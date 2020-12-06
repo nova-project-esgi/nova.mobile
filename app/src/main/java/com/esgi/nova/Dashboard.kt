@@ -1,4 +1,4 @@
-package com.esgi.nova.ui
+package com.esgi.nova
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
