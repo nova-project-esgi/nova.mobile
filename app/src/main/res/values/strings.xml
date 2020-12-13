@@ -3,4 +3,6 @@
     <string name="to_parameters">Options</string>
     <string name="to_leaderboard">Scores</string>
     <string name="new_game">Nouvelle Partie</string>
+    <string name="scoreBoard_name">LeaderBoard</string>
+    <string name="difficulty">difficulté :</string>
 </resources>
