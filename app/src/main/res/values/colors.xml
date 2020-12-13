@@ -2,11 +2,11 @@
 <resources>
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#03DAC5</color>
+    <color name="colorAccent">#00B0FF</color>
 
     <color name="backgroundColor">#6200EE</color>
     <color name="secondaryBackgroundColor">#6200EE</color>
-    <color name="buttonColor">#6200EE</color>
+    <color name="buttonColor">#FFC107</color>
     <color name="textColor">#6200EE</color>
     <color name="sensitiveTextColor">#6200EE</color>
 
