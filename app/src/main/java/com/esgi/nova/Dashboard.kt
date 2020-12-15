@@ -14,8 +14,7 @@ class Dashboard : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
 
-        spn_difficulty.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, listOf("Facile","Moyen","Difficile"))
-        spn_resources.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, listOf("30","50","70"))
+        spn_difficulty.adapter = ArrayAdapter(this, R.layout.spinner_item, listOf("Facile","Moyen","Difficile"))
         btn_to_leaderboard.setOnClickListener(this)
     }
 

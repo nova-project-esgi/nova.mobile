@@ -14,7 +14,7 @@ class ScoresAdapter(private val scores: List<Score>): RecyclerView.Adapter<Score
 
     override fun onBindViewHolder(holder: ScoreViewHolder, position: Int) {
         val score: Score = scores[position]
-        holder.bind(score)
+        holder.bind(score, position)
     }
 
     override fun getItemCount(): Int = scores.size
