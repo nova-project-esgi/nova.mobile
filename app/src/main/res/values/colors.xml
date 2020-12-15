@@ -2,12 +2,17 @@
 <resources>
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#03DAC5</color>
+    <color name="colorAccent">#00B0FF</color>
 
-    <color name="backgroundColor">#6200EE</color>
+    <color name="backgroundColor">#303030</color>
     <color name="secondaryBackgroundColor">#6200EE</color>
-    <color name="buttonColor">#6200EE</color>
-    <color name="textColor">#6200EE</color>
+
+    <color name="buttonColor">#FFC107</color>
+    <color name="textColor">#FFFFFF</color>
+    <color name="secondaryTextColor">#A8A28E</color>
     <color name="sensitiveTextColor">#6200EE</color>
+
+    <color name="spinnerItemBackground">#5E5C5C</color>
+    <color name="leaderBoardItemColor">#4E557E</color>
 
 </resources>

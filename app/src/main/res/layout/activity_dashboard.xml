@@ -4,21 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/backgroundColor"
     tools:context=".Dashboard">
 
     <Button
         android:id="@+id/btn_to_leaderboard"
-        android:layout_width="wrap_content"
+        android:layout_width="48dp"
         android:layout_height="wrap_content"
-        android:text="@string/to_leaderboard"
+        android:drawableStart="@drawable/scores_icons_48_light"
+        android:background="?android:attr/selectableItemBackground"
         app:layout_constraintStart_toStartOf="parent"
+        android:textColor="@color/textColor"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
+
         android:id="@+id/btn_to_parameters"
-        android:layout_width="wrap_content"
+        android:layout_width="48dp"
         android:layout_height="wrap_content"
-        android:text="@string/to_parameters"
+        android:drawableEnd="@drawable/settings_icons_48_light"
+        android:background="?android:attr/selectableItemBackground"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -27,19 +32,53 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/ln_difficulty"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_chainStyle="spread"
         android:text="@string/app_name"
+        android:textColor="@color/textColor"
         android:textSize="@android:dimen/app_icon_size"/>
+
+
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/ln_difficulty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tv_title"
+        app:layout_constraintBottom_toTopOf="@+id/btn_new_game"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:orientation="horizontal"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="@string/difficulty"
+            android:textColor="@color/textColor"
+            android:textSize="24sp"
+            />
+        <Spinner
+            android:id="@+id/spn_difficulty"
+            android:layout_width="wrap_content"
+            android:textSize="24sp"
+            android:layout_height="wrap_content"/>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tv_title"
+        app:layout_constraintTop_toBottomOf="@id/ln_difficulty"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        android:background="@color/buttonColor"
         android:id="@+id/btn_new_game"
         android:text="@string/new_game" />
 
