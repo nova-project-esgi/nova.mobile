@@ -6,18 +6,24 @@ import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.esgi.nova.adapters.ScoresAdapter
 import com.esgi.nova.models.Score
+import com.esgi.nova.network.score.ScoreRepository
+import com.esgi.nova.utils.NetworkUtils
 import kotlinx.android.synthetic.main.activity_leader_board.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.util.*
 
 class LeaderBoard : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
-    private var scoresFacile = mutableListOf<Score>(
+    private var scores = mutableListOf<Score>(
         Score(1, "Maxime", 300,Date()),
         Score(2, "Sacha", 145,Date()),
         Score(3, "James", 65,Date()),
@@ -29,30 +35,6 @@ class LeaderBoard : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         Score(8, "Léa", 1,Date())
     )
 
-    private var scoresMoyen = mutableListOf<Score>(
-        Score(1, "Moyen", 300,Date()),
-        Score(2, "Moyen", 145,Date()),
-        Score(3, "Moyen", 65,Date()),
-        Score(4, "Moyen", 795,Date()),
-        Score(5, "Moyen", 20,Date()),
-        Score(6, "Moyen", 125,Date()),
-        Score(7, "Moyen", 200,Date()),
-        Score(8, "Moyen", 855,Date()),
-        Score(8, "Moyen", 1,Date())
-    )
-
-    private var scoresDifficile = mutableListOf<Score>(
-        Score(1, "Difficile", 300,Date()),
-        Score(2, "Difficile", 145,Date()),
-        Score(3, "Difficile", 65,Date()),
-        Score(4, "Difficile", 795,Date()),
-        Score(5, "Difficile", 20,Date()),
-        Score(6, "Difficile", 125,Date()),
-        Score(7, "Difficile", 200,Date()),
-        Score(8, "Difficile", 855,Date()),
-        Score(8, "Difficile", 1,Date())
-    )
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_leader_board)
@@ -62,9 +44,12 @@ class LeaderBoard : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         itemDivider.setDrawable(ContextCompat.getDrawable(applicationContext, R.drawable.golden_divider)!!)
         rv_scores.addItemDecoration(itemDivider);
 
-        scoresFacile.sortByDescending { it.turn }
+        scores.sortByDescending { it.turn }
+        rv_scores?.apply {
+            layoutManager = LinearLayoutManager(this@LeaderBoard)
+            adapter = ScoresAdapter(scores)
+        }
 
-        updateRecyclerView(scoresFacile)
         swipeContainer.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener { refreshRecyclerView() })
 
         swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
@@ -78,33 +63,44 @@ class LeaderBoard : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
 
     fun refreshRecyclerView() {
-        scoresFacile.add(Score(9,"test",3333,Date(1111,10,15)))
-        scoresFacile.sortByDescending { it.turn }
-        updateRecyclerView(scoresFacile)
-        swipeContainer.setRefreshing(false);
+        rv_scores.visibility = View.GONE
+        if (NetworkUtils.isNetworkAvailable(this)) {
+            ScoreRepository.retrieveUser(object: Callback<Score> {
+                override fun onResponse(call: Call<Score>, response: Response<Score>) {
+                    response.body()?.let {
+                        scores.add(it)
+                    }
+                    scores.sortByDescending { it.turn }
+                    rv_scores.visibility = View.VISIBLE
+                    swipeContainer.setRefreshing(false)
+                }
 
-    }
+                override fun onFailure(call: Call<Score>, t: Throwable) {
+                    val toast = Toast.makeText(this@LeaderBoard, "Une erreur est survenue lors de la récupération des scores", Toast.LENGTH_LONG)
+                    toast.show()
+                    scores.clear()
+                    rv_scores.visibility = View.VISIBLE
+                    swipeContainer.setRefreshing(false)
+                }
+            })
 
-    private fun updateRecyclerView(scores: List<Score>) {
-        rv_scores?.apply {
-            layoutManager = LinearLayoutManager(this@LeaderBoard)
-            adapter = ScoresAdapter(scores)
+        } else {
+            val toast = Toast.makeText(this, "Le réseau n'est pas disponible", Toast.LENGTH_LONG)
+            toast.show()
+            scores.clear()
+            rv_scores.visibility = View.VISIBLE
+            swipeContainer.setRefreshing(false)
         }
+
     }
 
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         val text: String = parent?.getItemAtPosition(position).toString()
         Log.v("DIFFICULTE",text);
-        if (text == "Facile") {
-            updateRecyclerView(scoresFacile)
-        } else if (text == "Normal") {
-            updateRecyclerView(scoresMoyen)
-        } else {
-            updateRecyclerView(scoresDifficile)
-        }
+        //TODO changer la valeur de difficulté avant de lancer la requete de récupération
+        refreshRecyclerView()
     }
-
     override fun onNothingSelected(parent: AdapterView<*>?) {
 
     }
