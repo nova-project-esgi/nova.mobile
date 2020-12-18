@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">nova</string>
+    <string name="app_name">NOVA</string>
     <string name="to_parameters">Options</string>
     <string name="to_leaderboard">Scores</string>
     <string name="new_game">Nouvelle Partie</string>
@@ -9,4 +9,5 @@
     <string name="tgl_btn_on">OUI</string>
     <string name="tgl_btn_off">NON</string>
     <string name="scoreBoard_name">Scores</string>
+    <string name="connexion">Connexion</string>
 </resources>
