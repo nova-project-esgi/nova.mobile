@@ -3,12 +3,15 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.esgi.nova.data.dao.EventDAO
+import com.esgi.nova.data.dao.ResourceDAO
 import com.esgi.nova.data.entities.Event
+import com.esgi.nova.data.entities.Resource
 
-@Database(entities = [Event::class], version = 1)
+@Database(entities = [Event::class, Resource::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun eventDAO(): EventDAO
+    abstract fun resourceDAO(): ResourceDAO
 
     companion object {
         private var INSTANCE: AppDatabase? = null
