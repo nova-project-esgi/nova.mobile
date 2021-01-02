@@ -14,5 +14,6 @@
 
     <color name="spinnerItemBackground">#5E5C5C</color>
     <color name="leaderBoardItemColor">#4E557E</color>
+    <color name="hintTextColor">#BFC4BFBE</color>
 
 </resources>
