@@ -10,4 +10,6 @@
     <string name="tgl_btn_off">NON</string>
     <string name="scoreBoard_name">Scores</string>
     <string name="connexion">Connexion</string>
+    <string name="identifiant">identifiant</string>
+    <string name="password">mot de passe</string>
 </resources>
