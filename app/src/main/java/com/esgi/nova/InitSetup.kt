@@ -10,6 +10,8 @@ import androidx.loader.content.Loader
 import com.esgi.nova.data.dao.ResourceDAO
 import com.esgi.nova.data.entities.Event
 import com.esgi.nova.data.entities.Resource
+import com.esgi.nova.dto.CompleteEventsDTO
+import com.esgi.nova.dto.EventDTO
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.activity_init_setup.*
@@ -58,14 +60,14 @@ class InitSetup : AppCompatActivity() {
     }
 
     private fun loadEvents() {
-        val apiCall = URL("https://next.json-generator.com/api/json/get/VydTXyeqY?delay=2000")
+        val apiCall = URL("http://www.json-generator.com/api/json/get/cgAZQsKGIy?indent=2")
         val response = apiCall.readText()
 
-        val itemType = object : TypeToken<List<Event>>() {}.type
-        val events = Gson().fromJson<List<Event>>(response, itemType) // should work ?
+        val itemType = object : TypeToken<CompleteEventsDTO>() {}.type
+        val completeEvents = Gson().fromJson<CompleteEventsDTO>(response, itemType) // should work ?
 
-        events.forEach{
-                event: Event -> db?.eventDAO()?.insertAll(event)
+        completeEvents?.events?.forEach{
+                event: EventDTO -> db?.eventDAO()?.insertAll(event)
         }
 
         runOnUiThread {
