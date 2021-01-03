@@ -121,5 +121,6 @@ class Login : AppCompatActivity(), View.OnClickListener {
     private fun navigateToHomePage() {
         val intent = Intent(this, Dashboard::class.java)
         startActivity(intent)
+        finish()
     }
 }
