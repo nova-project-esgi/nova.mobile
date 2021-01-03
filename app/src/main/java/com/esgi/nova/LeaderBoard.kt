@@ -59,6 +59,8 @@ class LeaderBoard : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
         spn_ld_difficulty.onItemSelectedListener = this
 
+        swipeContainer.isRefreshing = true
+
     }
 
 
@@ -80,7 +82,7 @@ class LeaderBoard : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                     toast.show()
                     scores.clear()
                     rv_scores.visibility = View.VISIBLE
-                    swipeContainer.setRefreshing(false)
+                    swipeContainer.isRefreshing = false
                 }
             })
 
@@ -89,7 +91,7 @@ class LeaderBoard : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             toast.show()
             scores.clear()
             rv_scores.visibility = View.VISIBLE
-            swipeContainer.setRefreshing(false)
+            swipeContainer.isRefreshing = false
         }
 
     }
