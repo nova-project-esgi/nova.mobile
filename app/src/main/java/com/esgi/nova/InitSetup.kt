@@ -4,6 +4,8 @@ import AppDatabase
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.esgi.nova.data.entities.Resource
+import com.esgi.nova.difficulties.application.SynchronizeDifficultiesToLocalStorage
+import com.esgi.nova.events.application.SynchronizeEventsToLocalStorage
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.activity_init_setup.*
@@ -13,9 +15,7 @@ import java.net.URL
 class InitSetup : AppCompatActivity() {
 
 
-    val db = AppDatabase.getAppDataBase(this)
-
-
+    //val db = AppDatabase.getAppDataBase(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,9 +28,10 @@ class InitSetup : AppCompatActivity() {
         loadingText?.text = "default"
 
         doAsync {
-            loadRessources()
-            loadEvents()
-            loadChoices()
+            loadDifficulties()
+            //loadRessources()
+            //loadEvents()
+            //loadChoices()
         }
     }
 
@@ -42,7 +43,7 @@ class InitSetup : AppCompatActivity() {
         val resources = Gson().fromJson<List<Resource>>(response, itemType) // should work ?
 
         resources.forEach{
-            resource: Resource -> db?.resourceDAO()?.insertAll(resource)
+            //resource: Resource -> db?.resourceDAO()?.insertAll(resource)
         }
 
         runOnUiThread {
@@ -51,23 +52,16 @@ class InitSetup : AppCompatActivity() {
     }
 
     private fun loadEvents() {
-        val apiCall = URL("http://www.json-generator.com/api/json/get/cgAZQsKGIy?indent=2")
-        val response = apiCall.readText()
-
-        val itemType = object : TypeToken<CompleteEventsDTO>() {}.type
-        val completeEvents = Gson().fromJson<CompleteEventsDTO>(response, itemType) // should work ?
-
-        completeEvents?.events?.forEach{
-                event: EventDTO -> db?.eventDAO()?.insertAll(event)
-        }
-
-        runOnUiThread {
-            loadingText?.text = "blabla"
-        }
+        SynchronizeDifficultiesToLocalStorage.execute()
+        //SynchronizeEventsToLocalStorage.execute()
     }
 
     private fun loadChoices() {
 
+    }
+
+    private fun loadDifficulties() {
+        SynchronizeDifficultiesToLocalStorage.execute()
     }
 
 

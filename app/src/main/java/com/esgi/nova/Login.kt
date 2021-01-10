@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.Toast
+import com.esgi.nova.dto.ConnectedUserDTO
 import com.esgi.nova.network.auth.AuthRepository
 import com.esgi.nova.utils.NetworkUtils
 import kotlinx.android.synthetic.main.activity_login.*
