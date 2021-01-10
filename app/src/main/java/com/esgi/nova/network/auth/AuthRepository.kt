@@ -1,6 +1,5 @@
 package com.esgi.nova.network.auth
 
-import com.esgi.nova.dto.ConnectedUserDTO
 import com.esgi.nova.models.User
 import retrofit2.Callback
 import retrofit2.Retrofit

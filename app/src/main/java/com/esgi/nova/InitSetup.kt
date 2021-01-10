@@ -1,23 +1,14 @@
 package com.esgi.nova
 
 import AppDatabase
-import android.database.Cursor
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import androidx.loader.app.LoaderManager
-import androidx.loader.content.Loader
-import com.esgi.nova.data.dao.ResourceDAO
-import com.esgi.nova.data.entities.Event
 import com.esgi.nova.data.entities.Resource
-import com.esgi.nova.dto.CompleteEventsDTO
-import com.esgi.nova.dto.EventDTO
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.activity_init_setup.*
 import org.jetbrains.anko.doAsync
 import java.net.URL
-import kotlin.concurrent.timer
 
 class InitSetup : AppCompatActivity() {
 

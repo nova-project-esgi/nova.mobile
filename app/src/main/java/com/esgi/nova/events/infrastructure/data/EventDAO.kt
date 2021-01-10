@@ -1,7 +1,6 @@
-package com.esgi.nova.data.dao
+package com.esgi.nova.events.infrastructure.data
 
 import androidx.room.*
-import com.esgi.nova.data.entities.Event
 
 @Dao
 interface EventDAO {
