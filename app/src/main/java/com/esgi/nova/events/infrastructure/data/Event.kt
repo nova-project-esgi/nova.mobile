@@ -1,4 +1,4 @@
-package com.esgi.nova.data.entities
+package com.esgi.nova.events.infrastructure.data
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

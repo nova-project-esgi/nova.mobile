@@ -2,9 +2,9 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.esgi.nova.data.dao.EventDAO
+import com.esgi.nova.events.infrastructure.data.EventDAO
 import com.esgi.nova.data.dao.ResourceDAO
-import com.esgi.nova.data.entities.Event
+import com.esgi.nova.events.infrastructure.data.Event
 import com.esgi.nova.data.entities.Resource
 
 @Database(entities = [Event::class, Resource::class], version = 1)
