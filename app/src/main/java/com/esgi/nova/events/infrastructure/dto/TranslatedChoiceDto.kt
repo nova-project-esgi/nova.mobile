@@ -2,10 +2,10 @@ package com.esgi.nova.events.infrastructure.dto
 
 import java.util.*
 
-data class TranslatedChoiceView(
+data class TranslatedChoiceDto(
     val id: UUID,
     val eventId: UUID,
-    val resources: List<TranslatedChoiceResourceView>,
+    val resources: List<TranslatedChoiceResourceDto>,
     val title: String,
     val description: String,
     val language: String

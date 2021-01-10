@@ -1,4 +1,8 @@
 package com.esgi.nova.resources.application
 
-class SynchronizeResourcesToLocalStorage {
+object SynchronizeResourcesToLocalStorage {
+
+    fun execute() {
+
+    }
 }
