@@ -1,21 +1,23 @@
 package com.esgi.nova.events.infrastructure.data
 
 import androidx.room.*
+import com.esgi.nova.infrastructure.data.dao.BaseDao
+import java.util.*
 
 @Dao
-interface EventDAO {
-    @Query("SELECT * FROM event")
-    fun getAll(): List<Event>
+abstract class EventDAO : BaseDao<UUID, Event> (){
+    @Query("SELECT * FROM events")
+    abstract override fun getAll(): List<Event>
 
-    @Query("DELETE FROM event")
-    fun deleteAll()
+    @Query("DELETE FROM events")
+    abstract override fun deleteAll()
 
-    @Query("SELECT * FROM event WHERE id IN (:eventIds)")
-    fun loadAllByIds(eventIds: IntArray): List<Event>
+    @Query("SELECT * FROM events WHERE id IN (:ids)")
+    abstract override fun loadAllByIds(ids: List<UUID>): List<Event>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(vararg events: Event)
+    abstract override fun insertAll(vararg entities: Event)
 
     @Delete
-    fun delete(event: Event)
+    abstract override fun delete(entity: Event)
 }

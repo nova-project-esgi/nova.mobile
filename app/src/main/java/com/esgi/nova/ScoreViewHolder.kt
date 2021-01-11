@@ -11,9 +11,8 @@ import com.esgi.nova.models.Score
 import java.text.SimpleDateFormat
 import kotlin.math.log
 
-class ScoreViewHolder(inflater: LayoutInflater, parent: ViewGroup):
-    RecyclerView.ViewHolder(inflater.inflate(R.layout.score_item, parent, false))
-{
+class ScoreViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
+    RecyclerView.ViewHolder(inflater.inflate(R.layout.score_item, parent, false)) {
     private var username: TextView? = null
     private var turn: TextView? = null
     private var tv_position: TextView? = null
@@ -28,8 +27,7 @@ class ScoreViewHolder(inflater: LayoutInflater, parent: ViewGroup):
         tv_date = itemView.findViewById(R.id.tv_date)
     }
 
-    fun bind(score: Score, position: Int)
-    {
+    fun bind(score: Score, position: Int) {
         username?.text = score.userName
 
         turn?.text = "${score.turn} tours"

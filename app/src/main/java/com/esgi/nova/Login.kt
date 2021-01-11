@@ -6,20 +6,37 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.Toast
-import com.esgi.nova.dto.ConnectedUserDTO
-import com.esgi.nova.network.auth.AuthRepository
+import com.esgi.nova.infrastructure.data.AppDatabase
+import com.esgi.nova.users.dtos.ConnectedUserDto
+import com.esgi.nova.events.application.SynchronizeEventsToLocalStorage
+import com.esgi.nova.infrastructure.preferences.PreferenceConstants
+import com.esgi.nova.users.application.LogUser
+import com.esgi.nova.users.dtos.UserLoginDto
+import com.esgi.nova.users.exceptions.InvalidPasswordException
+import com.esgi.nova.users.exceptions.InvalidUsernameException
 import com.esgi.nova.utils.NetworkUtils
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_login.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class Login : AppCompatActivity(), View.OnClickListener {
+
+    @Inject
+    lateinit var service: SynchronizeEventsToLocalStorage;
+    @Inject
+    lateinit var logUser: LogUser
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-
         btn_login.setOnClickListener(this)
+        val test = AppDatabase.getAppDataBase(this)
+        println(test)
     }
 
     override fun onClick(view: View?) {
@@ -29,50 +46,50 @@ class Login : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun loginClick() {
-        val login = ti_login.text.toString().trim()
-        val password = ti_password.text.toString().trim()
+        val userLoginDto = UserLoginDto(
+            username = ti_login.text.toString().trim(),
+            password = ti_password.text.toString().trim()
+        )
         setViewVisibility(ProgressBar.VISIBLE)
-        if (login.isNotEmpty() && login.length >= 6 && login.length <= 20 && password.isNotEmpty() && password.length >= 8) {
-            if (NetworkUtils.isNetworkAvailable(this)) {
-                login(login, password)
+        try{
+            userLoginDto.validate()
+            if(NetworkUtils.isNetworkAvailable(this)){
+                return login(userLoginDto)
             } else {
                 setViewVisibility(ProgressBar.GONE)
                 val toast =
-                    Toast.makeText(this, "Le réseau n'est pas disponible", Toast.LENGTH_LONG)
+                    Toast.makeText(this, getString(R.string.network_not_available_msg), Toast.LENGTH_LONG)
                 toast.show()
             }
-        } else {
-            val toast: Toast
-            if (login.length < 6 || login.length > 20) {
-                toast = Toast.makeText(
-                    this,
-                    "L'identifiant doit avoir entre 6 et 20 caractères",
-                    Toast.LENGTH_LONG
-                )
-            } else {
-                toast = Toast.makeText(
-                    this,
-                    "le mot de passe doit avoir au minimum 8 caractères",
-                    Toast.LENGTH_LONG
-                )
-            }
-            setViewVisibility(ProgressBar.GONE)
-            toast.show()
+        }catch (e: InvalidUsernameException){
+            Toast.makeText(
+                this,
+                getString(R.string.invalid_username_msg),
+                Toast.LENGTH_LONG
+            ).show()
+        }catch(e: InvalidPasswordException){
+            Toast.makeText(
+                this,
+                getString(R.string.invalid_password_msg),
+                Toast.LENGTH_LONG
+            ).show()
         }
+        setViewVisibility(ProgressBar.GONE)
+
     }
 
-    private fun login(login: String, password: String) {
-        AuthRepository.logWithUsernameAndPassword(login, password, object :
-            Callback<ConnectedUserDTO> {
+    private fun login(user: UserLoginDto) {
+        logUser.execute(user, object :
+            Callback<ConnectedUserDto> {
             override fun onResponse(
-                call: Call<ConnectedUserDTO>,
-                response: Response<ConnectedUserDTO>
+                call: Call<ConnectedUserDto>,
+                response: Response<ConnectedUserDto>
             ) {
                 if (response.isSuccessful) {
                     response.body()?.let {
-                        val sharedPref = this@Login.getSharedPreferences("user",MODE_PRIVATE)
+                        val sharedPref = this@Login.getSharedPreferences(PreferenceConstants.UserKey, MODE_PRIVATE)
                         with(sharedPref.edit()) {
-                            putString("token", it.token)
+                            putString(PreferenceConstants.TokenKey, it.token)
                             apply()
                         }
                     }
@@ -82,22 +99,21 @@ class Login : AppCompatActivity(), View.OnClickListener {
                     setViewVisibility(ProgressBar.GONE)
                     val toast = Toast.makeText(
                         this@Login,
-                        "l'identifiant ou le mot de passe ne correspond pas",
+                        getString(R.string.user_not_exist_msg),
                         Toast.LENGTH_LONG
                     )
                     toast.show()
                 }
             }
 
-            override fun onFailure(call: Call<ConnectedUserDTO>, t: Throwable) {
+            override fun onFailure(call: Call<ConnectedUserDto>, t: Throwable) {
                 setViewVisibility(ProgressBar.GONE)
                 val toast = Toast.makeText(
                     this@Login,
-                    "Une erreur est survenue lors de la connexion",
+                    getString(R.string.connection_err_msg),
                     Toast.LENGTH_LONG
                 )
                 toast.show()
-
             }
 
         })
@@ -113,12 +129,10 @@ class Login : AppCompatActivity(), View.OnClickListener {
     }
 
 
-
-
-
     private fun navigateToHomePage() {
         val intent = Intent(this, Dashboard::class.java)
         startActivity(intent)
         finish()
     }
+
 }

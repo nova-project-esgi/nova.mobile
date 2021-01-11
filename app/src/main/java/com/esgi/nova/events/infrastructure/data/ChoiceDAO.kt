@@ -1,21 +1,23 @@
 package com.esgi.nova.events.infrastructure.data
 
 import androidx.room.*
+import com.esgi.nova.infrastructure.data.dao.BaseDao
+import java.util.*
 
 @Dao
-interface ChoiceDAO {
-    @Query("SELECT * FROM choice")
-    fun getAll(): List<Choice>
+abstract class ChoiceDAO : BaseDao<UUID, Choice>() {
+    @Query("SELECT * FROM choices")
+    abstract override fun getAll(): List<Choice>
 
-    @Query("DELETE FROM choice")
-    fun deleteAll()
+    @Query("DELETE FROM choices")
+    abstract override fun deleteAll()
 
-    @Query("SELECT * FROM choice WHERE id IN (:choiceIds)")
-    fun loadAllByIds(choiceIds: IntArray): List<Choice>
+    @Query("SELECT * FROM choices WHERE id IN (:ids)")
+    abstract override fun loadAllByIds(ids: List<UUID>): List<Choice>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(vararg choices: Choice)
+    abstract override fun insertAll(vararg entities: Choice)
 
     @Delete
-    fun delete(choice: Choice)
+    abstract override fun delete(entity: Choice)
 }

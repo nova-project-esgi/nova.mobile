@@ -13,35 +13,46 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.esgi.nova.adapters.ScoresAdapter
 import com.esgi.nova.models.Score
-import com.esgi.nova.network.score.ScoreRepository
+import com.esgi.nova.games.infrastructure.api.ScoreApiRepository
+import com.esgi.nova.users.application.RetrieveUser
 import com.esgi.nova.utils.NetworkUtils
 import kotlinx.android.synthetic.main.activity_leader_board.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
+import javax.inject.Inject
 
 class LeaderBoard : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
+    @Inject
+    lateinit var retrieveUser: RetrieveUser
+
     private var scores = mutableListOf<Score>(
-        Score(1, "Maxime", 300,Date()),
-        Score(2, "Sacha", 145,Date()),
-        Score(3, "James", 65,Date()),
-        Score(4, "Masa", 795,Date()),
-        Score(5, "Jérémy", 20,Date()),
-        Score(6, "Simon", 125,Date()),
-        Score(7, "Lucas", 200,Date()),
-        Score(8, "Théau", 855,Date()),
-        Score(8, "Léa", 1,Date())
+        Score(1, "Maxime", 300, Date()),
+        Score(2, "Sacha", 145, Date()),
+        Score(3, "James", 65, Date()),
+        Score(4, "Masa", 795, Date()),
+        Score(5, "Jérémy", 20, Date()),
+        Score(6, "Simon", 125, Date()),
+        Score(7, "Lucas", 200, Date()),
+        Score(8, "Théau", 855, Date()),
+        Score(8, "Léa", 1, Date())
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_leader_board)
-        spn_ld_difficulty.adapter = ArrayAdapter(this, R.layout.spinner_item, listOf("Facile","Normal","Difficile"))
+        spn_ld_difficulty.adapter =
+            ArrayAdapter(this, R.layout.spinner_item, listOf("Facile", "Normal", "Difficile"))
 
         val itemDivider = DividerItemDecoration(applicationContext, 1)
-        itemDivider.setDrawable(ContextCompat.getDrawable(applicationContext, R.drawable.golden_divider)!!)
+        itemDivider.setDrawable(
+            ContextCompat.getDrawable(
+                applicationContext,
+                R.drawable.golden_divider
+            )!!
+        )
         rv_scores.addItemDecoration(itemDivider);
 
         scores.sortByDescending { it.turn }
@@ -52,10 +63,12 @@ class LeaderBoard : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
         swipeContainer.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener { refreshRecyclerView() })
 
-        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+        swipeContainer.setColorSchemeResources(
+            android.R.color.holo_blue_bright,
             android.R.color.holo_green_light,
             android.R.color.holo_orange_light,
-            android.R.color.holo_red_light)
+            android.R.color.holo_red_light
+        )
 
         spn_ld_difficulty.onItemSelectedListener = this
 
@@ -67,7 +80,7 @@ class LeaderBoard : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     fun refreshRecyclerView() {
         rv_scores.visibility = View.GONE
         if (NetworkUtils.isNetworkAvailable(this)) {
-            ScoreRepository.retrieveUser(object: Callback<Score> {
+            retrieveUser.execute(object : Callback<Score> {
                 override fun onResponse(call: Call<Score>, response: Response<Score>) {
                     response.body()?.let {
                         scores.add(it)
@@ -78,7 +91,11 @@ class LeaderBoard : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                 }
 
                 override fun onFailure(call: Call<Score>, t: Throwable) {
-                    val toast = Toast.makeText(this@LeaderBoard, "Une erreur est survenue lors de la récupération des scores", Toast.LENGTH_LONG)
+                    val toast = Toast.makeText(
+                        this@LeaderBoard,
+                        "Une erreur est survenue lors de la récupération des scores",
+                        Toast.LENGTH_LONG
+                    )
                     toast.show()
                     scores.clear()
                     rv_scores.visibility = View.VISIBLE
@@ -99,10 +116,11 @@ class LeaderBoard : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         val text: String = parent?.getItemAtPosition(position).toString()
-        Log.v("DIFFICULTE",text);
+        Log.v("DIFFICULTE", text);
         //TODO changer la valeur de difficulté avant de lancer la requete de récupération
         refreshRecyclerView()
     }
+
     override fun onNothingSelected(parent: AdapterView<*>?) {
 
     }

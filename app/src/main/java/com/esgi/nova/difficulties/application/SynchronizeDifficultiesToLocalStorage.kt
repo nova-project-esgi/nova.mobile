@@ -1,16 +1,21 @@
 package com.esgi.nova.difficulties.application
 
-import com.esgi.nova.difficulties.infrastructure.api.DifficultyRepository
+import com.esgi.nova.difficulties.infrastructure.api.DifficultyApiRepository
+import com.esgi.nova.difficulties.infrastructure.data.DifficultyDbRepository
 import com.esgi.nova.difficulties.infrastructure.dto.TranslatedDifficultyDto
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import javax.inject.Inject
 
-object SynchronizeDifficultiesToLocalStorage {
+class SynchronizeDifficultiesToLocalStorage @Inject constructor(
+    private val difficultiesDbRepository: DifficultyDbRepository,
+    private val difficultiesApiRepository: DifficultyApiRepository
+) {
 
     fun execute() {
-        DifficultyRepository.getAllTranslatedDifficulties(object :
-        Callback<List<TranslatedDifficultyDto>> {
+        difficultiesApiRepository.getAllTranslatedDifficulties(object :
+            Callback<List<TranslatedDifficultyDto>> {
             override fun onResponse(
                 call: Call<List<TranslatedDifficultyDto>>,
                 response: Response<List<TranslatedDifficultyDto>>
@@ -27,6 +32,6 @@ object SynchronizeDifficultiesToLocalStorage {
             override fun onFailure(call: Call<List<TranslatedDifficultyDto>>, t: Throwable) {
                 TODO("Not yet implemented")
             }
-        } )
+        })
     }
 }

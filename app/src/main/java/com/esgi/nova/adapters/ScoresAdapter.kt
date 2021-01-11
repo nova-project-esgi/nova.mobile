@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.esgi.nova.ScoreViewHolder
 import com.esgi.nova.models.Score
 
-class ScoresAdapter(private val scores: List<Score>): RecyclerView.Adapter<ScoreViewHolder>() {
+class ScoresAdapter(private val scores: List<Score>) : RecyclerView.Adapter<ScoreViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ScoreViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         return ScoreViewHolder(inflater, parent)

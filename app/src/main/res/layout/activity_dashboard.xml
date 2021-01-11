@@ -38,8 +38,7 @@
         app:layout_constraintHorizontal_chainStyle="spread"
         android:text="@string/app_name"
         android:textColor="@color/textColor"
-        android:textSize="@android:dimen/app_icon_size"/>
-
+        android:textSize="@android:dimen/app_icon_size" />
 
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -50,8 +49,8 @@
         app:layout_constraintBottom_toTopOf="@+id/btn_new_game"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:orientation="horizontal"
-        >
+        android:orientation="horizontal">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -59,16 +58,14 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:text="@string/difficulty"
             android:textColor="@color/textColor"
-            android:textSize="24sp"
-            />
+            android:textSize="24sp" />
+
         <Spinner
             android:id="@+id/spn_difficulty"
             android:layout_width="wrap_content"
             android:textSize="24sp"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
     </androidx.appcompat.widget.LinearLayoutCompat>
-
-
 
 
     <Button
@@ -81,7 +78,6 @@
         android:background="@color/buttonColor"
         android:id="@+id/btn_new_game"
         android:text="@string/new_game" />
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
