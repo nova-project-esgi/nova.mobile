@@ -29,7 +29,7 @@ class AuthApiRepository @Inject constructor(){
         call?.enqueue(callback)
     }
 
-    fun logWithToken(callback: Callback<ConnectedUserDto>, token: String) {
+    fun logWithToken(token: String, callback: Callback<ConnectedUserDto>) {
         val call = authRequest.logWithToken(token)
         call?.enqueue(callback)
     }
