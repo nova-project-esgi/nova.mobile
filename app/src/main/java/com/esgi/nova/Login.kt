@@ -1,6 +1,7 @@
 package com.esgi.nova
 
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -35,6 +36,7 @@ class Login : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         btn_login.setOnClickListener(this)
+        btn_register.setOnClickListener(this)
         val test = AppDatabase.getAppDataBase(this)
         println(test)
     }
@@ -42,7 +44,15 @@ class Login : AppCompatActivity(), View.OnClickListener {
     override fun onClick(view: View?) {
         if (view == btn_login) {
             loginClick()
+        } else if(view == btn_register) {
+            registerClick();
         }
+    }
+
+    private fun registerClick() {
+        val uri: Uri = Uri.parse("http://freenetaccess.freeboxos.fr:8002/register")
+        val intent = Intent(Intent.ACTION_VIEW, uri)
+        startActivity(intent)
     }
 
     private fun loginClick() {

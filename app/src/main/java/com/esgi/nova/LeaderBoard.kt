@@ -23,7 +23,7 @@ import retrofit2.Response
 import java.util.*
 import javax.inject.Inject
 
-class LeaderBoard : AppCompatActivity(), AdapterView.OnItemSelectedListener {
+class LeaderBoard : AppCompatActivity(), AdapterView.OnItemClickListener{
 
     @Inject
     lateinit var retrieveUser: RetrieveUser
@@ -43,8 +43,10 @@ class LeaderBoard : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_leader_board)
-        spn_ld_difficulty.adapter =
-            ArrayAdapter(this, R.layout.spinner_item, listOf("Facile", "Normal", "Difficile"))
+        val difficulties = listOf("Facile", "Normal", "Difficile")
+        tv_leaderBoard_filter.setAdapter(ArrayAdapter(this, R.layout.list_item, difficulties))
+        tv_leaderBoard_filter.inputType = 0
+        tv_leaderBoard_filter.setText(difficulties[0], false)
 
         val itemDivider = DividerItemDecoration(applicationContext, 1)
         itemDivider.setDrawable(
@@ -70,9 +72,9 @@ class LeaderBoard : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             android.R.color.holo_red_light
         )
 
-        spn_ld_difficulty.onItemSelectedListener = this
+        tv_leaderBoard_filter.onItemClickListener = this
 
-        swipeContainer.isRefreshing = true
+//        swipeContainer.isRefreshing = true
 
     }
 
@@ -114,15 +116,12 @@ class LeaderBoard : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     }
 
 
-    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+    override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         val text: String = parent?.getItemAtPosition(position).toString()
         Log.v("DIFFICULTE", text);
+        swipeContainer.isRefreshing = true
         //TODO changer la valeur de difficulté avant de lancer la requete de récupération
         refreshRecyclerView()
-    }
-
-    override fun onNothingSelected(parent: AdapterView<*>?) {
-
     }
 
 }
