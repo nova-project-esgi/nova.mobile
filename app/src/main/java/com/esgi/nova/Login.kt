@@ -17,6 +17,7 @@ import com.esgi.nova.users.exceptions.InvalidPasswordException
 import com.esgi.nova.users.exceptions.InvalidUsernameException
 import com.esgi.nova.users.exceptions.UserNotFoundException
 import com.esgi.nova.utils.NetworkUtils
+import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_login.*
 import org.jetbrains.anko.doAsync
@@ -32,15 +33,66 @@ class Login : AppCompatActivity(), View.OnClickListener {
     lateinit var service: SynchronizeEventsToLocalStorage;
     @Inject
     lateinit var logUser: LogUser
+    @Inject
+    lateinit var logUserWithToken: LogUserWithToken
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+        checkExistingToken()
+
         btn_login.setOnClickListener(this)
         btn_register.setOnClickListener(this)
         val test = AppDatabase.getAppDataBase(this)
         println(test)
+    }
+
+    private fun checkExistingToken() {
+        val sharedPref = this@Login.getSharedPreferences(PreferenceConstants.UserKey, MODE_PRIVATE)
+        val token = sharedPref.getString(PreferenceConstants.TokenKey, null)
+        if (token !== null) {
+            setViewVisibility(ProgressBar.VISIBLE)
+            if(NetworkUtils.isNetworkAvailable(this)){
+                logUserWithToken.execute(token, object :
+                    Callback<ConnectedUserDto> {
+                    override fun onResponse(
+                        call: Call<ConnectedUserDto>,
+                        response: Response<ConnectedUserDto>
+                    ) {
+                        if (response.isSuccessful) {
+                            setViewVisibility(ProgressBar.GONE)
+                            val toast = Toast.makeText(
+                                this@Login,
+                                getString(R.string.new_game),
+                                Toast.LENGTH_LONG
+                            )
+                            toast.show()
+                            navigateToHomePage()
+                        } else {
+                            setViewVisibility(ProgressBar.GONE)
+                            val toast = Toast.makeText(
+                                this@Login,
+                                getString(R.string.user_have_to_re_auth_msg),
+                                Toast.LENGTH_LONG
+                            )
+                            toast.show()
+                        }
+                    }
+
+                    override fun onFailure(call: Call<ConnectedUserDto>, t: Throwable) {
+                        setViewVisibility(ProgressBar.GONE)
+                        val toast = Toast.makeText(
+                            this@Login,
+                            getString(R.string.connection_err_msg),
+                            Toast.LENGTH_LONG
+                        )
+                        toast.show()
+                    }
+
+                })
+            }
+        }
     }
 
     override fun onClick(view: View?) {
@@ -116,8 +168,10 @@ class Login : AppCompatActivity(), View.OnClickListener {
     fun setViewVisibility(state: Int) {
         if (state == ProgressBar.GONE) {
             btn_login.isEnabled = true
+            btn_register.isEnabled = true
         } else if (state == ProgressBar.VISIBLE) {
             btn_login.isEnabled = false
+            btn_register.isEnabled = false
         }
         progress_overlay.visibility = state
     }
