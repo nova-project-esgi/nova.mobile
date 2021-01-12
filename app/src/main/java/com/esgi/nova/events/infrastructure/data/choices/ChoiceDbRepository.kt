@@ -1,4 +1,4 @@
-package com.esgi.nova.events.infrastructure.data
+package com.esgi.nova.events.infrastructure.data.choices
 
 import com.esgi.nova.infrastructure.data.AppDatabase
 import javax.inject.Inject

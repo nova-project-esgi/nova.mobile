@@ -8,5 +8,6 @@ data class TranslatedDifficultyDto(
     val name: String,
     val resources: List<DifficultyResourceDto>
 ) {
+
 }
 

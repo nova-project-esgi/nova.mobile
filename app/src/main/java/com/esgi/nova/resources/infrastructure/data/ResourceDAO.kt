@@ -1,12 +1,12 @@
-package com.esgi.nova.infrastructure.data.dao
+package com.esgi.nova.resources.infrastructure.data
 
 import androidx.room.*
-import com.esgi.nova.infrastructure.data.entities.Resource
+import com.esgi.nova.infrastructure.data.dao.BaseDao
 import java.util.*
 
 @Dao
 abstract class ResourceDAO : BaseDao<UUID, Resource>() {
-    @Query("SELECT * FROM events WHERE id IN (:ids)")
+    @Query("SELECT * FROM resources WHERE id IN (:ids)")
     abstract override fun loadAllByIds(ids: List<UUID>): List<Resource>
 
     @Delete

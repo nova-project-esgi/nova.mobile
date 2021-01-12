@@ -1,4 +1,4 @@
-package com.esgi.nova.infrastructure.data.entities
+package com.esgi.nova.events.infrastructure.data.choices
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -7,10 +7,12 @@ import androidx.room.TypeConverters
 import com.esgi.nova.infrastructure.data.UUIDConverter
 import java.util.*
 
-@Entity(tableName = "resources")
-data class Resource(
+@Entity(tableName = "choices")
+data class Choice(
     @PrimaryKey
     @field:TypeConverters(UUIDConverter::class)
     val id: UUID = UUID.randomUUID(),
-    @ColumnInfo(name = "name") val name: String?
-)
+    @ColumnInfo(name = "title") val title: String?,
+    @ColumnInfo(name = "description") val description: String?
+) {}
+

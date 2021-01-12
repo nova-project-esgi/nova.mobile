@@ -5,6 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 
+
 @Dao
 abstract class BaseDao<Id, Entity> {
 

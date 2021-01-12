@@ -3,9 +3,11 @@ package com.esgi.nova
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.esgi.nova.infrastructure.data.entities.Resource
+import com.esgi.nova.resources.infrastructure.data.Resource
 import com.esgi.nova.difficulties.application.SynchronizeDifficultiesToLocalStorage
 import com.esgi.nova.events.application.SynchronizeEventsToLocalStorage
+import com.esgi.nova.languages.application.SynchronizeLanguagesToLocalStorage
+import com.esgi.nova.resources.application.SynchronizeResourceToLocalStorage
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import dagger.hilt.android.AndroidEntryPoint
@@ -20,13 +22,16 @@ class InitSetup : AppCompatActivity() {
     lateinit var synchronizeEventsToLocalStorage: SynchronizeEventsToLocalStorage
     @Inject
     lateinit var synchronizeDifficultiesToLocalStorage: SynchronizeDifficultiesToLocalStorage
+    @Inject
+    lateinit var synchronizeLanguagesToLocalStorage: SynchronizeLanguagesToLocalStorage
+    @Inject
+    lateinit var synchronizeResourcesToLocalStorage: SynchronizeResourceToLocalStorage
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_init_setup)
         loadData()
     }
-
 
     private fun toLoginActivity() {
         val intent = Intent(this, Login::class.java)
@@ -38,12 +43,16 @@ class InitSetup : AppCompatActivity() {
         loadingText?.text = "default"
 //        toLoginActivity()
         doAsync {
-            loadDifficulties()
+            synchronizeLanguagesToLocalStorage.execute()
+            synchronizeResourcesToLocalStorage.execute()
+            synchronizeDifficultiesToLocalStorage.execute()
+//            synchronizeEventsToLocalStorage.execute()
+
             //loadRessources()
-            //loadEvents()
             //loadChoices()
         }
     }
+
 
     private fun loadRessources() {
         val apiCall = URL("https://next.json-generator.com/api/json/get/VydTXyeqY?delay=2000")
@@ -62,17 +71,7 @@ class InitSetup : AppCompatActivity() {
         }
     }
 
-    private fun loadEvents() {
-//        synchronizeEventsToLocalStorage.execute()
-    }
 
-    private fun loadChoices() {
-
-    }
-
-    private fun loadDifficulties() {
-        synchronizeDifficultiesToLocalStorage.execute()
-    }
 
 
 }

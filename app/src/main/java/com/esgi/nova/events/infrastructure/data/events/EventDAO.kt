@@ -1,4 +1,4 @@
-package com.esgi.nova.events.infrastructure.data
+package com.esgi.nova.events.infrastructure.data.events
 
 import androidx.room.*
 import com.esgi.nova.infrastructure.data.dao.BaseDao
@@ -21,3 +21,4 @@ abstract class EventDAO : BaseDao<UUID, Event> (){
     @Delete
     abstract override fun delete(entity: Event)
 }
+

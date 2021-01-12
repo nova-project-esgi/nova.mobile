@@ -11,6 +11,6 @@ import retrofit2.http.Headers
 interface EventRequest {
 
     @Headers("Accept: ${ApiConstants.CustomMediaType.Application.TranslatedEvent}")
-    @GET("")
+    @GET("${ApiConstants.EndPoints.Events}${ApiConstants.EndPoints.Load}")
     fun getAllTranslatedEvents(@Field("language") language: String): Call<List<TranslatedEventsWithBackgroundDto>>?
 }

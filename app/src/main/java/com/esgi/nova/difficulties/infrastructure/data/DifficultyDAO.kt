@@ -22,3 +22,4 @@ abstract class DifficultyDAO : BaseDao<UUID, Difficulty>() {
     @Delete
     abstract override fun delete(entity: Difficulty)
 }
+
