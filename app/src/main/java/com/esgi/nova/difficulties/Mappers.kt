@@ -1,12 +1,12 @@
 package com.esgi.nova.difficulties
 
-import com.esgi.nova.difficulties.infrastructure.data.DifficultyResource
-import com.esgi.nova.difficulties.infrastructure.dto.TranslatedDifficultyDto
+import com.esgi.nova.difficulties.infrastructure.data.difficulty_resource.DifficultyResourceEntity
+import com.esgi.nova.difficulties.infrastructure.api.responses.TranslatedDifficultyResponse
 
-val TranslatedDifficultyDto.difficultyResources: List<DifficultyResource>
+val TranslatedDifficultyResponse.difficultyResources: List<DifficultyResourceEntity>
     get() =
         resources.map {
-            DifficultyResource(
+            DifficultyResourceEntity(
                 resourceId = it.resourceId,
                 difficultyId = id,
                 startValue = it.startValue

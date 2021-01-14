@@ -3,7 +3,7 @@ package com.esgi.nova
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.esgi.nova.resources.infrastructure.data.Resource
+import com.esgi.nova.resources.infrastructure.data.ResourceEntity
 import com.esgi.nova.difficulties.application.SynchronizeDifficultiesToLocalStorage
 import com.esgi.nova.events.application.SynchronizeEventsToLocalStorage
 import com.esgi.nova.languages.application.SynchronizeLanguagesToLocalStorage
@@ -44,9 +44,9 @@ class InitSetup : AppCompatActivity() {
 //        toLoginActivity()
         doAsync {
             synchronizeLanguagesToLocalStorage.execute()
-            synchronizeResourcesToLocalStorage.execute()
-            synchronizeDifficultiesToLocalStorage.execute()
-//            synchronizeEventsToLocalStorage.execute()
+            synchronizeResourcesToLocalStorage.execute("en")
+            synchronizeDifficultiesToLocalStorage.execute("en")
+            synchronizeEventsToLocalStorage.execute("en")
 
             //loadRessources()
             //loadChoices()
@@ -59,8 +59,8 @@ class InitSetup : AppCompatActivity() {
         val response = apiCall.readText()        //SynchronizeEventsToLocalStorage.execute()
 
 
-        val itemType = object : TypeToken<List<Resource>>() {}.type
-        val resources = Gson().fromJson<List<Resource>>(response, itemType) // should work ?
+        val itemType = object : TypeToken<List<ResourceEntity>>() {}.type
+        val resources = Gson().fromJson<List<ResourceEntity>>(response, itemType) // should work ?
 
         resources.forEach{
             //resource: Resource -> db?.resourceDAO()?.insertAll(resource)

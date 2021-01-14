@@ -1,23 +1,22 @@
 package com.esgi.nova.languages.infrastructure.api
 
 import com.esgi.nova.infrastructure.api.apiBuilder
-import com.esgi.nova.languages.infrastructure.dto.LanguageDto
 import retrofit2.Retrofit
 import javax.inject.Inject
 
 class LanguageApiRepository @Inject constructor() {
 
-    private var languagesRequests: LanguagesRequests
+    private var languagesServices: LanguageService
 
     init {
         val retrofit = Retrofit.Builder()
             .apiBuilder()
             .build()
-        languagesRequests = retrofit.create(LanguagesRequests::class.java)
+        languagesServices = retrofit.create(LanguageService::class.java)
     }
 
-    fun getAll(): List<LanguageDto> {
-        return languagesRequests.getAll()?.execute()?.body() ?: listOf()
+    fun getAll(): List<LanguageResponse> {
+        return languagesServices.getAll().execute().body() ?: listOf()
     }
 }
 

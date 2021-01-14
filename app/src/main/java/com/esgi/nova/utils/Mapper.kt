@@ -24,3 +24,17 @@ inline fun <reified In: Any, reified Out: Any> Collection<In>.reflectMapCollecti
     }
 }
 
+inline fun <reified In: Any, reified Out: Any> Array<In>.reflectMapArray(): Array<Out>{
+    val outCtr = Out::class.primaryConstructor
+    val propertiesByName= In::class.memberProperties.associateBy { it.name }
+    return this.mapNotNull {item ->
+        with(outCtr){
+            this?.callBy(parameters.associateWith { parameter ->
+                propertiesByName[parameter.name]?.get(item)
+            })
+        }
+    }.toTypedArray()
+}
+
+
+

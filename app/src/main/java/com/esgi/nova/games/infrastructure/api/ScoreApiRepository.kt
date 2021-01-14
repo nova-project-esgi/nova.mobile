@@ -7,7 +7,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Inject
 
 class ScoreApiRepository @Inject constructor() {
-    private var scoreRequest: ScoreRequest
+    private var scoreService: ScoreService
 
     init {
         val retrofit = Retrofit.Builder()
@@ -15,11 +15,11 @@ class ScoreApiRepository @Inject constructor() {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
-        scoreRequest = retrofit.create(ScoreRequest::class.java)
+        scoreService = retrofit.create(ScoreService::class.java)
     }
 
     fun retrieveUser(callback: Callback<Score>) {
-        val call = scoreRequest.retrieveUser()
+        val call = scoreService.retrieveUser()
         call?.enqueue(callback)
     }
 }

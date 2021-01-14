@@ -7,25 +7,28 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.esgi.nova.events.infrastructure.data.events.EventDAO
 import com.esgi.nova.resources.infrastructure.data.ResourceDAO
-import com.esgi.nova.events.infrastructure.data.events.Event
-import com.esgi.nova.resources.infrastructure.data.Resource
-import com.esgi.nova.difficulties.infrastructure.data.Difficulty
-import com.esgi.nova.difficulties.infrastructure.data.DifficultyDAO
-import com.esgi.nova.difficulties.infrastructure.data.DifficultyResource
-import com.esgi.nova.difficulties.infrastructure.data.DifficultyResourceDAO
-import com.esgi.nova.events.infrastructure.data.choices.Choice
+import com.esgi.nova.events.infrastructure.data.events.EventEntity
+import com.esgi.nova.resources.infrastructure.data.ResourceEntity
+import com.esgi.nova.difficulties.infrastructure.data.difficulty.DifficultyEntity
+import com.esgi.nova.difficulties.infrastructure.data.difficulty.DifficultyDAO
+import com.esgi.nova.difficulties.infrastructure.data.difficulty_resource.DifficultyResourceEntity
+import com.esgi.nova.difficulties.infrastructure.data.difficulty_resource.DifficultyResourceDAO
+import com.esgi.nova.events.infrastructure.data.choice_resource.ChoiceResourceEntity
+import com.esgi.nova.events.infrastructure.data.choice_resource.ChoiceResourceDAO
+import com.esgi.nova.events.infrastructure.data.choices.ChoiceEntity
 import com.esgi.nova.events.infrastructure.data.choices.ChoiceDAO
-import com.esgi.nova.languages.infrastructure.data.Language
+import com.esgi.nova.languages.infrastructure.data.LanguageEntity
 import com.esgi.nova.languages.infrastructure.data.LanguageDAO
 
 @Database(
     entities = [
-        Event::class,
-        Resource::class,
-        Choice::class,
-        Language::class,
-        Difficulty::class,
-        DifficultyResource::class],
+        EventEntity::class,
+        ResourceEntity::class,
+        ChoiceEntity::class,
+        LanguageEntity::class,
+        DifficultyEntity::class,
+        DifficultyResourceEntity::class,
+        ChoiceResourceEntity::class],
     version = 1
 )
 @TypeConverters(UUIDConverter::class)
@@ -37,6 +40,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun difficultyDAO(): DifficultyDAO
     abstract fun languageDAO(): LanguageDAO
     abstract fun difficultyResourceDAO(): DifficultyResourceDAO
+    abstract fun choiceResourceDAO(): ChoiceResourceDAO
 
     companion object {
         private var INSTANCE: AppDatabase? = null

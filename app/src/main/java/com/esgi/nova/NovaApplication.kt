@@ -23,12 +23,5 @@ class NovaApplication : Application() {
     }
 
 
-    private fun setAuthorizationInterceptor(){
-        val httpBuilder = OkHttpClient.Builder()
-        val authInterceptor = AuthorizationInterceptor(this)
-        val httpClient = OkHttpClient()
-            .newBuilder()
-            .addInterceptor(authInterceptor)
-            .build()
-    }
+
 }
