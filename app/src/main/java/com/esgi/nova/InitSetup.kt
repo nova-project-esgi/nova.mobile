@@ -2,6 +2,8 @@ package com.esgi.nova
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.esgi.nova.application_state.application.IsSynchronized
@@ -17,6 +19,7 @@ import com.esgi.nova.infrastructure.preferences.PreferenceConstants
 import com.esgi.nova.languages.application.SynchronizeLanguagesToLocalStorage
 import com.esgi.nova.resources.application.GetAllImageResourceWrappers
 import com.esgi.nova.resources.application.SynchronizeResourceToLocalStorage
+import com.esgi.nova.resources.infrastructure.data.ResourceDbRepository
 import com.esgi.nova.resources.infrastructure.data.ResourceEntity
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -28,6 +31,18 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class InitSetup : AppCompatActivity() {
+
+    /*
+    temp
+     */
+
+    @Inject
+    lateinit var fileStorageRepository: FileStorageRepository
+
+    @Inject
+    lateinit var resourceDbRepository: ResourceDbRepository
+
+    //
 
     @Inject
     lateinit var synchronizeEventsToLocalStorage: SynchronizeEventsToLocalStorage
