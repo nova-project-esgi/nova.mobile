@@ -1,4 +1,4 @@
-package com.esgi.nova.users.application
+package com.esgi.nova.games.application
 
 import com.esgi.nova.games.infrastructure.api.GamesApiRepository
 import com.esgi.nova.infrastructure.api.pagination.PageMetadata
@@ -9,7 +9,7 @@ import javax.inject.Inject
 
 class GetDefaultGameList @Inject constructor(private val gamesApiRepository: GamesApiRepository) {
 
-    fun execute(difficultyId: UUID,token: String, callback: Callback<PageMetadata<LeaderBoardGameView>>){
-        gamesApiRepository.getDefaultGamesList(difficultyId, token, callback)
+    fun execute(difficultyId: UUID,callback: Callback<PageMetadata<LeaderBoardGameView>>){
+        gamesApiRepository.getDefaultGamesList(difficultyId,callback)
     }
 }
