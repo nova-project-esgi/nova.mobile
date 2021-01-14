@@ -16,7 +16,7 @@ import com.esgi.nova.games.infrastructure.dto.UserResume
 import com.esgi.nova.infrastructure.api.pagination.PageMetadata
 import com.esgi.nova.infrastructure.preferences.PreferenceConstants
 import com.esgi.nova.models.*
-import com.esgi.nova.users.application.GetDefaultGameList
+import com.esgi.nova.games.application.GetDefaultGameList
 import com.esgi.nova.utils.NetworkUtils
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_leader_board.*
