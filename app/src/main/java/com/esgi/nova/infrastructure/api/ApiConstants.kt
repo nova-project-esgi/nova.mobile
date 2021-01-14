@@ -11,6 +11,7 @@ object ApiConstants {
         const val Users = "users/"
         const val Auth = "auth/"
         const val Games = "games/"
+        const val Load = "load/"
     }
 
     object CustomMediaType {

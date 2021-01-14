@@ -5,8 +5,9 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 
+
 @Dao
-abstract class BaseDao<Id, Entity> {
+abstract class BaseDao<Id,  Entity> {
 
 
     abstract fun getAll(): List< @JvmSuppressWildcards Entity>
@@ -17,6 +18,12 @@ abstract class BaseDao<Id, Entity> {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract fun insertAll(vararg entities: Entity)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    abstract fun insertOne(entity: Entity)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    abstract fun insertAll(entities: Collection<@JvmSuppressWildcards Entity>)
 
     @Delete
     abstract fun delete(entity: Entity)
