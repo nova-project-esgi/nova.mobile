@@ -9,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Inject
 
 class AuthApiRepository @Inject constructor(){
-    private var authRequest: AuthRequest
+    private var authService: AuthService
 
     init {
         val retrofit = Retrofit.Builder()
@@ -17,7 +17,7 @@ class AuthApiRepository @Inject constructor(){
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
-        authRequest = retrofit.create(AuthRequest::class.java)
+        authService = retrofit.create(AuthService::class.java)
     }
 
     fun logWithUsernameAndPassword(
@@ -25,12 +25,12 @@ class AuthApiRepository @Inject constructor(){
         password: String,
         callback: Callback<ConnectedUserDto>
     ) {
-        val call = authRequest.logWithUsernameAndPassword(User(username, password))
+        val call = authService.logWithUsernameAndPassword(User(username, password))
         call?.enqueue(callback)
     }
 
     fun logWithToken(callback: Callback<ConnectedUserDto>, token: String) {
-        val call = authRequest.logWithToken(token)
+        val call = authService.logWithToken(token)
         call?.enqueue(callback)
     }
 }

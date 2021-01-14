@@ -5,7 +5,7 @@ import com.esgi.nova.models.User
 import retrofit2.Call
 import retrofit2.http.*
 
-interface AuthRequest {
+interface AuthService {
 
     @POST("login")
     fun logWithUsernameAndPassword(@Body user: User): Call<ConnectedUserDto>?

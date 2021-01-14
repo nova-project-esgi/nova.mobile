@@ -14,7 +14,6 @@ import com.esgi.nova.adapters.GamesAdapter
 import com.esgi.nova.games.infrastructure.dto.LeaderBoardGameView
 import com.esgi.nova.games.infrastructure.dto.UserResume
 import com.esgi.nova.infrastructure.api.pagination.PageMetadata
-import com.esgi.nova.infrastructure.preferences.PreferenceConstants
 import com.esgi.nova.models.*
 import com.esgi.nova.games.application.GetDefaultGameList
 import com.esgi.nova.utils.NetworkUtils
@@ -90,14 +89,8 @@ class LeaderBoard : AppCompatActivity(), AdapterView.OnItemClickListener{
     fun refreshRecyclerView() {
         rv_scores.visibility = View.GONE
         if (NetworkUtils.isNetworkAvailable(this)) {
-            var token = ""
-                this.getSharedPreferences(PreferenceConstants.UserKey, MODE_PRIVATE)
-                .getString(PreferenceConstants.TokenKey, null).let {
-                    if (it != null) {
-                        token = "Bearer $it"
-                    }
-                }
-            getDefaultGameList.execute(currentDifficulty.id, token, object : Callback<PageMetadata<LeaderBoardGameView>> {
+
+            getDefaultGameList.execute(currentDifficulty.id, object : Callback<PageMetadata<LeaderBoardGameView>> {
                 override fun onResponse(
                     call: Call<PageMetadata<LeaderBoardGameView>>,
                     response: Response<PageMetadata<LeaderBoardGameView>>

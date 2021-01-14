@@ -8,6 +8,6 @@ import javax.inject.Inject
 
 class LogUserWithToken @Inject constructor(private val authApiRepository: AuthApiRepository) {
     fun execute(token: String, callback: Callback<ConnectedUserDto>){
-        authApiRepository.logWithToken(token, callback)
+        authApiRepository.logWithToken(callback, token)
     }
 }
