@@ -1,12 +1,8 @@
-package com.esgi.nova
+package com.esgi.nova.application
 
 import android.app.Application
 import android.content.Context
-import com.esgi.nova.infrastructure.api.AuthorizationInterceptor
 import dagger.hilt.android.HiltAndroidApp
-import okhttp3.OkHttpClient
-
-
 
 
 @HiltAndroidApp
@@ -18,10 +14,8 @@ class NovaApplication : Application() {
     }
 
     companion object {
-        private lateinit var context: Context;
-        fun getContext() = context
+        private lateinit var context: Context
+        fun getContext() =
+            context
     }
-
-
-
 }

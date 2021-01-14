@@ -27,5 +27,6 @@ abstract class DifficultyDAO : BaseDao<UUID, DifficultyEntity>() {
     abstract override fun insertOne(entity: DifficultyEntity)
     @Delete
     abstract override fun delete(entity: DifficultyEntity)
+
 }
 

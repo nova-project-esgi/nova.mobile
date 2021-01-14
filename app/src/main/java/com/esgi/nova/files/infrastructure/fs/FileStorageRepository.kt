@@ -1,19 +1,51 @@
 package com.esgi.nova.files.infrastructure.fs
 
 import android.content.ContentValues.TAG
+import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import com.esgi.nova.files.infrastructure.ports.IFileStreamResume
+import com.esgi.nova.utils.withoutExtension
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.io.OutputStream
+import java.nio.file.Paths
 import javax.inject.Inject
 
-class FileStorageRepository @Inject constructor() {
+class FileStorageRepository @Inject constructor(private val context: Context) {
+
+    private val storageDir get() = context.filesDir
+
+
+    private fun <Id> getFileWithoutExtension(path: String, fileNameWithoutExtension: Id): File?{
+        val dir = File("$storageDir$path$fileNameWithoutExtension")
+        return dir.listFiles()?.firstOrNull { file ->
+            path == file.name.withoutExtension()
+        }
+    }
+
+
+    fun <Id> getBitMapFromPathById(path: String, id: Id): Bitmap? {
+        getFileWithoutExtension(path, id)?.let { file ->
+            return BitmapFactory.decodeFile(file.path)
+        }
+        return null
+    }
+
 
     fun saveFile(file: IFileStreamResume, destination: String): Boolean{
         return try {
-            val savedFile = File("$destination.${file.extension}")
+            val savedFile = File("$storageDir$destination.${file.extension}")
+            savedFile.parentFile?.mkdirs()
+            if(!savedFile.exists()){
+                if(!savedFile.createNewFile()){
+                        return false
+                    }
+            }
             var outputStream: OutputStream? = null
             try {
                 val fileReader = ByteArray(4096)

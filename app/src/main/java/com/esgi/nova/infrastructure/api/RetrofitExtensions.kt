@@ -1,6 +1,6 @@
 package com.esgi.nova.infrastructure.api
 
-import com.esgi.nova.NovaApplication
+import com.esgi.nova.application.NovaApplication
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
