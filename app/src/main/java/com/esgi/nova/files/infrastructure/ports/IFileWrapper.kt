@@ -1,4 +1,8 @@
 package com.esgi.nova.files.infrastructure.ports
 
-interface IFileWrapper {
+import android.graphics.Bitmap
+
+interface IFileWrapper<out Entity> {
+    val data: Entity
+    val img: Bitmap
 }

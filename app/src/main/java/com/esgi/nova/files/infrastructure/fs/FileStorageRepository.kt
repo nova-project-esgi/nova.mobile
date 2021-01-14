@@ -21,10 +21,10 @@ class FileStorageRepository @Inject constructor(private val context: Context) {
     private val storageDir get() = context.filesDir
 
 
-    private fun <Id> getFileWithoutExtension(path: String, fileNameWithoutExtension: Id): File?{
-        val dir = File("$storageDir$path$fileNameWithoutExtension")
+    private fun <T> getFileWithoutExtension(path: String, fileNameWithoutExtension: T): File?{
+        val dir = File("$storageDir$path")
         return dir.listFiles()?.firstOrNull { file ->
-            path == file.name.withoutExtension()
+            file.nameWithoutExtension == fileNameWithoutExtension.toString()
         }
     }
 

@@ -7,6 +7,7 @@ import com.esgi.nova.resources.infrastructure.data.ResourceEntity
 import com.esgi.nova.difficulties.application.SynchronizeDifficultiesToLocalStorage
 import com.esgi.nova.events.application.SynchronizeEventsToLocalStorage
 import com.esgi.nova.languages.application.SynchronizeLanguagesToLocalStorage
+import com.esgi.nova.resources.application.GetAllImageResourceWrappers
 import com.esgi.nova.resources.application.SynchronizeResourceToLocalStorage
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -26,6 +27,9 @@ class InitSetup : AppCompatActivity() {
     lateinit var synchronizeLanguagesToLocalStorage: SynchronizeLanguagesToLocalStorage
     @Inject
     lateinit var synchronizeResourcesToLocalStorage: SynchronizeResourceToLocalStorage
+
+    @Inject
+    lateinit var getAllImageResourceWrappers: GetAllImageResourceWrappers;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,7 +51,8 @@ class InitSetup : AppCompatActivity() {
             synchronizeResourcesToLocalStorage.execute("en")
             synchronizeDifficultiesToLocalStorage.execute("en")
             synchronizeEventsToLocalStorage.execute("en")
-
+            val res = getAllImageResourceWrappers.execute()
+            println(res)
             //loadRessources()
             //loadChoices()
         }
