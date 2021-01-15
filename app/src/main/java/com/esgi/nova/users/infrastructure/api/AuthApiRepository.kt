@@ -1,13 +1,10 @@
 package com.esgi.nova.users.infrastructure.api
 
+import android.util.Log
 import com.esgi.nova.infrastructure.api.ApiConstants
-import com.esgi.nova.infrastructure.api.ApiRepository
-import com.esgi.nova.users.application.GetUserToken
-import com.esgi.nova.users.application.UpdateUserToken
-import com.esgi.nova.users.infrastructure.api.models.LogUser
+
 import com.esgi.nova.users.ports.IConnectedUser
 import com.esgi.nova.users.ports.ILogUser
-import com.esgi.nova.utils.reflectMap
 import com.esgi.nova.utils.reflectMapNotNull
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -32,6 +29,7 @@ class AuthApiRepository @Inject constructor(){
     }
 
     fun logWithToken(token: String): IConnectedUser? {
+        Log.d("TEST",token)
         return authService.logWithToken(token).execute().body()
     }
 }

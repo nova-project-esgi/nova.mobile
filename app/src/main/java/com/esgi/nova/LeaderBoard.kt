@@ -13,15 +13,13 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.esgi.nova.adapters.GamesAdapter
 import com.esgi.nova.games.infrastructure.dto.LeaderBoardGameView
 import com.esgi.nova.games.infrastructure.dto.UserResume
-import com.esgi.nova.infrastructure.api.pagination.PageMetadata
 import com.esgi.nova.models.*
-import com.esgi.nova.games.application.GetDefaultGameList
+import com.esgi.nova.games.application.GetLeaderBoardGameList
+import com.esgi.nova.users.exceptions.InvalidDifficultyException
 import com.esgi.nova.utils.NetworkUtils
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_leader_board.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import org.jetbrains.anko.doAsync
 import java.util.*
 import javax.inject.Inject
 
@@ -29,7 +27,7 @@ import javax.inject.Inject
 class LeaderBoard : AppCompatActivity(), AdapterView.OnItemClickListener{
 
     @Inject
-    lateinit var getDefaultGameList: GetDefaultGameList
+    lateinit var getLeaderBoardGameList: GetLeaderBoardGameList
 
     private var difficulties = mutableListOf<Difficulty>(
         Difficulty(UUID(15,20),"Facile"),
@@ -90,22 +88,18 @@ class LeaderBoard : AppCompatActivity(), AdapterView.OnItemClickListener{
         rv_scores.visibility = View.GONE
         if (NetworkUtils.isNetworkAvailable(this)) {
 
-            getDefaultGameList.execute(currentDifficulty.id, object : Callback<PageMetadata<LeaderBoardGameView>> {
-                override fun onResponse(
-                    call: Call<PageMetadata<LeaderBoardGameView>>,
-                    response: Response<PageMetadata<LeaderBoardGameView>>
-                ) {
-                    if (response.isSuccessful) {
-                        response.body()?.let {
-                            games.clear()
-                            games.addAll(it.values)
-                        }
+            doAsync {
+                try {
+                    val execute = getLeaderBoardGameList.execute(currentDifficulty.id)
+                    execute?.let {
+                        games.clear()
+                        games.addAll(it.values)
+                    }
+                    runOnUiThread {
                         rv_scores.visibility = View.VISIBLE
                         swipeContainer.setRefreshing(false)
-
                     }
-                }
-                override fun onFailure(call: Call<PageMetadata<LeaderBoardGameView>>, t: Throwable) {
+                } catch (e: InvalidDifficultyException) {
                     val toast = Toast.makeText(
                         this@LeaderBoard,
                         "Une erreur est survenue lors de la récupération des scores",
@@ -115,7 +109,7 @@ class LeaderBoard : AppCompatActivity(), AdapterView.OnItemClickListener{
                     rv_scores.visibility = View.VISIBLE
                     swipeContainer.isRefreshing = false
                 }
-            })
+            }
 
         } else {
             val toast = Toast.makeText(this, "Le réseau n'est pas disponible", Toast.LENGTH_LONG)

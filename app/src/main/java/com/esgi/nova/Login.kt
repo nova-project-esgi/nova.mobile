@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.Toast
@@ -13,6 +14,7 @@ import com.esgi.nova.events.application.SynchronizeEventsToLocalStorage
 import com.esgi.nova.infrastructure.preferences.PreferenceConstants
 import com.esgi.nova.users.application.LogUser
 import com.esgi.nova.dtos.user.UserLoginDto
+import com.esgi.nova.users.application.LogUserWithToken
 import com.esgi.nova.users.exceptions.InvalidPasswordException
 import com.esgi.nova.users.exceptions.InvalidUsernameException
 import com.esgi.nova.users.exceptions.UserNotFoundException
@@ -54,22 +56,15 @@ class Login : AppCompatActivity(), View.OnClickListener {
         if (token !== null) {
             setViewVisibility(ProgressBar.VISIBLE)
             if(NetworkUtils.isNetworkAvailable(this)){
-                logUserWithToken.execute(token, object :
-                    Callback<ConnectedUserDto> {
-                    override fun onResponse(
-                        call: Call<ConnectedUserDto>,
-                        response: Response<ConnectedUserDto>
-                    ) {
-                        if (response.isSuccessful) {
+                doAsync {
+                    try{
+                        logUserWithToken.execute(token)
+                        runOnUiThread {
                             setViewVisibility(ProgressBar.GONE)
-                            val toast = Toast.makeText(
-                                this@Login,
-                                getString(R.string.new_game),
-                                Toast.LENGTH_LONG
-                            )
-                            toast.show()
                             navigateToHomePage()
-                        } else {
+                        }
+                    } catch (e: UserNotFoundException){
+                        runOnUiThread {
                             setViewVisibility(ProgressBar.GONE)
                             val toast = Toast.makeText(
                                 this@Login,
@@ -78,19 +73,9 @@ class Login : AppCompatActivity(), View.OnClickListener {
                             )
                             toast.show()
                         }
-                    }
 
-                    override fun onFailure(call: Call<ConnectedUserDto>, t: Throwable) {
-                        setViewVisibility(ProgressBar.GONE)
-                        val toast = Toast.makeText(
-                            this@Login,
-                            getString(R.string.connection_err_msg),
-                            Toast.LENGTH_LONG
-                        )
-                        toast.show()
                     }
-
-                })
+                }
             }
         }
     }
@@ -178,7 +163,7 @@ class Login : AppCompatActivity(), View.OnClickListener {
 
 
     private fun navigateToHomePage() {
-        val intent = Intent(this, InitSetup::class.java)
+        val intent = Intent(this, Dashboard::class.java)
         startActivity(intent)
         finish()
     }
