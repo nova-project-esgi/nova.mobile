@@ -1,10 +1,8 @@
 package com.esgi.nova.difficulties.application
 
-import com.esgi.nova.difficulties.difficultyResources
 import com.esgi.nova.difficulties.infrastructure.api.DifficultyApiRepository
 import com.esgi.nova.difficulties.infrastructure.data.difficulty.DifficultyDbRepository
 import com.esgi.nova.difficulties.infrastructure.data.difficulty_resource.DifficultyResourceDbRepository
-import com.esgi.nova.utils.reflectMapNotNull
 import javax.inject.Inject
 
 class SynchronizeDifficultiesToLocalStorage @Inject constructor(
@@ -23,6 +21,6 @@ class SynchronizeDifficultiesToLocalStorage @Inject constructor(
         }
         difficultiesResourceDbRepository.getAll()
             .forEach { difficultyResource -> println(difficultyResource) }
-        difficultiesResourceDbRepository.getAllDifficultyWithResources()
+        difficultiesResourceDbRepository.getAllDetailedDifficulties()
     }
 }

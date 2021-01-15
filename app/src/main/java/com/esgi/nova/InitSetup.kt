@@ -1,14 +1,18 @@
 package com.esgi.nova
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.esgi.nova.resources.infrastructure.data.ResourceEntity
+import androidx.appcompat.app.AppCompatActivity
+import com.esgi.nova.difficulties.application.GetAllDetailedDifficulties
 import com.esgi.nova.difficulties.application.SynchronizeDifficultiesToLocalStorage
+import com.esgi.nova.events.application.GetAllImageDetailedEventWrappers
 import com.esgi.nova.events.application.SynchronizeEventsToLocalStorage
+import com.esgi.nova.games.application.CreateGame
+import com.esgi.nova.infrastructure.preferences.PreferenceConstants
 import com.esgi.nova.languages.application.SynchronizeLanguagesToLocalStorage
 import com.esgi.nova.resources.application.GetAllImageResourceWrappers
 import com.esgi.nova.resources.application.SynchronizeResourceToLocalStorage
+import com.esgi.nova.resources.infrastructure.data.ResourceEntity
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import dagger.hilt.android.AndroidEntryPoint
@@ -16,20 +20,34 @@ import kotlinx.android.synthetic.main.activity_init_setup.*
 import org.jetbrains.anko.doAsync
 import java.net.URL
 import javax.inject.Inject
+
 @AndroidEntryPoint
 class InitSetup : AppCompatActivity() {
 
     @Inject
     lateinit var synchronizeEventsToLocalStorage: SynchronizeEventsToLocalStorage
+
     @Inject
     lateinit var synchronizeDifficultiesToLocalStorage: SynchronizeDifficultiesToLocalStorage
+
     @Inject
     lateinit var synchronizeLanguagesToLocalStorage: SynchronizeLanguagesToLocalStorage
+
     @Inject
     lateinit var synchronizeResourcesToLocalStorage: SynchronizeResourceToLocalStorage
 
     @Inject
-    lateinit var getAllImageResourceWrappers: GetAllImageResourceWrappers;
+    lateinit var getAllImageResourceWrappers: GetAllImageResourceWrappers
+
+    @Inject
+    lateinit var getAllImageDetailedEventWrappers: GetAllImageDetailedEventWrappers
+
+    @Inject
+    lateinit var getAllDetailedDifficulties: GetAllDetailedDifficulties
+
+    @Inject
+    lateinit var createGame: CreateGame
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,16 +63,16 @@ class InitSetup : AppCompatActivity() {
 
     private fun loadData() {
         loadingText?.text = "default"
-//        toLoginActivity()
         doAsync {
             synchronizeLanguagesToLocalStorage.execute()
             synchronizeResourcesToLocalStorage.execute("en")
             synchronizeDifficultiesToLocalStorage.execute("en")
             synchronizeEventsToLocalStorage.execute("en")
-            val res = getAllImageResourceWrappers.execute()
-            println(res)
-            //loadRessources()
-            //loadChoices()
+            val resWrappers = getAllImageResourceWrappers.execute()
+            val eventWrappers = getAllImageDetailedEventWrappers.execute()
+            val difficulties = getAllDetailedDifficulties.execute()
+            createGame.execute(difficulties.first().id)
+            println("test")
         }
     }
 

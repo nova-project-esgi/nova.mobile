@@ -37,4 +37,11 @@ object AppDatabaseModule {
     @Provides
     fun  provideLanguageDao(db: AppDatabase) = db.languageDAO()
 
+    @Provides
+    fun  provideGameDao(db: AppDatabase) = db.gameDao()
+
+    @Provides
+    fun  provideGameEventDao(db: AppDatabase) = db.gameEventDao()
+
+
 }

@@ -4,13 +4,14 @@ object ApiConstants {
     const val BaseUrl = "http://freenetaccess.freeboxos.fr:8001/"
 
     object EndPoints{
-        const val Events = "events/"
-        const val Resources = "resources/"
-        const val Difficulties = "difficulties/"
-        const val Languages = "languages/"
-        const val Users = "users/"
         const val Auth = "auth/"
+        const val Difficulties = "difficulties/"
+        const val Events = "events/"
+        const val Games = "games/"
+        const val Languages = "languages/"
         const val Load = "load/"
+        const val Resources = "resources/"
+        const val Users = "users/"
     }
 
     object CustomMediaType {

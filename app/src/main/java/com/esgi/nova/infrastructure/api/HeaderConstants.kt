@@ -4,4 +4,5 @@ object HeaderConstants {
 
     const val Accept = "Accept"
     const val Authorization = "Authorization"
+    const val Location = "Location"
 }

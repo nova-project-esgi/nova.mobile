@@ -1,12 +1,13 @@
 package com.esgi.nova.files.infrastructure.api
 
 import com.esgi.nova.files.infrastructure.ports.IFileStreamResume
-import com.esgi.nova.infrastructure.api.apiBuilder
+import com.esgi.nova.infrastructure.api.ApiRepository
+import com.esgi.nova.users.application.GetUserToken
+import com.esgi.nova.users.application.UpdateUserToken
 import retrofit2.Retrofit
-import java.nio.file.Path
 import javax.inject.Inject
 
-class FileApiRepository @Inject constructor() {
+class FileApiRepository @Inject constructor(getUserToken: GetUserToken, updateUserToken: UpdateUserToken): ApiRepository(getUserToken,updateUserToken) {
     private lateinit var fileService: FileService
 
     init {

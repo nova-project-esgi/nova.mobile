@@ -13,4 +13,6 @@ data class EventWithChoices(
         entityColumn = "event_id"
     )
     lateinit var choices: Set<ChoiceEntity>
+
 }
+

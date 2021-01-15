@@ -20,31 +20,24 @@
 
         />
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/ll_leaderBoard_filter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/tv_score_title"
         app:layout_constraintBottom_toTopOf="@+id/swipeContainer"
-        android:layout_marginStart="10dp"
         android:layout_marginBottom="10dp"
-        android:orientation="horizontal">
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+        android:hint="@string/difficulty">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <AutoCompleteTextView
+            android:id="@+id/tv_leaderBoard_filter"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/difficulty"
-            android:textSize="24sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:textColor="@color/textColor"
-            app:layout_constraintStart_toStartOf="parent" />
+            android:inputType="none"
+            />
 
-        <Spinner
-            android:id="@+id/spn_ld_difficulty"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
+    </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeContainer"

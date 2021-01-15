@@ -17,6 +17,10 @@ import com.esgi.nova.events.infrastructure.data.choice_resource.ChoiceResourceEn
 import com.esgi.nova.events.infrastructure.data.choice_resource.ChoiceResourceDAO
 import com.esgi.nova.events.infrastructure.data.choices.ChoiceEntity
 import com.esgi.nova.events.infrastructure.data.choices.ChoiceDAO
+import com.esgi.nova.games.infrastructure.data.game.GameDao
+import com.esgi.nova.games.infrastructure.data.game.GameEntity
+import com.esgi.nova.games.infrastructure.data.game_event.GameEventDao
+import com.esgi.nova.games.infrastructure.data.game_event.GameEventEntity
 import com.esgi.nova.languages.infrastructure.data.LanguageEntity
 import com.esgi.nova.languages.infrastructure.data.LanguageDAO
 
@@ -28,10 +32,12 @@ import com.esgi.nova.languages.infrastructure.data.LanguageDAO
         LanguageEntity::class,
         DifficultyEntity::class,
         DifficultyResourceEntity::class,
-        ChoiceResourceEntity::class],
+        ChoiceResourceEntity::class,
+        GameEntity::class,
+        GameEventEntity::class],
     version = 1
 )
-@TypeConverters(UUIDConverter::class)
+@TypeConverters(UUIDConverter::class, DateConverter::class)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun eventDAO(): EventDAO
@@ -41,6 +47,8 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun languageDAO(): LanguageDAO
     abstract fun difficultyResourceDAO(): DifficultyResourceDAO
     abstract fun choiceResourceDAO(): ChoiceResourceDAO
+    abstract fun gameDao(): GameDao
+    abstract fun gameEventDao(): GameEventDao
 
     companion object {
         private var INSTANCE: AppDatabase? = null
