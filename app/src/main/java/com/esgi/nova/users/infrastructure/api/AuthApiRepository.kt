@@ -1,9 +1,14 @@
 package com.esgi.nova.users.infrastructure.api
 
 import com.esgi.nova.infrastructure.api.ApiConstants
-import com.esgi.nova.users.dtos.ConnectedUserDto
-import com.esgi.nova.models.User
-import retrofit2.Callback
+import com.esgi.nova.infrastructure.api.ApiRepository
+import com.esgi.nova.users.application.GetUserToken
+import com.esgi.nova.users.application.UpdateUserToken
+import com.esgi.nova.users.infrastructure.api.models.LogUser
+import com.esgi.nova.users.ports.IConnectedUser
+import com.esgi.nova.users.ports.ILogUser
+import com.esgi.nova.utils.reflectMap
+import com.esgi.nova.utils.reflectMapNotNull
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Inject
@@ -20,17 +25,13 @@ class AuthApiRepository @Inject constructor(){
         authService = retrofit.create(AuthService::class.java)
     }
 
-    fun logWithUsernameAndPassword(
-        username: String,
-        password: String,
-        callback: Callback<ConnectedUserDto>
-    ) {
-        val call = authService.logWithUsernameAndPassword(User(username, password))
-        call.enqueue(callback)
+    fun logUser(
+        loginUser: ILogUser
+    ): IConnectedUser? {
+       return authService.logWithUsernameAndPassword(loginUser.reflectMapNotNull()).execute().body()
     }
 
-    fun logWithToken(callback: Callback<ConnectedUserDto>, token: String) {
-        val call = authService.logWithToken(token)
-        call.enqueue(callback)
+    fun logWithToken(token: String): IConnectedUser? {
+        return authService.logWithToken(token).execute().body()
     }
 }

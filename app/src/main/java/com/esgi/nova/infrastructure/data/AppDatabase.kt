@@ -37,7 +37,7 @@ import com.esgi.nova.languages.infrastructure.data.LanguageDAO
         GameEventEntity::class],
     version = 1
 )
-@TypeConverters(UUIDConverter::class)
+@TypeConverters(UUIDConverter::class, DateConverter::class)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun eventDAO(): EventDAO

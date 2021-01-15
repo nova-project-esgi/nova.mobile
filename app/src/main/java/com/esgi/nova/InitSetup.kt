@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.esgi.nova.difficulties.application.SynchronizeDifficultiesToLocalStorage
 import com.esgi.nova.events.application.GetAllImageDetailedEventWrappers
 import com.esgi.nova.events.application.SynchronizeEventsToLocalStorage
+import com.esgi.nova.infrastructure.preferences.PreferenceConstants
 import com.esgi.nova.languages.application.SynchronizeLanguagesToLocalStorage
 import com.esgi.nova.resources.application.GetAllImageResourceWrappers
 import com.esgi.nova.resources.application.SynchronizeResourceToLocalStorage
@@ -53,7 +54,6 @@ class InitSetup : AppCompatActivity() {
 
     private fun loadData() {
         loadingText?.text = "default"
-//        toLoginActivity()
         doAsync {
             synchronizeLanguagesToLocalStorage.execute()
             synchronizeResourcesToLocalStorage.execute("en")
@@ -61,7 +61,7 @@ class InitSetup : AppCompatActivity() {
             synchronizeEventsToLocalStorage.execute("en")
             val resWrappers = getAllImageResourceWrappers.execute()
             val eventWrappers = getAllImageDetailedEventWrappers.execute()
-            println("tamer")
+            println("test")
         }
     }
 

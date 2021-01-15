@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.esgi.nova.adapters.ScoresAdapter
 import com.esgi.nova.models.Score
-import com.esgi.nova.games.infrastructure.api.ScoreApiRepository
 import com.esgi.nova.users.application.RetrieveUser
 import com.esgi.nova.utils.NetworkUtils
 import kotlinx.android.synthetic.main.activity_leader_board.*
