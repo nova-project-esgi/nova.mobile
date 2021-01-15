@@ -1,7 +1,6 @@
 package com.esgi.nova.events.infrastructure.data.choice_resource
 
 import androidx.room.*
-import com.esgi.nova.events.infrastructure.data.choices.ChoiceEntity
 import com.esgi.nova.infrastructure.data.dao.BaseDao
 import java.util.*
 
@@ -25,6 +24,7 @@ abstract class ChoiceResourceDAO : BaseDao<UUID, ChoiceResourceEntity>() {
 
     @Delete
     abstract override fun delete(entity: ChoiceResourceEntity)
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract override fun insertOne(entity: ChoiceResourceEntity)
 
@@ -32,4 +32,8 @@ abstract class ChoiceResourceDAO : BaseDao<UUID, ChoiceResourceEntity>() {
     @Query("SELECT * FROM choice_resource")
     @Transaction
     abstract fun getAllChoiceWithResource(): List<ChoiceWithResource>
+
+    @Query("SELECT * FROM choice_resource WHERE choice_id = :id")
+    @Transaction
+    abstract fun getAllChoiceWithResourceByChoiceId(id: UUID): List<ChoiceWithResource>
 }

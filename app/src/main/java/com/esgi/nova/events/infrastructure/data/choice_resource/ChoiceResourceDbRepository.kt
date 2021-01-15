@@ -1,7 +1,8 @@
 package com.esgi.nova.events.infrastructure.data.choice_resource
 
+import com.esgi.nova.events.infrastructure.data.toDetailedChoices
 import com.esgi.nova.events.ports.IChoiceResource
-import com.esgi.nova.infrastructure.data.AppDatabase
+import com.esgi.nova.events.ports.IDetailedChoice
 import com.esgi.nova.infrastructure.data.repository.BaseRepository
 import com.esgi.nova.utils.reflectMapCollection
 import com.esgi.nova.utils.reflectMapNotNull
@@ -12,10 +13,21 @@ class ChoiceResourceDbRepository @Inject constructor(override val dao: ChoiceRes
     BaseRepository<UUID, ChoiceResourceEntity, IChoiceResource>() {
 
 
-    fun getAllChoiceWithResource()  = dao.getAllChoiceWithResource()
+    fun getAllChoiceWithResource() = dao.getAllChoiceWithResource()
 
-    override fun toEntities(entities: Collection<IChoiceResource>): Collection<ChoiceResourceEntity>  = entities.reflectMapCollection()
+    override fun toEntities(entities: Collection<IChoiceResource>): Collection<ChoiceResourceEntity> =
+        entities.reflectMapCollection()
 
-    override fun toEntity(el: IChoiceResource): ChoiceResourceEntity { return el.reflectMapNotNull() }
+    override fun toEntity(el: IChoiceResource): ChoiceResourceEntity {
+        return el.reflectMapNotNull()
+    }
+
+
+    fun getAllDetailedChoices(): List<IDetailedChoice> =
+        dao.getAllChoiceWithResource().toDetailedChoices()
+
+    fun getAllDetailedChoicesByChoiceId(choiceId: UUID): List<IDetailedChoice> =
+        dao.getAllChoiceWithResourceByChoiceId(choiceId).toDetailedChoices()
+
 
 }

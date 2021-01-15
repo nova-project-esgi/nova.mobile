@@ -4,6 +4,9 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
+import com.esgi.nova.events.infrastructure.data.choice_resource.ChoiceWithResource
+import com.esgi.nova.events.infrastructure.data.events.models.DetailedEvent
+import com.esgi.nova.events.infrastructure.data.toDetailedChoices
 import com.esgi.nova.events.ports.IEvent
 import com.esgi.nova.infrastructure.data.UUIDConverter
 import java.util.*
@@ -15,4 +18,11 @@ data class EventEntity(
     override val id: UUID = UUID.randomUUID(),
     @ColumnInfo(name = "description") override val description: String,
     @ColumnInfo(name = "title") override val title: String
-): IEvent
+) : IEvent {
+    fun toDetailedEvent(choices: List<ChoiceWithResource>) = DetailedEvent(
+        choices = choices.toDetailedChoices(),
+        description = description,
+        title = title,
+        id = id
+    )
+}

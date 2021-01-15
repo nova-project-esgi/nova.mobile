@@ -2,7 +2,7 @@ package com.esgi.nova.events.infrastructure.api.responses
 
 import com.esgi.nova.events.infrastructure.api.models.ChoiceResource
 import com.esgi.nova.events.infrastructure.api.models.ResumedChoice
-import com.esgi.nova.events.infrastructure.api.responses.TranslatedChoiceResourceResponse
+import com.esgi.nova.events.infrastructure.data.choice_resource.models.ChangeValueResource
 import com.esgi.nova.events.ports.IChoice
 import com.esgi.nova.events.ports.IDetailedChoice
 import java.util.*
@@ -10,7 +10,7 @@ import java.util.*
 data class TranslatedChoiceResponse(
     override val id: UUID,
     override val eventId: UUID,
-    override val resources: MutableList<TranslatedChoiceResourceResponse>,
+    override val resources: MutableList<ChangeValueResource>,
     override val title: String,
     override val description: String,
     val language: String

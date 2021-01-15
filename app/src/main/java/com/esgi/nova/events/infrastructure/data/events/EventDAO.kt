@@ -1,8 +1,6 @@
 package com.esgi.nova.events.infrastructure.data.events
 
 import androidx.room.*
-import com.esgi.nova.difficulties.infrastructure.data.difficulty_resource.DifficultyResourceEntity
-import com.esgi.nova.events.infrastructure.data.choices.ChoiceEntity
 import com.esgi.nova.infrastructure.data.dao.BaseDao
 import java.util.*
 
@@ -29,5 +27,7 @@ abstract class EventDAO : BaseDao<UUID, EventEntity> (){
     @Transaction
     @Query("SELECT * FROM events")
     abstract  fun getAllEventWithChoices(): List<EventWithChoices>
+
+
 }
 
