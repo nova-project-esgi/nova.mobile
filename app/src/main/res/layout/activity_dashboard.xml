@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/backgroundColor"
+    android:background="@drawable/simple_bg"
     tools:context=".Dashboard">
 
     <Button
@@ -41,31 +41,27 @@
         android:textSize="@android:dimen/app_icon_size" />
 
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/ln_difficulty"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/tv_title"
         app:layout_constraintBottom_toTopOf="@+id/btn_new_game"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:orientation="horizontal">
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginEnd="100dp"
+        android:hint="@string/difficulty">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <AutoCompleteTextView
+            android:id="@+id/tv_difficulty"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:text="@string/difficulty"
-            android:textColor="@color/textColor"
-            android:textSize="24sp" />
+            android:inputType="none"
+            />
 
-        <Spinner
-            android:id="@+id/spn_difficulty"
-            android:layout_width="wrap_content"
-            android:textSize="24sp"
-            android:layout_height="wrap_content" />
-    </androidx.appcompat.widget.LinearLayoutCompat>
+    </com.google.android.material.textfield.TextInputLayout>
 
 
     <Button

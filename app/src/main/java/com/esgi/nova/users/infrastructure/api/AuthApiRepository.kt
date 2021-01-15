@@ -26,11 +26,11 @@ class AuthApiRepository @Inject constructor(){
         callback: Callback<ConnectedUserDto>
     ) {
         val call = authService.logWithUsernameAndPassword(User(username, password))
-        call.enqueue(callback)
+        call?.enqueue(callback)
     }
 
     fun logWithToken(callback: Callback<ConnectedUserDto>, token: String) {
         val call = authService.logWithToken(token)
-        call.enqueue(callback)
+        call?.enqueue(callback)
     }
 }

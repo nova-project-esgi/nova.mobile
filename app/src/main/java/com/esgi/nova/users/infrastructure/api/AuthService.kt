@@ -8,9 +8,9 @@ import retrofit2.http.*
 interface AuthService {
 
     @POST("login")
-    fun logWithUsernameAndPassword(@Body user: User): Call<ConnectedUserDto>
+    fun logWithUsernameAndPassword(@Body user: User): Call<ConnectedUserDto>?
 
-    @FormUrlEncoded
-    @GET()
-    fun logWithToken(@Field("token") token: String): Call<ConnectedUserDto>
+
+    @GET(".")
+    fun logWithToken(@Query("token") token: String): Call<ConnectedUserDto>?
 }
