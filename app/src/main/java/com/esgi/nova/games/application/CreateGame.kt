@@ -23,7 +23,6 @@ class CreateGame @Inject constructor(
 ) {
 
     fun execute(difficultyId: UUID) {
-
         userStorageRepository.getUsername()?.let { username ->
             gameApiRepository.createGame(GameForCreation(username, difficultyId))?.let { game ->
                 gameDbRepository.insertOne(game)

@@ -1,8 +1,10 @@
 package com.esgi.nova.games.infrastructure.api
 
+import com.esgi.nova.games.application.models.GameForCreation
 import com.esgi.nova.games.ports.IGameForCreation
 import com.esgi.nova.infrastructure.api.ApiConstants
 import com.esgi.nova.models.Score
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -13,5 +15,5 @@ interface GameService {
     fun retrieveUser(): Call<Score>?
 
     @POST(ApiConstants.EndPoints.Games)
-    fun createGame(@Body gameForCreation: IGameForCreation): Call<Any>
+    fun createGame(@Body gameForCreation: GameForCreation): Call<ResponseBody>
 }

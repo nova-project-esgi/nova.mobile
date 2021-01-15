@@ -64,15 +64,17 @@ class InitSetup : AppCompatActivity() {
     private fun loadData() {
         loadingText?.text = "default"
         doAsync {
-            synchronizeLanguagesToLocalStorage.execute()
-            synchronizeResourcesToLocalStorage.execute("en")
-            synchronizeDifficultiesToLocalStorage.execute("en")
-            synchronizeEventsToLocalStorage.execute("en")
-            val resWrappers = getAllImageResourceWrappers.execute()
-            val eventWrappers = getAllImageDetailedEventWrappers.execute()
             val difficulties = getAllDetailedDifficulties.execute()
             createGame.execute(difficulties.first().id)
-            println("test")
+
+//            synchronizeLanguagesToLocalStorage.execute()
+//            synchronizeResourcesToLocalStorage.execute("en")
+//            synchronizeDifficultiesToLocalStorage.execute("en")
+//            synchronizeEventsToLocalStorage.execute("en")
+//            val resWrappers = getAllImageResourceWrappers.execute()
+//            val eventWrappers = getAllImageDetailedEventWrappers.execute()
+//            createGame.execute(difficulties.first().id)
+//            println("test")
         }
     }
 
