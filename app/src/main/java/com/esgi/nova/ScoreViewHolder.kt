@@ -1,13 +1,17 @@
 package com.esgi.nova
 
+import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.esgi.nova.games.infrastructure.dto.LeaderBoardGameView
+import com.esgi.nova.models.Score
+import java.text.SimpleDateFormat
+import kotlin.math.log
 
-class GamesViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
+class ScoreViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
     RecyclerView.ViewHolder(inflater.inflate(R.layout.score_item, parent, false)) {
     private var username: TextView? = null
     private var turn: TextView? = null
@@ -23,11 +27,17 @@ class GamesViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
         tv_date = itemView.findViewById(R.id.tv_date)
     }
 
-    fun bind(score: LeaderBoardGameView, position: Int) {
-        username?.text = score.user.username
+    fun bind(score: Score, position: Int) {
+        username?.text = score.userName
 
-        turn?.text = "${score.eventCount} tours"
+        turn?.text = "${score.turn} tours"
         tv_position?.text = "${position + 1}"
+
+        val sdf = SimpleDateFormat("dd/MM/yyyy")
+
+        Log.v("DATE", score.time.toString())
+        Log.v("DATE", sdf.format(score.time))
+        tv_date?.text = sdf.format(score.time)
 
         if (position == 0) {
             trophy?.setImageResource(R.drawable.first)

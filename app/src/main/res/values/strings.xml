@@ -12,11 +12,9 @@
     <string name="connexion">Connexion</string>
     <string name="identifiant">identifiant</string>
     <string name="password">mot de passe</string>
-    <string name="register">Créer un compte</string>
     <string name="invalid_username_msg">Username length should be between 6 and 20 characters</string>
     <string name="invalid_password_msg">Password length should be greater than 8 characters</string>
     <string name="connection_err_msg">An error appear during connection</string>
     <string name="user_not_exist_msg">Username or password does not exist</string>
     <string name="network_not_available_msg">Network not available</string>
-    <string name="user_have_to_re_auth_msg">you must re-auth to the game</string>
 </resources>

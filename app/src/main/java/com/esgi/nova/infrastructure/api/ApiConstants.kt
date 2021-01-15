@@ -10,7 +10,6 @@ object ApiConstants {
         const val Languages = "languages/"
         const val Users = "users/"
         const val Auth = "auth/"
-        const val Games = "games/"
         const val Load = "load/"
     }
 

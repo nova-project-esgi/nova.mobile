@@ -15,10 +15,8 @@ class Dashboard : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
 
-        val difficulties = listOf("Facile", "Moyen", "Difficile")
-        tv_difficulty.setAdapter(ArrayAdapter(this, R.layout.list_item, difficulties))
-        tv_difficulty.inputType = 0
-        tv_difficulty.setText(difficulties[0], false)
+        spn_difficulty.adapter =
+            ArrayAdapter(this, R.layout.spinner_item, listOf("Facile", "Moyen", "Difficile"))
         btn_to_leaderboard.setOnClickListener(this)
     }
 
