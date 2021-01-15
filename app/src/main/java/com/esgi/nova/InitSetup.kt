@@ -3,9 +3,11 @@ package com.esgi.nova
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.esgi.nova.difficulties.application.GetAllDetailedDifficulties
 import com.esgi.nova.difficulties.application.SynchronizeDifficultiesToLocalStorage
 import com.esgi.nova.events.application.GetAllImageDetailedEventWrappers
 import com.esgi.nova.events.application.SynchronizeEventsToLocalStorage
+import com.esgi.nova.games.application.CreateGame
 import com.esgi.nova.infrastructure.preferences.PreferenceConstants
 import com.esgi.nova.languages.application.SynchronizeLanguagesToLocalStorage
 import com.esgi.nova.resources.application.GetAllImageResourceWrappers
@@ -40,6 +42,13 @@ class InitSetup : AppCompatActivity() {
     @Inject
     lateinit var getAllImageDetailedEventWrappers: GetAllImageDetailedEventWrappers
 
+    @Inject
+    lateinit var getAllDetailedDifficulties: GetAllDetailedDifficulties
+
+    @Inject
+    lateinit var createGame: CreateGame
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_init_setup)
@@ -61,6 +70,8 @@ class InitSetup : AppCompatActivity() {
             synchronizeEventsToLocalStorage.execute("en")
             val resWrappers = getAllImageResourceWrappers.execute()
             val eventWrappers = getAllImageDetailedEventWrappers.execute()
+            val difficulties = getAllDetailedDifficulties.execute()
+            createGame.execute(difficulties.first().id)
             println("test")
         }
     }

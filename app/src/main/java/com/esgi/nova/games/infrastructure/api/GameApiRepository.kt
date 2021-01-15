@@ -26,8 +26,8 @@ class GameApiRepository @Inject constructor(getUserToken: GetUserToken, updateUs
     }
 
     fun createGame(game: IGameForCreation): IGame? {
-        val game = gameService.createGame(game).execute().getLocatedContent<GameResume>()?.execute()?.body()
-        return game
+        val game = gameService.createGame(game).execute().getLocatedContent<GameResume>()?.execute()
+        return game?.body()
     }
 
 }
