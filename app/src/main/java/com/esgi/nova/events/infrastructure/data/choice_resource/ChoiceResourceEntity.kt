@@ -35,12 +35,12 @@ import java.util.*
 data class ChoiceResourceEntity(
     @ColumnInfo(name="resource_id")
     @field:TypeConverters(UUIDConverter::class)
-    override val resourceId: UUID = UUID.randomUUID(),
+    override var resourceId: UUID = UUID.randomUUID(),
     @ColumnInfo(name="choice_id")
     @field:TypeConverters(UUIDConverter::class)
-    override val choiceId: UUID = UUID.randomUUID(),
+    override var choiceId: UUID = UUID.randomUUID(),
     @ColumnInfo(name = "change_value")
-    override val changeValue: Int
+    override var changeValue: Int
 ): IChoiceResource {
 
 }

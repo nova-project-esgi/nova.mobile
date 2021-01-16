@@ -34,12 +34,12 @@ import java.util.*
 data class GameResourceEntity(
     @ColumnInfo(name = "resource_id")
     @field:TypeConverters(UUIDConverter::class)
-    override val resourceId: UUID = UUID.randomUUID(),
+    override var resourceId: UUID = UUID.randomUUID(),
     @ColumnInfo(name = "game_id")
     @field:TypeConverters(UUIDConverter::class)
-    override val gameId: UUID = UUID.randomUUID(),
+    override var gameId: UUID = UUID.randomUUID(),
     @ColumnInfo(name = "total")
-    override val total: Int
+    override var total: Int
 ): IGameResource{
 
 }

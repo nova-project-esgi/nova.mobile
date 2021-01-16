@@ -16,7 +16,7 @@ class LinkGameWithEvent @Inject constructor(
 
     fun execute(gameId: UUID, eventId: UUID) {
         gameEventDbRepository.insertOne(GameEvent(eventId, gameId, LocalDateTime.now()))
-        gameDbRepository.getGameEditionByID(gameId)?.let { gameEdition ->
+        gameDbRepository.getGameEditionById(gameId)?.let { gameEdition ->
             gameApiRepository.update(gameId, gameEdition)
         }
     }

@@ -12,6 +12,8 @@ abstract class GameDao : BaseDao<UUID, GameEntity>() {
     @Query("SELECT * FROM games WHERE id = :id")
     abstract override fun getById(id: UUID): List<GameEntity>
 
+    @Query("SELECT * FROM games WHERE isEnded = :isEnded ")
+    abstract fun getByIsEnded(isEnded: Boolean): List<GameEntity>
 
     @Query("DELETE FROM games")
     abstract override fun deleteAll()

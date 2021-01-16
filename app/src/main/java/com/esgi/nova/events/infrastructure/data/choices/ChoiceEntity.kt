@@ -21,10 +21,10 @@ import java.util.*
 data class ChoiceEntity(
     @PrimaryKey
     @field:TypeConverters(UUIDConverter::class)
-    override val id: UUID = UUID.randomUUID(),
+    override var id: UUID = UUID.randomUUID(),
     @field:TypeConverters(UUIDConverter::class)
     @ColumnInfo(name = "event_id")
-    override val eventId: UUID = UUID.randomUUID(),
+    override var eventId: UUID = UUID.randomUUID(),
     @ColumnInfo(name = "title") override val title: String,
     @ColumnInfo(name = "description") override val description: String
 ): IChoice{}

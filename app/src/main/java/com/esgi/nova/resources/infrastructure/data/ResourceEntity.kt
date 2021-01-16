@@ -12,6 +12,6 @@ import java.util.*
 data class ResourceEntity(
     @PrimaryKey
     @field:TypeConverters(UUIDConverter::class)
-    override val id: UUID = UUID.randomUUID(),
-    @ColumnInfo(name = "name") override val name: String
+    override var id: UUID = UUID.randomUUID(),
+    @ColumnInfo(name = "name") override var name: String
 ): IResource

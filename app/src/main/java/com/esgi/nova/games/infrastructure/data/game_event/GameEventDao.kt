@@ -10,7 +10,7 @@ abstract class GameEventDao : BaseDao<UUID, GameEventEntity>() {
     @Query("SELECT * FROM game_event")
     abstract override fun getAll(): List<GameEventEntity>
 
-    @Query("SELECT * FROM game_event WHERE event_id = :id")
+    @Query("SELECT * FROM game_event WHERE game_id = :id")
     abstract override fun getById(id: UUID): List<GameEventEntity>
 
     @Query("DELETE FROM game_event")
@@ -31,4 +31,8 @@ abstract class GameEventDao : BaseDao<UUID, GameEventEntity>() {
     @Query("SELECT * FROM game_event WHERE game_id = :gameId")
     @Transaction
     abstract fun getAllGameWithEventById(gameId: UUID): List<GameWithEvent>
+
+    @Query("SELECT COUNT(*) FROM game_event WHERE game_id = :gameId")
+    @Transaction
+    abstract fun getEventsCountByGame(gameId: UUID): Int
 }

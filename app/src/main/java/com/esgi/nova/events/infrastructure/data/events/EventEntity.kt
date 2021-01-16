@@ -15,9 +15,9 @@ import java.util.*
 data class EventEntity(
     @PrimaryKey()
     @field:TypeConverters(UUIDConverter::class)
-    override val id: UUID = UUID.randomUUID(),
-    @ColumnInfo(name = "description") override val description: String,
-    @ColumnInfo(name = "title") override val title: String
+    override var id: UUID = UUID.randomUUID(),
+    @ColumnInfo(name = "description") override var description: String,
+    @ColumnInfo(name = "title") override var title: String
 ) : IEvent {
     fun toDetailedEvent(choices: List<ChoiceWithResource>) = DetailedEvent(
         choices = choices.toDetailedChoices(),

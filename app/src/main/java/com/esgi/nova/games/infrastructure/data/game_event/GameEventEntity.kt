@@ -36,13 +36,13 @@ import java.util.*
 data class GameEventEntity(
     @ColumnInfo(name = "event_id")
     @field:TypeConverters(UUIDConverter::class)
-    override val eventId: UUID = UUID.randomUUID(),
+    override var eventId: UUID = UUID.randomUUID(),
     @ColumnInfo(name = "game_id")
     @field:TypeConverters(UUIDConverter::class)
-    override val gameId: UUID = UUID.randomUUID(),
+    override var gameId: UUID = UUID.randomUUID(),
     @ColumnInfo(name = "link_time")
     @field:TypeConverters(DateConverter::class)
-    override val linkTime: LocalDateTime
+    override var linkTime: LocalDateTime
 ): IGameEvent {
 
 }

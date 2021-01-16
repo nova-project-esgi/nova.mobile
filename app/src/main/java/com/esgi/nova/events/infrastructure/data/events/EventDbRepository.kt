@@ -28,6 +28,13 @@ class EventDbRepository @Inject constructor(
             })
     }
 
+    fun getAllDetailedEventByIds(ids: List<UUID>) = dao.getAllEventWithChoices().map { eventWithChoices ->
+        eventWithChoices.event.toDetailedEvent(eventWithChoices.choices
+            .flatMap { choice ->
+                choiceResourceDAO.getAllChoiceWithResourceByChoiceId(choice.id)
+            })
+    }
+
 
 }
 

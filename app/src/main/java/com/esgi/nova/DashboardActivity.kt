@@ -21,6 +21,7 @@ class DashboardActivity : AppCompatActivity(), View.OnClickListener {
     @Inject
     lateinit var getAllDetailedDifficulties : GetAllDetailedDifficulties
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)

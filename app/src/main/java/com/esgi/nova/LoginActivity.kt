@@ -46,7 +46,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         btn_login.setOnClickListener(this)
 
         if(hasConnectedUser.execute() && !intent.getBooleanExtra(ReconnectionKey, false)){
-            InitSetupActivity.startInitSetup(this@LoginActivity)
+            InitSetupActivity.start(this@LoginActivity)
             finish()
         }
     }
@@ -98,7 +98,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                 logUser.execute(user)
                 runOnUiThread {
                     setViewVisibility(ProgressBar.GONE)
-                    InitSetupActivity.startInitSetup(this@LoginActivity)
+                    InitSetupActivity.start(this@LoginActivity)
                     finish()
                 }
             } catch (e: UserNotFoundException){

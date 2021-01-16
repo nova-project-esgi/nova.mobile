@@ -23,11 +23,11 @@ import java.util.*
 data class GameEntity(
     @PrimaryKey
     @field:TypeConverters(UUIDConverter::class)
-    override val id: UUID = UUID.randomUUID(),
+    override var id: UUID = UUID.randomUUID(),
     @field:TypeConverters(UUIDConverter::class)
     @ColumnInfo(name = "difficulty_id")
-    override val difficultyId: UUID = UUID.randomUUID(),
-    override val duration: Int = 0,
-    override val isEnded: Boolean = false
+    override var difficultyId: UUID = UUID.randomUUID(),
+    override var duration: Int = 0,
+    override var isEnded: Boolean = false
 ) : IGame{}
 

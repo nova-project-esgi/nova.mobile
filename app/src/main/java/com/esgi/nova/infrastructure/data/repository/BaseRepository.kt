@@ -13,6 +13,7 @@ abstract class BaseRepository<Id, Entity, Element> where Entity:Element, Element
 
     fun getAll(): List<@JvmSuppressWildcards Element> = dao.getAll()
     fun getById(id: Id): Element? = dao.getById(id).firstOrNull()
+    fun getAllById(id: Id): List<Element> = dao.getById(id)
 
     fun deleteAll() = dao.deleteAll()
     fun loadAllByIds(ids: List<Id>) = dao.loadAllByIds(ids)
