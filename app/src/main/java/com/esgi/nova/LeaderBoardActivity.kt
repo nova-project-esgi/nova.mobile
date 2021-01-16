@@ -11,10 +11,11 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.esgi.nova.adapters.GamesAdapter
+import com.esgi.nova.games.application.GetLeaderBoardGameList
 import com.esgi.nova.games.infrastructure.dto.LeaderBoardGameView
 import com.esgi.nova.games.infrastructure.dto.UserResume
-import com.esgi.nova.models.*
-import com.esgi.nova.games.application.GetLeaderBoardGameList
+import com.esgi.nova.models.Difficulty
+import com.esgi.nova.models.Role
 import com.esgi.nova.users.exceptions.InvalidDifficultyException
 import com.esgi.nova.utils.NetworkUtils
 import dagger.hilt.android.AndroidEntryPoint
@@ -24,7 +25,7 @@ import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class LeaderBoard : AppCompatActivity(), AdapterView.OnItemClickListener{
+class LeaderBoardActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
 
     @Inject
     lateinit var getLeaderBoardGameList: GetLeaderBoardGameList
@@ -37,10 +38,14 @@ class LeaderBoard : AppCompatActivity(), AdapterView.OnItemClickListener{
     private lateinit var currentDifficulty: Difficulty
 
     private var games = mutableListOf<LeaderBoardGameView>(
-        LeaderBoardGameView(UUID.randomUUID(), UserResume(UUID.randomUUID(),"james.bertho94@gmail.com",Role.USER,"jamso"),1600, difficulties[0].id, emptyList(),45),
-        LeaderBoardGameView(UUID.randomUUID(), UserResume(UUID.randomUUID(),"james.bertho94@gmail.com",Role.USER,"jamso"),1600, difficulties[0].id, emptyList(),15),
-        LeaderBoardGameView(UUID.randomUUID(), UserResume(UUID.randomUUID(),"james.bertho94@gmail.com",Role.USER,"jamso"),1600, difficulties[0].id, emptyList(),30),
-        LeaderBoardGameView(UUID.randomUUID(), UserResume(UUID.randomUUID(),"james.bertho94@gmail.com",Role.USER,"jamso"),1600, difficulties[0].id, emptyList(),30)
+        LeaderBoardGameView(UUID.randomUUID(), UserResume(UUID.randomUUID(),"james.bertho94@gmail.com",
+            Role.USER,"jamso"),1600, difficulties[0].id, emptyList(),45),
+        LeaderBoardGameView(UUID.randomUUID(), UserResume(UUID.randomUUID(),"james.bertho94@gmail.com",
+            Role.USER,"jamso"),1600, difficulties[0].id, emptyList(),15),
+        LeaderBoardGameView(UUID.randomUUID(), UserResume(UUID.randomUUID(),"james.bertho94@gmail.com",
+            Role.USER,"jamso"),1600, difficulties[0].id, emptyList(),30),
+        LeaderBoardGameView(UUID.randomUUID(), UserResume(UUID.randomUUID(),"james.bertho94@gmail.com",
+            Role.USER,"jamso"),1600, difficulties[0].id, emptyList(),30)
     )
 
 
@@ -60,11 +65,11 @@ class LeaderBoard : AppCompatActivity(), AdapterView.OnItemClickListener{
                 R.drawable.golden_divider
             )!!
         )
-        rv_scores.addItemDecoration(itemDivider);
+        rv_scores.addItemDecoration(itemDivider)
 
         games.sortByDescending { it.eventCount }
         rv_scores?.apply {
-            layoutManager = LinearLayoutManager(this@LeaderBoard)
+            layoutManager = LinearLayoutManager(this@LeaderBoardActivity)
             adapter = GamesAdapter(games)
         }
 
@@ -101,7 +106,7 @@ class LeaderBoard : AppCompatActivity(), AdapterView.OnItemClickListener{
                     }
                 } catch (e: InvalidDifficultyException) {
                     val toast = Toast.makeText(
-                        this@LeaderBoard,
+                        this@LeaderBoardActivity,
                         "Une erreur est survenue lors de la récupération des scores",
                         Toast.LENGTH_LONG
                     )

@@ -21,10 +21,10 @@ import org.jetbrains.anko.doAsync
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class Login : AppCompatActivity(), View.OnClickListener {
+class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
     @Inject
-    lateinit var service: SynchronizeEventsToLocalStorage;
+    lateinit var service: SynchronizeEventsToLocalStorage
     @Inject
     lateinit var logUser: LogUser
     @Inject
@@ -32,8 +32,8 @@ class Login : AppCompatActivity(), View.OnClickListener {
 
     companion object {
         const val ReconnectionKey: String = "ReconnectionKey"
-        fun startReconnection(context: Context): Context{
-            val intent = Intent(context, Login::class.java)
+        fun startReconnection(context: Context): Context {
+            val intent = Intent(context, LoginActivity::class.java)
             intent.extras?.putBoolean(ReconnectionKey, true )
             context.startActivity(intent)
             return context
@@ -46,7 +46,7 @@ class Login : AppCompatActivity(), View.OnClickListener {
         btn_login.setOnClickListener(this)
 
         if(hasConnectedUser.execute() && !intent.getBooleanExtra(ReconnectionKey, false)){
-            InitSetup.startInitSetup(this@Login)
+            InitSetupActivity.startInitSetup(this@LoginActivity)
             finish()
         }
     }
@@ -98,14 +98,14 @@ class Login : AppCompatActivity(), View.OnClickListener {
                 logUser.execute(user)
                 runOnUiThread {
                     setViewVisibility(ProgressBar.GONE)
-                    InitSetup.startInitSetup(this@Login)
+                    InitSetupActivity.startInitSetup(this@LoginActivity)
                     finish()
                 }
             } catch (e: UserNotFoundException){
                 runOnUiThread {
                     setViewVisibility(ProgressBar.GONE)
                     val toast = Toast.makeText(
-                        this@Login,
+                        this@LoginActivity,
                         getString(R.string.user_not_exist_msg),
                         Toast.LENGTH_LONG
                     )
@@ -116,7 +116,7 @@ class Login : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    fun setViewVisibility(state: Int) {
+    private fun setViewVisibility(state: Int) {
         if (state == ProgressBar.GONE) {
             btn_login.isEnabled = true
             btn_register.isEnabled = true
@@ -126,9 +126,4 @@ class Login : AppCompatActivity(), View.OnClickListener {
         }
         progress_overlay.visibility = state
     }
-
-
-
-
-
 }

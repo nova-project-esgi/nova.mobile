@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/backgroundColor"
-    tools:context=".LeaderBoard">
+    tools:context=".LeaderBoardActivity">
 
     <TextView
         android:id="@+id/tv_score_title"
