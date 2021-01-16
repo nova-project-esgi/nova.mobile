@@ -119,8 +119,10 @@ class Login : AppCompatActivity(), View.OnClickListener {
     fun setViewVisibility(state: Int) {
         if (state == ProgressBar.GONE) {
             btn_login.isEnabled = true
+            btn_register.isEnabled = true
         } else if (state == ProgressBar.VISIBLE) {
             btn_login.isEnabled = false
+            btn_register.isEnabled = false
         }
         progress_overlay.visibility = state
     }
