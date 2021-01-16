@@ -10,8 +10,18 @@ import com.esgi.nova.models.Resource
 class EventActivity : AppCompatActivity() {
 
 
+    companion object {
+        fun startEventActivity(context: Context): Context {
+            val intent = Intent(context, EventActivity::class.java)
+            context.startActivity(intent)
+            return context
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_event)
     }
+
+
 }

@@ -69,7 +69,9 @@ class InitSetupActivity : AppCompatActivity() {
     companion object {
         const val ResynchronizeKey = "ResynchronizeKey"
 
-        fun start(context: Context): Context {
+        const val synchronizeStepsTotal = 6
+
+        fun startInitSetup(context: Context): Context {
             val intent = Intent(context, InitSetupActivity::class.java)
             context.startActivity(intent)
             return context
@@ -93,41 +95,26 @@ class InitSetupActivity : AppCompatActivity() {
     }
 
     private fun loadData() {
-        loadingText?.text = getString(R.string.resourceLoadingPrompt)
+
+        setLoadingText(1)
 
         doAsync {
-
-
-//            getCurrentGame.execute()?.let { game ->
-//                linkGameWithEvent.execute(game.id, getAllDetailedEvents.execute().first().id)
-//            }
-
             synchronizeLanguagesToLocalStorage.execute()
+            runOnUiThread { setLoadingText(2) }
             synchronizeResourcesToLocalStorage.execute()
+            runOnUiThread { setLoadingText(3) }
             synchronizeDifficultiesToLocalStorage.execute()
+            runOnUiThread { setLoadingText(4) }
             synchronizeEventsToLocalStorage.execute()
-//            createGame.execute(
-//                getAllDetailedDifficulties.execute().first().id
-//            )
-//            getCurrentGame.execute()?.let { game ->
-//                while(true){
-//                    getNextEvent.execute(game.id)?.let { event ->
-//                        val res = confirmChoice.execute(game.id, event.choices.first().id, duration = 12)
-//                        val currGame = getCurrentGame.execute()
-//                        println(currGame)
-//                        println(res)
-//                    }
-//                }
-//            }
-
-//            setSynchronized.execute()
-//            getCurrentGame.execute()?.let { game ->
-//                val nextEvent = getNextEvent.execute(game.id)
-//            }
+            runOnUiThread { setLoadingText(5) }
+            setSynchronized.execute()
             navigateToDashboardPage()
-
-
         }
+    }
+
+    private fun setLoadingText(index: Int) {
+        val loadingTextString = getString(R.string.resourceLoadingPrompt) + " $index / $synchronizeStepsTotal"
+        loadingText?.text = loadingTextString
     }
 
 
