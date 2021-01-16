@@ -1,15 +1,16 @@
 package com.esgi.nova
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.Toast
-import com.esgi.nova.infrastructure.data.AppDatabase
 import com.esgi.nova.events.application.SynchronizeEventsToLocalStorage
 import com.esgi.nova.users.application.LogUser
 import com.esgi.nova.dtos.user.UserLoginDto
+import com.esgi.nova.users.application.HasConnectedUser
 import com.esgi.nova.users.exceptions.InvalidPasswordException
 import com.esgi.nova.users.exceptions.InvalidUsernameException
 import com.esgi.nova.users.exceptions.UserNotFoundException
@@ -26,15 +27,31 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     lateinit var service: SynchronizeEventsToLocalStorage
     @Inject
     lateinit var logUser: LogUser
+    @Inject
+    lateinit var hasConnectedUser: HasConnectedUser
 
+    companion object {
+        const val ReconnectionKey: String = "ReconnectionKey"
+        fun startReconnection(context: Context): Context {
+            val intent = Intent(context, LoginActivity::class.java)
+            intent.extras?.putBoolean(ReconnectionKey, true )
+            context.startActivity(intent)
+            return context
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         btn_login.setOnClickListener(this)
-        val test = AppDatabase.getAppDataBase(this)
-        println(test)
+
+        if(hasConnectedUser.execute() && !intent.getBooleanExtra(ReconnectionKey, false)){
+            InitSetupActivity.startInitSetup(this@LoginActivity)
+            finish()
+        }
     }
+
+
 
     override fun onClick(view: View?) {
         if (view == btn_login) {
@@ -81,7 +98,8 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                 logUser.execute(user)
                 runOnUiThread {
                     setViewVisibility(ProgressBar.GONE)
-                    navigateToInitSetupPage()
+                    InitSetupActivity.startInitSetup(this@LoginActivity)
+                    finish()
                 }
             } catch (e: UserNotFoundException){
                 runOnUiThread {
@@ -101,17 +119,11 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     private fun setViewVisibility(state: Int) {
         if (state == ProgressBar.GONE) {
             btn_login.isEnabled = true
+            btn_register.isEnabled = true
         } else if (state == ProgressBar.VISIBLE) {
             btn_login.isEnabled = false
+            btn_register.isEnabled = false
         }
         progress_overlay.visibility = state
     }
-
-
-    private fun navigateToInitSetupPage() {
-        val intent = Intent(this, InitSetupActivity::class.java)
-        startActivity(intent)
-        finish()
-    }
-
 }
