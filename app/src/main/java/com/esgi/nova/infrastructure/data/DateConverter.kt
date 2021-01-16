@@ -10,7 +10,6 @@ import java.time.ZonedDateTime
 import java.util.*
 
 object DateConverter {
-    @RequiresApi(Build.VERSION_CODES.O)
     @TypeConverter
     @JvmStatic
     fun fromTimestamp(value: Long): LocalDateTime {
@@ -19,7 +18,6 @@ object DateConverter {
             TimeZone.getDefault().toZoneId());
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     @TypeConverter
     @JvmStatic
     fun dateToTimestamp(date: LocalDateTime): Long {

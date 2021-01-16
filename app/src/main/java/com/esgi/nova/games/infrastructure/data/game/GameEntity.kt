@@ -3,6 +3,7 @@ package com.esgi.nova.games.infrastructure.data.game
 import androidx.room.*
 import com.esgi.nova.difficulties.infrastructure.data.difficulty.DifficultyEntity
 import com.esgi.nova.games.ports.IGame
+import com.esgi.nova.infrastructure.data.IIdEntity
 import com.esgi.nova.infrastructure.data.UUIDConverter
 import java.util.*
 
@@ -25,6 +26,8 @@ data class GameEntity(
     override val id: UUID = UUID.randomUUID(),
     @field:TypeConverters(UUIDConverter::class)
     @ColumnInfo(name = "difficulty_id")
-    override val difficultyId: UUID = UUID.randomUUID()
-) : IGame {}
+    override val difficultyId: UUID = UUID.randomUUID(),
+    override val duration: Int = 0,
+    override val isEnded: Boolean = false
+) : IGame{}
 

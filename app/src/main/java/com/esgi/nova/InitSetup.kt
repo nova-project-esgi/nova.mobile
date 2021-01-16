@@ -1,13 +1,18 @@
 package com.esgi.nova
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.esgi.nova.application_state.application.IsSynchronized
+import com.esgi.nova.application_state.application.SetSynchronized
 import com.esgi.nova.difficulties.application.GetAllDetailedDifficulties
 import com.esgi.nova.difficulties.application.SynchronizeDifficultiesToLocalStorage
+import com.esgi.nova.events.application.GetAllDetailedEvents
 import com.esgi.nova.events.application.GetAllImageDetailedEventWrappers
 import com.esgi.nova.events.application.SynchronizeEventsToLocalStorage
 import com.esgi.nova.games.application.CreateGame
+import com.esgi.nova.games.application.LinkGameWithEvent
 import com.esgi.nova.infrastructure.preferences.PreferenceConstants
 import com.esgi.nova.languages.application.SynchronizeLanguagesToLocalStorage
 import com.esgi.nova.resources.application.GetAllImageResourceWrappers
@@ -46,35 +51,58 @@ class InitSetup : AppCompatActivity() {
     lateinit var getAllDetailedDifficulties: GetAllDetailedDifficulties
 
     @Inject
+    lateinit var getAllDetailedEvents: GetAllDetailedEvents
+
+    @Inject
+    lateinit var linkGameWithEvent: LinkGameWithEvent
+
+    @Inject
     lateinit var createGame: CreateGame
+
+    @Inject
+    lateinit var isSynchronized: IsSynchronized
+    @Inject
+    lateinit var setSynchronized: SetSynchronized
+
+    companion object {
+        const val ResynchronizeKey = "ResynchronizeKey"
+
+        fun startInitSetup(context: Context): Context{
+            val intent = Intent(context, InitSetup::class.java)
+            context.startActivity(intent)
+            return context
+        }
+        fun startResynchronize(context: Context): Context{
+            val intent = Intent(context, InitSetup::class.java)
+            intent.extras?.putBoolean(ResynchronizeKey, true)
+            context.startActivity(intent)
+            return context
+        }
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_init_setup)
-        loadData()
+//        if(!isSynchronized.execute() || intent.getBooleanExtra(ResynchronizeKey,false)){
+            loadData()
+//        }
     }
 
-    private fun toLoginActivity() {
-        val intent = Intent(this, Login::class.java)
-        startActivity(intent)
-        finish()
-    }
 
     private fun loadData() {
-        loadingText?.text = "default"
         doAsync {
-            val difficulties = getAllDetailedDifficulties.execute()
-            createGame.execute(difficulties.first().id)
-
+            val difficulty = getAllDetailedDifficulties.execute().first()
+            val event = getAllDetailedEvents.execute().first()
+            createGame.execute(difficulty.id)?.let { game ->
+                linkGameWithEvent.execute(game.id, event.id)
+            }
 //            synchronizeLanguagesToLocalStorage.execute()
-//            synchronizeResourcesToLocalStorage.execute("en")
-//            synchronizeDifficultiesToLocalStorage.execute("en")
-//            synchronizeEventsToLocalStorage.execute("en")
-//            val resWrappers = getAllImageResourceWrappers.execute()
-//            val eventWrappers = getAllImageDetailedEventWrappers.execute()
-//            createGame.execute(difficulties.first().id)
-//            println("test")
+//            synchronizeResourcesToLocalStorage.execute()
+//            synchronizeDifficultiesToLocalStorage.execute()
+//            synchronizeEventsToLocalStorage.execute()
+//            setSynchronized.execute()
+
         }
     }
 

@@ -1,13 +1,10 @@
 package com.esgi.nova.events.ports
 
-import androidx.room.ColumnInfo
-import androidx.room.PrimaryKey
-import androidx.room.TypeConverters
-import com.esgi.nova.infrastructure.data.UUIDConverter
+import com.esgi.nova.infrastructure.data.IIdEntity
 import java.util.*
 
-interface IEvent {
-    val id: UUID
+interface IEvent: IIdEntity<UUID> {
+    override val id: UUID
     val description: String
     val title: String
 }

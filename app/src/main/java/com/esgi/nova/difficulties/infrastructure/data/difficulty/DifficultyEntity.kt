@@ -5,6 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.esgi.nova.difficulties.ports.IDifficulty
+import com.esgi.nova.infrastructure.data.IIdEntity
 import com.esgi.nova.infrastructure.data.UUIDConverter
 import java.util.*
 
@@ -14,5 +15,5 @@ data class DifficultyEntity(
     @field:TypeConverters(UUIDConverter::class)
     override val id: UUID = UUID.randomUUID(),
     @ColumnInfo(name = "name") override val name: String
-): IDifficulty {
+): IDifficulty{
 }

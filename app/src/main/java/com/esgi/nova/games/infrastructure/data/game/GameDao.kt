@@ -9,6 +9,10 @@ abstract class GameDao : BaseDao<UUID, GameEntity>() {
     @Query("SELECT * FROM games")
     abstract override fun getAll(): List<GameEntity>
 
+    @Query("SELECT * FROM games WHERE id = :id")
+    abstract override fun getById(id: UUID): List<GameEntity>
+
+
     @Query("DELETE FROM games")
     abstract override fun deleteAll()
 
@@ -19,10 +23,10 @@ abstract class GameDao : BaseDao<UUID, GameEntity>() {
     abstract override fun insertAll(vararg entities: GameEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract override fun insertAll(entities: Collection<GameEntity>)
+    abstract override fun insertAll(entities: Collection<GameEntity>): Unit
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract override fun insertOne(entity: GameEntity)
+    abstract override fun insertOne(entity: GameEntity): Unit
 
     @Delete
     abstract override fun delete(entity: GameEntity)
