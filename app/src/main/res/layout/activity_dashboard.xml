@@ -44,7 +44,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/ln_difficulty"
         app:layout_constraintTop_toBottomOf="@id/tv_title"
-        app:layout_constraintBottom_toTopOf="@+id/btn_new_game"
+        app:layout_constraintBottom_toTopOf="@id/btn_init_new_game"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
@@ -72,7 +72,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:background="@color/buttonColor"
-        android:id="@+id/btn_new_game"
+        android:id="@+id/btn_init_new_game"
         android:text="@string/new_game" />
 
 
