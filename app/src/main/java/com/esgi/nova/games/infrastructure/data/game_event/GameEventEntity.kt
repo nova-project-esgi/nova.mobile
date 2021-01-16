@@ -5,6 +5,7 @@ import com.esgi.nova.events.infrastructure.data.events.EventEntity
 import com.esgi.nova.games.infrastructure.data.game.GameEntity
 import com.esgi.nova.games.ports.IGameEvent
 import com.esgi.nova.infrastructure.data.DateConverter
+import com.esgi.nova.infrastructure.data.IIdEntity
 import com.esgi.nova.infrastructure.data.UUIDConverter
 import java.time.LocalDateTime
 import java.util.*
@@ -43,5 +44,6 @@ data class GameEventEntity(
     @field:TypeConverters(DateConverter::class)
     override val linkTime: LocalDateTime
 ): IGameEvent {
+
 }
 

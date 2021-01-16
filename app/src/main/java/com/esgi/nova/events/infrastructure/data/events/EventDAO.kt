@@ -9,6 +9,9 @@ abstract class EventDAO : BaseDao<UUID, EventEntity> (){
     @Query("SELECT * FROM events")
     abstract override fun getAll(): List<EventEntity>
 
+    @Query("SELECT * FROM events WHERE id = :id")
+    abstract override fun getById(id: UUID): List<EventEntity>
+
     @Query("DELETE FROM events")
     abstract override fun deleteAll()
 
@@ -18,9 +21,11 @@ abstract class EventDAO : BaseDao<UUID, EventEntity> (){
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract override fun insertAll(vararg entities: EventEntity)
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract override fun insertAll(entities: Collection<EventEntity>)
+    abstract override fun insertAll(entities: Collection<EventEntity>): Unit
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract override fun insertOne(entity: EventEntity)
+    abstract override fun insertOne(entity: EventEntity): Unit
+
     @Delete
     abstract override fun delete(entity: EventEntity)
 

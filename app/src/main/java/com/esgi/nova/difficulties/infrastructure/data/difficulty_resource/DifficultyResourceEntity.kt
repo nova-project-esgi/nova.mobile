@@ -3,6 +3,7 @@ package com.esgi.nova.difficulties.infrastructure.data.difficulty_resource
 import androidx.room.*
 import com.esgi.nova.difficulties.infrastructure.data.difficulty.DifficultyEntity
 import com.esgi.nova.difficulties.ports.IDifficultyResource
+import com.esgi.nova.infrastructure.data.IIdEntity
 import com.esgi.nova.infrastructure.data.UUIDConverter
 import com.esgi.nova.resources.infrastructure.data.ResourceEntity
 import java.util.*
@@ -41,4 +42,5 @@ data class DifficultyResourceEntity(
     @ColumnInfo(name = "start_value")
     override val startValue: Int
 ): IDifficultyResource {
+
 }

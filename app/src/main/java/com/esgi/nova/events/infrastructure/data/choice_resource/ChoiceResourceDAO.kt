@@ -13,6 +13,9 @@ abstract class ChoiceResourceDAO : BaseDao<UUID, ChoiceResourceEntity>() {
     @Query("DELETE FROM choice_resource")
     abstract override fun deleteAll()
 
+    @Query("SELECT * FROM choice_resource WHERE choice_id = :id")
+    abstract override fun getById(id: UUID): List<ChoiceResourceEntity>
+
     @Query("SELECT * FROM choice_resource WHERE choice_id IN (:ids)")
     abstract override fun loadAllByIds(ids: List<UUID>): List<ChoiceResourceEntity>
 
@@ -20,13 +23,13 @@ abstract class ChoiceResourceDAO : BaseDao<UUID, ChoiceResourceEntity>() {
     abstract override fun insertAll(vararg entities: ChoiceResourceEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract override fun insertAll(entities: Collection<ChoiceResourceEntity>)
+    abstract override fun insertAll(entities: Collection<ChoiceResourceEntity>): Unit
 
     @Delete
     abstract override fun delete(entity: ChoiceResourceEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract override fun insertOne(entity: ChoiceResourceEntity)
+    abstract override fun insertOne(entity: ChoiceResourceEntity): Unit
 
 
     @Query("SELECT * FROM choice_resource")

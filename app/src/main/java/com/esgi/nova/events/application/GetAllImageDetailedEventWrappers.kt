@@ -24,3 +24,5 @@ class GetAllImageDetailedEventWrappers @Inject constructor(
             }.toList()
     }
 }
+
+

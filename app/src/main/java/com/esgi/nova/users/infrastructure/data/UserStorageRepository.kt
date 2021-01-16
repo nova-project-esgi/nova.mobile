@@ -1,48 +1,41 @@
 package com.esgi.nova.users.infrastructure.data
 
 import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
 import com.esgi.nova.infrastructure.preferences.PreferenceConstants
+import com.esgi.nova.infrastructure.storage.BaseStorageRepository
 import com.esgi.nova.users.infrastructure.data.models.LogUser
-import com.esgi.nova.users.ports.IConnectedUser
 import com.esgi.nova.users.ports.IConnectedUserPassword
 import com.esgi.nova.users.ports.ILogUser
 import javax.inject.Inject
 
-class UserStorageRepository @Inject constructor(private val context: Context) {
+class UserStorageRepository @Inject constructor(
+    context: Context
+) : BaseStorageRepository(context) {
+    override val preferenceKey: String = PreferenceConstants.User.Key
 
-    fun saveUser(user: IConnectedUserPassword){
-        context.getSharedPreferences(PreferenceConstants.UserKey, AppCompatActivity.MODE_PRIVATE)?.let {
-            sharedPreferences ->
-                with(sharedPreferences.edit()) {
-                    putString(PreferenceConstants.TokenKey, user.token)
-                    putString(PreferenceConstants.UsernameKey, user.username)
-                    putString(PreferenceConstants.PasswordKey, user.password)
-                    apply()
-            }
+    fun saveUser(user: IConnectedUserPassword) {
+        with(preference.edit()) {
+            putString(PreferenceConstants.User.TokenKey, user.token)
+            putString(PreferenceConstants.User.UsernameKey, user.username)
+            putString(PreferenceConstants.User.PasswordKey, user.password)
+            apply()
         }
     }
 
-    fun getUserToken(): String? {
-        return context.getSharedPreferences(PreferenceConstants.UserKey, Context.MODE_PRIVATE)
-            .getString(PreferenceConstants.TokenKey, null)
-    }
+    fun getUserToken(): String? = preference.getString(PreferenceConstants.User.TokenKey, null)
 
-    fun getUsername(): String? {
-        return context.getSharedPreferences(PreferenceConstants.UserKey, Context.MODE_PRIVATE)
-            .getString(PreferenceConstants.UsernameKey, null)
-    }
+
+    fun getUsername(): String? = preference.getString(PreferenceConstants.User.UsernameKey, null)
 
 
     fun getUser(): ILogUser? {
-        context.getSharedPreferences(PreferenceConstants.UserKey, Context.MODE_PRIVATE)?.let {
-            sharedPreferences ->
-            sharedPreferences.getString(PreferenceConstants.UsernameKey, null)?.let { username ->
-                sharedPreferences.getString(PreferenceConstants.PasswordKey, null)?.let { password ->
-                    return LogUser(username, password)
-                }
+        preference.getString(PreferenceConstants.User.UsernameKey, null)
+            ?.let { username ->
+                preference.getString(PreferenceConstants.User.PasswordKey, null)
+                    ?.let { password ->
+                        return LogUser(username, password)
+                    }
             }
-        }
         return null
     }
 

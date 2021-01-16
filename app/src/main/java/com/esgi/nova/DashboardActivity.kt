@@ -2,6 +2,8 @@ package com.esgi.nova
 
 import android.content.Intent
 import android.os.Bundle
+import com.esgi.nova.games.application.CreateGame
+import com.esgi.nova.models.Resource
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
@@ -22,7 +24,10 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class Dashboard : AppCompatActivity(), View.OnClickListener, AdapterView.OnItemClickListener {
+class DashboardActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnItemClickListener {
+
+    @Inject
+    lateinit var createGame: CreateGame
 
     @Inject
     lateinit var getAllDetailedDifficulties: GetAllDetailedDifficulties
@@ -47,7 +52,7 @@ class Dashboard : AppCompatActivity(), View.OnClickListener, AdapterView.OnItemC
                 difficulties = result.reflectMapCollection<IDetailedDifficulty, DetailedDifficultyDto>().toList()
                 runOnUiThread {
                     val arrayAdapter = ArrayAdapter(
-                        this@Dashboard,
+                        this@DashboardActivity,
                         R.layout.list_item,
                         difficulties
                     )
@@ -60,7 +65,7 @@ class Dashboard : AppCompatActivity(), View.OnClickListener, AdapterView.OnItemC
                     } else {
                         tv_difficulty.isEnabled = false
                     }
-                    tv_difficulty.onItemClickListener = this@Dashboard
+                    tv_difficulty.onItemClickListener = this@DashboardActivity
                 }
             } catch (e: Error){
 
@@ -73,8 +78,27 @@ class Dashboard : AppCompatActivity(), View.OnClickListener, AdapterView.OnItemC
 
     override fun onClick(view: View?) {
         if (view == btn_to_leaderboard) {
-            val intent = Intent(this, LeaderBoard::class.java)
-            startActivity(intent);
+            val intent = Intent(this, LeaderBoardActivity::class.java)
+            startActivity(intent)
+        }
+
+        if (view == btn_new_game) {
+
+            //todo: temp
+            val difficulty = getAllDetailedDifficulties.execute().first()
+
+            val difficultyResources = difficulty.resources
+
+            val resources = mutableListOf<Resource>()
+            difficultyResources.forEach {
+                resources += Resource(it.id, it.name, it.startValue)
+            }
+
+            //todo: pas mal de trucs
+            createGame.execute(difficulty.id)
+
+            val intent = Intent(this, EventActivity::class.java)
+            startActivity(intent)
         }
     }
 
@@ -92,7 +116,7 @@ class Dashboard : AppCompatActivity(), View.OnClickListener, AdapterView.OnItemC
                 runOnUiThread {
                     wrapperResources.clear()
                     wrapperResources.addAll(result)
-                    val inflater = LayoutInflater.from(this@Dashboard)
+                    val inflater = LayoutInflater.from(this@DashboardActivity)
                     list_resource.removeAllViews()
                     wrapperResources.forEach {
                         val resourceView = createResourceView(inflater, it)

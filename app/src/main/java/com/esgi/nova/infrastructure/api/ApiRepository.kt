@@ -2,11 +2,17 @@ package com.esgi.nova.infrastructure.api
 
 import com.esgi.nova.users.application.GetUserToken
 import com.esgi.nova.users.application.UpdateUserToken
+import com.esgi.nova.utils.reflectMapNotNull
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.google.gson.internal.LinkedTreeMap
 import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.lang.Exception
+import java.time.LocalDateTime
 import javax.inject.Inject
 
 open class ApiRepository @Inject constructor(
@@ -14,7 +20,7 @@ open class ApiRepository @Inject constructor(
     private val updateUserToken: UpdateUserToken
 ) {
 
-    private lateinit var genericService: GenericService
+    lateinit var genericService: GenericService
 
     init {
         val retrofit = Retrofit.Builder()
@@ -23,9 +29,14 @@ open class ApiRepository @Inject constructor(
         genericService = retrofit.create(GenericService::class.java)
     }
 
-    protected fun <T> Response<Any>.getLocatedContent(): Call<T>? {
-        this@getLocatedContent.headers()[HeaderConstants.Location]?.let {
-                location -> return@getLocatedContent  this@ApiRepository.genericService.get<T>(location)
+    inline protected fun <reified T : Any> Response<*>.getLocatedContent(): T? {
+        this@getLocatedContent.headers()[HeaderConstants.Location]?.let { location ->
+            return try{
+                val req = this@ApiRepository.genericService.get(location).execute()
+                Gson().fromJson(req.body()?.string(), T::class.java)
+            } catch (e: Exception){
+                null
+            }
         }
         return null
     }
@@ -38,8 +49,11 @@ open class ApiRepository @Inject constructor(
             .addInterceptor(authRequestInterceptor)
             .authenticator(authResponseInterceptor)
             .build()
+        val gson = GsonBuilder()
+            .registerTypeAdapter(LocalDateTime::class.java, LocalDateTimeAdapter())
+            .create()
         return this.baseUrl(baseUrl)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .client(httpClient)
     }
 

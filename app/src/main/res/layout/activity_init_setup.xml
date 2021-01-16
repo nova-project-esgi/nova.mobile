@@ -4,7 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".InitSetup">
+    android:background="@drawable/login_bg"
+    tools:context=".InitSetupActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="@string/app_name"
+        android:textSize="64sp"
+        android:textColor="@color/textColor"
+        android:layout_marginTop="40dp" />
 
     <ProgressBar
         android:id="@+id/loader"
@@ -20,9 +32,11 @@
         android:id="@+id/loadingText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/loader" />
+        app:layout_constraintTop_toBottomOf="@id/loader"
+        android:textColor="@color/textColor"
+        android:layout_marginTop="60dp"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

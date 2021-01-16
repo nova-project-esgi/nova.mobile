@@ -8,7 +8,6 @@ import retrofit2.http.Url
 
 interface GenericService {
 
-    @Streaming
     @GET
-    fun <T> get(@Url url: String): Call<T>
+    fun get(@Url url: String): Call<ResponseBody>
 }

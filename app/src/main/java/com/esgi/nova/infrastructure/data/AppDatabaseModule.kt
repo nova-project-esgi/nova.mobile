@@ -43,5 +43,8 @@ object AppDatabaseModule {
     @Provides
     fun  provideGameEventDao(db: AppDatabase) = db.gameEventDao()
 
+    @Provides
+    fun  provideGameResourceDao(db: AppDatabase) = db.gameResourceDao()
+
 
 }

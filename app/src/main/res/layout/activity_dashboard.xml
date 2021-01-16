@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/simple_bg"
-    tools:context=".Dashboard">
+    android:background="@color/backgroundColor"
+    tools:context=".DashboardActivity">
 
     <Button
         android:id="@+id/btn_to_leaderboard"

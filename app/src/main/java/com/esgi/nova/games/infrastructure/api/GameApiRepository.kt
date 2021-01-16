@@ -1,13 +1,18 @@
 package com.esgi.nova.games.infrastructure.api
 
+import com.esgi.nova.games.application.models.GameForCreation
+import com.esgi.nova.games.infrastructure.api.models.GameForUpdate
 import com.esgi.nova.games.infrastructure.api.models.GameResume
 import com.esgi.nova.games.infrastructure.dto.LeaderBoardGameView
 import com.esgi.nova.games.ports.IGame
 import com.esgi.nova.games.ports.IGameForCreation
+import com.esgi.nova.games.ports.IDetailedGame
+import com.esgi.nova.games.ports.IGameEdition
 import com.esgi.nova.infrastructure.api.ApiRepository
 import com.esgi.nova.infrastructure.api.pagination.PageMetadata
 import com.esgi.nova.users.application.GetUserToken
 import com.esgi.nova.users.application.UpdateUserToken
+import com.esgi.nova.utils.reflectMapNotNull
 import retrofit2.Retrofit
 import java.util.*
 import javax.inject.Inject
@@ -26,8 +31,16 @@ class GameApiRepository @Inject constructor(getUserToken: GetUserToken, updateUs
 
 
     fun createGame(game: IGameForCreation): IGame? {
-        val game = gameService.createGame(game).execute().getLocatedContent<GameResume>()?.execute()
-        return game?.body()
+        val test = game.reflectMapNotNull<IGameForCreation, GameForCreation>()
+        return gameService.createGame(test).execute().getLocatedContent<GameResume>()
+    }
+
+    fun update(id: UUID, game: IGameEdition){
+        val gamet = game.reflectMapNotNull<IGameEdition, GameForUpdate>()
+        val res = gameService.uploadGame(
+            id,
+            gamet
+        ).execute()
     }
     fun getDefaultGamesList(difficultyId: UUID): PageMetadata<LeaderBoardGameView>? {
         return gameService.getLeaderBoardGamesByDifficulty(difficultyId.toString()).execute().body()

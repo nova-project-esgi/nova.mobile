@@ -1,12 +1,9 @@
 package com.esgi.nova.resources.ports
 
-import androidx.room.ColumnInfo
-import androidx.room.PrimaryKey
-import androidx.room.TypeConverters
-import com.esgi.nova.infrastructure.data.UUIDConverter
+import com.esgi.nova.infrastructure.data.IIdEntity
 import java.util.*
 
-interface IResource {
-    val id: UUID
+interface IResource: IIdEntity<UUID> {
+    override val id: UUID
      val name: String?
 }

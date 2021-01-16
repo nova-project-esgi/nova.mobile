@@ -1,8 +1,17 @@
 package com.esgi.nova.infrastructure.preferences
 
+import com.esgi.nova.application_state.application.IsSynchronized
+
 object PreferenceConstants {
-    const val UsernameKey = "username"
-    const val TokenKey = "token"
-    const val UserKey = "user"
-    const val PasswordKey = "password"
+    object User{
+        const val UsernameKey = "username"
+        const val TokenKey = "token"
+        const val Key = "user"
+        const val PasswordKey = "password"
+    }
+    object ApplicationState{
+        const val Key = "applicationState"
+        const val IsSynchronizedKey = "isSynchronized"
+    }
+
 }

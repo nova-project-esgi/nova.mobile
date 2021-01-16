@@ -1,28 +1,29 @@
 package com.esgi.nova
 
+import android.content.Context
 import android.content.Intent
-import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import com.esgi.nova.application_state.application.IsSynchronized
+import com.esgi.nova.application_state.application.SetSynchronized
 import com.esgi.nova.difficulties.application.GetAllDetailedDifficulties
 import com.esgi.nova.difficulties.application.SynchronizeDifficultiesToLocalStorage
+import com.esgi.nova.events.application.GetAllDetailedEvents
 import com.esgi.nova.events.application.GetAllImageDetailedEventWrappers
 import com.esgi.nova.events.application.SynchronizeEventsToLocalStorage
 import com.esgi.nova.games.application.CreateGame
-import com.esgi.nova.infrastructure.preferences.PreferenceConstants
+import com.esgi.nova.games.application.LinkGameWithEvent
 import com.esgi.nova.languages.application.SynchronizeLanguagesToLocalStorage
 import com.esgi.nova.resources.application.GetAllImageResourceWrappers
 import com.esgi.nova.resources.application.SynchronizeResourceToLocalStorage
-import com.esgi.nova.resources.infrastructure.data.ResourceEntity
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_init_setup.*
 import org.jetbrains.anko.doAsync
-import java.net.URL
+import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class InitSetup : AppCompatActivity() {
+class InitSetupActivity : AppCompatActivity() {
 
     @Inject
     lateinit var synchronizeEventsToLocalStorage: SynchronizeEventsToLocalStorage
@@ -46,52 +47,63 @@ class InitSetup : AppCompatActivity() {
     lateinit var getAllDetailedDifficulties: GetAllDetailedDifficulties
 
     @Inject
+    lateinit var getAllDetailedEvents: GetAllDetailedEvents
+
+    @Inject
+    lateinit var linkGameWithEvent: LinkGameWithEvent
+
+    @Inject
     lateinit var createGame: CreateGame
+
+    @Inject
+    lateinit var isSynchronized: IsSynchronized
+    @Inject
+    lateinit var setSynchronized: SetSynchronized
+
+    companion object {
+        const val ResynchronizeKey = "ResynchronizeKey"
+
+        fun startInitSetup(context: Context): Context {
+            val intent = Intent(context, InitSetupActivity::class.java)
+            context.startActivity(intent)
+            return context
+        }
+        fun startResynchronize(context: Context): Context {
+            val intent = Intent(context, InitSetupActivity::class.java)
+            intent.extras?.putBoolean(ResynchronizeKey, true)
+            context.startActivity(intent)
+            return context
+        }
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_init_setup)
+//        if(!isSynchronized.execute() || intent.getBooleanExtra(ResynchronizeKey,false)){
         loadData()
-    }
-
-    private fun toLoginActivity() {
-        val intent = Intent(this, Login::class.java)
-        startActivity(intent)
-        finish()
+//        }
     }
 
     private fun loadData() {
-        loadingText?.text = "default"
+        loadingText?.text = getString(R.string.resourceLoadingPrompt)
+
         doAsync {
+            val language = Locale.getDefault().toLanguageTag() // TODO : chosen Language
             synchronizeLanguagesToLocalStorage.execute()
-            synchronizeResourcesToLocalStorage.execute("en")
-            synchronizeDifficultiesToLocalStorage.execute("en")
-            synchronizeEventsToLocalStorage.execute("en")
-            val resWrappers = getAllImageResourceWrappers.execute()
-            val eventWrappers = getAllImageDetailedEventWrappers.execute()
-            val difficulties = getAllDetailedDifficulties.execute()
-            createGame.execute(difficulties.first().id)
-            println("test")
+            synchronizeResourcesToLocalStorage.execute(language)
+            synchronizeDifficultiesToLocalStorage.execute(language)
+            synchronizeEventsToLocalStorage.execute(language)
+            setSynchronized.execute()
+            navigateToDashboardPage()
         }
     }
 
 
-    private fun loadRessources() {
-        val apiCall = URL("https://next.json-generator.com/api/json/get/VydTXyeqY?delay=2000")
-        val response = apiCall.readText()        //SynchronizeEventsToLocalStorage.execute()
-
-
-        val itemType = object : TypeToken<List<ResourceEntity>>() {}.type
-        val resources = Gson().fromJson<List<ResourceEntity>>(response, itemType) // should work ?
-
-        resources.forEach{
-            //resource: Resource -> db?.resourceDAO()?.insertAll(resource)
-        }
-
-        runOnUiThread {
-            loadingText?.text = "nova"
-        }
+    private fun navigateToDashboardPage() {
+        val intent = Intent(this, DashboardActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
 

@@ -21,6 +21,8 @@ import com.esgi.nova.games.infrastructure.data.game.GameDao
 import com.esgi.nova.games.infrastructure.data.game.GameEntity
 import com.esgi.nova.games.infrastructure.data.game_event.GameEventDao
 import com.esgi.nova.games.infrastructure.data.game_event.GameEventEntity
+import com.esgi.nova.games.infrastructure.data.game_resource.GameResourceDao
+import com.esgi.nova.games.infrastructure.data.game_resource.GameResourceEntity
 import com.esgi.nova.languages.infrastructure.data.LanguageEntity
 import com.esgi.nova.languages.infrastructure.data.LanguageDAO
 
@@ -34,7 +36,9 @@ import com.esgi.nova.languages.infrastructure.data.LanguageDAO
         DifficultyResourceEntity::class,
         ChoiceResourceEntity::class,
         GameEntity::class,
-        GameEventEntity::class],
+        GameEventEntity::class,
+        GameResourceEntity::class
+    ],
     version = 1
 )
 @TypeConverters(UUIDConverter::class, DateConverter::class)
@@ -49,6 +53,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun choiceResourceDAO(): ChoiceResourceDAO
     abstract fun gameDao(): GameDao
     abstract fun gameEventDao(): GameEventDao
+    abstract fun gameResourceDao(): GameResourceDao
 
     companion object {
         private var INSTANCE: AppDatabase? = null

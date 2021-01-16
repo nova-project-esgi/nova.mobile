@@ -6,6 +6,7 @@ import com.esgi.nova.events.infrastructure.data.choices.ChoiceDbRepository
 import com.esgi.nova.events.infrastructure.data.events.EventDbRepository
 import com.esgi.nova.files.application.SynchronizeFile
 import com.esgi.nova.infrastructure.fs.FsConstants
+import com.esgi.nova.languages.infrastructure.data.LanguageDbRepository
 import javax.inject.Inject
 
 class SynchronizeEventsToLocalStorage @Inject constructor(
@@ -13,10 +14,11 @@ class SynchronizeEventsToLocalStorage @Inject constructor(
     private val choiceDbRepository: ChoiceDbRepository,
     private val eventApiRepository: EventApiRepository,
     private val choiceResourceDbRepository: ChoiceResourceDbRepository,
-    private val synchronizeFile: SynchronizeFile
+    private val synchronizeFile: SynchronizeFile,
+    private val languageDbRepository: LanguageDbRepository
 ) {
 
-    fun execute(language: String) {
+    fun execute(language: String = languageDbRepository.getSelectedLanguage()?.tag ?: "" ) {
         val translatedEventsWrappers = eventApiRepository.getAllTranslatedEvents(language)
 
         eventDbRepository.insertAll(translatedEventsWrappers.map { it.data })

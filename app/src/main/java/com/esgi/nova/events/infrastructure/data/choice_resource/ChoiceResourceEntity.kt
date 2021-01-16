@@ -3,6 +3,7 @@ package com.esgi.nova.events.infrastructure.data.choice_resource
 import androidx.room.*
 import com.esgi.nova.events.infrastructure.data.choices.ChoiceEntity
 import com.esgi.nova.events.ports.IChoiceResource
+import com.esgi.nova.infrastructure.data.IIdEntity
 import com.esgi.nova.infrastructure.data.UUIDConverter
 import com.esgi.nova.resources.infrastructure.data.ResourceEntity
 import java.util.*
@@ -41,4 +42,5 @@ data class ChoiceResourceEntity(
     @ColumnInfo(name = "change_value")
     override val changeValue: Int
 ): IChoiceResource {
+
 }

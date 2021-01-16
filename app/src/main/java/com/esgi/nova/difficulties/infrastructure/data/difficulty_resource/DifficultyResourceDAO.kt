@@ -11,6 +11,10 @@ abstract class DifficultyResourceDAO : BaseDao<UUID, DifficultyResourceEntity>()
     @Query("SELECT * FROM difficulty_resource")
     abstract override fun getAll(): List<DifficultyResourceEntity>
 
+    @Query("SELECT * FROM difficulty_resource WHERE difficulty_id = :id")
+    abstract override fun getById(id: UUID): List<DifficultyResourceEntity>
+
+
     @Query("DELETE FROM difficulty_resource")
     abstract override fun deleteAll()
 
@@ -20,13 +24,18 @@ abstract class DifficultyResourceDAO : BaseDao<UUID, DifficultyResourceEntity>()
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract override fun insertAll(vararg entities: DifficultyResourceEntity)
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract override fun insertAll(entities: Collection<DifficultyResourceEntity>)
+    abstract override fun insertAll(entities: Collection<DifficultyResourceEntity>): Unit
+
     @Delete
     abstract override fun delete(entity: DifficultyResourceEntity)
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract override fun insertOne(entity: DifficultyResourceEntity)
+    abstract override fun insertOne(entity: DifficultyResourceEntity): Unit
 
     @Query("SELECT * FROM difficulty_resource")
     @Transaction
     abstract fun getAllDifficultyWithResource(): List<DifficultyWithResource>
+
+    @Query("SELECT * FROM difficulty_resource WHERE difficulty_id = :id")
+    @Transaction
+    abstract fun getAllDifficultyWithResourceById(id: UUID): List<DifficultyWithResource>
 }

@@ -1,7 +1,7 @@
 package com.esgi.nova.languages.infrastructure.data
 
-import com.esgi.nova.infrastructure.data.AppDatabase
 import com.esgi.nova.infrastructure.data.repository.BaseRepository
+import com.esgi.nova.languages.ports.IAppLanguage
 import com.esgi.nova.languages.ports.ILanguage
 import com.esgi.nova.utils.reflectMapCollection
 import com.esgi.nova.utils.reflectMapNotNull
@@ -9,15 +9,31 @@ import java.util.*
 import javax.inject.Inject
 
 class LanguageDbRepository @Inject constructor(override val dao: LanguageDAO):
-    BaseRepository<UUID, LanguageEntity, ILanguage>() {
+    BaseRepository<UUID, LanguageEntity, IAppLanguage>() {
 
 
-    override fun toEntity(el: ILanguage): LanguageEntity {
+    override fun toEntity(el: IAppLanguage): LanguageEntity {
         return el.reflectMapNotNull()
     }
 
-    override fun toEntities(entities: Collection<ILanguage>): Collection<LanguageEntity> = entities.reflectMapCollection()
+    override fun toEntities(entities: Collection<IAppLanguage>): Collection<LanguageEntity> = entities.reflectMapCollection()
 
+    fun getSelectedLanguage(): IAppLanguage?{
+        return dao.getSelectedLanguage().firstOrNull()
+    }
 
+    fun selectLanguage(id: UUID){
+        dao.getById(id).firstOrNull()?.let { language ->
+            language.isSelected = true
+            update(language )
+        }
+    }
+
+    fun deselectLanguages(){
+        dao.getSelectedLanguage().forEach { selectedLanguage ->
+            selectedLanguage.isSelected = false
+            update(selectedLanguage)
+        }
+    }
 
 }
