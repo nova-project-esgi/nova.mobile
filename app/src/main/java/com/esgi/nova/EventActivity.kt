@@ -36,6 +36,8 @@ class EventActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(this@EventActivity)
             adapter = ResourcesAdapter(localResources)
         }
+
+
     }
 
 
