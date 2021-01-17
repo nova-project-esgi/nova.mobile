@@ -12,13 +12,15 @@ data class TranslatedEventsWithBackgroundResponse(
     override val description: String,
     val language: String,
     override val choices: MutableList<TranslatedChoiceResponse>,
-    val backgroundUrl: Link
+    val backgroundUrl: Link,
+    override val isDaily: Boolean = false
 ): IDetailedEvent{
 
-    fun toResumedEvent() = ResumedEvent(
+    fun toResumedEvent(isDaily: Boolean = false) = ResumedEvent(
         choices = choices.map { it.toResumedChoice() }.toMutableList(),
         title = title,
         id = id,
-        description = description
+        description = description,
+        isDaily = isDaily
     )
 }

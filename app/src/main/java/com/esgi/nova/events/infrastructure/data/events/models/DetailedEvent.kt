@@ -8,6 +8,7 @@ data class DetailedEvent(
     override val choices: MutableList<out IDetailedChoice>,
     override val id: UUID,
     override val description: String,
-    override val title: String
+    override val title: String,
+    override val isDaily: Boolean
 ) : IDetailedEvent {
 }

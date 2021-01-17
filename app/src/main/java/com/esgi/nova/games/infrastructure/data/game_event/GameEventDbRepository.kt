@@ -7,6 +7,7 @@ import com.esgi.nova.games.ports.IGameEvent
 import com.esgi.nova.infrastructure.data.repository.BaseRepository
 import com.esgi.nova.utils.reflectMapCollection
 import com.esgi.nova.utils.reflectMapNotNull
+import java.time.LocalDateTime
 import java.util.*
 import javax.inject.Inject
 
@@ -22,6 +23,8 @@ class GameEventDbRepository @Inject constructor(override val dao: GameEventDao) 
     fun getAllEventsByGameOrderByLinkTimeDesc(gameId: UUID):List<IGameEvent>{
         return getAllById(gameId).sortedByDescending { it.linkTime }
     }
+
+
 
 }
 

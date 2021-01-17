@@ -10,6 +10,8 @@ import com.esgi.nova.games.ports.IResumedGame
 import com.esgi.nova.infrastructure.data.repository.BaseRepository
 import com.esgi.nova.utils.reflectMapCollection
 import com.esgi.nova.utils.reflectMapNotNull
+import java.time.LocalDate
+import java.time.LocalDateTime
 import java.util.*
 import javax.inject.Inject
 
@@ -52,6 +54,10 @@ class GameDbRepository @Inject constructor(
         return null
     }
 
+    fun hasDailyEventByDate(gameId: UUID, date: LocalDate): Boolean{
+        return gameEventDao.getAllGameWithEventById(gameId).any { gameWithEvent -> gameWithEvent.gameEvent.linkTime.toLocalDate() == date}
+    }
+
     fun getActiveGameId(): UUID? {
         return dao.getByIsEnded(false).firstOrNull()?.id
     }
@@ -67,4 +73,6 @@ class GameDbRepository @Inject constructor(
             game.id
         }
     }
+
+
 }

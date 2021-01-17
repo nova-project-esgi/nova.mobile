@@ -3,6 +3,7 @@ package com.esgi.nova.infrastructure.data
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.room.TypeConverter
+import com.esgi.nova.utils.DateConverter
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -13,17 +14,12 @@ object DateConverter {
     @TypeConverter
     @JvmStatic
     fun fromTimestamp(value: Long): LocalDateTime {
-        return LocalDateTime.ofInstant(
-            Instant.ofEpochMilli(value),
-            TimeZone.getDefault().toZoneId());
+        return DateConverter.fromTimestamp(value)
     }
 
     @TypeConverter
     @JvmStatic
     fun dateToTimestamp(date: LocalDateTime): Long {
-        return ZonedDateTime.of(
-            date,
-            ZoneId.systemDefault()
-        ).toInstant().toEpochMilli()
+        return DateConverter.dateToTimestamp(date)
     }
 }

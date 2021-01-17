@@ -7,4 +7,5 @@ interface IEvent: IIdEntity<UUID> {
     override val id: UUID
     val description: String
     val title: String
+    val isDaily: Boolean
 }
