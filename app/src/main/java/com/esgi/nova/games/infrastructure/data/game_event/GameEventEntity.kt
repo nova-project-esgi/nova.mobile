@@ -12,10 +12,6 @@ import java.util.*
 
 @Entity(
     tableName = "game_event",
-    indices = [
-        Index("event_id"),
-        Index("game_id")
-    ],
     foreignKeys = [
         ForeignKey(
             entity = EventEntity::class,
@@ -31,18 +27,22 @@ import java.util.*
             onDelete = ForeignKey.CASCADE,
             onUpdate = ForeignKey.CASCADE
         )
-    ], primaryKeys = ["event_id", "game_id"]
+    ]
 )
 data class GameEventEntity(
+    @PrimaryKey
+    @ColumnInfo(name = "id")
+    @field:TypeConverters(UUIDConverter::class)
+    override var id: UUID = UUID.randomUUID(),
     @ColumnInfo(name = "event_id")
     @field:TypeConverters(UUIDConverter::class)
-    override val eventId: UUID = UUID.randomUUID(),
+    override var eventId: UUID = UUID.randomUUID(),
     @ColumnInfo(name = "game_id")
     @field:TypeConverters(UUIDConverter::class)
-    override val gameId: UUID = UUID.randomUUID(),
+    override var gameId: UUID = UUID.randomUUID(),
     @ColumnInfo(name = "link_time")
     @field:TypeConverters(DateConverter::class)
-    override val linkTime: LocalDateTime
+    override var linkTime: LocalDateTime
 ): IGameEvent {
 
 }

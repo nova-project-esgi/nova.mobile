@@ -9,4 +9,5 @@ data class GameEvent(
     override val gameId: UUID,
     override val linkTime: LocalDateTime
 ): IGameEvent {
+    override val id: UUID = UUID.randomUUID()
 }

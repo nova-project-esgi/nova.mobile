@@ -35,12 +35,12 @@ import java.util.*
 data class DifficultyResourceEntity(
     @ColumnInfo(name="resource_id")
     @field:TypeConverters(UUIDConverter::class)
-    override val resourceId: UUID = UUID.randomUUID(),
+    override var resourceId: UUID = UUID.randomUUID(),
     @ColumnInfo(name="difficulty_id")
     @field:TypeConverters(UUIDConverter::class)
-    override val difficultyId: UUID = UUID.randomUUID(),
+    override var difficultyId: UUID = UUID.randomUUID(),
     @ColumnInfo(name = "start_value")
-    override val startValue: Int
+    override var startValue: Int
 ): IDifficultyResource {
 
 }

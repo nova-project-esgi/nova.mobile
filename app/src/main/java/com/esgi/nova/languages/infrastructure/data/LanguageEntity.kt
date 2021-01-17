@@ -13,9 +13,9 @@ import java.util.*
 data class LanguageEntity(
     @PrimaryKey()
     @field:TypeConverters(UUIDConverter::class)
-    override val id: UUID = UUID.randomUUID(),
-    @ColumnInfo(name = "code") override val code: String,
-    @ColumnInfo(name = "sub_code") override val subCode: String?,
+    override var id: UUID = UUID.randomUUID(),
+    @ColumnInfo(name = "code") override var code: String,
+    @ColumnInfo(name = "sub_code") override var subCode: String?,
     @ColumnInfo(name = "is_selected") override var isSelected: Boolean = false
 ): IAppLanguage {
 }

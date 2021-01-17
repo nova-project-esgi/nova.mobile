@@ -2,8 +2,8 @@ package com.esgi.nova
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.esgi.nova.application_state.application.IsSynchronized
 import com.esgi.nova.application_state.application.SetSynchronized
 import com.esgi.nova.difficulties.application.GetAllDetailedDifficulties
@@ -11,15 +11,13 @@ import com.esgi.nova.difficulties.application.SynchronizeDifficultiesToLocalStor
 import com.esgi.nova.events.application.GetAllDetailedEvents
 import com.esgi.nova.events.application.GetAllImageDetailedEventWrappers
 import com.esgi.nova.events.application.SynchronizeEventsToLocalStorage
-import com.esgi.nova.games.application.CreateGame
-import com.esgi.nova.games.application.LinkGameWithEvent
+import com.esgi.nova.games.application.*
 import com.esgi.nova.languages.application.SynchronizeLanguagesToLocalStorage
 import com.esgi.nova.resources.application.GetAllImageResourceWrappers
 import com.esgi.nova.resources.application.SynchronizeResourceToLocalStorage
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_init_setup.*
 import org.jetbrains.anko.doAsync
-import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -49,25 +47,36 @@ class InitSetupActivity : AppCompatActivity() {
     @Inject
     lateinit var getAllDetailedEvents: GetAllDetailedEvents
 
-    @Inject
-    lateinit var linkGameWithEvent: LinkGameWithEvent
 
     @Inject
     lateinit var createGame: CreateGame
 
     @Inject
     lateinit var isSynchronized: IsSynchronized
+
     @Inject
     lateinit var setSynchronized: SetSynchronized
 
+    @Inject
+    lateinit var getCurrentGame: GetCurrentGame
+
+    @Inject
+    lateinit var getNextEvent: GetNextEvent
+
+    @Inject
+    lateinit var confirmChoice: ConfirmChoice
+
     companion object {
         const val ResynchronizeKey = "ResynchronizeKey"
+
+        const val synchronizeStepsTotal = 6
 
         fun startInitSetup(context: Context): Context {
             val intent = Intent(context, InitSetupActivity::class.java)
             context.startActivity(intent)
             return context
         }
+
         fun startResynchronize(context: Context): Context {
             val intent = Intent(context, InitSetupActivity::class.java)
             intent.extras?.putBoolean(ResynchronizeKey, true)
@@ -86,17 +95,26 @@ class InitSetupActivity : AppCompatActivity() {
     }
 
     private fun loadData() {
-        loadingText?.text = getString(R.string.resourceLoadingPrompt)
+
+        setLoadingText(1)
 
         doAsync {
-            val language = Locale.getDefault().toLanguageTag() // TODO : chosen Language
             synchronizeLanguagesToLocalStorage.execute()
-            synchronizeResourcesToLocalStorage.execute(language)
-            synchronizeDifficultiesToLocalStorage.execute(language)
-            synchronizeEventsToLocalStorage.execute(language)
+            runOnUiThread { setLoadingText(2) }
+            synchronizeResourcesToLocalStorage.execute()
+            runOnUiThread { setLoadingText(3) }
+            synchronizeDifficultiesToLocalStorage.execute()
+            runOnUiThread { setLoadingText(4) }
+            synchronizeEventsToLocalStorage.execute()
+            runOnUiThread { setLoadingText(5) }
             setSynchronized.execute()
             navigateToDashboardPage()
         }
+    }
+
+    private fun setLoadingText(index: Int) {
+        val loadingTextString = getString(R.string.resourceLoadingPrompt) + " $index / $synchronizeStepsTotal"
+        loadingText?.text = loadingTextString
     }
 
 

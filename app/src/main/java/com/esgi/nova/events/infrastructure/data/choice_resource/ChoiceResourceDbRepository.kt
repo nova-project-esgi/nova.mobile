@@ -26,8 +26,8 @@ class ChoiceResourceDbRepository @Inject constructor(override val dao: ChoiceRes
     fun getAllDetailedChoices(): List<IDetailedChoice> =
         dao.getAllChoiceWithResource().toDetailedChoices()
 
-    fun getAllDetailedChoicesByChoiceId(choiceId: UUID): List<IDetailedChoice> =
-        dao.getAllChoiceWithResourceByChoiceId(choiceId).toDetailedChoices()
+    fun getDetailedChoiceById(choiceId: UUID): IDetailedChoice? =
+        dao.getAllChoiceWithResourceByChoiceId(choiceId).toDetailedChoices().firstOrNull()
 
 
 }
