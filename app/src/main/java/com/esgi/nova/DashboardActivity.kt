@@ -44,12 +44,20 @@ class DashboardActivity : AppCompatActivity(), View.OnClickListener, AdapterView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
+        generateDifficulties()
 
+
+        btn_to_leaderboard.setOnClickListener(this)
+    }
+
+    private fun generateDifficulties() {
         doAsync {
             try {
                 val result = getAllDetailedDifficulties.execute()
 
-                difficulties = result.reflectMapCollection<IDetailedDifficulty, DetailedDifficultyDto>().toList()
+                difficulties =
+                    result.reflectMapCollection<IDetailedDifficulty, DetailedDifficultyDto>()
+                        .toList()
                 runOnUiThread {
                     val arrayAdapter = ArrayAdapter(
                         this@DashboardActivity,
@@ -58,7 +66,7 @@ class DashboardActivity : AppCompatActivity(), View.OnClickListener, AdapterView
                     )
                     tv_difficulty.setAdapter(arrayAdapter)
                     tv_difficulty.inputType = 0
-                    if (difficulties.isNotEmpty()){
+                    if (difficulties.isNotEmpty()) {
                         currentDifficulty = difficulties[0]
                         tv_difficulty.setText(difficulties[0].name, false)
                         generateResourceViews()
@@ -67,13 +75,10 @@ class DashboardActivity : AppCompatActivity(), View.OnClickListener, AdapterView
                     }
                     tv_difficulty.onItemClickListener = this@DashboardActivity
                 }
-            } catch (e: Error){
+            } catch (e: Error) {
 
             }
         }
-
-
-        btn_to_leaderboard.setOnClickListener(this)
     }
 
     override fun onClick(view: View?) {
