@@ -90,9 +90,13 @@ class InitSetupActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_init_setup)
-//        if(!isSynchronized.execute() || intent.getBooleanExtra(ResynchronizeKey,false)){
-        navigateToDashboardPage()
-//        }
+        if (!isSynchronized.execute() || intent.getBooleanExtra(ResynchronizeKey, false)) {
+            loadData()
+        } else {
+            DashboardActivity.start(this@InitSetupActivity)
+            finish()
+        }
+
     }
 
     private fun loadData() {
@@ -109,7 +113,9 @@ class InitSetupActivity : AppCompatActivity() {
             synchronizeEventsToLocalStorage.execute()
             runOnUiThread { setLoadingText(5) }
             setSynchronized.execute()
-            navigateToDashboardPage()
+
+            DashboardActivity.start(this@InitSetupActivity)
+            finish()
         }
     }
 

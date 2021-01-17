@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.esgi.nova.adapters.ChoiceAdapter
@@ -25,6 +26,7 @@ class EventActivity : AppCompatActivity() {
     @Inject
     lateinit var getNextEvent: GetNextEvent
 
+    val choicesListViewModel by viewModels<ChoicesListViewModel>()
 
     companion object {
         fun startEventActivity(context: Context): Context {
@@ -40,38 +42,47 @@ class EventActivity : AppCompatActivity() {
 
         doAsync {
 
-            val localGame = getCurrentGame.execute()
-            val localResources = localGame?.resources
 
-            val currentEvent = localGame?.id?.let { getNextEvent.execute(it) }
-            val currentChoices = currentEvent?.choices
+            getCurrentGame.execute()?.let { game ->
 
-            runOnUiThread {
-                eventTitleView?.text = currentEvent?.title
-                eventDescriptionView?.text = currentEvent?.description
+                getNextEvent.execute(game.id)?.let { event ->
 
-                resourcesRecyclerView?.apply {
-                    val orientation = resources.configuration.orientation
+                    choicesListViewModel.choices.clear()
+                    choicesListViewModel.choices.addAll(event.choices)
 
-                    if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                    runOnUiThread {
+                        eventTitleView?.text = event.title
+                        eventDescriptionView?.text = event.description
 
-                    } else {
-                        layoutManager = LinearLayoutManager(
-                            this@EventActivity,
-                            LinearLayoutManager.HORIZONTAL,
-                            false
-                        )
+                        resourcesRecyclerView?.apply {
+                            val orientation = resources.configuration.orientation
+
+                            if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                                layoutManager = LinearLayoutManager(
+                                    this@EventActivity,
+                                    LinearLayoutManager.VERTICAL,
+                                    false
+                                )
+                            } else {
+                                layoutManager = LinearLayoutManager(
+                                    this@EventActivity,
+                                    LinearLayoutManager.HORIZONTAL,
+                                    false
+                                )
+
+                            }
+                            adapter = ResourcesAdapter(game.resources)
+                        }
+                        supportFragmentManager
+                            .beginTransaction()
+                            .replace(R.id.fragment_container, ChoicesListFragment.newInstance())
+                            .commitNow()
 
                     }
-
-                    adapter = localResources?.let { ResourcesAdapter(it) }
-                }
-
-                choicesRecyclerView?.apply {
-                    layoutManager = LinearLayoutManager(this@EventActivity)
-                    adapter = currentChoices?.let { ChoiceAdapter(it) }
                 }
             }
+
+
         }
 
 
