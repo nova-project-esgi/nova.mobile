@@ -28,7 +28,7 @@ class EventDbRepository @Inject constructor(
             })
     }
 
-    fun getDetailedEventById(id: UUID) = dao.getAllEventWithChoices().firstOrNull()?.let { eventWithChoices ->
+    fun getDetailedEventById(id: UUID) = dao.getAllEventWithChoicesByEventId(id).firstOrNull()?.let { eventWithChoices ->
         eventWithChoices.event.toDetailedEvent(eventWithChoices.choices
             .flatMap { choice ->
                 choiceResourceDAO.getAllChoiceWithResourceByChoiceId(choice.id)

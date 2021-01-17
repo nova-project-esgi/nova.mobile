@@ -70,9 +70,9 @@ class InitSetupActivity : AppCompatActivity() {
     companion object {
         const val ResynchronizeKey = "ResynchronizeKey"
 
-        const val synchronizeStepsTotal = 6
+        const val SynchronizeStepsTotal = 6
 
-        fun startInitSetup(context: Context): Context {
+        fun start(context: Context): Context {
             val intent = Intent(context, InitSetupActivity::class.java)
             context.startActivity(intent)
             return context
@@ -114,7 +114,7 @@ class InitSetupActivity : AppCompatActivity() {
     }
 
     private fun setLoadingText(index: Int) {
-        val loadingTextString = getString(R.string.resourceLoadingPrompt) + " $index / $synchronizeStepsTotal"
+        val loadingTextString = getString(R.string.resourceLoadingPrompt) + " $index / $SynchronizeStepsTotal"
         loadingText?.text = loadingTextString
     }
 
