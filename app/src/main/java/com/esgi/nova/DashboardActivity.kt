@@ -3,6 +3,7 @@ package com.esgi.nova
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.ArrayAdapter
 import kotlinx.android.synthetic.main.activity_dashboard.*
 import android.view.View
@@ -10,6 +11,7 @@ import com.esgi.nova.difficulties.application.GetAllDetailedDifficulties
 import com.esgi.nova.games.application.CreateGame
 import com.esgi.nova.models.Resource
 import dagger.hilt.android.AndroidEntryPoint
+import org.jetbrains.anko.doAsync
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -19,7 +21,7 @@ class DashboardActivity : AppCompatActivity(), View.OnClickListener {
     lateinit var createGame: CreateGame
 
     @Inject
-    lateinit var getAllDetailedDifficulties : GetAllDetailedDifficulties
+    lateinit var getAllDetailedDifficulties: GetAllDetailedDifficulties
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,31 +33,24 @@ class DashboardActivity : AppCompatActivity(), View.OnClickListener {
         tv_difficulty.inputType = 0
         tv_difficulty.setText(difficulties[0], false)
         btn_to_leaderboard.setOnClickListener(this)
+        btn_init_new_game.setOnClickListener(this)
     }
 
     override fun onClick(view: View?) {
+
+        Log.d("test", view.toString())
+
         if (view == btn_to_leaderboard) {
             val intent = Intent(this, LeaderBoardActivity::class.java)
             startActivity(intent)
-        }
+        } else if (view == btn_init_new_game) {
 
-        if (view == btn_new_game) {
+            doAsync {
+                createGame.execute(getAllDetailedDifficulties.execute().first().id) // TEMP
+                EventActivity.startEventActivity(this@DashboardActivity)
 
-            //todo: temp
-            val difficulty = getAllDetailedDifficulties.execute().first()
-
-            val difficultyResources = difficulty.resources
-
-            val resources = mutableListOf<Resource>()
-            difficultyResources.forEach {
-                resources += Resource(it.id, it.name, it.startValue)
             }
 
-            //todo: pas mal de trucs
-            createGame.execute(difficulty.id)
-
-            val intent = Intent(this, EventActivity::class.java)
-            startActivity(intent)
         }
     }
 }
