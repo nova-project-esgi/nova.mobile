@@ -2,14 +2,14 @@ package com.esgi.nova
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.content.res.Configuration
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.esgi.nova.adapters.ChoiceAdapter
 import com.esgi.nova.adapters.ResourcesAdapter
 import com.esgi.nova.games.application.GetCurrentGame
 import com.esgi.nova.games.application.GetNextEvent
-import com.esgi.nova.games.infrastructure.dto.GameResourceView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_event.*
 import org.jetbrains.anko.doAsync
@@ -51,7 +51,19 @@ class EventActivity : AppCompatActivity() {
                 eventDescriptionView?.text = currentEvent?.description
 
                 resourcesRecyclerView?.apply {
-                    layoutManager = LinearLayoutManager(this@EventActivity, LinearLayoutManager.HORIZONTAL, false)
+                    val orientation = resources.configuration.orientation
+
+                    if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+
+                    } else {
+                        layoutManager = LinearLayoutManager(
+                            this@EventActivity,
+                            LinearLayoutManager.HORIZONTAL,
+                            false
+                        )
+
+                    }
+
                     adapter = localResources?.let { ResourcesAdapter(it) }
                 }
 
