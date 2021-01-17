@@ -11,6 +11,7 @@ import com.esgi.nova.difficulties.application.GetAllDetailedDifficulties
 import com.esgi.nova.games.application.CreateGame
 import com.esgi.nova.models.Resource
 import dagger.hilt.android.AndroidEntryPoint
+import org.jetbrains.anko.doAsync
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -20,7 +21,7 @@ class DashboardActivity : AppCompatActivity(), View.OnClickListener {
     lateinit var createGame: CreateGame
 
     @Inject
-    lateinit var getAllDetailedDifficulties : GetAllDetailedDifficulties
+    lateinit var getAllDetailedDifficulties: GetAllDetailedDifficulties
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,22 +45,12 @@ class DashboardActivity : AppCompatActivity(), View.OnClickListener {
             startActivity(intent)
         } else if (view == btn_init_new_game) {
 
+            doAsync {
+                createGame.execute(getAllDetailedDifficulties.execute().first().id) // TEMP
+                EventActivity.startEventActivity(this@DashboardActivity)
 
+            }
 
-            //todo: temp
-//            val difficulty = getAllDetailedDifficulties.execute().first()
-//
-//            val difficultyResources = difficulty.resources
-//
-//            val resources = mutableListOf<Resource>()
-//            difficultyResources.forEach {
-//                resources += Resource(it.id, it.name, it.startValue)
-//            }
-//
-//            //todo: pas mal de trucs
-//            createGame.execute(difficulty.id)
-
-            EventActivity.startEventActivity(this@DashboardActivity)
         }
     }
 }
