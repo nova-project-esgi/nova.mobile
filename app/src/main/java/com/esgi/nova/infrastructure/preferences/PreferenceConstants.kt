@@ -14,4 +14,12 @@ object PreferenceConstants {
         const val IsSynchronizedKey = "isSynchronized"
     }
 
+    object Parameters{
+        const val Key = "parameters"
+        const val IsDarkModeKey = "isDarkMode"
+        const val HasDailyEventsKey = "hasDailyEvents"
+        const val HasNotificationsKey = "hasNotifications"
+        const val HasMusicKey = "hasMusic"
+    }
+
 }

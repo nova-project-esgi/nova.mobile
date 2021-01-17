@@ -39,6 +39,17 @@ class UserStorageRepository @Inject constructor(
         return null
     }
 
+    fun removeUser(): ILogUser?{
+        val user = getUser()
+        with(preference.edit()) {
+            remove(PreferenceConstants.User.TokenKey)
+            remove(PreferenceConstants.User.UsernameKey)
+            remove(PreferenceConstants.User.PasswordKey)
+            apply()
+        }
+        return user
+    }
+
 
 
 
