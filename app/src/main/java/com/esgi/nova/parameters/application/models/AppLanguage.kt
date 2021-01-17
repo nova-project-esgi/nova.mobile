@@ -1,4 +1,4 @@
-package com.esgi.nova.languages.application.models
+package com.esgi.nova.parameters.application.models
 
 import com.esgi.nova.languages.ports.IAppLanguage
 import java.util.*

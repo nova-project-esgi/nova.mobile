@@ -7,7 +7,7 @@ import com.esgi.nova.users.ports.ILogUser
 import javax.inject.Inject
 
 
-class LogUser @Inject constructor(
+class LogInUser @Inject constructor(
     private val authApiRepository: AuthApiRepository,
     private val userStorageRepository: UserStorageRepository
 ) {

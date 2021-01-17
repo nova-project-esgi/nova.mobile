@@ -12,7 +12,7 @@ import com.esgi.nova.events.application.GetAllDetailedEvents
 import com.esgi.nova.events.application.GetAllImageDetailedEventWrappers
 import com.esgi.nova.events.application.SynchronizeEventsToLocalStorage
 import com.esgi.nova.games.application.*
-import com.esgi.nova.languages.application.SynchronizeLanguagesToLocalStorage
+import com.esgi.nova.languages.application.SynchronizeLanguages
 import com.esgi.nova.resources.application.GetAllImageResourceWrappers
 import com.esgi.nova.resources.application.SynchronizeResourceToLocalStorage
 import dagger.hilt.android.AndroidEntryPoint
@@ -30,7 +30,7 @@ class InitSetupActivity : AppCompatActivity() {
     lateinit var synchronizeDifficultiesToLocalStorage: SynchronizeDifficultiesToLocalStorage
 
     @Inject
-    lateinit var synchronizeLanguagesToLocalStorage: SynchronizeLanguagesToLocalStorage
+    lateinit var synchronizeLanguages: SynchronizeLanguages
 
     @Inject
     lateinit var synchronizeResourcesToLocalStorage: SynchronizeResourceToLocalStorage
@@ -99,7 +99,7 @@ class InitSetupActivity : AppCompatActivity() {
         setLoadingText(1)
 
         doAsync {
-            synchronizeLanguagesToLocalStorage.execute()
+            synchronizeLanguages.execute()
             runOnUiThread { setLoadingText(2) }
             synchronizeResourcesToLocalStorage.execute()
             runOnUiThread { setLoadingText(3) }

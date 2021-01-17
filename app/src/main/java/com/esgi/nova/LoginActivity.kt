@@ -8,7 +8,7 @@ import android.view.View
 import android.widget.ProgressBar
 import android.widget.Toast
 import com.esgi.nova.events.application.SynchronizeEventsToLocalStorage
-import com.esgi.nova.users.application.LogUser
+import com.esgi.nova.users.application.LogInUser
 import com.esgi.nova.dtos.user.UserLoginDto
 import com.esgi.nova.users.application.HasConnectedUser
 import com.esgi.nova.users.exceptions.InvalidPasswordException
@@ -26,7 +26,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     @Inject
     lateinit var service: SynchronizeEventsToLocalStorage
     @Inject
-    lateinit var logUser: LogUser
+    lateinit var logInUser: LogInUser
     @Inject
     lateinit var hasConnectedUser: HasConnectedUser
 
@@ -95,7 +95,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     private fun login(user: UserLoginDto) {
         doAsync {
             try{
-                logUser.execute(user)
+                logInUser.execute(user)
                 runOnUiThread {
                     setViewVisibility(ProgressBar.GONE)
                     InitSetupActivity.startInitSetup(this@LoginActivity)

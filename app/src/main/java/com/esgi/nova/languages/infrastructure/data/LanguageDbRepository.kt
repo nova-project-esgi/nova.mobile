@@ -18,6 +18,7 @@ class LanguageDbRepository @Inject constructor(override val dao: LanguageDAO):
 
     override fun toEntities(entities: Collection<IAppLanguage>): Collection<LanguageEntity> = entities.reflectMapCollection()
 
+
     fun getSelectedLanguage(): IAppLanguage?{
         return dao.getSelectedLanguage().firstOrNull()
     }
@@ -29,11 +30,13 @@ class LanguageDbRepository @Inject constructor(override val dao: LanguageDAO):
         }
     }
 
-    fun deselectLanguages(){
-        dao.getSelectedLanguage().forEach { selectedLanguage ->
-            selectedLanguage.isSelected = false
-            update(selectedLanguage)
+    fun deselectLanguages(): List<UUID> {
+        return dao.getSelectedLanguage().map {language ->
+            language.isSelected = false
+            dao.update(language)
+            return@map language.id
         }
     }
+
 
 }
