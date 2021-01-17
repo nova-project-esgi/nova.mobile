@@ -9,6 +9,5 @@ interface IGameEvent: IIdEntity<UUID> {
     val eventId: UUID
     val gameId: UUID
     val linkTime: LocalDateTime
-    override val id: UUID
-        get() = gameId
+
 }

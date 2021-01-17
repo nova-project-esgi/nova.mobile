@@ -12,3 +12,4 @@ class GetCurrentGame @Inject constructor(
         return gameDbRepository.getResumedGameById(id)
     }
 }
+

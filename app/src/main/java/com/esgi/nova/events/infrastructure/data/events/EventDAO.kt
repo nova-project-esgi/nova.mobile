@@ -33,6 +33,10 @@ abstract class EventDAO : BaseDao<UUID, EventEntity> (){
     @Query("SELECT * FROM events")
     abstract  fun getAllEventWithChoices(): List<EventWithChoices>
 
+    @Transaction
+    @Query("SELECT * FROM events WHERE id = :eventId")
+    abstract  fun getAllEventWithChoicesByEventId(eventId: UUID): List<EventWithChoices>
+
 
 }
 

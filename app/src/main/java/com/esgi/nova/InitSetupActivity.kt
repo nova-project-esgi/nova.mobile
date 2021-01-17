@@ -11,10 +11,7 @@ import com.esgi.nova.difficulties.application.SynchronizeDifficultiesToLocalStor
 import com.esgi.nova.events.application.GetAllDetailedEvents
 import com.esgi.nova.events.application.GetAllImageDetailedEventWrappers
 import com.esgi.nova.events.application.SynchronizeEventsToLocalStorage
-import com.esgi.nova.games.application.CreateGame
-import com.esgi.nova.games.application.GetCurrentGame
-import com.esgi.nova.games.application.GetNextEvent
-import com.esgi.nova.games.application.LinkGameWithEvent
+import com.esgi.nova.games.application.*
 import com.esgi.nova.languages.application.SynchronizeLanguagesToLocalStorage
 import com.esgi.nova.resources.application.GetAllImageResourceWrappers
 import com.esgi.nova.resources.application.SynchronizeResourceToLocalStorage
@@ -50,8 +47,6 @@ class InitSetupActivity : AppCompatActivity() {
     @Inject
     lateinit var getAllDetailedEvents: GetAllDetailedEvents
 
-    @Inject
-    lateinit var linkGameWithEvent: LinkGameWithEvent
 
     @Inject
     lateinit var createGame: CreateGame
@@ -67,6 +62,9 @@ class InitSetupActivity : AppCompatActivity() {
 
     @Inject
     lateinit var getNextEvent: GetNextEvent
+
+    @Inject
+    lateinit var confirmChoice: ConfirmChoice
 
     companion object {
         const val ResynchronizeKey = "ResynchronizeKey"
@@ -99,23 +97,36 @@ class InitSetupActivity : AppCompatActivity() {
 
         doAsync {
 
+
+//            getCurrentGame.execute()?.let { game ->
+//                linkGameWithEvent.execute(game.id, getAllDetailedEvents.execute().first().id)
+//            }
+
+            synchronizeLanguagesToLocalStorage.execute()
+            synchronizeResourcesToLocalStorage.execute()
+            synchronizeDifficultiesToLocalStorage.execute()
+            synchronizeEventsToLocalStorage.execute()
 //            createGame.execute(
 //                getAllDetailedDifficulties.execute().first().id
 //            )
 //            getCurrentGame.execute()?.let { game ->
-//                linkGameWithEvent.execute(game.id, getAllDetailedEvents.execute().first().id)
+//                while(true){
+//                    getNextEvent.execute(game.id)?.let { event ->
+//                        val res = confirmChoice.execute(game.id, event.choices.first().id, duration = 12)
+//                        val currGame = getCurrentGame.execute()
+//                        println(currGame)
+//                        println(res)
+//                    }
+//                }
 //            }
-            getCurrentGame.execute()?.let { game ->
-                val nextEvent = getNextEvent.execute(game.id)
 
-            }
-
-//            synchronizeLanguagesToLocalStorage.execute()
-//            synchronizeResourcesToLocalStorage.execute()
-//            synchronizeDifficultiesToLocalStorage.execute()
-//            synchronizeEventsToLocalStorage.execute()
 //            setSynchronized.execute()
-//            navigateToDashboardPage()
+//            getCurrentGame.execute()?.let { game ->
+//                val nextEvent = getNextEvent.execute(game.id)
+//            }
+            navigateToDashboardPage()
+
+
         }
     }
 

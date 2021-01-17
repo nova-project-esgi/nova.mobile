@@ -12,10 +12,6 @@ import java.util.*
 
 @Entity(
     tableName = "game_event",
-    indices = [
-        Index("event_id"),
-        Index("game_id")
-    ],
     foreignKeys = [
         ForeignKey(
             entity = EventEntity::class,
@@ -31,9 +27,13 @@ import java.util.*
             onDelete = ForeignKey.CASCADE,
             onUpdate = ForeignKey.CASCADE
         )
-    ], primaryKeys = ["event_id", "game_id"]
+    ]
 )
 data class GameEventEntity(
+    @PrimaryKey
+    @ColumnInfo(name = "id")
+    @field:TypeConverters(UUIDConverter::class)
+    override var id: UUID = UUID.randomUUID(),
     @ColumnInfo(name = "event_id")
     @field:TypeConverters(UUIDConverter::class)
     override var eventId: UUID = UUID.randomUUID(),
