@@ -24,6 +24,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_leader_board.*
 import org.jetbrains.anko.doAsync
 import java.util.*
+import org.jetbrains.anko.doAsync
 import javax.inject.Inject
 
 
@@ -96,22 +97,12 @@ class DashboardActivity : AppCompatActivity(), View.OnClickListener, AdapterView
             startActivity(intent)
         } else if (view == btn_init_new_game) {
 
+            doAsync {
+                createGame.execute(getAllDetailedDifficulties.execute().first().id) // TEMP
+                EventActivity.startEventActivity(this@DashboardActivity)
 
+            }
 
-            //todo: temp
-//            val difficulty = getAllDetailedDifficulties.execute().first()
-//
-//            val difficultyResources = difficulty.resources
-//
-//            val resources = mutableListOf<Resource>()
-//            difficultyResources.forEach {
-//                resources += Resource(it.id, it.name, it.startValue)
-//            }
-//
-//            //todo: pas mal de trucs
-//            createGame.execute(difficulty.id)
-
-            EventActivity.startEventActivity(this@DashboardActivity)
         }
     }
 

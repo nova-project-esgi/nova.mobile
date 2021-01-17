@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.esgi.nova.games.infrastructure.dto.GameResourceView
+import com.esgi.nova.games.ports.ITotalValueResource
 
 class ResourceViewHolder(inflater: LayoutInflater, parent: ViewGroup):
     RecyclerView.ViewHolder(inflater.inflate(R.layout.resource_list_item, parent, false))
@@ -20,7 +21,7 @@ class ResourceViewHolder(inflater: LayoutInflater, parent: ViewGroup):
         amount = itemView.findViewById(R.id.amount)
     }
 
-    fun bind(resource: GameResourceView)
+    fun bind(resource: ITotalValueResource)
     {
         name?.text = resource.name
         amount?.text = resource.total.toString()

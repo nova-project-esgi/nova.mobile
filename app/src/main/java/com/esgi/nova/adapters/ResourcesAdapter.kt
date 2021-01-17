@@ -5,8 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.esgi.nova.ResourceViewHolder
 import com.esgi.nova.games.infrastructure.dto.GameResourceView
+import com.esgi.nova.games.ports.ITotalValueResource
 
-class ResourcesAdapter(private val resources: List<GameResourceView>) : RecyclerView.Adapter<ResourceViewHolder>() {
+class ResourcesAdapter(private val resources: List<ITotalValueResource>) : RecyclerView.Adapter<ResourceViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ResourceViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -14,7 +15,7 @@ class ResourcesAdapter(private val resources: List<GameResourceView>) : Recycler
     }
 
     override fun onBindViewHolder(holder: ResourceViewHolder, position: Int) {
-        val resource: GameResourceView = resources[position]
+        val resource: ITotalValueResource = resources[position]
         holder.bind(resource)
     }
 
