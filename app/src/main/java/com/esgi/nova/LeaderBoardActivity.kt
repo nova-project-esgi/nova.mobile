@@ -11,6 +11,9 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.esgi.nova.adapters.GamesAdapter
+import com.esgi.nova.difficulties.application.GetAllDetailedDifficulties
+import com.esgi.nova.difficulties.ports.IDetailedDifficulty
+import com.esgi.nova.dtos.difficulty.DetailedDifficultyDto
 import com.esgi.nova.games.application.GetLeaderBoardGameList
 import com.esgi.nova.games.infrastructure.dto.LeaderBoardGameView
 import com.esgi.nova.games.infrastructure.dto.UserResume
@@ -18,7 +21,9 @@ import com.esgi.nova.models.Difficulty
 import com.esgi.nova.models.Role
 import com.esgi.nova.users.exceptions.InvalidDifficultyException
 import com.esgi.nova.utils.NetworkUtils
+import com.esgi.nova.utils.reflectMapCollection
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.activity_dashboard.*
 import kotlinx.android.synthetic.main.activity_leader_board.*
 import org.jetbrains.anko.doAsync
 import java.util.*
@@ -30,33 +35,20 @@ class LeaderBoardActivity : AppCompatActivity(), AdapterView.OnItemClickListener
     @Inject
     lateinit var getLeaderBoardGameList: GetLeaderBoardGameList
 
-    private var difficulties = mutableListOf<Difficulty>(
-        Difficulty(UUID(15,20),"Facile"),
-        Difficulty(UUID(2,8),"Moyen"),
-        Difficulty(UUID(3,10),"Difficile")
-    )
-    private lateinit var currentDifficulty: Difficulty
+    @Inject
+    lateinit var getAllDetailedDifficulties: GetAllDetailedDifficulties
 
-    private var games = mutableListOf<LeaderBoardGameView>(
-        LeaderBoardGameView(UUID.randomUUID(), UserResume(UUID.randomUUID(),"james.bertho94@gmail.com",
-            Role.USER,"jamso"),1600, difficulties[0].id, emptyList(),45),
-        LeaderBoardGameView(UUID.randomUUID(), UserResume(UUID.randomUUID(),"james.bertho94@gmail.com",
-            Role.USER,"jamso"),1600, difficulties[0].id, emptyList(),15),
-        LeaderBoardGameView(UUID.randomUUID(), UserResume(UUID.randomUUID(),"james.bertho94@gmail.com",
-            Role.USER,"jamso"),1600, difficulties[0].id, emptyList(),30),
-        LeaderBoardGameView(UUID.randomUUID(), UserResume(UUID.randomUUID(),"james.bertho94@gmail.com",
-            Role.USER,"jamso"),1600, difficulties[0].id, emptyList(),30)
-    )
+    private lateinit var difficulties: List<DetailedDifficultyDto>
+
+    private lateinit var currentDifficulty: DetailedDifficultyDto
+
+    private var games = mutableListOf<LeaderBoardGameView>()
 
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_leader_board)
-        tv_leaderBoard_filter.setAdapter(ArrayAdapter(this, R.layout.list_item, difficulties))
-        tv_leaderBoard_filter.inputType = 0
-        tv_leaderBoard_filter.setText(difficulties[0].name, false)
-        currentDifficulty = difficulties[0]
 
         val itemDivider = DividerItemDecoration(applicationContext, 1)
         itemDivider.setDrawable(
@@ -67,7 +59,6 @@ class LeaderBoardActivity : AppCompatActivity(), AdapterView.OnItemClickListener
         )
         rv_scores.addItemDecoration(itemDivider)
 
-        games.sortByDescending { it.eventCount }
         rv_scores?.apply {
             layoutManager = LinearLayoutManager(this@LeaderBoardActivity)
             adapter = GamesAdapter(games)
@@ -82,10 +73,40 @@ class LeaderBoardActivity : AppCompatActivity(), AdapterView.OnItemClickListener
         )
 
         tv_leaderBoard_filter.onItemClickListener = this
+        generateDifficulties()
 
-        swipeContainer.isRefreshing = true
-        refreshRecyclerView()
+    }
 
+    private fun generateDifficulties() {
+        doAsync {
+            try {
+                val result = getAllDetailedDifficulties.execute()
+
+                difficulties =
+                    result.reflectMapCollection<IDetailedDifficulty, DetailedDifficultyDto>()
+                        .toList()
+                runOnUiThread {
+                    val arrayAdapter = ArrayAdapter(
+                        this@LeaderBoardActivity,
+                        R.layout.list_item,
+                        difficulties
+                    )
+                    tv_leaderBoard_filter.setAdapter(arrayAdapter)
+                    tv_leaderBoard_filter.inputType = 0
+                    if (difficulties.isNotEmpty()) {
+                        currentDifficulty = difficulties[0]
+                        tv_leaderBoard_filter.setText(difficulties[0].name, false)
+                        swipeContainer.isRefreshing = true
+                        refreshRecyclerView()
+                    } else {
+                        tv_leaderBoard_filter.isEnabled = false
+                    }
+                    tv_leaderBoard_filter.onItemClickListener = this@LeaderBoardActivity
+                }
+            } catch (e: Error) {
+
+            }
+        }
     }
 
 
@@ -126,7 +147,7 @@ class LeaderBoardActivity : AppCompatActivity(), AdapterView.OnItemClickListener
 
 
     override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        currentDifficulty = parent?.getItemAtPosition(position) as Difficulty
+        currentDifficulty = parent?.getItemAtPosition(position) as DetailedDifficultyDto
         swipeContainer.isRefreshing = true
         refreshRecyclerView()
     }
