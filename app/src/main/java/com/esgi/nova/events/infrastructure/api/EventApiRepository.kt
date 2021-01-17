@@ -6,6 +6,7 @@ import com.esgi.nova.infrastructure.api.LinkWrapper
 import com.esgi.nova.users.application.GetUserToken
 import com.esgi.nova.users.application.UpdateUserToken
 import retrofit2.Retrofit
+import java.util.*
 import javax.inject.Inject
 
 class EventApiRepository @Inject constructor(getUserToken: GetUserToken, updateUserToken: UpdateUserToken): ApiRepository(getUserToken,updateUserToken) {
@@ -25,4 +26,12 @@ class EventApiRepository @Inject constructor(getUserToken: GetUserToken, updateU
             .execute()
             .body()
             ?.map { LinkWrapper(it.toResumedEvent(), it.backgroundUrl) } ?: listOf()
+
+    fun getDailyEvent(language: String, gameId: UUID): LinkWrapper<IResumedEvent>? =
+        eventService
+            .getDailyEvent(language = language, gameId = gameId)
+            .execute()
+            .body()?.let {
+                LinkWrapper(it.toResumedEvent(isDaily = true), it.backgroundUrl) }
+
 }

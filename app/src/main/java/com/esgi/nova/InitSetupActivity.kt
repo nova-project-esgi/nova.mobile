@@ -66,6 +66,7 @@ class InitSetupActivity : AppCompatActivity() {
     @Inject
     lateinit var confirmChoice: ConfirmChoice
 
+
     companion object {
         const val ResynchronizeKey = "ResynchronizeKey"
 

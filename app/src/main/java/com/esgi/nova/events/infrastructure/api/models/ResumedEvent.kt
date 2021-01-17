@@ -9,7 +9,8 @@ data class ResumedEvent(
     override val choices: MutableList<out IResumedChoice>,
     override val id: UUID,
     override val description: String,
-    override val title: String
+    override val title: String,
+    override val isDaily: Boolean = false
 ) : IResumedEvent{
 
 }

@@ -17,12 +17,14 @@ data class EventEntity(
     @field:TypeConverters(UUIDConverter::class)
     override var id: UUID = UUID.randomUUID(),
     @ColumnInfo(name = "description") override var description: String,
-    @ColumnInfo(name = "title") override var title: String
+    @ColumnInfo(name = "title") override var title: String,
+    @ColumnInfo(name = "isDaily") override var isDaily: Boolean
 ) : IEvent {
     fun toDetailedEvent(choices: List<ChoiceWithResource>) = DetailedEvent(
         choices = choices.toDetailedChoices(),
         description = description,
         title = title,
+        isDaily = isDaily,
         id = id
     )
 }

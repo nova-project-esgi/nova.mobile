@@ -35,6 +35,8 @@ class EventDbRepository @Inject constructor(
             })
     }
 
+    fun getAllNonDaily() = dao.getAllByIsDaily(false)
+
 
 }
 

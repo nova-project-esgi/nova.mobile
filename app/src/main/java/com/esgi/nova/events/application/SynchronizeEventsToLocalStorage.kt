@@ -30,8 +30,8 @@ class SynchronizeEventsToLocalStorage @Inject constructor(
             }
         }
 
-        translatedEventsWrappers.forEach { resourceWrapper ->
-            synchronizeFile.execute(resourceWrapper.link.href, "${FsConstants.Paths.Events}${resourceWrapper.data.id}")
+        translatedEventsWrappers.forEach { eventWrapper ->
+            synchronizeFile.execute(eventWrapper.link.href, "${FsConstants.Paths.Events}${eventWrapper.data.id}")
         }
     }
 }
