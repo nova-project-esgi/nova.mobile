@@ -48,6 +48,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+        android:textColorHint="@color/colorPrimaryDark"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="100dp"
@@ -74,6 +75,7 @@
         android:gravity="center"
         android:footerDividersEnabled = "false"
         android:headerDividersEnabled = "false"
+        android:background="@color/resourcesBackground"
         android:orientation="horizontal">
 
     </LinearLayout>
@@ -87,6 +89,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
         android:background="@color/buttonColor"
         android:id="@+id/btn_init_new_game"
         android:text="@string/new_game" />

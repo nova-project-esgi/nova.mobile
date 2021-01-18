@@ -20,4 +20,11 @@
     <string name="user_not_exist_msg">Username or password does not exist</string>
     <string name="network_not_available_msg">Network not available</string>
     <string name="user_have_to_re_auth_msg">you must re-auth to the game</string>
+    <string name="language">Langage</string>
+    <string name="notification">Notification</string>
+    <string name="dark_mode">Mode sombre</string>
+    <string name="disconnection">Déconnexion</string>
+    <string name="save">Sauvegarder</string>
+    <string name="daily_event">Événements journaliers</string>
+    <string name="music">Musique</string>
 </resources>
