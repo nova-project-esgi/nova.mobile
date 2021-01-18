@@ -1,10 +1,10 @@
-package com.esgi.nova
+package com.esgi.nova.games.ui.view_holders
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.esgi.nova.games.infrastructure.dto.GameResourceView
+import com.esgi.nova.R
 import com.esgi.nova.games.ports.ITotalValueResource
 
 class ResourceViewHolder(inflater: LayoutInflater, parent: ViewGroup):

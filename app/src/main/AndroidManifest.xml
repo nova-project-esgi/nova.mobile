@@ -14,6 +14,7 @@
         android:roundIcon="@drawable/nova_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".games.ui.GameActivity"></activity>
         <activity android:name=".ParametersActivity"></activity>
         <activity android:name=".EventActivity" />
         <activity android:name=".LoginActivity">

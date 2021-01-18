@@ -10,3 +10,4 @@ class GetAllDetailedEvents @Inject constructor(
 
     fun execute(): List<IDetailedEvent>  = eventDbRepository.getAllDetailedEvent()
 }
+

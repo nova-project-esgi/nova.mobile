@@ -3,8 +3,13 @@ package com.esgi.nova.games.application
 import com.esgi.nova.events.application.GetDailyEvent
 import com.esgi.nova.events.infrastructure.data.events.EventDbRepository
 import com.esgi.nova.events.ports.IDetailedEvent
+import com.esgi.nova.files.application.GetFileBitmapById
+import com.esgi.nova.files.application.model.FileWrapper
+import com.esgi.nova.files.infrastructure.fs.FileStorageRepository
+import com.esgi.nova.files.infrastructure.ports.IFileWrapper
 import com.esgi.nova.games.application.models.GameEvent
 import com.esgi.nova.games.infrastructure.data.game_event.GameEventDbRepository
+import com.esgi.nova.infrastructure.fs.FsConstants
 import java.time.LocalDateTime
 import java.util.*
 import javax.inject.Inject
@@ -13,14 +18,16 @@ import kotlin.random.Random
 class GetNextEvent @Inject constructor(
     private val gameEventDbRepository: GameEventDbRepository,
     private val eventDbRepository: EventDbRepository,
-    private val getDailyEvent: GetDailyEvent
+    private val getDailyEvent: GetDailyEvent,
+    private val getFileBitmapById: GetFileBitmapById
+
 ){
 
     companion object{
         const val LastEventLimit = 3
     }
 
-    fun execute(gameId: UUID): IDetailedEvent? {
+    fun execute(gameId: UUID): IFileWrapper<IDetailedEvent>? {
 
         getDailyEvent.execute(gameId)?.let { event ->
             gameEventDbRepository.insertOne(
@@ -30,7 +37,9 @@ class GetNextEvent @Inject constructor(
                     linkTime = LocalDateTime.now()
                 )
             )
-            return event
+            getFileBitmapById.execute(FsConstants.Paths.Events, event.id)?.let { img ->
+                return FileWrapper(event, img)
+            }
         }
 
         val events = eventDbRepository.getAllNonDaily()
@@ -54,7 +63,11 @@ class GetNextEvent @Inject constructor(
                 gameId = gameId,
                 linkTime = LocalDateTime.now()
             ))
-            return eventDbRepository.getDetailedEventById(id = selectedEventId)
+            eventDbRepository.getDetailedEventById(id = selectedEventId)?.let { event ->
+                getFileBitmapById.execute(FsConstants.Paths.Events, event.id)?.let { img ->
+                    return FileWrapper(event, img)
+                }
+            }
         }
 
         return null

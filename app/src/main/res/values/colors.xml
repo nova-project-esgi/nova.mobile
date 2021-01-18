@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#6200EE</color>
+    <color name="colorSecondary">#FFC107</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#00B0FF</color>
 
     <color name="backgroundColor">#303030</color>
     <color name="secondaryBackgroundColor">#6200EE</color>
-    <color name="resourcesBackground">#80303030</color>
-    <color name="optionBtnBackground">#EDEDED</color>
 
-    <color name="buttonColor">#FFC107</color>
-    <color name="deleteColor">#F44336</color>
     <color name="textColor">#FFFFFF</color>
     <color name="secondaryTextColor">#A8A28E</color>
     <color name="sensitiveTextColor">#6200EE</color>

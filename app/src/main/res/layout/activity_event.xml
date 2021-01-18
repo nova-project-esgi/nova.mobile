@@ -4,56 +4,65 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".EventActivity">
+    tools:context=".games.ui.GameActivity">
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/resourceGL"
+        android:id="@+id/resource_gl"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent=".06" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/turnGL"
+        android:id="@+id/turn_gl"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent=".12" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/middleGL"
+        android:id="@+id/middle_gl"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent=".5" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/resourcesRecyclerView"
+        android:id="@+id/resources_rv"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="@id/resourceGL"
+        app:layout_constraintBottom_toBottomOf="@id/resource_gl"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/event_background_img"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/turn_gl"
+        app:layout_constraintBottom_toTopOf="@id/middle_gl"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:contentDescription="@string/event_background" />
 
     <TextView
-        android:id="@+id/eventTitleView"
+        android:id="@+id/event_title_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/turnGL" />
+        app:layout_constraintTop_toTopOf="@id/turn_gl" />
 
     <TextView
-        android:id="@+id/eventDescriptionView"
+        android:id="@+id/event_description_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@id/middleGL"
+        app:layout_constraintBottom_toBottomOf="@id/middle_gl"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/eventTitleView" />
+        app:layout_constraintTop_toBottomOf="@id/event_title_tv" />
 
     <FrameLayout
         android:id="@+id/fragment_container"
@@ -62,7 +71,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/middleGL"
+        app:layout_constraintTop_toBottomOf="@id/middle_gl"
         />
 
 

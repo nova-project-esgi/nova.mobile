@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/turnGL"
+        android:id="@+id/turn_gl"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="horizontal"
@@ -20,41 +20,52 @@
         app:layout_constraintGuide_percent=".9" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/resourceGL"
+        android:id="@+id/resource_gl"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="vertical"
         app:layout_constraintGuide_percent=".1" />
 
+    <ImageView
+        android:id="@+id/event_background_img"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        app:layout_constraintEnd_toEndOf="@id/middle_gl"
+        app:layout_constraintStart_toStartOf="@id/resource_gl"
+        app:layout_constraintTop_toBottomOf="@id/event_title_tv"
+        app:layout_constraintBottom_toBottomOf="@id/timerGL"
+        android:contentDescription="@string/event_background" />
+
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/resourcesRecyclerView"
+        android:id="@+id/resources_rv"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="vertical"
-        app:layout_constraintEnd_toStartOf="@id/resourceGL"
+        app:layout_constraintEnd_toStartOf="@id/resource_gl"
         app:layout_constraintBottom_toTopOf="@id/timerGL"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/turnGL" />
+        app:layout_constraintTop_toBottomOf="@id/turn_gl" />
 
     <TextView
-        android:id="@+id/eventTitleView"
+        android:id="@+id/event_title_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="@id/middleGL"
-        app:layout_constraintStart_toStartOf="@id/resourceGL"
-        app:layout_constraintTop_toTopOf="@id/turnGL" />
+        app:layout_constraintEnd_toEndOf="@id/middle_gl"
+        app:layout_constraintStart_toStartOf="@id/resource_gl"
+        app:layout_constraintTop_toBottomOf="@id/turn_gl"
+        app:layout_constraintBottom_toTopOf="@id/event_description_tv"/>
 
     <TextView
-        android:id="@+id/eventDescriptionView"
+        android:id="@+id/event_description_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="@id/middleGL"
-        app:layout_constraintStart_toStartOf="@id/resourceGL"
-        app:layout_constraintTop_toBottomOf="@id/eventTitleView"
-        app:layout_constraintBottom_toBottomOf="@id/timerGL"/>
+        app:layout_constraintEnd_toStartOf="@id/middle_gl"
+        app:layout_constraintStart_toEndOf="@id/resource_gl"
+        app:layout_constraintTop_toBottomOf="@id/event_title_tv"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/middleGL"
+        android:id="@+id/middle_gl"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="vertical"
@@ -67,7 +78,7 @@
         android:layout_width="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/middleGL"
+        app:layout_constraintStart_toStartOf="@id/middle_gl"
         app:layout_constraintTop_toTopOf="parent"
        />
 

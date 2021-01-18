@@ -8,6 +8,7 @@ import com.esgi.nova.games.infrastructure.api.GameApiRepository
 import com.esgi.nova.games.infrastructure.data.game.GameDbRepository
 import com.esgi.nova.games.infrastructure.data.game_event.GameEventDbRepository
 import com.esgi.nova.games.infrastructure.data.game_resource.GameResourceDbRepository
+import org.jetbrains.anko.doAsync
 import java.util.*
 import javax.inject.Inject
 
@@ -50,7 +51,9 @@ class ConfirmChoice @Inject constructor(
                 )
 
                 gameDbRepository.getGameEditionById(gameId)?.let { game ->
-                    gameApiRepository.update(gameId, game)
+                    doAsync {
+                        gameApiRepository.update(gameId, game)
+                    }
                 }
 
             }

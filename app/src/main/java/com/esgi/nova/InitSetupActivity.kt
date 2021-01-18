@@ -121,7 +121,7 @@ class InitSetupActivity : AppCompatActivity() {
 
     private fun setLoadingText(index: Int) {
         val loadingTextString = getString(R.string.resourceLoadingPrompt) + " $index / $SynchronizeStepsTotal"
-        loadingText?.text = loadingTextString
+        loading_tv?.text = loadingTextString
     }
 
 

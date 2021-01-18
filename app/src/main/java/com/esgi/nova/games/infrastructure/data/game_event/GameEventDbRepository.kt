@@ -24,6 +24,10 @@ class GameEventDbRepository @Inject constructor(override val dao: GameEventDao) 
         return getAllById(gameId).sortedByDescending { it.linkTime }
     }
 
+    fun getLastGameEventByGame(gameId: UUID):IGameEvent? {
+        return getAllEventsByGameOrderByLinkTimeDesc(gameId).firstOrNull()
+    }
+
 
 
 }

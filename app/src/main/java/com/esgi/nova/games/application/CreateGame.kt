@@ -6,7 +6,9 @@ import com.esgi.nova.games.application.models.GameForCreation
 import com.esgi.nova.games.infrastructure.api.GameApiRepository
 import com.esgi.nova.games.infrastructure.data.game.GameDbRepository
 import com.esgi.nova.games.infrastructure.data.game_resource.GameResourceDbRepository
+import com.esgi.nova.games.ports.IDetailedGame
 import com.esgi.nova.games.ports.IGame
+import com.esgi.nova.games.ports.IResumedGame
 import com.esgi.nova.users.infrastructure.data.UserStorageRepository
 import java.util.*
 import javax.inject.Inject
@@ -20,7 +22,7 @@ class CreateGame @Inject constructor(
     private val difficultyResourceDbRepository: DifficultyResourceDbRepository
 ) {
 
-    fun execute(difficultyId: UUID): IGame? {
+    fun execute(difficultyId: UUID): IResumedGame? {
         userStorageRepository.getUsername()?.let { username ->
             difficultyResourceDbRepository.getDetailedDifficultyById(difficultyId)?.let { difficulty ->
 
@@ -44,7 +46,7 @@ class CreateGame @Inject constructor(
                 }
 
                 gameResourceDbRepository.insertAll(difficulty.getGameResources(dbGameId))
-                return gameDbRepository.getById(dbGameId)
+                return gameDbRepository.getResumedGameById(dbGameId)
             }
         }
         return null

@@ -35,6 +35,9 @@ class EventDbRepository @Inject constructor(
             })
     }
 
+
+    fun getCount() = dao.getAll().size
+
     fun getAllNonDaily() = dao.getAllByIsDaily(false)
 
 

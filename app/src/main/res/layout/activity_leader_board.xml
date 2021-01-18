@@ -8,7 +8,7 @@
     tools:context=".LeaderBoardActivity">
 
     <TextView
-        android:id="@+id/tv_score_title"
+        android:id="@+id/score_title_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/scoreBoard_name"
@@ -16,16 +16,16 @@
         android:textSize="48sp"
         android:textColor="@color/textColor"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/ll_leaderBoard_filter"
+        app:layout_constraintBottom_toTopOf="@id/leaderBoard_filter_til"
 
         />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/ll_leaderBoard_filter"
+        android:id="@+id/leaderBoard_filter_til"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tv_score_title"
-        app:layout_constraintBottom_toTopOf="@+id/swipeContainer"
+        app:layout_constraintTop_toBottomOf="@id/score_title_tv"
+        app:layout_constraintBottom_toTopOf="@+id/swipe_container"
         android:layout_marginBottom="10dp"
         style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
         android:hint="@string/difficulty">
@@ -40,13 +40,13 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipeContainer"
+        android:id="@+id/swipe_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/ll_leaderBoard_filter">
+        app:layout_constraintTop_toBottomOf="@id/leaderBoard_filter_til">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_scores"
+            android:id="@+id/scores_rv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 

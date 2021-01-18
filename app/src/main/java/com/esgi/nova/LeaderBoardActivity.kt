@@ -1,5 +1,7 @@
 package com.esgi.nova
 
+import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -16,17 +18,12 @@ import com.esgi.nova.difficulties.ports.IDetailedDifficulty
 import com.esgi.nova.dtos.difficulty.DetailedDifficultyDto
 import com.esgi.nova.games.application.GetLeaderBoardGameList
 import com.esgi.nova.games.infrastructure.dto.LeaderBoardGameView
-import com.esgi.nova.games.infrastructure.dto.UserResume
-import com.esgi.nova.models.Difficulty
-import com.esgi.nova.models.Role
 import com.esgi.nova.users.exceptions.InvalidDifficultyException
 import com.esgi.nova.utils.NetworkUtils
 import com.esgi.nova.utils.reflectMapCollection
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_dashboard.*
 import kotlinx.android.synthetic.main.activity_leader_board.*
 import org.jetbrains.anko.doAsync
-import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -44,7 +41,12 @@ class LeaderBoardActivity : AppCompatActivity(), AdapterView.OnItemClickListener
 
     private var games = mutableListOf<LeaderBoardGameView>()
 
-
+    companion object{
+        fun start(context: Context){
+            val intent = Intent(context, LeaderBoardActivity::class.java)
+            context.startActivity(intent)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,15 +59,15 @@ class LeaderBoardActivity : AppCompatActivity(), AdapterView.OnItemClickListener
                 R.drawable.golden_divider
             )!!
         )
-        rv_scores.addItemDecoration(itemDivider)
+        scores_rv.addItemDecoration(itemDivider)
 
-        rv_scores?.apply {
+        scores_rv?.apply {
             layoutManager = LinearLayoutManager(this@LeaderBoardActivity)
             adapter = GamesAdapter(games)
         }
 
-        swipeContainer.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener { refreshRecyclerView() })
-        swipeContainer.setColorSchemeResources(
+        swipe_container.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener { refreshRecyclerView() })
+        swipe_container.setColorSchemeResources(
             android.R.color.holo_blue_bright,
             android.R.color.holo_green_light,
             android.R.color.holo_orange_light,
@@ -96,7 +98,7 @@ class LeaderBoardActivity : AppCompatActivity(), AdapterView.OnItemClickListener
                     if (difficulties.isNotEmpty()) {
                         currentDifficulty = difficulties[0]
                         tv_leaderBoard_filter.setText(difficulties[0].name, false)
-                        swipeContainer.isRefreshing = true
+                        swipe_container.isRefreshing = true
                         refreshRecyclerView()
                     } else {
                         tv_leaderBoard_filter.isEnabled = false
@@ -111,7 +113,7 @@ class LeaderBoardActivity : AppCompatActivity(), AdapterView.OnItemClickListener
 
 
     fun refreshRecyclerView() {
-        rv_scores.visibility = View.GONE
+        scores_rv.visibility = View.GONE
         if (NetworkUtils.isNetworkAvailable(this)) {
 
             doAsync {
@@ -122,8 +124,8 @@ class LeaderBoardActivity : AppCompatActivity(), AdapterView.OnItemClickListener
                         games.addAll(it.values)
                     }
                     runOnUiThread {
-                        rv_scores.visibility = View.VISIBLE
-                        swipeContainer.setRefreshing(false)
+                        scores_rv.visibility = View.VISIBLE
+                        swipe_container.setRefreshing(false)
                     }
                 } catch (e: InvalidDifficultyException) {
                     val toast = Toast.makeText(
@@ -132,23 +134,23 @@ class LeaderBoardActivity : AppCompatActivity(), AdapterView.OnItemClickListener
                         Toast.LENGTH_LONG
                     )
                     toast.show()
-                    rv_scores.visibility = View.VISIBLE
-                    swipeContainer.isRefreshing = false
+                    scores_rv.visibility = View.VISIBLE
+                    swipe_container.isRefreshing = false
                 }
             }
 
         } else {
             val toast = Toast.makeText(this, "Le réseau n'est pas disponible", Toast.LENGTH_LONG)
             toast.show()
-            rv_scores.visibility = View.VISIBLE
-            swipeContainer.isRefreshing = false
+            scores_rv.visibility = View.VISIBLE
+            swipe_container.isRefreshing = false
         }
     }
 
 
     override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         currentDifficulty = parent?.getItemAtPosition(position) as DetailedDifficultyDto
-        swipeContainer.isRefreshing = true
+        swipe_container.isRefreshing = true
         refreshRecyclerView()
     }
 
