@@ -2,7 +2,7 @@ package com.esgi.nova.games.ports
 
 import java.util.*
 
-interface IResumedGame {
+interface IRecappedGame {
     val id: UUID
     val resources: MutableList<ITotalValueResource>
     val duration: Int

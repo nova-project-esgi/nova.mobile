@@ -28,7 +28,5 @@ class GameEventDbRepository @Inject constructor(override val dao: GameEventDao) 
         return getAllEventsByGameOrderByLinkTimeDesc(gameId).firstOrNull()
     }
 
-
-
 }
 

@@ -5,6 +5,8 @@ import com.esgi.nova.files.application.model.FileWrapper
 import com.esgi.nova.files.infrastructure.ports.IFileWrapper
 import com.esgi.nova.games.application.models.GameEvent
 import com.esgi.nova.games.application.models.GameResource
+import com.esgi.nova.games.application.models.RecappedGameWithResourceIcons
+import com.esgi.nova.games.ports.IRecappedGame
 import com.esgi.nova.games.application.models.ResumedGameWithResourceIcons
 import com.esgi.nova.games.ports.*
 import com.esgi.nova.resources.ports.IResource
@@ -14,8 +16,8 @@ fun IDetailedDifficulty.getGameResources(gameId: UUID) = this.resources.map { re
     GameResource(resourceId = resource.id, total = resource.startValue, gameId = gameId)
 }
 
-fun IResumedGame.toResumedGameWithResourceIcons(resourceWrappers: List<IFileWrapper<IResource>>) =
-    ResumedGameWithResourceIcons(
+fun IRecappedGame.toRecappedGameWithResourceIcons(resourceWrappers: List<IFileWrapper<IResource>>) =
+    RecappedGameWithResourceIcons(
         id = this.id,
         resources = this.resources.mapNotNull { resource ->
             resourceWrappers.firstOrNull { resourceWrapper ->

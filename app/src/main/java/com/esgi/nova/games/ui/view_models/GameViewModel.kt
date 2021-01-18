@@ -3,7 +3,6 @@ package com.esgi.nova.games.ui.view_models
 import androidx.lifecycle.ViewModel
 import com.esgi.nova.events.ports.IDetailedEvent
 import com.esgi.nova.files.infrastructure.ports.IFileWrapper
-import com.esgi.nova.games.ports.IResumedGame
 import com.esgi.nova.games.ports.IResumedGameWithResourceIcons
 import com.esgi.nova.games.ports.ITotalValueResource
 import com.esgi.nova.ui.IViewModelState

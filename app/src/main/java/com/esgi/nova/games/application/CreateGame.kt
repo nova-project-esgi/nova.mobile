@@ -3,7 +3,7 @@ package com.esgi.nova.games.application
 import com.esgi.nova.difficulties.infrastructure.data.difficulty_resource.DifficultyResourceDbRepository
 import com.esgi.nova.games.application.models.Game
 import com.esgi.nova.games.application.models.GameForCreation
-import com.esgi.nova.games.application.models.ResumedGameWithResourceIcons
+import com.esgi.nova.games.application.models.RecappedGameWithResourceIcons
 import com.esgi.nova.games.infrastructure.api.GameApiRepository
 import com.esgi.nova.games.infrastructure.data.game.GameDbRepository
 import com.esgi.nova.games.infrastructure.data.game_resource.GameResourceDbRepository
@@ -22,7 +22,7 @@ class CreateGame @Inject constructor(
     private val getAllImageResourceWrappers: GetAllImageResourceWrappers
 ) {
 
-    fun execute(difficultyId: UUID): ResumedGameWithResourceIcons? {
+    fun execute(difficultyId: UUID): RecappedGameWithResourceIcons? {
         userStorageRepository.getUserResume()?.let { user ->
             difficultyResourceDbRepository.getDetailedDifficultyById(difficultyId)
                 ?.let { difficulty ->
@@ -50,8 +50,8 @@ class CreateGame @Inject constructor(
 
                 gameResourceDbRepository.insertAll(difficulty.getGameResources(dbGameId))
                 val resourceWrappers = getAllImageResourceWrappers.execute()
-                gameDbRepository.getResumedGameById(dbGameId)?.let {resumedGame ->
-                    return resumedGame.toResumedGameWithResourceIcons(resourceWrappers)
+                gameDbRepository.getRecappedGameById(dbGameId)?.let { resumedGame ->
+                    return resumedGame.toRecappedGameWithResourceIcons(resourceWrappers)
                 }
             }
         }

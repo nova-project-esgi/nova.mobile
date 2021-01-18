@@ -22,6 +22,7 @@ import java.util.*
 )
 data class GameEntity(
     @PrimaryKey
+    @ColumnInfo(name = "id")
     @field:TypeConverters(UUIDConverter::class)
     override var id: UUID = UUID.randomUUID(),
     @field:TypeConverters(UUIDConverter::class)
@@ -30,6 +31,7 @@ data class GameEntity(
     @ColumnInfo(name = "user_id")
     override var userId: UUID,
     override var duration: Int = 0,
+    @ColumnInfo(name = "is_ended")
     override var isEnded: Boolean = false
 ) : IGame{}
 

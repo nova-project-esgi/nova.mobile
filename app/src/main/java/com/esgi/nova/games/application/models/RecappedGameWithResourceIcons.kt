@@ -6,7 +6,7 @@ import com.esgi.nova.games.ports.IResumedGameWithResourceIcons
 import com.esgi.nova.games.ports.ITotalValueResource
 import java.util.*
 
-class ResumedGameWithResourceIcons(
+class RecappedGameWithResourceIcons(
     override val id: UUID,
     override val resources: List<IFileWrapper<ITotalValueResource>>,
     override val duration: Int,

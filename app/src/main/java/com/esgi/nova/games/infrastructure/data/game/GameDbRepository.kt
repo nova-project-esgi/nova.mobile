@@ -1,12 +1,12 @@
 package com.esgi.nova.games.infrastructure.data.game
 
 import com.esgi.nova.games.infrastructure.data.game.models.GameEdition
-import com.esgi.nova.games.infrastructure.data.game.models.ResumedGame
+import com.esgi.nova.games.infrastructure.data.game.models.RecappedGame
 import com.esgi.nova.games.infrastructure.data.game_event.GameEventDao
 import com.esgi.nova.games.infrastructure.data.game_resource.GameResourceDao
 import com.esgi.nova.games.ports.IGame
 import com.esgi.nova.games.ports.IGameEdition
-import com.esgi.nova.games.ports.IResumedGame
+import com.esgi.nova.games.ports.IRecappedGame
 import com.esgi.nova.infrastructure.data.repository.BaseRepository
 import com.esgi.nova.utils.reflectMapCollection
 import com.esgi.nova.utils.reflectMapNotNull
@@ -41,9 +41,9 @@ class GameDbRepository @Inject constructor(
         return null
     }
 
-    fun getResumedGameById(id: UUID): IResumedGame? {
+    fun getRecappedGameById(id: UUID): IRecappedGame? {
         getById(id)?.let {game ->
-            return ResumedGame(
+            return RecappedGame(
                 id = game.id,
                 duration = game.duration,
                 resources = gameResourceDao.getAllGameWithResourceById(id).map { it.toTotalValueResource() }.toMutableList(),
@@ -62,6 +62,9 @@ class GameDbRepository @Inject constructor(
         return dao.getByIsEndedAndUserId(false, userId).firstOrNull()?.id
     }
 
+    fun getLastEndedGameId(): UUID? {
+        return dao.getLast(true).firstOrNull()?.id
+    }
     fun getActiveGamesIds(userId: UUID): List<UUID> {
         return dao.getByIsEndedAndUserId(false, userId).map { it.id }
     }

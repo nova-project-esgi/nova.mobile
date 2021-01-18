@@ -15,10 +15,9 @@ class GetCurrentGame @Inject constructor(
     fun execute(): IResumedGameWithResourceIcons? =
         userStorageRepository.getUserId()?.let { userId ->
             gameDbRepository.getActiveGameId(userId)?.let { id ->
-                gameDbRepository.getResumedGameById(id)?.let { resumedGame ->
-                    val resourceWrappers = getAllImageResourceWrappers.execute()
-                    return resumedGame.toResumedGameWithResourceIcons(resourceWrappers)
-                }
+            gameDbRepository.getRecappedGameById(id)?.let { resumedGame ->
+                val resourceWrappers = getAllImageResourceWrappers.execute()
+                return resumedGame.toRecappedGameWithResourceIcons(resourceWrappers)
             }
         }
 
