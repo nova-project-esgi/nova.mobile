@@ -3,6 +3,8 @@ package com.esgi.nova
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -12,6 +14,7 @@ import com.esgi.nova.dtos.difficulty.DetailedDifficultyDto
 import com.esgi.nova.files.infrastructure.ports.IFileWrapper
 import com.esgi.nova.games.application.CreateGame
 import com.esgi.nova.games.infrastructure.data.game.models.CanLaunchGame
+import com.esgi.nova.games.infrastructure.data.game.models.CanResumeGame
 import com.esgi.nova.games.ui.GameActivity
 import com.esgi.nova.resources.application.GetImageResourceWrappersByIds
 import com.esgi.nova.resources.ports.IResource
@@ -36,6 +39,8 @@ class DashboardActivity : AppCompatActivity(), View.OnClickListener, AdapterView
 
     @Inject
     lateinit var canLaunchGame: CanLaunchGame
+    @Inject
+    lateinit var canResumeGame: CanResumeGame
 
     private lateinit var difficulties: List<DetailedDifficultyDto>
 
@@ -56,13 +61,26 @@ class DashboardActivity : AppCompatActivity(), View.OnClickListener, AdapterView
         setContentView(R.layout.activity_dashboard)
         generateDifficulties()
 
-
-        to_leaderboard_btn.setOnClickListener(this)
         init_new_game_btn.setOnClickListener(this)
         resume_game_btn.setOnClickListener(this)
         doAsync {
             init_new_game_btn.isEnabled = canLaunchGame.execute()
+            resume_game_btn.isEnabled = canResumeGame.execute()
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.dashboard_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.leaderboard_btn -> LeaderBoardActivity.start(this)
+            R.id.settings_btn -> SettingActivity.start(this)
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun generateDifficulties() {
@@ -96,7 +114,6 @@ class DashboardActivity : AppCompatActivity(), View.OnClickListener, AdapterView
 
     override fun onClick(view: View?) {
         when(view){
-            to_leaderboard_btn -> LeaderBoardActivity.start(this)
             init_new_game_btn -> GameActivity.newGame(this@DashboardActivity, selectedDifficulty.id)
             resume_game_btn -> GameActivity.start(this@DashboardActivity)
         }
@@ -129,15 +146,15 @@ class DashboardActivity : AppCompatActivity(), View.OnClickListener, AdapterView
     private fun createResourceView(inflater: LayoutInflater, resource: IFileWrapper<IResource>): View? {
         val view =
             inflater.inflate(R.layout.horizontal_list_resource, resources_list_ll, false)
-        val resourceName: TextView =  view.findViewById(R.id.tv_resource_name)
+        val resourceName: TextView =  view.findViewById(R.id.resource_name_tv)
         resourceName.text = resource.data.name
 
-        val imgView: ImageView = view.findViewById(R.id.iv_resource_img)
+        val imgView: ImageView = view.findViewById(R.id.resource_icon_iv)
         val lp = LinearLayout.LayoutParams(100, 100)
         imgView.setImageBitmap(resource.img)
         imgView.layoutParams = lp
 
-        val resourceStartValue: TextView = view.findViewById(R.id.tv_resource_value)
+        val resourceStartValue: TextView = view.findViewById(R.id.resource_value_tv)
         val startValueResource = selectedDifficulty.resources.filter { r -> r.id == resource.data.id }[0]
         resourceStartValue.text = "${startValueResource.startValue}"
 

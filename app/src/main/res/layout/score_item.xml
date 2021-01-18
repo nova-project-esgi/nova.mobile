@@ -3,71 +3,89 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
-    android:padding="20dp"
-    android:background="@color/leaderBoardItemColor">
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="5dp">
 
-    <TextView
-        android:id="@+id/tv_position"
-        android:layout_width="wrap_content"
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="48sp"
-        android:textStyle="bold"
+        android:clickable="false"
+        android:focusable="false"
+        android:checkable="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/tv_username"
-        android:textColor="@color/textColor"
-        tools:text="1" />
-
-    <TextView
-        android:id="@+id/tv_username"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@id/tv_turn"
-        app:layout_constraintStart_toEndOf="@+id/tv_position"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed"
-        android:layout_marginStart="15sp"
-        tools:text="Nom du joueur"
-        android:textColor="@color/textColor" />
-
-    <TextView
-        android:id="@+id/tv_turn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/tv_position"
-        app:layout_constraintTop_toBottomOf="@id/tv_username"
-        android:layout_marginStart="15sp"
-        android:textColor="@color/secondaryTextColor"
-        tools:text="Score du joueur" />
-
-    <TextView
-        android:id="@+id/tv_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/tv_turn"
-        app:layout_constraintTop_toBottomOf="@id/tv_username"
-        android:layout_marginStart="15sp"
-        android:textColor="@color/secondaryTextColor"
-        tools:text="Score du joueur" />
-
-    <ImageView
-        android:id="@+id/iv_trophy"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:src="@drawable/first"
-        android:contentDescription="Trophy">
+        app:cardElevation="1dp"
+        >
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/position_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="48sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/username_tv"
+                android:textColor="@color/primaryTextColor"
+                tools:text="1" />
 
-    </ImageView>
+            <TextView
+                android:id="@+id/username_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@id/round_tv"
+                app:layout_constraintStart_toEndOf="@+id/position_tv"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed"
+                android:layout_marginStart="15sp"
+                tools:text="Nom du joueur"
+                android:textColor="@color/primaryTextColor" />
+
+            <TextView
+                android:id="@+id/round_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/position_tv"
+                app:layout_constraintTop_toBottomOf="@id/username_tv"
+                android:layout_marginStart="15sp"
+                android:textColor="@color/secondaryTextColor"
+                tools:text="Score du joueur" />
+
+            <TextView
+                android:id="@+id/date_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/round_tv"
+                app:layout_constraintTop_toBottomOf="@id/username_tv"
+                android:layout_marginStart="15sp"
+                android:textColor="@color/secondaryTextColor"
+                tools:text="Score du joueur" />
+
+
+            <ImageView
+                android:id="@+id/trophy_iv"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:src="@drawable/first"
+                android:contentDescription="@string/trophy">
+            </ImageView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,12 +6,33 @@
     android:layout_height="match_parent"
     tools:context=".games.ui.GameActivity">
 
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="5dp"
+        android:background="@color/primaryColor"
+        app:layout_constraintBottom_toTopOf="@id/resource_gl"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/resources_rv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" />
+    </LinearLayout>
+
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/resource_gl"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent=".06" />
+
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/turn_gl"
@@ -20,22 +41,7 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent=".12" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/middle_gl"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent=".5" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/resources_rv"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="@id/resource_gl"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/event_background_img"
@@ -63,6 +69,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/event_title_tv" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/middle_gl"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent=".5" />
 
     <FrameLayout
         android:id="@+id/fragment_container"

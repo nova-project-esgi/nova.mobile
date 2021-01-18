@@ -8,3 +8,4 @@ interface IResumedGame {
     val duration: Int
     val rounds: Int
 }
+

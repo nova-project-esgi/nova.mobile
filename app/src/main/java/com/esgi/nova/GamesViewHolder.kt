@@ -16,11 +16,11 @@ class GamesViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
     private var tv_date: TextView? = null
 
     init {
-        username = itemView.findViewById(R.id.tv_username)
-        turn = itemView.findViewById(R.id.tv_turn)
-        tv_position = itemView.findViewById(R.id.tv_position)
-        trophy = itemView.findViewById(R.id.iv_trophy)
-        tv_date = itemView.findViewById(R.id.tv_date)
+        username = itemView.findViewById(R.id.username_tv)
+        turn = itemView.findViewById(R.id.round_tv)
+        tv_position = itemView.findViewById(R.id.position_tv)
+        trophy = itemView.findViewById(R.id.trophy_iv)
+        tv_date = itemView.findViewById(R.id.date_tv)
     }
 
     fun bind(score: LeaderBoardGameView, position: Int) {

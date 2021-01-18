@@ -10,6 +10,7 @@ import android.widget.Toast
 import com.esgi.nova.events.application.SynchronizeEventsToLocalStorage
 import com.esgi.nova.users.application.LogInUser
 import com.esgi.nova.dtos.user.UserLoginDto
+import com.esgi.nova.parameters.application.SetCurrentTheme
 import com.esgi.nova.users.application.HasConnectedUser
 import com.esgi.nova.users.exceptions.InvalidPasswordException
 import com.esgi.nova.users.exceptions.InvalidUsernameException
@@ -29,6 +30,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     lateinit var logInUser: LogInUser
     @Inject
     lateinit var hasConnectedUser: HasConnectedUser
+    @Inject lateinit var setCurrentTheme: SetCurrentTheme
 
     companion object {
         const val ReconnectionKey: String = "ReconnectionKey"
@@ -48,6 +50,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setCurrentTheme.execute()
         setContentView(R.layout.activity_login)
         btn_login.setOnClickListener(this)
 

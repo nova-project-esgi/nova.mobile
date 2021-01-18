@@ -16,4 +16,5 @@
     <style name="ThemeOverlay.App.Switch" parent="">
         <item name="colorAccent">@color/colorPrimaryDark</item>
     </style>
+
 </resources>

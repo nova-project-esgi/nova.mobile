@@ -10,3 +10,5 @@ class CanLaunchGame @Inject constructor(
 
     fun execute(): Boolean = eventDbRepository.getCount() > 0
 }
+
+

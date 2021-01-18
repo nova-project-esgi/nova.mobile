@@ -1,6 +1,7 @@
 package com.esgi.nova.parameters.infrastructure.storage
 
 import android.content.Context
+import androidx.appcompat.app.AppCompatDelegate
 import com.esgi.nova.application_state.storage.models.Parameters
 import com.esgi.nova.infrastructure.preferences.PreferenceConstants
 import com.esgi.nova.infrastructure.storage.BaseStorageRepository
@@ -11,12 +12,13 @@ class ParametersStorageRepository @Inject constructor(context: Context): BaseSto
 
     override val preferenceKey: String = PreferenceConstants.Parameters.Key
 
+
     fun save(parameters: IParameters){
         with(preference.edit()) {
             putBoolean(PreferenceConstants.Parameters.HasDailyEventsKey,parameters.hasDailyEvents)
             putBoolean(PreferenceConstants.Parameters.HasMusicKey,parameters.hasMusic)
             putBoolean(PreferenceConstants.Parameters.HasNotificationsKey,parameters.hasNotifications)
-            putBoolean(PreferenceConstants.Parameters.IsDarkModeKey,parameters.isDarkMode)
+            putBoolean(PreferenceConstants.Parameters.IsDarkModeKey, parameters.isDarkMode)
             apply()
         }
     }
@@ -28,5 +30,27 @@ class ParametersStorageRepository @Inject constructor(context: Context): BaseSto
             hasMusic = preference.getBoolean(PreferenceConstants.Parameters.HasMusicKey, false),
             hasNotifications = preference.getBoolean(PreferenceConstants.Parameters.HasNotificationsKey, false)
         )
+    }
+
+    fun switchTheme(isDarkMode: Boolean): IParameters {
+        with(preference.edit()) {
+            putBoolean(PreferenceConstants.Parameters.IsDarkModeKey, isDarkMode)
+            apply()
+        }
+        return get()
+    }
+    fun switchMusic(isOn: Boolean): IParameters {
+        with(preference.edit()) {
+            putBoolean(PreferenceConstants.Parameters.HasMusicKey, isOn)
+            apply()
+        }
+        return get()
+    }
+    fun switchNotification(isOn: Boolean): IParameters {
+        with(preference.edit()) {
+            putBoolean(PreferenceConstants.Parameters.HasNotificationsKey, isOn)
+            apply()
+        }
+        return get()
     }
 }

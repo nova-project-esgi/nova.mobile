@@ -14,7 +14,7 @@
         android:text="@string/scoreBoard_name"
         android:textAlignment="center"
         android:textSize="48sp"
-        android:textColor="@color/textColor"
+        android:textColor="@color/secondaryColor"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/leaderBoard_filter_til"
 

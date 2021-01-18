@@ -6,6 +6,7 @@ import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -109,8 +110,11 @@ class GameActivity : AppCompatActivity(), Observer<IDetailedChoice?>, OnChoiceCo
     }
 
     private fun startDashboard() {
-        DashboardActivity.start(this@GameActivity)
-        finish()
+        runOnUiThread {
+            DashboardActivity.start(this@GameActivity)
+            finish()
+        }
+
     }
 
     private fun loadGame() {
@@ -127,6 +131,10 @@ class GameActivity : AppCompatActivity(), Observer<IDetailedChoice?>, OnChoiceCo
         getCurrentGame.execute()?.let { game ->
             gameViewModel.copyGame(game)
             getCurrentEvent.execute(game.id)?.let { event ->
+                gameViewModel.event = event
+                return
+            }
+            getNextEvent.execute(game.id)?.let { event ->
                 gameViewModel.event = event
                 return
             }

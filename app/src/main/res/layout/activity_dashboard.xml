@@ -7,25 +7,6 @@
     android:background="@drawable/simple_bg"
     tools:context=".DashboardActivity">
 
-    <Button
-        android:id="@+id/to_leaderboard_btn"
-        android:layout_width="48dp"
-        android:layout_height="wrap_content"
-        android:drawableStart="@drawable/scores_icons_48_light"
-        android:background="?android:attr/selectableItemBackground"
-        app:layout_constraintStart_toStartOf="parent"
-        android:textColor="@color/textColor"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-
-        android:id="@+id/btn_to_parameters"
-        android:layout_width="48dp"
-        android:layout_height="wrap_content"
-        android:drawableEnd="@drawable/settings_icons_48_light"
-        android:background="?android:attr/selectableItemBackground"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/title_tv"
@@ -37,7 +18,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_chainStyle="spread"
         android:text="@string/app_name"
-        android:textColor="@color/textColor"
+        android:textColor="@color/secondaryLightColor"
         android:textSize="@android:dimen/app_icon_size" />
 
 
@@ -80,7 +61,7 @@
 
 
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="10dp"
@@ -88,11 +69,11 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/resume_game_btn"
-        android:background="@color/colorSecondary"
+        app:backgroundTint="@color/primaryColor"
         android:id="@+id/init_new_game_btn"
         android:text="@string/new_game" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="10dp"
@@ -100,7 +81,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/init_new_game_btn"
         app:layout_constraintEnd_toEndOf="parent"
-        android:background="@color/colorSecondary"
+        app:backgroundTint="@color/primaryColor"
         android:id="@+id/resume_game_btn"
         android:text="@string/resume_game" />
 
