@@ -40,6 +40,7 @@ class DashboardActivity : AppCompatActivity(), View.OnClickListener, AdapterView
 
     @Inject
     lateinit var canLaunchGame: CanLaunchGame
+
     @Inject
     lateinit var canResumeGame: CanResumeGame
 

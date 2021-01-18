@@ -102,7 +102,8 @@
         app:layout_constraintBottom_toTopOf="@id/middle_gl"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:contentDescription="@string/event_background" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
 
 
@@ -118,10 +119,22 @@
         android:id="@+id/event_description_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@id/middle_gl"
+        android:padding="20dp"
+        app:layout_constraintBottom_toTopOf="@id/event_background_img"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/event_title_tv" />
+
+    <ImageView
+        android:id="@+id/event_background_img"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="20dp"
+        android:contentDescription="@string/event_background"
+        app:layout_constraintBottom_toTopOf="@id/middle_gl"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/event_description_tv" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/middle_gl"
@@ -132,13 +145,12 @@
 
     <FrameLayout
         android:id="@+id/fragment_container"
-        android:layout_height="0dp"
         android:layout_width="match_parent"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/middle_gl"
-        />
+        app:layout_constraintTop_toBottomOf="@id/middle_gl" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
