@@ -38,6 +38,12 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
             context.startActivity(intent)
             return context
         }
+
+        fun startLoginActivity(context: Context): Context {
+            val intent = Intent(context, LoginActivity::class.java)
+            context.startActivity(intent)
+            return context
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
