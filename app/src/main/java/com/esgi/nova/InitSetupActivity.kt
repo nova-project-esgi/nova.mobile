@@ -91,7 +91,7 @@ class InitSetupActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_init_setup)
 //        if(!isSynchronized.execute() || intent.getBooleanExtra(ResynchronizeKey,false)){
-        loadData()
+        navigateToDashboardPage()
 //        }
     }
 
