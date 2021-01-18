@@ -19,7 +19,11 @@ interface GameService {
 
     @Headers(HeaderConstants.Accept + ": " + ApiConstants.CustomMediaType.Application.LeaderBoardGame)
     @GET("${ApiConstants.BaseUrl}${ApiConstants.EndPoints.Games}")
-    fun getLeaderBoardGamesByDifficulty(@Query("difficultyId") difficultyId: String): Call<PageMetadata<LeaderBoardGameView>>
+    fun getLeaderBoardGamesByDifficulty(
+        @Query("difficultyId") difficultyId: String,
+        @Query("page") page: Int,
+        @Query("size") pageSize: Int
+    ): Call<PageMetadata<LeaderBoardGameView>>
 
     @Headers(HeaderConstants.Accept + ": " + ApiConstants.CustomMediaType.Application.GameState)
     @GET("${ApiConstants.BaseUrl}${ApiConstants.EndPoints.Games}")
