@@ -24,6 +24,7 @@
     <string name="cancel">Cancel</string>
     <string name="resume_game">Resume game</string>
     <string name="event_background">Event background</string>
+    <string name="resource_icon">Resource icon</string>
     <string name="language">Langage</string>
     <string name="notification">Notification</string>
     <string name="dark_mode">Mode sombre</string>
