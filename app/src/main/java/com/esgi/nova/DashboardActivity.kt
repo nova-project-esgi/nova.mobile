@@ -1,5 +1,6 @@
 package com.esgi.nova
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -78,7 +79,7 @@ class DashboardActivity : AppCompatActivity(), View.OnClickListener, AdapterView
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.leaderboard_btn -> LeaderBoardActivity.start(this)
-            R.id.settings_btn -> SettingActivity.start(this)
+            R.id.settings_btn -> ParametersActivity.start(this)
         }
         return super.onOptionsItemSelected(item)
     }

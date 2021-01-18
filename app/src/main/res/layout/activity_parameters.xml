@@ -16,7 +16,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:text="@string/to_parameters"
-        android:textColor="@color/textColor"
+        android:textColor="@color/secondaryColor"
         android:textSize="@android:dimen/app_icon_size" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -39,7 +39,7 @@
         app:layout_constraintStart_toEndOf="@id/gl_left_option"
         app:layout_constraintEnd_toStartOf="@id/gl_right_option"
         style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
-        android:textColorHint="@color/colorPrimaryDark"
+        android:textColorHint="@color/primaryColor"
 
         android:layout_height="wrap_content"
         android:layout_width="0dp"
@@ -68,8 +68,7 @@
 
         app:useMaterialThemeColors="false"
         android:padding="15dp"
-        android:background="@color/optionBtnBackground"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@color/primaryColor"
 
         android:checked="true"
         android:text="@string/daily_event" />
@@ -86,8 +85,7 @@
 
         app:useMaterialThemeColors="false"
         android:padding="15dp"
-        android:background="@color/optionBtnBackground"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@color/primaryColor"
         android:checked="true"
         android:text="@string/dark_mode"
          />
@@ -104,8 +102,7 @@
         app:useMaterialThemeColors="false"
 
         android:padding="15dp"
-        android:background="@color/optionBtnBackground"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@color/primaryColor"
         android:checked="true"
         android:text="@string/notification"/>
 
@@ -121,8 +118,7 @@
         app:useMaterialThemeColors="false"
 
         android:padding="15dp"
-        android:background="@color/optionBtnBackground"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@color/primaryColor"
         android:checked="true"
         android:text="@string/music"/>
 
@@ -137,23 +133,20 @@
         app:layout_constraintEnd_toEndOf="parent"
 
         >
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/btn_disconnect_option"
 
-            app:layout_constraintHorizontal_chainStyle="spread"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/btn_save_option"
 
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:background="@color/deleteColor"
+            android:backgroundTint="@color/secondaryColor"
             android:text="@string/disconnection"/>
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/btn_save_option"
@@ -163,9 +156,7 @@
             app:layout_constraintStart_toEndOf="@id/btn_disconnect_option"
             app:layout_constraintEnd_toEndOf="parent"
 
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:background="@color/buttonColor"
+            android:backgroundTint="@color/primaryColor"
             android:text="@string/save"/>
 
 

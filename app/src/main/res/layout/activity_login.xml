@@ -71,7 +71,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
-        android:background="@color/buttonColor"
+        android:background="@color/primaryColor"
         android:text="@string/connexion">
 
     </com.google.android.material.button.MaterialButton>
@@ -87,7 +87,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
-        android:background="@color/buttonColor"
+        android:background="@color/primaryColor"
         android:text="@string/register"
         />
 

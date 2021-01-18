@@ -7,11 +7,13 @@ import javax.inject.Inject
 
 class SaveParameters @Inject constructor(
     private val selectLanguage: SelectLanguage,
-    private val parametersStorageRepository: ParametersStorageRepository
+    private val parametersStorageRepository: ParametersStorageRepository,
+    private var switchTheme: SwitchTheme
 ) {
 
     fun execute(params: ILanguageParameters): ILanguageParameters {
         parametersStorageRepository.save(params)
+        switchTheme.execute(params.isDarkMode)
         params.selectedLanguage?.let { language ->
             selectLanguage.execute(languageId = language.id)?.let { selectedLanguage ->
                 return params.toLanguageParameters(selectedLanguage)

@@ -48,11 +48,12 @@ class ParametersActivity : AppCompatActivity(), View.OnClickListener,
     private lateinit var parametersState: ILanguageParameters
 
     companion object {
-        fun startParametersActivity(context: Context): Context {
+        fun start(context: Context): Context {
             val intent = Intent(context, ParametersActivity::class.java)
             context.startActivity(intent)
             return context
         }
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -146,7 +147,7 @@ class ParametersActivity : AppCompatActivity(), View.OnClickListener,
             InitSetupActivity.startResynchronize(this)
             finish()
         } else {
-            DashboardActivity.startDashBoardActivity(this)
+            DashboardActivity.start(this)
             finish()
         }
     }
