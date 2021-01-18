@@ -14,7 +14,8 @@
         android:roundIcon="@drawable/nova_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".EventActivity"></activity>
+        <activity android:name=".ParametersActivity"></activity>
+        <activity android:name=".EventActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -7,8 +7,7 @@
     android:layout_width="50dp"
     android:layout_height="100dp"
     android:layout_marginStart="15dp"
-    android:layout_marginEnd="15dp"
-    android:background="@color/leaderBoardItemColor">
+    android:layout_marginEnd="15dp">
 
     <TextView
         android:id="@+id/tv_resource_name"

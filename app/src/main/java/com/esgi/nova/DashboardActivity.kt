@@ -55,6 +55,7 @@ class DashboardActivity : AppCompatActivity(), View.OnClickListener, AdapterView
 
         btn_to_leaderboard.setOnClickListener(this)
         btn_init_new_game.setOnClickListener(this)
+        btn_to_parameters.setOnClickListener(this)
     }
 
     private fun generateDifficulties() {
@@ -96,13 +97,12 @@ class DashboardActivity : AppCompatActivity(), View.OnClickListener, AdapterView
             val intent = Intent(this, LeaderBoardActivity::class.java)
             startActivity(intent)
         } else if (view == btn_init_new_game) {
-
             doAsync {
                 createGame.execute(getAllDetailedDifficulties.execute().first().id) // TEMP
                 EventActivity.startEventActivity(this@DashboardActivity)
-
             }
-
+        } else if (view == btn_to_parameters) {
+            ParametersActivity.startParametersActivity(this)
         }
     }
 
