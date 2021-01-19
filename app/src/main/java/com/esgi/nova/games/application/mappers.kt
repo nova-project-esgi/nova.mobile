@@ -3,9 +3,10 @@ package com.esgi.nova.games.application
 import com.esgi.nova.difficulties.ports.IDetailedDifficulty
 import com.esgi.nova.files.application.model.FileWrapper
 import com.esgi.nova.files.infrastructure.ports.IFileWrapper
+import com.esgi.nova.games.application.models.GameEvent
 import com.esgi.nova.games.application.models.GameResource
 import com.esgi.nova.games.application.models.ResumedGameWithResourceIcons
-import com.esgi.nova.games.ports.IResumedGame
+import com.esgi.nova.games.ports.*
 import com.esgi.nova.resources.ports.IResource
 import java.util.*
 
@@ -26,3 +27,15 @@ fun IResumedGame.toResumedGameWithResourceIcons(resourceWrappers: List<IFileWrap
         duration = this.duration,
         rounds = this.rounds
     )
+
+fun IGameResourceState.toGameResource(gameId: UUID) = GameResource(
+    resourceId = resourceId,
+    gameId = gameId,
+    total = total
+)
+
+fun IGameEventState.toGameEvent(gameId: UUID) = GameEvent(
+    eventId = eventId,
+    gameId = gameId,
+    linkTime = linkTime
+)

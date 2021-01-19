@@ -28,7 +28,10 @@
         app:layout_constraintBottom_toTopOf="@id/resources_list_ll"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+        app:endIconTint="@color/primaryColor"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+        android:textColorHint="@color/primaryColor"
+        app:boxStrokeColor="@color/primaryColor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="100dp"
@@ -40,6 +43,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="none"
+            android:textColor="@color/secondaryColor"
             />
 
     </com.google.android.material.textfield.TextInputLayout>

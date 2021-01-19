@@ -8,7 +8,7 @@ import com.esgi.nova.resources.infrastructure.api.ResourceApiRepository
 import com.esgi.nova.resources.infrastructure.data.ResourceDbRepository
 import javax.inject.Inject
 
-class SynchronizeResourceToLocalStorage @Inject constructor(
+class SynchronizeResources @Inject constructor(
     private val resourceDbRepository: ResourceDbRepository,
     private val resourceApiRepository: ResourceApiRepository,
     private val synchronizeFile: SynchronizeFile,

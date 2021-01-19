@@ -5,7 +5,7 @@ import java.util.*
 
 data class GameResume(
     override val id: UUID,
-    val userId: UUID,
+    override val userId: UUID,
     override val duration: Int,
     override val difficultyId: UUID,
     val resourceIds: List<UUID>,

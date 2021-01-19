@@ -8,5 +8,5 @@ interface IGame : IIdEntity<UUID>{
     val difficultyId: UUID
     val duration: Int
     val isEnded: Boolean
-
+    val userId: UUID
 }

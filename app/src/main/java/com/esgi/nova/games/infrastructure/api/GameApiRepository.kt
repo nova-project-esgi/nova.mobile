@@ -1,12 +1,12 @@
 package com.esgi.nova.games.infrastructure.api
 
+import com.esgi.nova.games.ports.IGameState
 import com.esgi.nova.games.application.models.GameForCreation
 import com.esgi.nova.games.infrastructure.api.models.GameForUpdate
 import com.esgi.nova.games.infrastructure.api.models.GameResume
 import com.esgi.nova.games.infrastructure.dto.LeaderBoardGameView
 import com.esgi.nova.games.ports.IGame
 import com.esgi.nova.games.ports.IGameForCreation
-import com.esgi.nova.games.ports.IDetailedGame
 import com.esgi.nova.games.ports.IGameEdition
 import com.esgi.nova.infrastructure.api.ApiRepository
 import com.esgi.nova.infrastructure.api.pagination.PageMetadata
@@ -44,6 +44,10 @@ class GameApiRepository @Inject constructor(getUserToken: GetUserToken, updateUs
     }
     fun getDefaultGamesList(difficultyId: UUID): PageMetadata<LeaderBoardGameView>? {
         return gameService.getLeaderBoardGamesByDifficulty(difficultyId.toString()).execute().body()
+    }
+
+    fun getLastActiveGameForUser(username: String): IGameState? {
+        return gameService.getGameStateByUsername(username).execute().body()
     }
 
 }

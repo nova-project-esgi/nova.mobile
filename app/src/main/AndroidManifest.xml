@@ -13,10 +13,8 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@drawable/nova_logo"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:background="@color/primaryColor">
-        <activity android:name=".ParametersActivity"></activity>
-        <activity android:name=".SettingActivity"></activity>
+        android:theme="@style/Theme.Nova.NoActionBar">
+        <activity android:name=".ParametersActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,7 +27,7 @@
         <activity android:name=".LeaderBoardActivity" />
         <activity
             android:name=".DashboardActivity"
-            android:theme="@style/Theme.Nova.ActionBar" />
+            android:theme="@style/Theme.Nova"/>
     </application>
 
 </manifest>

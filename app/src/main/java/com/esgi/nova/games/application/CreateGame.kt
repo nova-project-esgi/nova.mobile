@@ -7,7 +7,6 @@ import com.esgi.nova.games.application.models.ResumedGameWithResourceIcons
 import com.esgi.nova.games.infrastructure.api.GameApiRepository
 import com.esgi.nova.games.infrastructure.data.game.GameDbRepository
 import com.esgi.nova.games.infrastructure.data.game_resource.GameResourceDbRepository
-import com.esgi.nova.games.ports.IResumedGame
 import com.esgi.nova.resources.application.GetAllImageResourceWrappers
 import com.esgi.nova.users.infrastructure.data.UserStorageRepository
 import java.util.*
@@ -24,27 +23,30 @@ class CreateGame @Inject constructor(
 ) {
 
     fun execute(difficultyId: UUID): ResumedGameWithResourceIcons? {
-        userStorageRepository.getUsername()?.let { username ->
-            difficultyResourceDbRepository.getDetailedDifficultyById(difficultyId)?.let { difficulty ->
+        userStorageRepository.getUserResume()?.let { user ->
+            difficultyResourceDbRepository.getDetailedDifficultyById(difficultyId)
+                ?.let { difficulty ->
 
-                gameDbRepository.setActiveGamesEnded().forEach { endedGameId ->
-                    gameDbRepository.getGameEditionById(endedGameId)?.let { endedGame ->
-                        gameApiRepository.update(endedGameId, endedGame)
+                    gameDbRepository.setActiveGamesEnded(userId = user.id).forEach { endedGameId ->
+                        gameDbRepository.getGameEditionById(endedGameId)?.let { endedGame ->
+                            gameApiRepository.update(endedGameId, endedGame)
+                        }
                     }
-                }
 
-                var dbGameId = gameDbRepository.insertOne(
-                    Game(
-                        difficultyId = difficultyId,
-                        duration = 0,
-                        isEnded = false,
-                        id = UUID.randomUUID()
-                    )
+                    var dbGameId = gameDbRepository.insertOne(
+                        Game(
+                            difficultyId = difficultyId,
+                            duration = 0,
+                            isEnded = false,
+                            id = UUID.randomUUID(),
+                            userId = user.id
+                        )
                 )
 
-                gameApiRepository.createGame(GameForCreation(username, difficultyId))?.let { game ->
-                    dbGameId = gameDbRepository.replace(dbGameId, game)
-                }
+                    gameApiRepository.createGame(GameForCreation(user.username, difficultyId))
+                        ?.let { game ->
+                            dbGameId = gameDbRepository.replace(dbGameId, game)
+                        }
 
                 gameResourceDbRepository.insertAll(difficulty.getGameResources(dbGameId))
                 val resourceWrappers = getAllImageResourceWrappers.execute()

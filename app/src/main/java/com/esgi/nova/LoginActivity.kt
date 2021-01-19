@@ -7,7 +7,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.Toast
-import com.esgi.nova.events.application.SynchronizeEventsToLocalStorage
+import com.esgi.nova.events.application.SynchronizeEvents
 import com.esgi.nova.users.application.LogInUser
 import com.esgi.nova.dtos.user.UserLoginDto
 import com.esgi.nova.parameters.application.SetCurrentTheme
@@ -25,7 +25,7 @@ import javax.inject.Inject
 class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
     @Inject
-    lateinit var service: SynchronizeEventsToLocalStorage
+    lateinit var service: SynchronizeEvents
     @Inject
     lateinit var logInUser: LogInUser
     @Inject

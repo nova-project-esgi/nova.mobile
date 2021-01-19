@@ -7,14 +7,14 @@ import androidx.appcompat.app.AppCompatActivity
 import com.esgi.nova.application_state.application.IsSynchronized
 import com.esgi.nova.application_state.application.SetSynchronized
 import com.esgi.nova.difficulties.application.GetAllDetailedDifficulties
-import com.esgi.nova.difficulties.application.SynchronizeDifficultiesToLocalStorage
+import com.esgi.nova.difficulties.application.SynchronizeDifficulties
 import com.esgi.nova.events.application.GetAllDetailedEvents
 import com.esgi.nova.events.application.GetAllImageDetailedEventWrappers
-import com.esgi.nova.events.application.SynchronizeEventsToLocalStorage
+import com.esgi.nova.events.application.SynchronizeEvents
 import com.esgi.nova.games.application.*
 import com.esgi.nova.languages.application.SynchronizeLanguages
 import com.esgi.nova.resources.application.GetAllImageResourceWrappers
-import com.esgi.nova.resources.application.SynchronizeResourceToLocalStorage
+import com.esgi.nova.resources.application.SynchronizeResources
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_init_setup.*
 import org.jetbrains.anko.doAsync
@@ -24,16 +24,19 @@ import javax.inject.Inject
 class InitSetupActivity : AppCompatActivity() {
 
     @Inject
-    lateinit var synchronizeEventsToLocalStorage: SynchronizeEventsToLocalStorage
+    lateinit var synchronizeEvents: SynchronizeEvents
 
     @Inject
-    lateinit var synchronizeDifficultiesToLocalStorage: SynchronizeDifficultiesToLocalStorage
+    lateinit var synchronizeDifficulties: SynchronizeDifficulties
 
     @Inject
     lateinit var synchronizeLanguages: SynchronizeLanguages
 
     @Inject
-    lateinit var synchronizeResourcesToLocalStorage: SynchronizeResourceToLocalStorage
+    lateinit var synchronizeResources: SynchronizeResources
+
+    @Inject
+    lateinit var synchronizeLastActiveGame: SynchronizeLastActiveGame
 
     @Inject
     lateinit var getAllImageResourceWrappers: GetAllImageResourceWrappers
@@ -90,12 +93,12 @@ class InitSetupActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_init_setup)
-        if (!isSynchronized.execute() || intent.getBooleanExtra(ResynchronizeKey, false)) {
+//        if (!isSynchronized.execute() || intent.getBooleanExtra(ResynchronizeKey, false)) {
             loadData()
-        } else {
-            DashboardActivity.start(this@InitSetupActivity)
-            finish()
-        }
+//        } else {
+//            DashboardActivity.start(this@InitSetupActivity)
+//            finish()
+//        }
 
     }
 
@@ -106,12 +109,14 @@ class InitSetupActivity : AppCompatActivity() {
         doAsync {
             synchronizeLanguages.execute()
             runOnUiThread { setLoadingText(2) }
-            synchronizeResourcesToLocalStorage.execute()
+            synchronizeResources.execute()
             runOnUiThread { setLoadingText(3) }
-            synchronizeDifficultiesToLocalStorage.execute()
+            synchronizeDifficulties.execute()
             runOnUiThread { setLoadingText(4) }
-            synchronizeEventsToLocalStorage.execute()
+            synchronizeEvents.execute()
             runOnUiThread { setLoadingText(5) }
+            synchronizeLastActiveGame.execute()
+            runOnUiThread { setLoadingText(6) }
             setSynchronized.execute()
 
             DashboardActivity.start(this@InitSetupActivity)

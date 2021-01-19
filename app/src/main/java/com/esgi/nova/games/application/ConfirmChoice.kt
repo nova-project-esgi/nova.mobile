@@ -8,6 +8,7 @@ import com.esgi.nova.games.infrastructure.api.GameApiRepository
 import com.esgi.nova.games.infrastructure.data.game.GameDbRepository
 import com.esgi.nova.games.infrastructure.data.game_event.GameEventDbRepository
 import com.esgi.nova.games.infrastructure.data.game_resource.GameResourceDbRepository
+import com.esgi.nova.users.infrastructure.data.UserStorageRepository
 import org.jetbrains.anko.doAsync
 import java.util.*
 import javax.inject.Inject
@@ -16,11 +17,13 @@ class ConfirmChoice @Inject constructor(
     private val gameDbRepository: GameDbRepository,
     private val gameApiRepository: GameApiRepository,
     private val gameResourceDbRepository: GameResourceDbRepository,
-    private val choiceResourceDbRepository: ChoiceResourceDbRepository
+    private val choiceResourceDbRepository: ChoiceResourceDbRepository,
+    private val userRepository: UserStorageRepository
 ) {
 
     fun execute(gameId: UUID, choiceId: UUID, duration: Int): Boolean {
         var isEnded = false
+        val userId = userRepository.getUserId() ?: return true
 
         gameDbRepository.getById(gameId)?.let { game ->
             choiceResourceDbRepository.getDetailedChoiceById(choiceId)?.let { choice ->
@@ -46,7 +49,8 @@ class ConfirmChoice @Inject constructor(
                         id = gameId,
                         difficultyId = game.difficultyId,
                         isEnded = isEnded,
-                        duration = duration
+                        duration = duration,
+                        userId = userId
                     )
                 )
 

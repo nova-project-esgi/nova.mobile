@@ -2,7 +2,9 @@ package com.esgi.nova.games.infrastructure.api
 
 import com.esgi.nova.games.application.models.GameForCreation
 import com.esgi.nova.games.infrastructure.api.models.GameForUpdate
+import com.esgi.nova.games.infrastructure.api.models.GameState
 import com.esgi.nova.games.infrastructure.dto.LeaderBoardGameView
+import com.esgi.nova.games.infrastructure.dto.UserResume
 import com.esgi.nova.games.ports.IGameForCreation
 import com.esgi.nova.infrastructure.api.ApiConstants
 import com.esgi.nova.infrastructure.api.HeaderConstants
@@ -20,6 +22,10 @@ interface GameService {
     @Headers(HeaderConstants.Accept + ": " + ApiConstants.CustomMediaType.Application.LeaderBoardGame)
     @GET("${ApiConstants.BaseUrl}${ApiConstants.EndPoints.Games}")
     fun getLeaderBoardGamesByDifficulty(@Query("difficultyId") difficultyId: String): Call<PageMetadata<LeaderBoardGameView>>
+
+    @Headers(HeaderConstants.Accept + ": " + ApiConstants.CustomMediaType.Application.GameState)
+    @GET("${ApiConstants.BaseUrl}${ApiConstants.EndPoints.Games}")
+    fun getGameStateByUsername(@Query("username") username: String): Call<GameState>
 
     @POST(ApiConstants.EndPoints.Games)
     fun createGame(@Body gameForCreation: GameForCreation): Call<ResponseBody>

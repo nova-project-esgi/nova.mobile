@@ -4,16 +4,12 @@ import android.content.ContentValues.TAG
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.os.Build
 import android.util.Log
-import androidx.annotation.RequiresApi
 import com.esgi.nova.files.infrastructure.ports.IFileStreamResume
-import com.esgi.nova.utils.withoutExtension
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.io.OutputStream
-import java.nio.file.Paths
 import javax.inject.Inject
 
 class FileStorageRepository @Inject constructor(private val context: Context) {
@@ -36,15 +32,14 @@ class FileStorageRepository @Inject constructor(private val context: Context) {
         return null
     }
 
-
     fun saveFile(file: IFileStreamResume, destination: String): Boolean{
         return try {
             val savedFile = File("$storageDir$destination.${file.extension}")
             savedFile.parentFile?.mkdirs()
             if(!savedFile.exists()){
                 if(!savedFile.createNewFile()){
-                        return false
-                    }
+                    return false
+                }
             }
             var outputStream: OutputStream? = null
             try {
@@ -75,4 +70,20 @@ class FileStorageRepository @Inject constructor(private val context: Context) {
         }
 
     }
+
+//    fun saveFile(file: IFileStreamResume, destination: String): Boolean {
+//
+//        val savedFile = File("$storageDir$destination.${file.extension}")
+//        savedFile.parentFile?.mkdirs()
+//        if (!savedFile.exists()) {
+//            if (!savedFile.createNewFile()) {
+//                return false
+//            }
+//        }
+//        val bitmap = BitmapFactory.decodeStream(file.data)
+//        val outputStream = FileOutputStream(savedFile)
+//        bitmap.compress(Bitmap.CompressFormat.PNG, 80, outputStream)
+//        outputStream.close()
+//        return true
+//    }
 }

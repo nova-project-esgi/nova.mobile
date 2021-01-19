@@ -11,7 +11,6 @@ import com.esgi.nova.infrastructure.data.repository.BaseRepository
 import com.esgi.nova.utils.reflectMapCollection
 import com.esgi.nova.utils.reflectMapNotNull
 import java.time.LocalDate
-import java.time.LocalDateTime
 import java.util.*
 import javax.inject.Inject
 
@@ -54,20 +53,21 @@ class GameDbRepository @Inject constructor(
         return null
     }
 
-    fun hasDailyEventByDate(gameId: UUID, date: LocalDate): Boolean{
-        return gameEventDao.getAllGameWithEventById(gameId).any { gameWithEvent -> gameWithEvent.gameEvent.linkTime.toLocalDate() == date}
+    fun hasDailyEventByDate(gameId: UUID, date: LocalDate): Boolean {
+        return gameEventDao.getAllGameWithEventById(gameId)
+            .any { gameWithEvent -> gameWithEvent.gameEvent.linkTime.toLocalDate() == date }
     }
 
-    fun getActiveGameId(): UUID? {
-        return dao.getByIsEnded(false).firstOrNull()?.id
+    fun getActiveGameId(userId: UUID): UUID? {
+        return dao.getByIsEndedAndUserId(false, userId).firstOrNull()?.id
     }
 
-    fun getActiveGamesIds(): List<UUID> {
-        return dao.getByIsEnded(false).map { it.id }
+    fun getActiveGamesIds(userId: UUID): List<UUID> {
+        return dao.getByIsEndedAndUserId(false, userId).map { it.id }
     }
 
-    fun setActiveGamesEnded(): List<UUID>{
-        return dao.getByIsEnded(false).map {game ->
+    fun setActiveGamesEnded(userId: UUID): List<UUID> {
+        return dao.getByIsEndedAndUserId(false, userId).map { game ->
             game.isEnded = true
             dao.update(game)
             game.id

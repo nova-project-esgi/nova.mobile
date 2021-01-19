@@ -38,12 +38,12 @@
         app:layout_constraintBottom_toTopOf="@id/s_download_option"
         app:layout_constraintStart_toEndOf="@id/gl_left_option"
         app:layout_constraintEnd_toStartOf="@id/gl_right_option"
-        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+        app:endIconTint="@color/primaryColor"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
         android:textColorHint="@color/primaryColor"
-
+        app:boxStrokeColor="@color/primaryColor"
         android:layout_height="wrap_content"
         android:layout_width="0dp"
-
         android:hint="@string/language">
 
         <AutoCompleteTextView
@@ -51,6 +51,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="none"
+            android:textColor="@color/secondaryColor"
             />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -142,20 +143,19 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/btn_save_option"
-
+            app:icon="@drawable/baseline_close_white_24"
             android:backgroundTint="@color/secondaryColor"
-            android:text="@string/disconnection"/>
+            android:text="@string/log_out"/>
 
         <com.google.android.material.button.MaterialButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/btn_save_option"
-
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/btn_disconnect_option"
             app:layout_constraintEnd_toEndOf="parent"
-
+            app:icon="@drawable/baseline_save_white_24"
             android:backgroundTint="@color/primaryColor"
             android:text="@string/save"/>
 

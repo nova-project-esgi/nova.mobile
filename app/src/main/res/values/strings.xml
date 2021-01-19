@@ -35,6 +35,6 @@
     <string name="music">Music</string>
     <string name="notification">Notifications</string>
     <string name="daily_event">Activate daily events</string>
-    <string name="disconnection">Disconnection</string>
+    <string name="log_out">Logout</string>
     <string name="save">Save</string>
 </resources>

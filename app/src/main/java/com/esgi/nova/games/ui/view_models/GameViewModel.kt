@@ -18,6 +18,8 @@ class GameViewModel(
     override lateinit var resources: List<IFileWrapper<ITotalValueResource>>
     override var duration: Int = 0
     override var rounds: Int = 0
+    var timer: Timer? = null
+
 
     fun copyGame(game: IResumedGameWithResourceIcons) {
         id = game.id

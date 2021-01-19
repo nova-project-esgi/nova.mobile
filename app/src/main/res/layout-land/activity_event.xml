@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/turn_gl"
+        android:id="@+id/background_gl"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="horizontal"
@@ -44,7 +44,7 @@
         app:layout_constraintEnd_toStartOf="@id/resource_gl"
         app:layout_constraintBottom_toTopOf="@id/timerGL"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/turn_gl" />
+        app:layout_constraintTop_toBottomOf="@id/background_gl" />
 
     <TextView
         android:id="@+id/event_title_tv"
@@ -52,7 +52,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="@id/middle_gl"
         app:layout_constraintStart_toStartOf="@id/resource_gl"
-        app:layout_constraintTop_toBottomOf="@id/turn_gl"
+        app:layout_constraintTop_toBottomOf="@id/background_gl"
         app:layout_constraintBottom_toTopOf="@id/event_description_tv"/>
 
     <TextView

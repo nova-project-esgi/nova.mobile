@@ -6,7 +6,7 @@ import com.esgi.nova.difficulties.infrastructure.data.difficulty_resource.Diffic
 import com.esgi.nova.languages.infrastructure.data.LanguageDbRepository
 import javax.inject.Inject
 
-class SynchronizeDifficultiesToLocalStorage @Inject constructor(
+class SynchronizeDifficulties @Inject constructor(
     private val difficultiesDbRepository: DifficultyDbRepository,
     private val difficultiesApiRepository: DifficultyApiRepository,
     private val difficultiesResourceDbRepository: DifficultyResourceDbRepository,

@@ -7,6 +7,7 @@ class Game(
     override val id: UUID,
     override val difficultyId: UUID,
     override val duration: Int,
-    override val isEnded: Boolean
+    override val isEnded: Boolean,
+    override val userId: UUID
 ) : IGame {
 }

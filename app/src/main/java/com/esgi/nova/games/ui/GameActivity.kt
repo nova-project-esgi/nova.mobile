@@ -6,7 +6,6 @@ import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -26,8 +25,10 @@ import com.esgi.nova.utils.putUUIDExtra
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_event.*
 import org.jetbrains.anko.doAsync
+import java.time.LocalTime
 import java.util.*
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class GameActivity : AppCompatActivity(), Observer<IDetailedChoice?>, OnChoiceConfirmedListener {
@@ -88,6 +89,7 @@ class GameActivity : AppCompatActivity(), Observer<IDetailedChoice?>, OnChoiceCo
             event_title_tv?.text = gameViewModel.event.data.title
             event_description_tv?.text = gameViewModel.event.data.description
             event_background_img?.setImageBitmap(gameViewModel.event.img)
+            round_tv?.text = gameViewModel.rounds.toString()
             initResources()
             onChanged(choicesListViewModel.selected.value)
         }
@@ -195,5 +197,21 @@ class GameActivity : AppCompatActivity(), Observer<IDetailedChoice?>, OnChoiceCo
         }
     }
 
+    fun startTimer() {
+        if (gameViewModel.timer != null) {
+            return
+        }
+        gameViewModel.timer = Timer()
+        val timerTask: TimerTask = object : TimerTask() {
+            override fun run() {
+                runOnUiThread {
+                    gameViewModel.duration++
+                    timer_tv?.text =
+                        LocalTime.ofSecondOfDay(gameViewModel.duration.toLong()).toString()
+                }
+            }
+        }
+        gameViewModel.timer?.scheduleAtFixedRate(timerTask, 0, 1000)
+    }
 
 }

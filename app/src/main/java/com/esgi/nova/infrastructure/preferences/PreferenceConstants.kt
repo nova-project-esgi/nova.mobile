@@ -8,6 +8,7 @@ object PreferenceConstants {
         const val TokenKey = "token"
         const val Key = "user"
         const val PasswordKey = "password"
+        const val UserIdKey = "userId"
     }
     object ApplicationState{
         const val Key = "applicationState"

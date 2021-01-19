@@ -4,11 +4,11 @@
         <item name="colorPrimary">@color/primaryColor</item>
         <item name="colorPrimaryDark">@color/primaryDarkColor</item>
     </style>
-    <style name="Theme.Nova.NoActionBar" parent="Theme.Nova">
+    <style name="Theme.Nova.NoActionBar" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-    </style>
-    <style name="Theme.Nova.ActionBar" parent="Theme.Nova">
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimaryDark">@color/primaryDarkColor</item>
     </style>
 </resources>
 

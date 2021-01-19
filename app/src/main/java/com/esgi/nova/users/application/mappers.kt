@@ -9,5 +9,6 @@ fun IConnectedUser.toConnectedUserPassword(password: String): IConnectedUserPass
     email = email,
     role = role,
     username = username,
-    token = token
+    token = token,
+    id = id
 )

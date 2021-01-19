@@ -27,6 +27,8 @@ data class GameEntity(
     @field:TypeConverters(UUIDConverter::class)
     @ColumnInfo(name = "difficulty_id")
     override var difficultyId: UUID = UUID.randomUUID(),
+    @ColumnInfo(name = "user_id")
+    override var userId: UUID,
     override var duration: Int = 0,
     override var isEnded: Boolean = false
 ) : IGame{}

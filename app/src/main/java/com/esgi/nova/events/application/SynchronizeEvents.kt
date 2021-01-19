@@ -9,7 +9,7 @@ import com.esgi.nova.infrastructure.fs.FsConstants
 import com.esgi.nova.languages.infrastructure.data.LanguageDbRepository
 import javax.inject.Inject
 
-class SynchronizeEventsToLocalStorage @Inject constructor(
+class SynchronizeEvents @Inject constructor(
     private val eventDbRepository: EventDbRepository,
     private val choiceDbRepository: ChoiceDbRepository,
     private val eventApiRepository: EventApiRepository,
@@ -20,6 +20,7 @@ class SynchronizeEventsToLocalStorage @Inject constructor(
 
     fun execute(language: String = languageDbRepository.getSelectedLanguage()?.tag ?: "" ) {
         val translatedEventsWrappers = eventApiRepository.getAllTranslatedEvents(language)
+
 
         eventDbRepository.insertAll(translatedEventsWrappers.map { it.data })
 
