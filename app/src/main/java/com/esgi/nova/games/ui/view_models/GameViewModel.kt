@@ -3,14 +3,14 @@ package com.esgi.nova.games.ui.view_models
 import androidx.lifecycle.ViewModel
 import com.esgi.nova.events.ports.IDetailedEvent
 import com.esgi.nova.files.infrastructure.ports.IFileWrapper
-import com.esgi.nova.games.ports.IResumedGameWithResourceIcons
+import com.esgi.nova.games.ports.IRecappedGameWithResourceIcons
 import com.esgi.nova.games.ports.ITotalValueResource
 import com.esgi.nova.ui.IViewModelState
 import java.util.*
 
 class GameViewModel(
 
-) : ViewModel(), IResumedGameWithResourceIcons, IViewModelState {
+) : ViewModel(), IRecappedGameWithResourceIcons, IViewModelState {
 
     lateinit var event: IFileWrapper<IDetailedEvent>
     override lateinit var id: UUID
@@ -20,7 +20,7 @@ class GameViewModel(
     var timer: Timer? = null
 
 
-    fun copyGame(game: IResumedGameWithResourceIcons) {
+    fun copyGame(game: IRecappedGameWithResourceIcons) {
         id = game.id
         resources = game.resources
         duration = game.duration

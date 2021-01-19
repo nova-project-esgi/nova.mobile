@@ -7,7 +7,6 @@ import com.esgi.nova.games.application.models.GameEvent
 import com.esgi.nova.games.application.models.GameResource
 import com.esgi.nova.games.application.models.RecappedGameWithResourceIcons
 import com.esgi.nova.games.ports.IRecappedGame
-import com.esgi.nova.games.application.models.ResumedGameWithResourceIcons
 import com.esgi.nova.games.ports.*
 import com.esgi.nova.resources.ports.IResource
 import java.util.*
