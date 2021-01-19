@@ -6,10 +6,10 @@ import com.esgi.nova.infrastructure.preferences.getUUID
 import com.esgi.nova.infrastructure.preferences.putUUID
 import com.esgi.nova.infrastructure.storage.BaseStorageRepository
 import com.esgi.nova.users.infrastructure.data.models.LogUser
-import com.esgi.nova.users.infrastructure.data.models.UserResume
+import com.esgi.nova.users.infrastructure.data.models.UserRecapped
 import com.esgi.nova.users.ports.IConnectedUserPassword
 import com.esgi.nova.users.ports.ILogUser
-import com.esgi.nova.users.ports.IUserResume
+import com.esgi.nova.users.ports.IUserRecapped
 import java.util.*
 import javax.inject.Inject
 
@@ -36,9 +36,9 @@ class UserStorageRepository @Inject constructor(
     fun getUsername(): String? = preference.getString(PreferenceConstants.User.UsernameKey, null)
     fun getUserId(): UUID? = preference.getUUID(PreferenceConstants.User.UserIdKey, null)
 
-    fun getUserResume(): IUserResume? = getUserId()?.let { userId ->
+    fun getUserResume(): IUserRecapped? = getUserId()?.let { userId ->
         getUsername()?.let { username ->
-            UserResume (username = username, id = userId)
+            UserRecapped (username = username, id = userId)
         }
     }
 

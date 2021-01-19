@@ -4,8 +4,6 @@ import com.esgi.nova.games.application.models.GameForCreation
 import com.esgi.nova.games.infrastructure.api.models.GameForUpdate
 import com.esgi.nova.games.infrastructure.api.models.GameState
 import com.esgi.nova.games.infrastructure.dto.LeaderBoardGameView
-import com.esgi.nova.games.infrastructure.dto.UserResume
-import com.esgi.nova.games.ports.IGameForCreation
 import com.esgi.nova.infrastructure.api.ApiConstants
 import com.esgi.nova.infrastructure.api.HeaderConstants
 import com.esgi.nova.infrastructure.api.pagination.PageMetadata

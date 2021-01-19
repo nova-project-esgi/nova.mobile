@@ -46,7 +46,7 @@ class DashboardActivity : AppCompatActivity(), View.OnClickListener, AdapterView
 
     private lateinit var difficulties: List<DetailedDifficultyDto>
 
-    private var selectedDifficulty: DetailedDifficultyDto? = null
+    private lateinit var selectedDifficulty: DetailedDifficultyDto
 
 
     private var wrapperResources = mutableListOf<IFileWrapper<IResource>>()
@@ -115,10 +115,9 @@ class DashboardActivity : AppCompatActivity(), View.OnClickListener, AdapterView
 
 
     override fun onClick(view: View?) {
-        when(view){
-            init_new_game_btn -> selectedDifficulty?.id?.let {
-                GameActivity.newGame(this@DashboardActivity, it)
-            }
+        when (view) {
+            init_new_game_btn -> GameActivity.newGame(this@DashboardActivity, selectedDifficulty.id)
+
             resume_game_btn -> GameActivity.start(this@DashboardActivity)
         }
 
@@ -130,20 +129,18 @@ class DashboardActivity : AppCompatActivity(), View.OnClickListener, AdapterView
     }
 
     private fun generateResourceViews() {
-        selectedDifficulty?.let { difficulty ->
-            doAsync {
-                val result = getImageResourceWrappersByIds.execute(difficulty.resources)
+        doAsync {
+            val result = getImageResourceWrappersByIds.execute(selectedDifficulty.resources)
+            wrapperResources.clear()
+            wrapperResources.addAll(result)
+            runOnUiThread {
                 wrapperResources.clear()
                 wrapperResources.addAll(result)
-                runOnUiThread {
-                    wrapperResources.clear()
-                    wrapperResources.addAll(result)
-                    val inflater = LayoutInflater.from(this@DashboardActivity)
-                    resources_list_ll.removeAllViews()
-                    wrapperResources.forEach {
-                        val resourceView = createResourceView(inflater, it)
-                        resources_list_ll.addView(resourceView)
-                    }
+                val inflater = LayoutInflater.from(this@DashboardActivity)
+                resources_list_ll.removeAllViews()
+                wrapperResources.forEach {
+                    val resourceView = createResourceView(inflater, it)
+                    resources_list_ll.addView(resourceView)
                 }
             }
         }
@@ -152,7 +149,7 @@ class DashboardActivity : AppCompatActivity(), View.OnClickListener, AdapterView
     private fun createResourceView(inflater: LayoutInflater, resource: IFileWrapper<IResource>): View? {
         val view =
             inflater.inflate(R.layout.horizontal_list_resource, resources_list_ll, false)
-        val resourceName: TextView =  view.findViewById(R.id.resource_name_tv)
+        val resourceName: TextView = view.findViewById(R.id.resource_name_tv)
         resourceName.text = resource.data.name
 
         val imgView: ImageView = view.findViewById(R.id.resource_icon_iv)
@@ -161,10 +158,9 @@ class DashboardActivity : AppCompatActivity(), View.OnClickListener, AdapterView
         imgView.layoutParams = lp
 
         val resourceStartValue: TextView = view.findViewById(R.id.resource_value_tv)
-        selectedDifficulty?.let { difficulty ->
-            val startValueResource = difficulty.resources.filter { r -> r.id == resource.data.id }[0]
-            resourceStartValue.text = "${startValueResource.startValue}"
-        }
+        val startValueResource =
+            selectedDifficulty.resources.filter { r -> r.id == resource.data.id }[0]
+        resourceStartValue.text = "${startValueResource.startValue}"
 
         return view
     }

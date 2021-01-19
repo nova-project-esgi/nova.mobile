@@ -15,8 +15,8 @@ abstract class GameDao : BaseDao<UUID, GameEntity>() {
     @Query("SELECT * FROM games WHERE is_ended = :isEnded AND user_id = :userId")
     abstract fun getByIsEndedAndUserId(isEnded: Boolean, userId: UUID): List<GameEntity>
 
-    @Query("SELECT * FROM games WHERE id = (SELECT game_id from game_event ORDER BY link_time DESC LIMIT 1) AND is_ended = :isEnded ")
-    abstract fun getLast(isEnded: Boolean): List<GameEntity>
+    @Query("SELECT * FROM games WHERE id = (SELECT game_id from game_event ORDER BY link_time DESC LIMIT 1) AND is_ended = :isEnded AND user_id =:userId")
+    abstract fun getLast(isEnded: Boolean, userId: UUID): List<GameEntity>
 
     @Query("DELETE FROM games")
     abstract override fun deleteAll()

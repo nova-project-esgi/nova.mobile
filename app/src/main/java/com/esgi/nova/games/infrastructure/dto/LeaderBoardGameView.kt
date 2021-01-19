@@ -4,7 +4,7 @@ import java.util.*
 
 data class LeaderBoardGameView (
     val id: UUID,
-    val user: UserResume,
+    val user: UserRecapped,
     val duration: Int,
     val difficultyId: UUID,
     val resources: List<GameResourceView>,

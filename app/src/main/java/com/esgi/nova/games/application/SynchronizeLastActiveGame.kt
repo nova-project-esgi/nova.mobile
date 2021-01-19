@@ -15,7 +15,7 @@ import com.esgi.nova.games.ports.IGameState
 import com.esgi.nova.infrastructure.fs.FsConstants
 import com.esgi.nova.languages.infrastructure.data.LanguageDbRepository
 import com.esgi.nova.users.infrastructure.data.UserStorageRepository
-import com.esgi.nova.users.ports.IUserResume
+import com.esgi.nova.users.ports.IUserRecapped
 import javax.inject.Inject
 
 class SynchronizeLastActiveGame @Inject constructor(
@@ -77,7 +77,7 @@ class SynchronizeLastActiveGame @Inject constructor(
     }
 
     private fun recreateGame(
-        user: IUserResume,
+        user: IUserRecapped,
         gameState: IGameState,
         gameResources: List<GameResource>,
         gameEvents: List<GameEvent>,

@@ -62,8 +62,8 @@ class GameDbRepository @Inject constructor(
         return dao.getByIsEndedAndUserId(false, userId).firstOrNull()?.id
     }
 
-    fun getLastEndedGameId(): UUID? {
-        return dao.getLast(true).firstOrNull()?.id
+    fun getLastEndedGameId(userId: UUID): UUID? {
+        return dao.getLast(true, userId).firstOrNull()?.id
     }
     fun getActiveGamesIds(userId: UUID): List<UUID> {
         return dao.getByIsEndedAndUserId(false, userId).map { it.id }
