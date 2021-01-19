@@ -17,9 +17,10 @@ class SynchronizeLanguages @Inject constructor(
 
     fun execute(selectedLanguage: String = languageSystemRepository.getLanguage()) {
         val languages = languageApiRepository.getAll();
-        
-        languageDbRepository.insertAll(languages.reflectMapCollection<IDefaultLanguage, AppLanguage>())
 
+        languageDbRepository.upsertCollection(languages.reflectMapCollection<IDefaultLanguage, AppLanguage>())
+//        languageDbRepository.insertAll()
+        
         val selectLanguage = languages.firstOrNull { it.tag == selectedLanguage }
             ?: languages.firstOrNull { it.isDefault }
 

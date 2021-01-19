@@ -27,11 +27,21 @@ class EventApiRepository @Inject constructor(getUserToken: GetUserToken, updateU
             .body()
             ?.map { LinkWrapper(it.toResumedEvent(), it.backgroundUrl) } ?: listOf()
 
+
+    fun getOneTranslatedEvent(eventId: UUID, language: String): LinkWrapper<IResumedEvent>? =
+        eventService
+            .getOneTranslatedEvent(eventId = eventId.toString(), language = language)
+            .execute()
+            .body()
+            ?.let { event -> LinkWrapper(event.toResumedEvent(), event.backgroundUrl) }
+
+
     fun getDailyEvent(language: String, gameId: UUID): LinkWrapper<IResumedEvent>? =
         eventService
             .getDailyEvent(language = language, gameId = gameId)
             .execute()
             .body()?.let {
-                LinkWrapper(it.toResumedEvent(isDaily = true), it.backgroundUrl) }
+                LinkWrapper(it.toResumedEvent(isDaily = true), it.backgroundUrl)
+            }
 
 }

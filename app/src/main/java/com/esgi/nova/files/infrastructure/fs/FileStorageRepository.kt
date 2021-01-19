@@ -1,23 +1,23 @@
 package com.esgi.nova.files.infrastructure.fs
 
-import android.content.ContentValues.TAG
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Log
-import com.esgi.nova.files.infrastructure.ports.IFileStreamResume
+import com.esgi.nova.files.infrastructure.ports.IFileStreamResumeWithDestination
+import com.esgi.nova.infrastructure.Clear
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.io.OutputStream
 import javax.inject.Inject
 
-class FileStorageRepository @Inject constructor(private val context: Context) {
+class FileStorageRepository @Inject constructor(private val context: Context) : Clear {
 
     private val storageDir get() = context.filesDir
 
 
-    private fun <T> getFileWithoutExtension(path: String, fileNameWithoutExtension: T): File?{
+    private fun <T> getFileWithoutExtension(path: String, fileNameWithoutExtension: T): File? {
         val dir = File("$storageDir$path")
         return dir.listFiles()?.firstOrNull { file ->
             file.nameWithoutExtension == fileNameWithoutExtension.toString()
@@ -32,12 +32,37 @@ class FileStorageRepository @Inject constructor(private val context: Context) {
         return null
     }
 
-    fun saveFile(file: IFileStreamResume, destination: String): Boolean{
+    fun upsertFiles(files: List<IFileStreamResumeWithDestination>) = try {
+        files.groupBy { file -> file.destinationDir }.forEach { (destinationDir, filesList) ->
+
+            val fileDir = File("$storageDir$destinationDir")
+            fileDir.parentFile?.mkdirs()
+
+            filesList.forEach { file -> saveFile(file) }
+
+            fileDir.listFiles()?.forEach { existingFile ->
+                if (!filesList.any { file -> file.fileNameWithoutExtension == existingFile.nameWithoutExtension }) {
+                    existingFile.delete()
+                }
+            }
+        }
+        true
+    } catch (e: java.lang.Exception) {
+        Log.e(
+            FileStorageRepository::class.java.name,
+            "can't upsert files"
+        )
+        false
+    }
+
+
+    fun saveFile(file: IFileStreamResumeWithDestination): Boolean {
         return try {
-            val savedFile = File("$storageDir$destination.${file.extension}")
+            val savedFile =
+                File("$storageDir${file.destinationDir}${file.fileNameWithoutExtension}.${file.extension}")
             savedFile.parentFile?.mkdirs()
-            if(!savedFile.exists()){
-                if(!savedFile.createNewFile()){
+            if (!savedFile.exists()) {
+                if (!savedFile.createNewFile()) {
                     return false
                 }
             }
@@ -55,7 +80,10 @@ class FileStorageRepository @Inject constructor(private val context: Context) {
                     }
                     outputStream.write(fileReader, 0, read)
                     fileSizeDownloaded += read.toLong()
-                    Log.d(TAG, "file download: $fileSizeDownloaded of $fileSize")
+                    Log.d(
+                        FileStorageRepository::class.java.name,
+                        "file download: $fileSizeDownloaded of $fileSize"
+                    )
                 }
                 outputStream.flush()
                 true
@@ -70,6 +98,21 @@ class FileStorageRepository @Inject constructor(private val context: Context) {
         }
 
     }
+
+    override fun clear(): Boolean =
+        try {
+            storageDir.delete()
+            true
+        } catch (e: IOException) {
+            Log.e(
+                FileStorageRepository::class.java.name,
+                "Can't delete storage dir ${storageDir.path}"
+            )
+            false
+        } catch (e: Exception) {
+            false
+        }
+
 
 //    fun saveFile(file: IFileStreamResume, destination: String): Boolean {
 //

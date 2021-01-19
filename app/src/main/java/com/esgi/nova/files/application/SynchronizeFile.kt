@@ -9,9 +9,21 @@ class SynchronizeFile @Inject constructor(
     private val fileStorageRepository: FileStorageRepository
 ) {
 
-    fun execute(url: String, destination: String, resolveFileExtension: Boolean = true) {
+    fun execute(
+        url: String,
+        destinationDir: String,
+        fileName: String,
+        resolveFileExtension: Boolean = true
+    ) {
         fileApiRepository.getFile(url)?.let { fileStreamResume ->
-            fileStorageRepository.saveFile(fileStreamResume, destination)
+            fileStorageRepository.saveFile(
+                fileStreamResume.toFileStreamWithDestination(
+                    destinationDir,
+                    fileName
+                )
+            )
         }
     }
 }
+
+

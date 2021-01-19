@@ -1,7 +1,7 @@
 package com.esgi.nova.resources.application
 
-import com.esgi.nova.files.application.SynchronizeFile
-import com.esgi.nova.files.infrastructure.api.FileApiRepository
+import com.esgi.nova.files.application.SynchronizeFiles
+import com.esgi.nova.files.dtos.FileSynchronizationDto
 import com.esgi.nova.infrastructure.fs.FsConstants
 import com.esgi.nova.languages.infrastructure.data.LanguageDbRepository
 import com.esgi.nova.resources.infrastructure.api.ResourceApiRepository
@@ -11,15 +11,21 @@ import javax.inject.Inject
 class SynchronizeResources @Inject constructor(
     private val resourceDbRepository: ResourceDbRepository,
     private val resourceApiRepository: ResourceApiRepository,
-    private val synchronizeFile: SynchronizeFile,
+    private val synchronizeFiles: SynchronizeFiles,
     private val languageDbRepository: LanguageDbRepository
 ) {
 
     fun execute(language: String = languageDbRepository.getSelectedLanguage()?.tag ?: "" ) {
         val resources = resourceApiRepository.getAll(language)
-        resources.forEach { resourceWrapper ->
-            synchronizeFile.execute(resourceWrapper.link.href, "${FsConstants.Paths.Resources}${resourceWrapper.data.id}")
+
+        val fileSynchronizations = resources.map { resourceWrapper ->
+            FileSynchronizationDto(
+                url = resourceWrapper.link.href,
+                destinationDir = FsConstants.Paths.Resources,
+                fileName = resourceWrapper.data.id.toString()
+            )
         }
-        resourceDbRepository.insertAll(resources.map { it.data })
+        synchronizeFiles.execute(fileSynchronizations)
+        resourceDbRepository.upsertCollection(resources.map { it.data })
     }
 }

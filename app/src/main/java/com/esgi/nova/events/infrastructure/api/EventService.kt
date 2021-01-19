@@ -17,6 +17,17 @@ interface EventService {
     fun getAllTranslatedEvents(@Query("language") language: String): Call<List<TranslatedEventsWithBackgroundResponse>>
 
     @Headers("Accept: ${ApiConstants.CustomMediaType.Application.TranslatedEvent}")
+    @GET("${ApiConstants.EndPoints.Events}${ApiConstants.EndPoints.Load}{eventId}")
+    fun getOneTranslatedEvent(
+        @Path("eventId") eventId: String,
+        @Query("language") language: String
+    ): Call<TranslatedEventsWithBackgroundResponse?>
+
+
+    @Headers("Accept: ${ApiConstants.CustomMediaType.Application.TranslatedEvent}")
     @GET("${ApiConstants.EndPoints.Games}{gameId}/${ApiConstants.EndPoints.Daily}")
-    fun getDailyEvent(@Path("gameId")gameId: UUID,@Query("language") language: String): Call<TranslatedEventsWithBackgroundResponse?>
+    fun getDailyEvent(
+        @Path("gameId") gameId: UUID,
+        @Query("language") language: String
+    ): Call<TranslatedEventsWithBackgroundResponse?>
 }

@@ -10,7 +10,6 @@ import com.esgi.nova.games.infrastructure.data.game.GameDbRepository
 import com.esgi.nova.infrastructure.fs.FsConstants
 import com.esgi.nova.languages.infrastructure.data.LanguageDbRepository
 import java.time.LocalDate
-import java.time.LocalDateTime
 import java.util.*
 import javax.inject.Inject
 
@@ -41,7 +40,8 @@ class GetDailyEvent @Inject constructor(
             }
             synchronizeFile.execute(
                 eventWrapper.link.href,
-                "${FsConstants.Paths.Events}${eventWrapper.data.id}"
+                FsConstants.Paths.Events,
+                eventWrapper.data.id.toString()
             )
             return eventDbRepository.getDetailedEventById(eventWrapper.data.id)
         }

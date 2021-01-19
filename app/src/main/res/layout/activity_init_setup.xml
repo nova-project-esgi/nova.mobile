@@ -35,8 +35,22 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/loader_pb"
+        android:textColor="@color/primaryColor"
+        android:layout_marginTop="60dp"
+        android:text="@string/loading"
+        />
+
+    <TextView
+        android:id="@+id/loading_description_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/loading_tv"
         android:textColor="@color/primaryLightColor"
         android:layout_marginTop="60dp"
+        android:text="@string/crew_message"
         />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,7 +1,7 @@
 package com.esgi.nova.games.ports
 
 interface IGameState: IGame {
-    val resourceStates: List<IGameResourceState>
-    val eventStates: List<IGameEventState>
+    val resources: List<IGameResourceState>
+    val events: List<IGameEventState>
 }
 

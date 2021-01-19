@@ -34,7 +34,7 @@ class UserStorageRepository @Inject constructor(
 
 
     fun getUsername(): String? = preference.getString(PreferenceConstants.User.UsernameKey, null)
-    fun getUserId(): UUID? = preference.getUUID(PreferenceConstants.User.UsernameKey, null)
+    fun getUserId(): UUID? = preference.getUUID(PreferenceConstants.User.UserIdKey, null)
 
     fun getUserResume(): IUserResume? = getUserId()?.let { userId ->
         getUsername()?.let { username ->

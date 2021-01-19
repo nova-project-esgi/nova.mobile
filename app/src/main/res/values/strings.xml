@@ -37,4 +37,12 @@
     <string name="daily_event">Activate daily events</string>
     <string name="log_out">Logout</string>
     <string name="save">Save</string>
+    <string name="crew_message">Crew message...</string>
+    <string name="loading">Loading</string>
+    <string name="loading_step_1">Initial checking…</string>
+    <string name="loading_step_2">Ammo stock is ok…</string>
+    <string name="loading_step_3">Thrusters preheating…</string>
+    <string name="loading_step_4">Storing beer in space fridge…</string>
+    <string name="loading_step_5">Hyper space ignition</string>
+    <string name="loading_step_6">Let\'s go!!</string>
 </resources>

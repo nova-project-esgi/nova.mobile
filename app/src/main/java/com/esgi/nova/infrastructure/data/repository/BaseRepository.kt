@@ -4,7 +4,6 @@ import com.esgi.nova.infrastructure.data.IIdEntity
 import com.esgi.nova.infrastructure.data.dao.BaseDao
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.doAsyncResult
-import java.util.function.Predicate
 
 @FunctionalInterface
 interface BinaryPredicate<First, Second> {
@@ -52,9 +51,9 @@ abstract class BaseRepository<Id, Entity, Element> where Entity : Element, Eleme
                 insertOne(element)
             }
         }
-        entities.forEach { resourceEntity ->
-            if (!elements.any { gameResource -> gameResource.id == resourceEntity.id }) {
-                delete(resourceEntity)
+        entities.forEach { entity ->
+            if (!elements.any { element -> test.invoke(element, entity) }) {
+                delete(entity)
             }
         }
     }

@@ -1,6 +1,7 @@
 package com.esgi.nova.infrastructure.data
 
 import android.content.Context
+import android.text.method.TextKeyListener
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -23,6 +24,7 @@ import com.esgi.nova.games.infrastructure.data.game_event.GameEventDao
 import com.esgi.nova.games.infrastructure.data.game_event.GameEventEntity
 import com.esgi.nova.games.infrastructure.data.game_resource.GameResourceDao
 import com.esgi.nova.games.infrastructure.data.game_resource.GameResourceEntity
+import com.esgi.nova.infrastructure.Clear
 import com.esgi.nova.languages.infrastructure.data.LanguageEntity
 import com.esgi.nova.languages.infrastructure.data.LanguageDAO
 
@@ -42,7 +44,7 @@ import com.esgi.nova.languages.infrastructure.data.LanguageDAO
     version = 1
 )
 @TypeConverters(UUIDConverter::class, DateConverter::class)
-abstract class AppDatabase : RoomDatabase() {
+abstract class AppDatabase : RoomDatabase(), Clear {
 
     abstract fun eventDAO(): EventDAO
     abstract fun resourceDAO(): ResourceDAO
@@ -75,5 +77,10 @@ abstract class AppDatabase : RoomDatabase() {
         fun destroyDataBase() {
             INSTANCE = null
         }
+    }
+
+    override fun clear(): Boolean {
+        INSTANCE?.clearAllTables()
+        return true
     }
 }

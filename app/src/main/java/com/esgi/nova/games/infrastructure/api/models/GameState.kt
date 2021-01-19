@@ -6,8 +6,8 @@ import com.esgi.nova.games.ports.IGameState
 import java.util.*
 
 data class GameState(
-    override val resourceStates: List<IGameResourceState>,
-    override val eventStates: List<IGameEventState>,
+    override val resources: List<GameResourceState>,
+    override val events: List<GameEventState>,
     override val id: UUID,
     override val difficultyId: UUID,
     override val duration: Int,

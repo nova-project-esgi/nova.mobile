@@ -17,12 +17,8 @@ class SynchronizeDifficulties @Inject constructor(
 
          val difficulties = difficultiesApiRepository
             .getAllTranslatedDifficulties(language)
-        difficulties.forEach { difficulty ->
-            difficultiesDbRepository.insertOne(difficulty)
-            difficultiesResourceDbRepository.insertAll(difficulty.resources)
-        }
-        difficultiesResourceDbRepository.getAll()
-            .forEach { difficultyResource -> println(difficultyResource) }
-        difficultiesResourceDbRepository.getAllDetailedDifficulties()
+        val difficultyResources = difficulties.flatMap { resumedDifficulty -> resumedDifficulty.resources }
+        difficultiesDbRepository.upsertCollection(difficulties)
+        difficultiesResourceDbRepository.upsertCollection(difficultyResources)
     }
 }

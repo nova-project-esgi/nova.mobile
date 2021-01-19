@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.esgi.nova.application_state.application.ClearState
 import com.esgi.nova.application_state.application.IsSynchronized
 import com.esgi.nova.application_state.application.SetSynchronized
 import com.esgi.nova.difficulties.application.GetAllDetailedDifficulties
@@ -69,6 +70,9 @@ class InitSetupActivity : AppCompatActivity() {
     @Inject
     lateinit var confirmChoice: ConfirmChoice
 
+    @Inject
+    lateinit var clearState: ClearState
+
 
     companion object {
         const val ResynchronizeKey = "ResynchronizeKey"
@@ -93,12 +97,12 @@ class InitSetupActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_init_setup)
-//        if (!isSynchronized.execute() || intent.getBooleanExtra(ResynchronizeKey, false)) {
+        if (!isSynchronized.execute() || intent.getBooleanExtra(ResynchronizeKey, false)) {
             loadData()
-//        } else {
-//            DashboardActivity.start(this@InitSetupActivity)
-//            finish()
-//        }
+        } else {
+            DashboardActivity.start(this@InitSetupActivity)
+            finish()
+        }
 
     }
 
@@ -127,6 +131,14 @@ class InitSetupActivity : AppCompatActivity() {
     private fun setLoadingText(index: Int) {
         val loadingTextString = getString(R.string.resourceLoadingPrompt) + " $index / $SynchronizeStepsTotal"
         loading_tv?.text = loadingTextString
+        when(index){
+            1 -> loading_description_tv?.text = getString(R.string.loading_step_1)
+            2 -> loading_description_tv?.text = getString(R.string.loading_step_2)
+            3 -> loading_description_tv?.text = getString(R.string.loading_step_3)
+            4 -> loading_description_tv?.text = getString(R.string.loading_step_4)
+            5 -> loading_description_tv?.text = getString(R.string.loading_step_5)
+            6 -> loading_description_tv?.text = getString(R.string.loading_step_6)
+        }
     }
 
 
