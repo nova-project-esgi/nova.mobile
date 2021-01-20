@@ -3,12 +3,18 @@ package com.esgi.nova
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.esgi.nova.adapters.GamesAdapter
 import com.esgi.nova.difficulties.application.GetAllDetailedDifficulties
 import com.esgi.nova.difficulties.ports.IDetailedDifficulty
@@ -38,6 +44,10 @@ class LeaderBoardActivity : AppCompatActivity(), AdapterView.OnItemClickListener
 
     private var games = mutableListOf<LeaderBoardGameView>()
 
+    private var isLoading = false
+
+    private val PAGE_SIZE = 10
+
     companion object{
         fun start(context: Context){
             val intent = Intent(context, LeaderBoardActivity::class.java)
@@ -54,7 +64,28 @@ class LeaderBoardActivity : AppCompatActivity(), AdapterView.OnItemClickListener
             adapter = GamesAdapter(games)
         }
 
-        swipe_container.setOnRefreshListener { refreshRecyclerView() }
+        val linearLayoutManager = scores_rv.layoutManager as LinearLayoutManager
+        scores_rv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+            }
+
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                val llManager = recyclerView.layoutManager as LinearLayoutManager?
+                if (!isLoading) {
+                    if (llManager != null && llManager.findLastCompletelyVisibleItemPosition() == games.size - 1) {
+                        if (games.size%10 == 0 ) {
+                            loadMore()
+
+                        }
+                    }
+                }
+            }
+        })
+
+        swipe_container.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener { refreshRecyclerView() })
         swipe_container.setColorSchemeResources(
             android.R.color.holo_blue_bright,
             android.R.color.holo_green_light,
@@ -65,6 +96,23 @@ class LeaderBoardActivity : AppCompatActivity(), AdapterView.OnItemClickListener
         tv_leaderBoard_filter.onItemClickListener = this
         generateDifficulties()
 
+    }
+
+    private fun loadMore() {
+        pb_load_more.visibility = ProgressBar.VISIBLE
+        isLoading = true
+        doAsync {
+            val moreGames = getLeaderBoardGameList.execute(currentDifficulty.id, games.size/PAGE_SIZE, PAGE_SIZE)
+            runOnUiThread {
+                moreGames?.values?.forEach {
+                    games.add(it)
+                }
+                games.sortBy { game -> game.eventCount }
+                scores_rv.adapter?.notifyDataSetChanged()
+                isLoading = false
+                pb_load_more.visibility = ProgressBar.GONE
+            }
+        }
     }
 
     private fun generateDifficulties() {
@@ -106,10 +154,15 @@ class LeaderBoardActivity : AppCompatActivity(), AdapterView.OnItemClickListener
 
             doAsync {
                 try {
-                    val execute = getLeaderBoardGameList.execute(currentDifficulty.id)
+                    val execute = getLeaderBoardGameList.execute(
+                        currentDifficulty.id,
+                        0,
+                        PAGE_SIZE
+                    )
                     execute?.let {
                         games.clear()
                         games.addAll(it.values)
+                        games.sortBy { game -> game.eventCount }
                     }
                     runOnUiThread {
                         scores_rv.visibility = View.VISIBLE
@@ -143,3 +196,4 @@ class LeaderBoardActivity : AppCompatActivity(), AdapterView.OnItemClickListener
     }
 
 }
+

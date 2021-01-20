@@ -14,12 +14,14 @@ import retrofit2.http.*
 import java.util.*
 
 interface GameService {
-    @GET("json/get/Ey-Bp0E3F?delay=2000")
-    fun retrieveUser(): Call<Score>?
 
     @Headers(HttpConstants.Headers.Accept + ": " + ApiConstants.CustomMediaType.Application.LeaderBoardGame)
     @GET("${ApiConstants.BaseUrl}${ApiConstants.EndPoints.Games}")
-    fun getLeaderBoardGamesByDifficulty(@Query("difficultyId") difficultyId: String): Call<PageMetadata<LeaderBoardGameView>>
+    fun getLeaderBoardGamesByDifficulty(
+        @Query("difficultyId") difficultyId: String,
+        @Query("page") page: Int,
+        @Query("size") pageSize: Int
+    ): Call<PageMetadata<LeaderBoardGameView>>
 
     @Headers(HttpConstants.Headers.Accept + ": " + ApiConstants.CustomMediaType.Application.GameState)
     @GET("${ApiConstants.BaseUrl}${ApiConstants.EndPoints.Games}")

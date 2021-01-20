@@ -48,8 +48,8 @@ class GameApiRepository @Inject constructor(getUserToken: GetUserToken, updateUs
             )
         }
     }
-    fun getDefaultGamesList(difficultyId: UUID): PageMetadata<LeaderBoardGameView>? {
-        return gameService.getLeaderBoardGamesByDifficulty(difficultyId.toString()).execute().body()
+    fun getDefaultGamesList(difficultyId: UUID, page: Int, pageSize: Int): PageMetadata<LeaderBoardGameView>? {
+        return gameService.getLeaderBoardGamesByDifficulty(difficultyId.toString(), page, pageSize).execute().body()
     }
 
     fun getLastActiveGameForUser(username: String): IGameState? {
