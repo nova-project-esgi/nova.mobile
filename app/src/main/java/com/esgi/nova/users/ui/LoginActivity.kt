@@ -7,6 +7,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.widget.ProgressBar
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -58,12 +59,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, TextWatcher {
         fun startReconnection(context: Context): Context {
             val intent = Intent(context, LoginActivity::class.java)
             intent.putExtra(ReconnectionKey, true)
-            context.startActivity(intent)
-            return context
-        }
-
-        fun startLoginActivity(context: Context): Context {
-            val intent = Intent(context, LoginActivity::class.java)
             context.startActivity(intent)
             return context
         }
@@ -120,6 +115,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, TextWatcher {
             username = ti_login?.text.toString().trim(),
             password = ti_password?.text.toString().trim()
         )
+        resetTextviewColors()
         setViewVisibility(ProgressBar.VISIBLE)
         try{
             userLoginDto.validate()
@@ -132,20 +128,18 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, TextWatcher {
                 toast.show()
             }
         }catch (e: InvalidUsernameException){
-            Toast.makeText(
-                this,
-                getString(R.string.invalid_username_msg),
-                Toast.LENGTH_LONG
-            ).show()
+            et_login.error = resources.getString(R.string.invalid_username_msg)
         }catch(e: InvalidPasswordException){
-            Toast.makeText(
-                this,
-                getString(R.string.invalid_password_msg),
-                Toast.LENGTH_LONG
-            ).show()
+            et_password.error = resources.getString(R.string.invalid_password_msg)
         }
         setViewVisibility(ProgressBar.GONE)
 
+    }
+
+    private fun resetTextviewColors() {
+        et_login.error = null
+        et_password.error = null
+        tv_errorString.visibility = TextView.GONE
     }
 
     private fun login(user: UserLoginDto) {
@@ -160,12 +154,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, TextWatcher {
             } catch (e: UserNotFoundException){
                 runOnUiThread {
                     setViewVisibility(ProgressBar.GONE)
-                    val toast = Toast.makeText(
-                        this@LoginActivity,
-                        getString(R.string.user_not_exist_msg),
-                        Toast.LENGTH_LONG
-                    )
-                    toast.show()
+                    tv_errorString.visibility = TextView.VISIBLE
                 }
 
             }
