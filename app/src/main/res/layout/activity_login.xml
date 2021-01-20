@@ -72,6 +72,7 @@
             app:boxStrokeColor="@color/primaryColor"
             app:endIconTint="@color/primaryColor"
             android:hint="@string/identifiant"
+            app:errorEnabled="true"
             app:endIconMode="clear_text">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -105,6 +106,7 @@
             android:textColorHint="@color/primaryColor"
             app:boxStrokeColor="@color/primaryColor"
             app:endIconTint="@color/primaryColor"
+            app:errorEnabled="true"
             android:hint="@string/password"
             app:endIconMode="clear_text">
 
@@ -117,6 +119,17 @@
         </com.google.android.material.textfield.TextInputLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/tv_errorString"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/user_not_exist_msg"
+        android:visibility="gone"
+        android:textColor="@color/design_default_color_error"
+        app:layout_constraintBottom_toTopOf="@id/buttons_hl_gl"
+        app:layout_constraintEnd_toStartOf="@+id/end_input_gl"
+        app:layout_constraintStart_toStartOf="@+id/start_input_gl"
+        app:layout_constraintTop_toBottomOf="@id/password_cl"/>
 
 
 

@@ -63,8 +63,7 @@ class LeaderBoardActivity : AppCompatActivity(), AdapterView.OnItemClickListener
             layoutManager = LinearLayoutManager(this@LeaderBoardActivity)
             adapter = GamesAdapter(games)
         }
-
-        val linearLayoutManager = scores_rv.layoutManager as LinearLayoutManager
+        
         scores_rv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
