@@ -106,7 +106,7 @@ class LeaderBoardActivity : AppCompatActivity(), AdapterView.OnItemClickListener
                 moreGames?.values?.forEach {
                     games.add(it)
                 }
-                games.sortBy { game -> game.eventCount }
+                games.sortByDescending { game -> game.eventCount }
                 scores_rv.adapter?.notifyDataSetChanged()
                 isLoading = false
                 pb_load_more.visibility = ProgressBar.GONE
@@ -161,7 +161,7 @@ class LeaderBoardActivity : AppCompatActivity(), AdapterView.OnItemClickListener
                     execute?.let {
                         games.clear()
                         games.addAll(it.values)
-                        games.sortBy { game -> game.eventCount }
+                        games.sortByDescending { game -> game.eventCount }
                     }
                     runOnUiThread {
                         scores_rv.visibility = View.VISIBLE
