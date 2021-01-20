@@ -9,6 +9,9 @@ class RecappedGameWithResourceIcons(
     override val id: UUID,
     override val resources: List<IFileWrapper<ITotalValueResource>>,
     override val duration: Int,
-    override val rounds: Int
+    override val rounds: Int,
+    override val difficultyId: UUID,
+    override val isEnded: Boolean,
+    override val userId: UUID
 ) : IRecappedGameWithResourceIcons {
 }

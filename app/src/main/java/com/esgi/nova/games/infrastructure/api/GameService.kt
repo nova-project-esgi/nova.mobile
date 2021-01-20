@@ -5,7 +5,7 @@ import com.esgi.nova.games.infrastructure.api.models.GameForUpdate
 import com.esgi.nova.games.infrastructure.api.models.GameState
 import com.esgi.nova.games.infrastructure.dto.LeaderBoardGameView
 import com.esgi.nova.infrastructure.api.ApiConstants
-import com.esgi.nova.infrastructure.api.HeaderConstants
+import com.esgi.nova.infrastructure.api.HttpConstants
 import com.esgi.nova.infrastructure.api.pagination.PageMetadata
 import com.esgi.nova.models.Score
 import okhttp3.ResponseBody
@@ -17,11 +17,11 @@ interface GameService {
     @GET("json/get/Ey-Bp0E3F?delay=2000")
     fun retrieveUser(): Call<Score>?
 
-    @Headers(HeaderConstants.Accept + ": " + ApiConstants.CustomMediaType.Application.LeaderBoardGame)
+    @Headers(HttpConstants.Headers.Accept + ": " + ApiConstants.CustomMediaType.Application.LeaderBoardGame)
     @GET("${ApiConstants.BaseUrl}${ApiConstants.EndPoints.Games}")
     fun getLeaderBoardGamesByDifficulty(@Query("difficultyId") difficultyId: String): Call<PageMetadata<LeaderBoardGameView>>
 
-    @Headers(HeaderConstants.Accept + ": " + ApiConstants.CustomMediaType.Application.GameState)
+    @Headers(HttpConstants.Headers.Accept + ": " + ApiConstants.CustomMediaType.Application.GameState)
     @GET("${ApiConstants.BaseUrl}${ApiConstants.EndPoints.Games}")
     fun getGameStateByUsername(@Query("username") username: String): Call<GameState>
 

@@ -2,6 +2,7 @@ package com.esgi.nova.games.infrastructure.api
 
 import com.esgi.nova.games.ports.IGameState
 import com.esgi.nova.games.application.models.GameForCreation
+import com.esgi.nova.games.infrastructure.api.exceptions.GameNotFoundException
 import com.esgi.nova.games.infrastructure.api.models.GameForUpdate
 import com.esgi.nova.games.infrastructure.api.models.GameResume
 import com.esgi.nova.games.infrastructure.dto.LeaderBoardGameView
@@ -9,6 +10,7 @@ import com.esgi.nova.games.ports.IGame
 import com.esgi.nova.games.ports.IGameForCreation
 import com.esgi.nova.games.ports.IGameEdition
 import com.esgi.nova.infrastructure.api.ApiRepository
+import com.esgi.nova.infrastructure.api.HttpConstants
 import com.esgi.nova.infrastructure.api.pagination.PageMetadata
 import com.esgi.nova.users.application.GetUserToken
 import com.esgi.nova.users.application.UpdateUserToken
@@ -25,7 +27,6 @@ class GameApiRepository @Inject constructor(getUserToken: GetUserToken, updateUs
         val retrofit = Retrofit.Builder()
             .apiBuilder()
             .build()
-
         gameService = retrofit.create(GameService::class.java)
     }
 
@@ -41,6 +42,11 @@ class GameApiRepository @Inject constructor(getUserToken: GetUserToken, updateUs
             id,
             gamet
         ).execute()
+        if(res.code() ==  HttpConstants.Codes.NotFound){
+            throw GameNotFoundException(
+                id
+            )
+        }
     }
     fun getDefaultGamesList(difficultyId: UUID): PageMetadata<LeaderBoardGameView>? {
         return gameService.getLeaderBoardGamesByDifficulty(difficultyId.toString()).execute().body()
@@ -49,6 +55,7 @@ class GameApiRepository @Inject constructor(getUserToken: GetUserToken, updateUs
     fun getLastActiveGameForUser(username: String): IGameState? {
         return gameService.getGameStateByUsername(username).execute().body()
     }
+
 
 }
 

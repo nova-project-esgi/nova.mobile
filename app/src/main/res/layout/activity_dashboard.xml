@@ -5,25 +5,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/simple_bg"
-    tools:context=".DashboardActivity">
+    tools:context=".ui.dashboard.DashboardActivity">
 
 
     <TextView
         android:id="@+id/title_tv"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/difficulty_ln"
+        app:layout_constraintBottom_toTopOf="@id/difficulty_til"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_chainStyle="spread"
         android:text="@string/app_name"
+        android:fontFamily="@font/stracruiser_italic"
         android:textColor="@color/secondaryLightColor"
-        android:textSize="@android:dimen/app_icon_size" />
+        android:textAlignment="center"
+        android:textSize="@dimen/title_size" />
 
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/difficulty_ln"
+        android:id="@+id/difficulty_til"
         app:layout_constraintTop_toBottomOf="@id/title_tv"
         app:layout_constraintBottom_toTopOf="@id/resources_list_ll"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,7 +40,7 @@
         android:layout_marginEnd="100dp"
         android:hint="@string/difficulty">
 
-        <AutoCompleteTextView
+        <com.esgi.nova.ui.TextInputDropdownMenu
             android:id="@+id/difficulty_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -48,20 +50,29 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <LinearLayout
+
+
+    <GridLayout
         android:id="@+id/resources_list_ll"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        app:layout_constraintTop_toBottomOf="@id/difficulty_ln"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/difficulty_til"
         app:layout_constraintBottom_toTopOf="@id/init_new_game_btn"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:gravity="center"
-        android:footerDividersEnabled = "false"
-        android:headerDividersEnabled = "false"
-        android:orientation="horizontal">
+        android:orientation="vertical">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/resources_rv"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_gravity="center_horizontal"
+            android:orientation="vertical"/>
 
-    </LinearLayout>
+    </GridLayout>
 
 
 

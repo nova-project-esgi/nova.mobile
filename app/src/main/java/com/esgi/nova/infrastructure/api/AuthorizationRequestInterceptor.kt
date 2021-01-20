@@ -18,7 +18,7 @@ class AuthorizationRequestInterceptor(val getUserToken: GetUserToken) : Intercep
     private fun Request.signedRequest(): Request {
         val finalToken = "Bearer $token"
         return this.newBuilder()
-            .addHeader(HeaderConstants.Authorization, finalToken)
+            .addHeader(HttpConstants.Headers.Authorization, finalToken)
             .build()
     }
 

@@ -1,17 +1,18 @@
 package com.esgi.nova.games.application
 
 import com.esgi.nova.events.infrastructure.data.choice_resource.ChoiceResourceDbRepository
-import com.esgi.nova.events.infrastructure.data.choices.ChoiceDbRepository
 import com.esgi.nova.games.application.models.Game
+import com.esgi.nova.games.application.models.GameForCreation
 import com.esgi.nova.games.application.models.GameResource
 import com.esgi.nova.games.infrastructure.api.GameApiRepository
+import com.esgi.nova.games.infrastructure.api.exceptions.GameNotFoundException
 import com.esgi.nova.games.infrastructure.data.game.GameDbRepository
-import com.esgi.nova.games.infrastructure.data.game_event.GameEventDbRepository
 import com.esgi.nova.games.infrastructure.data.game_resource.GameResourceDbRepository
 import com.esgi.nova.users.infrastructure.data.UserStorageRepository
 import org.jetbrains.anko.doAsync
 import java.util.*
 import javax.inject.Inject
+
 
 class ConfirmChoice @Inject constructor(
     private val gameDbRepository: GameDbRepository,
@@ -23,7 +24,7 @@ class ConfirmChoice @Inject constructor(
 
     fun execute(gameId: UUID, choiceId: UUID, duration: Int): Boolean {
         var isEnded = false
-        val userId = userRepository.getUserId() ?: return true
+        val user = userRepository.getUserResume() ?: return true
 
         gameDbRepository.getById(gameId)?.let { game ->
             choiceResourceDbRepository.getDetailedChoiceById(choiceId)?.let { choice ->
@@ -50,13 +51,18 @@ class ConfirmChoice @Inject constructor(
                         difficultyId = game.difficultyId,
                         isEnded = isEnded,
                         duration = duration,
-                        userId = userId
+                        userId = user.id
                     )
                 )
 
-                gameDbRepository.getGameEditionById(gameId)?.let { game ->
+                gameDbRepository.getGameEditionById(gameId)?.let { gameEdition ->
                     doAsync {
-                        gameApiRepository.update(gameId, game)
+                        try{
+                            gameApiRepository.update(gameId, gameEdition)
+                        } catch (e: GameNotFoundException){
+                            gameApiRepository.createGame(GameForCreation(username = user.username, difficultyId = game.difficultyId))
+                            gameApiRepository.update(gameId, gameEdition)
+                        }
                     }
                 }
 

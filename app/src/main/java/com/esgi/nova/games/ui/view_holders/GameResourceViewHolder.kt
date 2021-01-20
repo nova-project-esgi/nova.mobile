@@ -8,18 +8,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.esgi.nova.R
 import com.esgi.nova.files.infrastructure.ports.IFileWrapper
 import com.esgi.nova.games.ports.ITotalValueResource
-import kotlinx.android.synthetic.main.activity_event.*
 
-class ResourceViewHolder(inflater: LayoutInflater, parent: ViewGroup):
-    RecyclerView.ViewHolder(inflater.inflate(R.layout.resource_list_item, parent, false))
-{
+class GameResourceViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
+    RecyclerView.ViewHolder(inflater.inflate(R.layout.game_resource_item, parent, false)) {
 
     private var icon: ImageView? = null
     private var amount: TextView? = null
 
 
-    init
-    {
+    init {
         amount = itemView.findViewById(R.id.amount)
         icon = itemView.findViewById(R.id.resource_icon_iv)
     }
@@ -30,3 +27,4 @@ class ResourceViewHolder(inflater: LayoutInflater, parent: ViewGroup):
     }
 
 }
+

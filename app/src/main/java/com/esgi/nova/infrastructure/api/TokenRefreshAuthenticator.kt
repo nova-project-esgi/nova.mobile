@@ -17,7 +17,7 @@ class TokenRefreshAuthenticator(val updateUserToken: UpdateUserToken) :
 
     private fun Request.signWithToken(accessToken: String) =
         newBuilder()
-            .header(HeaderConstants.Authorization, "Bearer $accessToken")
+            .header(HttpConstants.Headers.Authorization, "Bearer $accessToken")
             .build()
 
     private fun Response.createSignedRequest(): Request? = try {

@@ -3,6 +3,7 @@
     <style name="Theme.Nova" parent="Theme.MaterialComponents.DayNight">
         <item name="colorPrimary">@color/primaryColor</item>
         <item name="colorPrimaryDark">@color/primaryDarkColor</item>
+        <item name="backgroundColor">#4ba3c7</item>
     </style>
     <style name="Theme.Nova.NoActionBar" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="windowActionBar">false</item>

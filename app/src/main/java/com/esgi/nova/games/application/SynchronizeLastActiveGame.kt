@@ -14,6 +14,7 @@ import com.esgi.nova.games.infrastructure.data.game_resource.GameResourceDbRepos
 import com.esgi.nova.games.ports.IGameState
 import com.esgi.nova.infrastructure.fs.FsConstants
 import com.esgi.nova.languages.infrastructure.data.LanguageDbRepository
+import com.esgi.nova.ports.Synchronize
 import com.esgi.nova.users.infrastructure.data.UserStorageRepository
 import com.esgi.nova.users.ports.IUserRecapped
 import javax.inject.Inject
@@ -30,9 +31,10 @@ class SynchronizeLastActiveGame @Inject constructor(
     private val languageDbRepository: LanguageDbRepository,
     private val choiceDbRepository: ChoiceDbRepository,
     private val choiceResourceDbRepository: ChoiceResourceDbRepository
-) {
+) : Synchronize {
 
-    fun execute(language: String = languageDbRepository.getSelectedLanguage()?.tag ?: "") {
+    override fun execute() {
+        val language: String = languageDbRepository.getSelectedLanguage()?.tag ?: ""
         userStorageRepository.getUserResume()?.let { user ->
             gameApiRepository.getLastActiveGameForUser(username = user.username)?.let { gameState ->
                 val gameResources =

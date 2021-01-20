@@ -24,6 +24,14 @@ class UserStorageRepository @Inject constructor(
             putString(PreferenceConstants.User.UsernameKey, user.username)
             putString(PreferenceConstants.User.PasswordKey, user.password)
             putUUID(PreferenceConstants.User.UserIdKey, user.id)
+            putBoolean(PreferenceConstants.User.IsConnectedKey, true)
+            apply()
+        }
+    }
+
+    fun changeConnectionState(isConnected: Boolean){
+        with(preference.edit()) {
+            putBoolean(PreferenceConstants.User.IsConnectedKey, isConnected)
             apply()
         }
     }
@@ -35,6 +43,7 @@ class UserStorageRepository @Inject constructor(
 
     fun getUsername(): String? = preference.getString(PreferenceConstants.User.UsernameKey, null)
     fun getUserId(): UUID? = preference.getUUID(PreferenceConstants.User.UserIdKey, null)
+    fun getUserConnectionState(): Boolean = preference.getBoolean(PreferenceConstants.User.IsConnectedKey, false)
 
     fun getUserResume(): IUserRecapped? = getUserId()?.let { userId ->
         getUsername()?.let { username ->
@@ -53,16 +62,15 @@ class UserStorageRepository @Inject constructor(
         return null
     }
 
-    fun removeUser(): ILogUser?{
-        val user = getUser()
+    fun removeUser(){
         with(preference.edit()) {
             remove(PreferenceConstants.User.TokenKey)
             remove(PreferenceConstants.User.UsernameKey)
             remove(PreferenceConstants.User.PasswordKey)
             remove(PreferenceConstants.User.UserIdKey)
+            remove(PreferenceConstants.User.IsConnectedKey)
             apply()
         }
-        return user
     }
 
 

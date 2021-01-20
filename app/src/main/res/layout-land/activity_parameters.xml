@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/simple_bg"
+    tools:context=".parameters.ui.ParametersActivity">
+
+    <TextView
+        android:id="@+id/tv_option_title"
+        android:fontFamily="@font/stracruiser_italic"
+        android:layout_height="wrap_content"
+        android:text="@string/to_parameters"
+        android:layout_width="0dp"
+        android:textAlignment="center"
+        android:textColor="@color/secondaryColor"
+        android:textSize="@dimen/title_size"
+        app:layout_constraintBottom_toTopOf="@id/til_language_option"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gl_left_option"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.15" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gl_right_option"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.85" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/actions_gl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.80" />
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_language_option"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/language"
+        android:textColorHint="@color/primaryColor"
+        app:boxStrokeColor="@color/primaryColor"
+        app:endIconTint="@color/primaryColor"
+        app:layout_constraintBottom_toTopOf="@id/s_download_option"
+        app:layout_constraintEnd_toStartOf="@id/gl_right_option"
+        app:layout_constraintStart_toEndOf="@id/gl_left_option"
+        app:layout_constraintTop_toBottomOf="@id/tv_option_title">
+
+        <com.esgi.nova.ui.TextInputDropdownMenu
+            android:id="@+id/tv_language_option"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="none"
+            android:textColor="@color/secondaryColor" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/s_download_option"
+
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:checked="true"
+        android:padding="15dp"
+        android:text="@string/daily_event"
+        android:textColor="@color/primaryColor"
+
+        app:layout_constraintBottom_toTopOf="@id/s_notification_option"
+        app:layout_constraintEnd_toStartOf="@id/s_dark_mode_option"
+        app:layout_constraintStart_toStartOf="@id/gl_left_option"
+
+        app:layout_constraintTop_toBottomOf="@id/til_language_option"
+        app:useMaterialThemeColors="false" />
+
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/s_dark_mode_option"
+
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:checked="true"
+        android:padding="15dp"
+        android:text="@string/dark_mode"
+        android:textColor="@color/primaryColor"
+
+        app:layout_constraintBottom_toTopOf="@id/s_music_option"
+        app:layout_constraintEnd_toEndOf="@id/gl_right_option"
+        app:layout_constraintStart_toEndOf="@id/s_download_option"
+        app:layout_constraintTop_toBottomOf="@id/til_language_option"
+        app:useMaterialThemeColors="false" />
+
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/s_notification_option"
+
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:checked="true"
+        android:padding="15dp"
+        android:text="@string/notification"
+        android:textColor="@color/primaryColor"
+        app:layout_constraintBottom_toTopOf="@id/actions_gl"
+
+        app:layout_constraintEnd_toStartOf="@id/s_music_option"
+        app:layout_constraintStart_toStartOf="@id/gl_left_option"
+        app:layout_constraintTop_toBottomOf="@id/s_download_option"
+        app:useMaterialThemeColors="false" />
+
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/s_music_option"
+
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:checked="true"
+        android:padding="15dp"
+        android:text="@string/music"
+        android:textColor="@color/primaryColor"
+        app:layout_constraintBottom_toTopOf="@id/actions_gl"
+
+        app:layout_constraintEnd_toEndOf="@id/gl_right_option"
+        app:layout_constraintStart_toEndOf="@id/s_notification_option"
+        app:layout_constraintTop_toBottomOf="@id/s_dark_mode_option"
+        app:useMaterialThemeColors="false" />
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_disconnect_option"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/secondaryColor"
+        android:text="@string/log_out"
+        app:icon="@drawable/baseline_close_white_24"
+        app:layout_constraintTop_toBottomOf="@id/actions_gl"
+        app:layout_constraintEnd_toStartOf="@id/btn_save_option"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_save_option"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/primaryColor"
+        android:text="@string/save"
+        app:icon="@drawable/baseline_save_white_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btn_disconnect_option"
+        app:layout_constraintTop_toBottomOf="@id/actions_gl" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

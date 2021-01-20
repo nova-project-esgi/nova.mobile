@@ -46,8 +46,12 @@ class GameDbRepository @Inject constructor(
             return RecappedGame(
                 id = game.id,
                 duration = game.duration,
-                resources = gameResourceDao.getAllGameWithResourceById(id).map { it.toTotalValueResource() }.toMutableList(),
-                rounds = gameEventDao.getEventsCountByGame(game.id)
+                resources = gameResourceDao.getAllGameWithResourceById(id)
+                    .map { it.toTotalValueResource() }.toMutableList(),
+                rounds = gameEventDao.getEventsCountByGame(game.id),
+                difficultyId = game.difficultyId,
+                userId = game.userId,
+                isEnded = game.isEnded
             )
         }
         return null

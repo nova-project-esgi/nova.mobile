@@ -8,6 +8,7 @@ import com.esgi.nova.files.application.SynchronizeFiles
 import com.esgi.nova.files.dtos.FileSynchronizationDto
 import com.esgi.nova.infrastructure.fs.FsConstants
 import com.esgi.nova.languages.infrastructure.data.LanguageDbRepository
+import com.esgi.nova.ports.Synchronize
 import javax.inject.Inject
 
 class SynchronizeEvents @Inject constructor(
@@ -17,9 +18,10 @@ class SynchronizeEvents @Inject constructor(
     private val choiceResourceDbRepository: ChoiceResourceDbRepository,
     private val synchronizeFiles: SynchronizeFiles,
     private val languageDbRepository: LanguageDbRepository
-) {
+) : Synchronize {
 
-    fun execute(language: String = languageDbRepository.getSelectedLanguage()?.tag ?: "" ) {
+    override fun execute() {
+        val language = languageDbRepository.getSelectedLanguage()?.tag ?: ""
         val translatedEventsWrappers = eventApiRepository.getAllTranslatedEvents(language)
         val translatedEvents = translatedEventsWrappers.map { it.data }
         val eventChoices = translatedEvents.flatMap { event -> event.choices }

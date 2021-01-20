@@ -9,6 +9,7 @@ object PreferenceConstants {
         const val Key = "user"
         const val PasswordKey = "password"
         const val UserIdKey = "userId"
+        const val IsConnectedKey = "isConnected"
     }
     object ApplicationState{
         const val Key = "applicationState"

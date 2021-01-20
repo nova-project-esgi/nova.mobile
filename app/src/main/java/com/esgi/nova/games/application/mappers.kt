@@ -4,10 +4,13 @@ import com.esgi.nova.difficulties.ports.IDetailedDifficulty
 import com.esgi.nova.files.application.model.FileWrapper
 import com.esgi.nova.files.infrastructure.ports.IFileWrapper
 import com.esgi.nova.games.application.models.GameEvent
+import com.esgi.nova.games.application.models.GameForCreation
 import com.esgi.nova.games.application.models.GameResource
 import com.esgi.nova.games.application.models.RecappedGameWithResourceIcons
+import com.esgi.nova.games.ports.IGameEdition
+import com.esgi.nova.games.ports.IGameEventState
+import com.esgi.nova.games.ports.IGameResourceState
 import com.esgi.nova.games.ports.IRecappedGame
-import com.esgi.nova.games.ports.*
 import com.esgi.nova.resources.ports.IResource
 import java.util.*
 
@@ -26,7 +29,10 @@ fun IRecappedGame.toRecappedGameWithResourceIcons(resourceWrappers: List<IFileWr
             }
         },
         duration = this.duration,
-        rounds = this.rounds
+        rounds = this.rounds,
+        isEnded = isEnded,
+        userId = userId,
+        difficultyId = difficultyId
     )
 
 fun IGameResourceState.toGameResource(gameId: UUID) = GameResource(
@@ -40,3 +46,4 @@ fun IGameEventState.toGameEvent(gameId: UUID) = GameEvent(
     gameId = gameId,
     linkTime = linkTime
 )
+

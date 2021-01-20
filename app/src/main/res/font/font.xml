@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<font-family xmlns:android="http://schemas.android.com/apk/res/android">
+    <font
+        android:fontStyle="normal"
+        android:fontWeight="400"
+        android:font="@font/space_quest" />
+    <font
+        android:fontStyle="italic"
+        android:fontWeight="400"
+        android:font="@font/space_quest_italic" />
+    <font
+        android:fontStyle="normal"
+        android:fontWeight="400"
+        android:font="@font/digital" />
+    <font
+        android:fontStyle="normal"
+        android:fontWeight="400"
+        android:font="@font/starcruiser" />
+    <font
+        android:fontStyle="normal"
+        android:fontWeight="400"
+        android:font="@font/stracruiser_italic" />
+</font-family>

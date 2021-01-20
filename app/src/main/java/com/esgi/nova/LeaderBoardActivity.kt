@@ -2,16 +2,13 @@ package com.esgi.nova
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.esgi.nova.adapters.GamesAdapter
 import com.esgi.nova.difficulties.application.GetAllDetailedDifficulties
 import com.esgi.nova.difficulties.ports.IDetailedDifficulty
@@ -52,21 +49,12 @@ class LeaderBoardActivity : AppCompatActivity(), AdapterView.OnItemClickListener
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_leader_board)
 
-        val itemDivider = DividerItemDecoration(applicationContext, 1)
-        itemDivider.setDrawable(
-            ContextCompat.getDrawable(
-                applicationContext,
-                R.drawable.golden_divider
-            )!!
-        )
-        scores_rv.addItemDecoration(itemDivider)
-
         scores_rv?.apply {
             layoutManager = LinearLayoutManager(this@LeaderBoardActivity)
             adapter = GamesAdapter(games)
         }
 
-        swipe_container.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener { refreshRecyclerView() })
+        swipe_container.setOnRefreshListener { refreshRecyclerView() }
         swipe_container.setColorSchemeResources(
             android.R.color.holo_blue_bright,
             android.R.color.holo_green_light,
@@ -112,7 +100,7 @@ class LeaderBoardActivity : AppCompatActivity(), AdapterView.OnItemClickListener
     }
 
 
-    fun refreshRecyclerView() {
+    private fun refreshRecyclerView() {
         scores_rv.visibility = View.GONE
         if (NetworkUtils.isNetworkAvailable(this)) {
 

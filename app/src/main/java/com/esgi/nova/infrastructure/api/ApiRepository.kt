@@ -2,12 +2,9 @@ package com.esgi.nova.infrastructure.api
 
 import com.esgi.nova.users.application.GetUserToken
 import com.esgi.nova.users.application.UpdateUserToken
-import com.esgi.nova.utils.reflectMapNotNull
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.google.gson.internal.LinkedTreeMap
 import okhttp3.OkHttpClient
-import retrofit2.Call
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -30,7 +27,7 @@ open class ApiRepository @Inject constructor(
     }
 
     inline protected fun <reified T : Any> Response<*>.getLocatedContent(): T? {
-        this@getLocatedContent.headers()[HeaderConstants.Location]?.let { location ->
+        this@getLocatedContent.headers()[HttpConstants.Headers.Location]?.let { location ->
             return try{
                 val req = this@ApiRepository.genericService.get(location).execute()
                 Gson().fromJson(req.body()?.string(), T::class.java)

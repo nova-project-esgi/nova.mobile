@@ -51,4 +51,6 @@
     <string name="loading_step_4">Storing beer in space fridge…</string>
     <string name="loading_step_5">Hyper space ignition</string>
     <string name="loading_step_6">Let\'s go!!</string>
+    <string name="title">Title</string>
+    <string name="rounds">Rounds :</string>
 </resources>

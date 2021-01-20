@@ -7,27 +7,32 @@
     android:background="@drawable/simple_bg"
     tools:context=".LeaderBoardActivity">
 
+
     <TextView
         android:id="@+id/score_title_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/scoreBoard_name"
         android:textAlignment="center"
-        android:textSize="48sp"
+        android:textSize="@dimen/title_size"
+        android:fontFamily="@font/stracruiser_italic"
         android:textColor="@color/secondaryColor"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/leaderBoard_filter_til"
-
         />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/leaderBoard_filter_til"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:endIconTint="@color/primaryColor"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+        android:textColorHint="@color/primaryColor"
+        app:boxStrokeColor="@color/primaryColor"
         app:layout_constraintTop_toBottomOf="@id/score_title_tv"
         app:layout_constraintBottom_toTopOf="@+id/swipe_container"
-        android:layout_marginBottom="10dp"
-        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+        android:layout_marginBottom="15dp"
+        android:layout_marginHorizontal="15dp"
         android:hint="@string/difficulty">
 
         <AutoCompleteTextView

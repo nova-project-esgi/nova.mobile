@@ -15,9 +15,9 @@
         android:roundIcon="@drawable/nova_logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.Nova.NoActionBar">
-        <activity android:name=".ParametersActivity" />
-        <activity android:name=".EndGameActivity"></activity>
-        <activity android:name=".LoginActivity">
+        <activity android:name=".parameters.ui.ParametersActivity" />
+        <activity android:name=".EndGameActivity" />
+        <activity android:name=".users.ui.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,10 +25,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".games.ui.GameActivity" />
-        <activity android:name=".InitSetupActivity" />
+        <activity android:name=".ui.init.InitSetupActivity" />
         <activity android:name=".LeaderBoardActivity" />
         <activity
-            android:name=".DashboardActivity"
+            android:name=".ui.dashboard.DashboardActivity"
             android:theme="@style/Theme.Nova"/>
     </application>
 

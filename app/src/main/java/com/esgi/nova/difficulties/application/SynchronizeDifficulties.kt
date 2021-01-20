@@ -4,6 +4,7 @@ import com.esgi.nova.difficulties.infrastructure.api.DifficultyApiRepository
 import com.esgi.nova.difficulties.infrastructure.data.difficulty.DifficultyDbRepository
 import com.esgi.nova.difficulties.infrastructure.data.difficulty_resource.DifficultyResourceDbRepository
 import com.esgi.nova.languages.infrastructure.data.LanguageDbRepository
+import com.esgi.nova.ports.Synchronize
 import javax.inject.Inject
 
 class SynchronizeDifficulties @Inject constructor(
@@ -11,13 +12,15 @@ class SynchronizeDifficulties @Inject constructor(
     private val difficultiesApiRepository: DifficultyApiRepository,
     private val difficultiesResourceDbRepository: DifficultyResourceDbRepository,
     private val languageDbRepository: LanguageDbRepository
-) {
+) : Synchronize {
 
-    fun execute(language: String = languageDbRepository.getSelectedLanguage()?.tag ?: "" ) {
+    override fun execute() {
+        val language = languageDbRepository.getSelectedLanguage()?.tag ?: ""
 
-         val difficulties = difficultiesApiRepository
+        val difficulties = difficultiesApiRepository
             .getAllTranslatedDifficulties(language)
-        val difficultyResources = difficulties.flatMap { resumedDifficulty -> resumedDifficulty.resources }
+        val difficultyResources =
+            difficulties.flatMap { resumedDifficulty -> resumedDifficulty.resources }
         difficultiesDbRepository.upsertCollection(difficulties)
         difficultiesResourceDbRepository.upsertCollection(difficultyResources)
     }

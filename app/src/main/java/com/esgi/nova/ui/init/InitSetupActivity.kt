@@ -1,9 +1,11 @@
-package com.esgi.nova
+package com.esgi.nova.ui.init
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.esgi.nova.R
 import com.esgi.nova.application_state.application.ClearState
 import com.esgi.nova.application_state.application.IsSynchronized
 import com.esgi.nova.application_state.application.SetSynchronized
@@ -14,8 +16,11 @@ import com.esgi.nova.events.application.GetAllImageDetailedEventWrappers
 import com.esgi.nova.events.application.SynchronizeEvents
 import com.esgi.nova.games.application.*
 import com.esgi.nova.languages.application.SynchronizeLanguages
+import com.esgi.nova.ports.Synchronize
 import com.esgi.nova.resources.application.GetAllImageResourceWrappers
 import com.esgi.nova.resources.application.SynchronizeResources
+import com.esgi.nova.ui.dashboard.DashboardActivity
+import com.esgi.nova.ui.init.view_models.InitViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_init_setup.*
 import org.jetbrains.anko.doAsync
@@ -73,10 +78,12 @@ class InitSetupActivity : AppCompatActivity() {
     @Inject
     lateinit var clearState: ClearState
 
+    val initViewModel by viewModels<InitViewModel>()
+
+    lateinit var stepsList: List<Synchronize>
 
     companion object {
         const val ResynchronizeKey = "ResynchronizeKey"
-
         const val SynchronizeStepsTotal = 6
 
         fun start(context: Context): Context {
@@ -87,7 +94,7 @@ class InitSetupActivity : AppCompatActivity() {
 
         fun startResynchronize(context: Context): Context {
             val intent = Intent(context, InitSetupActivity::class.java)
-            intent.extras?.putBoolean(ResynchronizeKey, true)
+            intent.putExtra(ResynchronizeKey, true)
             context.startActivity(intent)
             return context
         }
@@ -97,6 +104,17 @@ class InitSetupActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_init_setup)
+        initViewModel.stepLimit = SynchronizeStepsTotal + 1
+
+        stepsList = listOf(
+            synchronizeLanguages,
+            synchronizeResources,
+            synchronizeDifficulties,
+            synchronizeEvents,
+            synchronizeLastActiveGame
+        )
+
+
         if (!isSynchronized.execute() || intent.getBooleanExtra(ResynchronizeKey, false)) {
             loadData()
         } else {
@@ -108,21 +126,17 @@ class InitSetupActivity : AppCompatActivity() {
 
     private fun loadData() {
 
-        setLoadingText(1)
 
         doAsync {
-            synchronizeLanguages.execute()
-            runOnUiThread { setLoadingText(2) }
-            synchronizeResources.execute()
-            runOnUiThread { setLoadingText(3) }
-            synchronizeDifficulties.execute()
-            runOnUiThread { setLoadingText(4) }
-            synchronizeEvents.execute()
-            runOnUiThread { setLoadingText(5) }
-            synchronizeLastActiveGame.execute()
-            runOnUiThread { setLoadingText(6) }
-            setSynchronized.execute()
+            stepsList.slice(initViewModel.currentStep until stepsList.size).forEach { sync ->
+                initViewModel.currentStep
+                runOnUiThread { setLoadingText(initViewModel.currentStep + 1) }
+                sync.execute()
+                initViewModel.currentStep++
+            }
 
+            runOnUiThread { setLoadingText(initViewModel.currentStep) }
+            setSynchronized.execute()
             DashboardActivity.start(this@InitSetupActivity)
             finish()
         }

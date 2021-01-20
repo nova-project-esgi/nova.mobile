@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.esgi.nova.R
 import com.esgi.nova.events.ports.IDetailedChoice
@@ -42,7 +43,7 @@ class ChoicesListFragment : Fragment(), OnChoiceClicked, Observer<List<IDetailed
 
     fun initChoicesList() {
         choices_rv?.apply {
-            layoutManager = LinearLayoutManager(requireContext())
+            layoutManager = GridLayoutManager(requireContext(), 2)
             adapter = ChoiceAdapter(choices, this@ChoicesListFragment)
         }
     }

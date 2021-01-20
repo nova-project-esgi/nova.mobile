@@ -12,41 +12,52 @@
         android:clickable="false"
         android:focusable="false"
         android:checkable="false"
+        app:strokeColor="@color/primaryColor"
+        app:strokeWidth="3dp"
+        style="@style/CardView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:cardElevation="1dp"
+        app:cardElevation="4dp"
+        android:layout_marginHorizontal="6dp"
+        android:paddingHorizontal="15dp"
         >
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:padding="9dp">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/position_gl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintGuide_percent="0.1"
+                android:orientation="vertical"/>
+
             <TextView
                 android:id="@+id/position_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="48sp"
-                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/username_tv"
-                android:textColor="@color/primaryTextColor"
+                app:layout_constraintEnd_toStartOf="@id/position_gl"
+                android:fontFamily="@font/starcruiser"
                 tools:text="1" />
 
             <TextView
                 android:id="@+id/username_tv"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:textSize="24sp"
-                android:textStyle="bold"
+                android:textSize="20sp"
+                android:fontFamily="@font/stracruiser_italic"
                 app:layout_constraintBottom_toTopOf="@id/round_tv"
-                app:layout_constraintStart_toEndOf="@+id/position_tv"
+                app:layout_constraintStart_toEndOf="@+id/position_gl"
+                app:layout_constraintEnd_toStartOf="@id/trophy_iv"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_chainStyle="packed"
-                android:layout_marginStart="15sp"
-                tools:text="Nom du joueur"
-                android:textColor="@color/primaryTextColor" />
+                tools:text="Nom du joueur"/>
 
             <TextView
                 android:id="@+id/round_tv"
@@ -54,10 +65,8 @@
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/position_tv"
+                app:layout_constraintStart_toEndOf="@+id/position_gl"
                 app:layout_constraintTop_toBottomOf="@id/username_tv"
-                android:layout_marginStart="15sp"
-                android:textColor="@color/secondaryTextColor"
                 tools:text="Score du joueur" />
 
             <TextView
@@ -69,7 +78,6 @@
                 app:layout_constraintStart_toEndOf="@+id/round_tv"
                 app:layout_constraintTop_toBottomOf="@id/username_tv"
                 android:layout_marginStart="15sp"
-                android:textColor="@color/secondaryTextColor"
                 tools:text="Score du joueur" />
 
 

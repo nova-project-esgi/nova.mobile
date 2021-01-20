@@ -11,8 +11,8 @@ class NovaApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         context = this
-
     }
+
 
     companion object {
         private lateinit var context: Context

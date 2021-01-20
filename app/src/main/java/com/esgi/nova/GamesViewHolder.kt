@@ -29,14 +29,19 @@ class GamesViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
         turn?.text = "${score.eventCount} tours"
         tv_position?.text = "${position + 1}"
 
-        if (position == 0) {
-            trophy?.setImageResource(R.drawable.first)
-        } else if (position == 1) {
-            trophy?.setImageResource(R.drawable.second)
-        } else if (position == 2) {
-            trophy?.setImageResource(R.drawable.third)
-        } else {
-            trophy?.setImageDrawable(null)
+        when (position) {
+            0 -> {
+                trophy?.setImageResource(R.drawable.first)
+            }
+            1 -> {
+                trophy?.setImageResource(R.drawable.second)
+            }
+            2 -> {
+                trophy?.setImageResource(R.drawable.third)
+            }
+            else -> {
+                trophy?.setImageDrawable(null)
+            }
         }
     }
 }

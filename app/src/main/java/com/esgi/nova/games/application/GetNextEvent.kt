@@ -10,7 +10,9 @@ import com.esgi.nova.files.infrastructure.ports.IFileWrapper
 import com.esgi.nova.games.application.models.GameEvent
 import com.esgi.nova.games.infrastructure.data.game_event.GameEventDbRepository
 import com.esgi.nova.infrastructure.fs.FsConstants
+import com.esgi.nova.parameters.infrastructure.storage.ParametersStorageRepository
 import java.time.LocalDateTime
+import java.time.ZoneOffset
 import java.util.*
 import javax.inject.Inject
 import kotlin.random.Random
@@ -19,7 +21,8 @@ class GetNextEvent @Inject constructor(
     private val gameEventDbRepository: GameEventDbRepository,
     private val eventDbRepository: EventDbRepository,
     private val getDailyEvent: GetDailyEvent,
-    private val getFileBitmapById: GetFileBitmapById
+    private val getFileBitmapById: GetFileBitmapById,
+    private val parametersStorageRepository: ParametersStorageRepository
 
 ){
 
@@ -29,16 +32,18 @@ class GetNextEvent @Inject constructor(
 
     fun execute(gameId: UUID): IFileWrapper<IDetailedEvent>? {
 
-        getDailyEvent.execute(gameId)?.let { event ->
-            gameEventDbRepository.insertOne(
-                GameEvent(
-                    eventId = event.id,
-                    gameId = gameId,
-                    linkTime = LocalDateTime.now()
+        if(parametersStorageRepository.get().hasDailyEvents){
+            getDailyEvent.execute(gameId)?.let { event ->
+                gameEventDbRepository.insertOne(
+                    GameEvent(
+                        eventId = event.id,
+                        gameId = gameId,
+                        linkTime = LocalDateTime.now(ZoneOffset.UTC)
+                    )
                 )
-            )
-            getFileBitmapById.execute(FsConstants.Paths.Events, event.id)?.let { img ->
-                return FileWrapper(event, img)
+                getFileBitmapById.execute(FsConstants.Paths.Events, event.id)?.let { img ->
+                    return FileWrapper(event, img)
+                }
             }
         }
 
@@ -61,7 +66,7 @@ class GetNextEvent @Inject constructor(
             gameEventDbRepository.insertOne(element = GameEvent(
                 eventId = selectedEventId,
                 gameId = gameId,
-                linkTime = LocalDateTime.now()
+                linkTime = LocalDateTime.now(ZoneOffset.UTC)
             ))
             eventDbRepository.getDetailedEventById(id = selectedEventId)?.let { event ->
                 getFileBitmapById.execute(FsConstants.Paths.Events, event.id)?.let { img ->

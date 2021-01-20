@@ -9,11 +9,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.esgi.nova.DashboardActivity
+import com.esgi.nova.ui.dashboard.DashboardActivity
 import com.esgi.nova.R
 import com.esgi.nova.events.ports.IDetailedChoice
 import com.esgi.nova.games.application.*
-import com.esgi.nova.games.ui.adapters.ResourcesAdapter
+import com.esgi.nova.games.ui.adapters.GameResourcesAdapter
 import com.esgi.nova.games.ui.fragments.ChoiceDetailFragment
 import com.esgi.nova.games.ui.fragments.ChoicesListFragment
 import com.esgi.nova.games.ui.fragments.OnChoiceConfirmedListener
@@ -47,6 +47,10 @@ class GameActivity : AppCompatActivity(), Observer<IDetailedChoice?>, OnChoiceCo
 
     @Inject
     lateinit var confirmChoice: ConfirmChoice
+
+    @Inject
+    lateinit var updateGame: UpdateGame
+
 
     val choicesListViewModel by viewModels<ChoicesListViewModel>()
     val gameViewModel by viewModels<GameViewModel>()
@@ -105,7 +109,7 @@ class GameActivity : AppCompatActivity(), Observer<IDetailedChoice?>, OnChoiceCo
                 false
             )
             adapter =
-                ResourcesAdapter(
+                GameResourcesAdapter(
                     gameViewModel.resources
                 )
         }
@@ -179,13 +183,26 @@ class GameActivity : AppCompatActivity(), Observer<IDetailedChoice?>, OnChoiceCo
                 .replace(R.id.fragment_container, ChoiceDetailFragment.newInstance(this))
                 .commitNow()
         }
+    }
 
+
+    override fun onStart() {
+        super.onStart()
+        startTimer()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        stopTimer()
+        doAsync {
+            updateGame.execute(gameViewModel)
+        }
     }
 
     override fun onChoiceConfirmed(choice: IDetailedChoice) {
         doAsync {
             val isEnded =
-                confirmChoice.execute(gameId = gameViewModel.id, choiceId = choice.id, duration = 0)
+                confirmChoice.execute(gameId = gameViewModel.id, choiceId = choice.id, duration = gameViewModel.duration)
             if (isEnded) {
                 DashboardActivity.start(this@GameActivity)
             } else {
@@ -197,7 +214,14 @@ class GameActivity : AppCompatActivity(), Observer<IDetailedChoice?>, OnChoiceCo
         }
     }
 
-    fun startTimer() {
+    private fun stopTimer() {
+        gameViewModel.timer?.let { timer ->
+            timer.cancel()
+            gameViewModel.timer = null
+        }
+    }
+
+    private fun startTimer() {
         if (gameViewModel.timer != null) {
             return
         }
