@@ -138,18 +138,18 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, TextWatcher {
                 toast.show()
             }
         }catch (e: InvalidUsernameException){
-            et_login.error = resources.getString(R.string.invalid_username_msg)
+            et_login?.error = resources.getString(R.string.invalid_username_msg)
         }catch(e: InvalidPasswordException){
-            et_password.error = resources.getString(R.string.invalid_password_msg)
+            et_password?.error = resources.getString(R.string.invalid_password_msg)
         }
         setViewVisibility(ProgressBar.GONE)
 
     }
 
     private fun resetTextviewColors() {
-        et_login.error = null
-        et_password.error = null
-        tv_errorString.visibility = TextView.GONE
+        et_login?.error = null
+        et_password?.error = null
+        tv_errorString?.visibility = TextView.GONE
     }
 
     private fun login(user: UserLoginDto) {
@@ -164,7 +164,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, TextWatcher {
             } catch (e: UserNotFoundException) {
                 runOnUiThread {
                     setViewVisibility(ProgressBar.GONE)
-                    tv_errorString.visibility = TextView.VISIBLE
+                    tv_errorString?.visibility = TextView.VISIBLE
                 }
 
             }
@@ -178,13 +178,13 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, TextWatcher {
 
     private fun setViewVisibility(state: Int) {
         if (state == ProgressBar.GONE) {
-            btn_login.isEnabled = true
-            btn_register.isEnabled = true
+            btn_login?.isEnabled = true
+            btn_register?.isEnabled = true
         } else if (state == ProgressBar.VISIBLE) {
-            btn_login.isEnabled = false
-            btn_register.isEnabled = false
+            btn_login?.isEnabled = false
+            btn_register?.isEnabled = false
         }
-        progress_overlay.visibility = state
+        progress_overlay?.visibility = state
     }
 
     override fun afterTextChanged(s: Editable?) {
