@@ -7,6 +7,6 @@ data class Parameters(
     override val isDarkMode: Boolean,
     override val hasDailyEvents: Boolean,
     override val hasNotifications: Boolean,
-    override val hasMusic: Boolean
+    override val hasSound: Boolean
 ) : IParameters {
 }

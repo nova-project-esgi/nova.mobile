@@ -10,10 +10,10 @@ import dagger.hilt.android.components.ApplicationComponent
 @InstallIn(ApplicationComponent::class)
 object ApplicationModule {
 
-    @Provides
-    fun provideContext(
-    ): Context {
-        return NovaApplication.getContext()
-    }
+//    @Provides
+//    fun provideContext(
+//    ): ApplicationObserver {
+////        return NovaApplication.getContext()
+//    }
 
 }

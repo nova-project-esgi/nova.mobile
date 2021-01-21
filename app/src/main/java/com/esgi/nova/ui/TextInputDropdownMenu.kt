@@ -9,6 +9,7 @@ import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatAutoCompleteTextView
 
 
+
 class TextInputDropdownMenu : AppCompatAutoCompleteTextView {
 
     override fun getDefaultEditable(): Boolean {
@@ -69,17 +70,18 @@ class TextInputDropdownMenu : AppCompatAutoCompleteTextView {
             out.writeString(text)
         }
 
-        companion object {
-            private val CREATOR: Parcelable.Creator<CustomSavedState> =
-                object : Parcelable.Creator<CustomSavedState> {
-                    override fun createFromParcel(source: Parcel): CustomSavedState? {
-                        return CustomSavedState(source)
-                    }
 
-                    override fun newArray(size: Int): Array<CustomSavedState?> {
-                        return arrayOfNulls(size)
-                    }
-                }
+        override fun describeContents(): Int {
+            return 0
+        }
+
+        companion object CREATOR : Parcelable.Creator<CustomSavedState> {
+            override fun createFromParcel(parcel: Parcel): CustomSavedState {
+                return CustomSavedState(parcel)
+            }
+            override fun newArray(size: Int): Array<CustomSavedState?> {
+                return arrayOfNulls(size)
+            }
         }
     }
 }

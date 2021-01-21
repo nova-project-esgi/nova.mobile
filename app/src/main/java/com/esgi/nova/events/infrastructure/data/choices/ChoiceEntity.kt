@@ -19,6 +19,7 @@ import java.util.*
         onUpdate = ForeignKey.CASCADE
 )])
 data class ChoiceEntity(
+    @ColumnInfo(name = "id")
     @PrimaryKey
     @field:TypeConverters(UUIDConverter::class)
     override var id: UUID = UUID.randomUUID(),

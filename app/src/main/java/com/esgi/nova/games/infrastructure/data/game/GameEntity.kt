@@ -30,6 +30,7 @@ data class GameEntity(
     override var difficultyId: UUID = UUID.randomUUID(),
     @ColumnInfo(name = "user_id")
     override var userId: UUID,
+    @ColumnInfo(name = "duration")
     override var duration: Int = 0,
     @ColumnInfo(name = "is_ended")
     override var isEnded: Boolean = false

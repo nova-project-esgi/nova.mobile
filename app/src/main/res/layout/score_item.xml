@@ -26,20 +26,21 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="9dp">
+            android:padding="5dp">
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/position_gl"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintGuide_percent="0.1"
+                app:layout_constraintGuide_percent="0.14"
                 android:orientation="vertical"/>
 
             <TextView
                 android:id="@+id/position_tv"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:textSize="48sp"
+                android:textSize="30sp"
+                android:textAlignment="center"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -57,28 +58,52 @@
                 app:layout_constraintStart_toEndOf="@+id/position_gl"
                 app:layout_constraintEnd_toStartOf="@id/trophy_iv"
                 app:layout_constraintTop_toTopOf="parent"
+                android:textAlignment="center"
                 tools:text="Nom du joueur"/>
+
+            <TextView
+                android:id="@+id/round_description_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toStartOf="@id/round_tv"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/position_gl"
+                app:layout_constraintTop_toBottomOf="@id/username_tv"
+                tools:text="@string/rounds" />
 
             <TextView
                 android:id="@+id/round_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
+                android:textSize="15sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/position_gl"
+                app:layout_constraintStart_toEndOf="@+id/round_description_tv"
                 app:layout_constraintTop_toBottomOf="@id/username_tv"
-                tools:text="Score du joueur" />
+                tools:text="10" />
 
             <TextView
-                android:id="@+id/date_tv"
+                android:id="@+id/duration_description_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
+                android:textSize="15sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/round_tv"
                 app:layout_constraintTop_toBottomOf="@id/username_tv"
-                android:layout_marginStart="15sp"
-                tools:text="Score du joueur" />
+                app:layout_constraintEnd_toStartOf="@id/duration_tv"
+                tools:text="@string/duration" />
+
+
+            <TextView
+                android:id="@+id/duration_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toStartOf="@id/trophy_iv"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/duration_description_tv"
+                app:layout_constraintTop_toBottomOf="@id/username_tv"
+                tools:text="HH:MM:SS" />
 
 
             <ImageView

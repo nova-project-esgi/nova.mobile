@@ -95,7 +95,7 @@ class ParametersActivity : AppCompatActivity(), View.OnClickListener,
         s_download_option?.isChecked = parametersViewModel.hasDailyEvents
         s_dark_mode_option?.isChecked = parametersViewModel.isDarkMode
         s_notification_option?.isChecked = parametersViewModel.hasNotifications
-        s_music_option?.isChecked = parametersViewModel.hasMusic
+        s_music_option?.isChecked = parametersViewModel.hasSound
     }
 
     private fun setLanguageAutocomplete() {
@@ -165,7 +165,7 @@ class ParametersActivity : AppCompatActivity(), View.OnClickListener,
             s_dark_mode_option -> parametersViewModel.isDarkMode = isChecked
             s_download_option -> parametersViewModel.hasDailyEvents = isChecked
             s_notification_option -> parametersViewModel.hasNotifications = isChecked
-            s_music_option -> parametersViewModel.hasMusic = isChecked
+            s_music_option -> parametersViewModel.hasSound = isChecked
         }
     }
 }

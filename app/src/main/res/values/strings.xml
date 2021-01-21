@@ -53,4 +53,6 @@
     <string name="loading_step_6">Let\'s go!!</string>
     <string name="title">Title</string>
     <string name="rounds">Rounds :</string>
+    <string name="duration">Duration :</string>
+    <string name="score_fetch_error_msg">An error occurred during score fetching</string>
 </resources>

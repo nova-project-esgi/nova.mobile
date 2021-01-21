@@ -2,6 +2,7 @@ package com.esgi.nova.users.ui
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -11,11 +12,12 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.esgi.nova.ui.init.InitSetupActivity
 import com.esgi.nova.R
 import com.esgi.nova.dtos.user.UserLoginDto
 import com.esgi.nova.events.application.SynchronizeEvents
 import com.esgi.nova.parameters.application.SetCurrentTheme
+import com.esgi.nova.sound.application.SwitchSound
+import com.esgi.nova.ui.init.InitSetupActivity
 import com.esgi.nova.users.application.HasConnectedUser
 import com.esgi.nova.users.application.LogInUser
 import com.esgi.nova.users.application.LogOutUser
@@ -29,6 +31,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_login.*
 import org.jetbrains.anko.doAsync
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class LoginActivity : AppCompatActivity(), View.OnClickListener, TextWatcher {
@@ -51,11 +54,15 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, TextWatcher {
     @Inject
     lateinit var retrieveUser: RetrieveUser
 
+    @Inject
+    lateinit var switchSound: SwitchSound
+
     val loginViewModel by viewModels<LoginViewModel>()
 
 
     companion object {
         const val ReconnectionKey: String = "ReconnectionKey"
+        const val RegisterUrl: String = "http://freenetaccess.freeboxos.fr:8002/register"
         fun startReconnection(context: Context): Context {
             val intent = Intent(context, LoginActivity::class.java)
             intent.putExtra(ReconnectionKey, true)
@@ -68,7 +75,9 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, TextWatcher {
         super.onCreate(savedInstanceState)
         setCurrentTheme.execute()
         setContentView(R.layout.activity_login)
-        btn_login.setOnClickListener(this)
+        btn_login?.setOnClickListener(this)
+        btn_register?.setOnClickListener(this)
+
 
         if (!loginViewModel.initialized) {
             doAsync {
@@ -105,8 +114,9 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, TextWatcher {
 
 
     override fun onClick(view: View?) {
-        if (view == btn_login) {
-            loginClick()
+        when (view) {
+            btn_login -> loginClick()
+            btn_register -> openBrowserForRegister()
         }
     }
 
@@ -151,7 +161,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, TextWatcher {
                     InitSetupActivity.start(this@LoginActivity)
                     finish()
                 }
-            } catch (e: UserNotFoundException){
+            } catch (e: UserNotFoundException) {
                 runOnUiThread {
                     setViewVisibility(ProgressBar.GONE)
                     tv_errorString.visibility = TextView.VISIBLE
@@ -159,6 +169,11 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, TextWatcher {
 
             }
         }
+    }
+
+    private fun openBrowserForRegister() {
+        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(RegisterUrl))
+        startActivity(browserIntent)
     }
 
     private fun setViewVisibility(state: Int) {

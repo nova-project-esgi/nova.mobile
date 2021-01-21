@@ -10,11 +10,12 @@ import com.esgi.nova.users.infrastructure.data.models.UserRecapped
 import com.esgi.nova.users.ports.IConnectedUserPassword
 import com.esgi.nova.users.ports.ILogUser
 import com.esgi.nova.users.ports.IUserRecapped
+import dagger.hilt.android.qualifiers.ApplicationContext
 import java.util.*
 import javax.inject.Inject
 
 class UserStorageRepository @Inject constructor(
-    context: Context
+    @ApplicationContext context: Context
 ) : BaseStorageRepository(context) {
     override val preferenceKey: String = PreferenceConstants.User.Key
 

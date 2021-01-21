@@ -5,10 +5,11 @@ import android.content.SharedPreferences
 import android.text.method.TextKeyListener.clear
 import com.esgi.nova.infrastructure.preferences.PreferenceConstants
 import com.esgi.nova.infrastructure.storage.BaseStorageRepository
+import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
-class ApplicationStateStorageRepository @Inject constructor(
-    context: Context
+class ApplicationStateStorageRepository  @Inject constructor(
+    @ApplicationContext context: Context
 
 ) :
     BaseStorageRepository(context) {

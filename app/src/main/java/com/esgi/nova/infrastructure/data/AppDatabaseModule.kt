@@ -1,19 +1,21 @@
 package com.esgi.nova.infrastructure.data
 
+import android.content.Context
 import com.esgi.nova.application.NovaApplication
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.android.qualifiers.ApplicationContext
 
 @Module
 @InstallIn(ApplicationComponent::class)
 object AppDatabaseModule {
 
     @Provides
-    fun provideAppDatabase(
+    fun provideAppDatabase(@ApplicationContext context: Context
     ): AppDatabase {
-        return AppDatabase.getAppDataBase(NovaApplication.getContext())!!
+        return AppDatabase.getAppDataBase(context)!!
     }
 
     @Provides

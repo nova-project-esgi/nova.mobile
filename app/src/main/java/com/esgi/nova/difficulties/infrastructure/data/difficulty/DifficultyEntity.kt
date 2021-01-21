@@ -11,6 +11,7 @@ import java.util.*
 
 @Entity(tableName = "difficulties")
 data class DifficultyEntity(
+    @ColumnInfo(name = "id")
     @PrimaryKey
     @field:TypeConverters(UUIDConverter::class)
     override var id: UUID = UUID.randomUUID(),

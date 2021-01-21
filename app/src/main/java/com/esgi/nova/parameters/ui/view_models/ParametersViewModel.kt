@@ -11,7 +11,7 @@ class ParametersViewModel(
     override var isDarkMode: Boolean = false
     override var hasDailyEvents: Boolean = false
     override var hasNotifications: Boolean = false
-    override var hasMusic: Boolean = false
+    override var hasSound: Boolean = false
     override var initialized: Boolean = false
     var languages: List<AppLanguageDto> = listOf()
     var selectedLanguage: AppLanguageDto? = null
@@ -20,6 +20,6 @@ class ParametersViewModel(
         isDarkMode = params.isDarkMode
         hasDailyEvents = params.hasDailyEvents
         hasNotifications = params.hasNotifications
-        hasMusic = params.hasMusic
+        hasSound = params.hasSound
     }
 }

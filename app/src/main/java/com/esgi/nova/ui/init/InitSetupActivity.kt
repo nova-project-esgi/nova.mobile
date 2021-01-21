@@ -78,7 +78,7 @@ class InitSetupActivity : AppCompatActivity() {
     @Inject
     lateinit var clearState: ClearState
 
-    val initViewModel by viewModels<InitViewModel>()
+    val viewModel by viewModels<InitViewModel>()
 
     lateinit var stepsList: List<Synchronize>
 
@@ -104,7 +104,7 @@ class InitSetupActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_init_setup)
-        initViewModel.stepLimit = SynchronizeStepsTotal + 1
+        viewModel.stepLimit = SynchronizeStepsTotal + 1
 
         stepsList = listOf(
             synchronizeLanguages,
@@ -128,14 +128,14 @@ class InitSetupActivity : AppCompatActivity() {
 
 
         doAsync {
-            stepsList.slice(initViewModel.currentStep until stepsList.size).forEach { sync ->
-                initViewModel.currentStep
-                runOnUiThread { setLoadingText(initViewModel.currentStep + 1) }
+            stepsList.slice(viewModel.currentStep until stepsList.size).forEach { sync ->
+                viewModel.currentStep
+                runOnUiThread { setLoadingText(viewModel.currentStep + 1) }
                 sync.execute()
-                initViewModel.currentStep++
+                viewModel.currentStep++
             }
 
-            runOnUiThread { setLoadingText(initViewModel.currentStep) }
+            runOnUiThread { setLoadingText(viewModel.currentStep) }
             setSynchronized.execute()
             DashboardActivity.start(this@InitSetupActivity)
             finish()
