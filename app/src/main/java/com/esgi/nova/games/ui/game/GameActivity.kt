@@ -9,11 +9,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.esgi.nova.EndGameActivity
 import com.esgi.nova.ui.dashboard.DashboardActivity
 import com.esgi.nova.R
 import com.esgi.nova.events.ports.IDetailedChoice
 import com.esgi.nova.games.application.*
+import com.esgi.nova.games.ui.endgame.EndGameActivity
 import com.esgi.nova.games.ui.game.adapters.GameResourcesAdapter
 import com.esgi.nova.games.ui.game.fragments.ChoiceDetailFragment
 import com.esgi.nova.games.ui.game.fragments.ChoicesListFragment
@@ -211,7 +211,11 @@ class GameActivity : AppCompatActivity(), Observer<IDetailedChoice?>, OnChoiceCo
     override fun onChoiceConfirmed(choice: IDetailedChoice) {
         doAsync {
             val isEnded =
-                confirmChoice.execute(gameId = gameViewModel.id, choiceId = choice.id, duration = gameViewModel.duration)
+                confirmChoice.execute(
+                    gameId = gameViewModel.id,
+                    choiceId = choice.id,
+                    duration = gameViewModel.duration
+                )
             if (isEnded) {
                 startEndGameActivity()
             } else {
