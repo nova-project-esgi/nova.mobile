@@ -27,7 +27,6 @@ class BackgroundSoundService  : Service() {
     lateinit var saveSoundResume: SaveSoundResume
 
     companion object {
-        val TAG: String = this::class.java.name
         fun start(context: Context) {
             val intent = Intent(context, BackgroundSoundService::class.java)
             context.startService(intent)

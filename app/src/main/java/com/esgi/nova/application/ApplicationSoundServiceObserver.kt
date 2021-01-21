@@ -19,6 +19,5 @@ class ApplicationSoundServiceObserver(private val context: Context): LifecycleOb
     @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
     fun onEnterBackground() {
         BackgroundSoundService.stop(context)
-
     }
 }

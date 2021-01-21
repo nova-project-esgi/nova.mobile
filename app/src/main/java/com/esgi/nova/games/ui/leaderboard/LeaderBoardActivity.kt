@@ -4,10 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.ProgressBar
-import android.widget.Toast
+import android.widget.*
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,17 +21,17 @@ import com.esgi.nova.users.exceptions.InvalidDifficultyException
 import com.esgi.nova.utils.NetworkUtils
 import com.esgi.nova.utils.reflectMapCollection
 import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.android.synthetic.main.activity_leader_board.*
 import org.jetbrains.anko.doAsync
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class LeaderBoardActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
 
     @Inject
     lateinit var getLeaderBoardGameList: GetLeaderBoardGameList
-
-
 
     @Inject
     lateinit var getLeaderBoardPageCursor: GetLeaderBoardGamePageCursor
@@ -44,7 +41,6 @@ class LeaderBoardActivity : AppCompatActivity(), AdapterView.OnItemClickListener
 
 
     val viewModel by viewModels<LeaderBoardViewModel>()
-
 
     companion object {
         fun start(context: Context) {
@@ -97,6 +93,8 @@ class LeaderBoardActivity : AppCompatActivity(), AdapterView.OnItemClickListener
                 if (!viewModel.isLoading) {
                     if (llManager?.findLastCompletelyVisibleItemPosition() == viewModel.cursor.size - 1 && viewModel.cursor.hasNext == true) {
                         loadMore()
+                    } else {
+                        displayNoMoreGamesMessage()
                     }
                 }
             }
@@ -149,6 +147,7 @@ class LeaderBoardActivity : AppCompatActivity(), AdapterView.OnItemClickListener
                     }?.let { viewModel.cursor.copy(it) }
                     viewModel.cursor.addAll(viewModel.cursor.loadCurrent())
                     runOnUiThread {
+                        verifyGameList()
                         scores_rv?.visibility = View.VISIBLE
                         swipe_container?.isRefreshing = false
                     }
@@ -176,11 +175,31 @@ class LeaderBoardActivity : AppCompatActivity(), AdapterView.OnItemClickListener
         }
     }
 
+    private fun verifyGameList() {
+        if (viewModel.cursor.isEmpty()) {
+            tv_no_games.visibility = TextView.VISIBLE
+        } else {
+            tv_no_games.visibility = TextView.GONE
+        }
+    }
+
 
     override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         viewModel.currentDifficulty = parent?.getItemAtPosition(position) as DetailedDifficultyDto
         swipe_container?.isRefreshing = true
         reloadScoresRecyclerView()
+    }
+
+
+    private fun displayNoMoreGamesMessage() {
+        if (viewModel.cursor.isNotEmpty()){
+            val toast = Toast.makeText(
+                this@LeaderBoardActivity,
+                getString(R.string.no_more_game_to_load),
+                Toast.LENGTH_SHORT
+            )
+            toast.show()
+        }
     }
 
 }

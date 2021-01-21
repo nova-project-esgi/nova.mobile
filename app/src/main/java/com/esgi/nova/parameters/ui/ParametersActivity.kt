@@ -43,8 +43,6 @@ class ParametersActivity : AppCompatActivity(), View.OnClickListener,
     lateinit var saveParameters: SaveParameters
 
 
-
-
     val parametersViewModel by viewModels<ParametersViewModel>()
 
     companion object {
@@ -61,8 +59,8 @@ class ParametersActivity : AppCompatActivity(), View.OnClickListener,
         setContentView(R.layout.activity_parameters)
         setContent()
 
-        btn_save_option.setOnClickListener(this)
-        btn_disconnect_option.setOnClickListener(this)
+        btn_save_option?.setOnClickListener(this)
+        btn_disconnect_option?.setOnClickListener(this)
         s_dark_mode_option?.setOnCheckedChangeListener(this)
         s_download_option?.setOnCheckedChangeListener(this)
         s_notification_option?.setOnCheckedChangeListener(this)
@@ -77,7 +75,7 @@ class ParametersActivity : AppCompatActivity(), View.OnClickListener,
                         .toList()
                 parametersViewModel.copyParameters(getParameters.execute())
                 parametersViewModel.selectedLanguage =
-                    parametersViewModel.languages.firstOrNull() { language -> language.isSelected }
+                    parametersViewModel.languages.firstOrNull { language -> language.isSelected }
                 parametersViewModel.initialized = true
                 runOnUiThread {
                     setLanguageAutocomplete()
