@@ -18,7 +18,6 @@ import com.esgi.nova.difficulties.ports.IDetailedDifficulty
 import com.esgi.nova.dtos.difficulty.DetailedDifficultyDto
 import com.esgi.nova.games.application.GetLeaderBoardGameList
 import com.esgi.nova.games.application.GetLeaderBoardGamePageCursor
-import com.esgi.nova.games.application.GetLeaderBoardGamePageFunc
 import com.esgi.nova.games.ui.leaderboard.adapters.GamesAdapter
 import com.esgi.nova.games.ui.leaderboard.view_models.LeaderBoardViewModel
 import com.esgi.nova.users.exceptions.InvalidDifficultyException
@@ -35,8 +34,7 @@ class LeaderBoardActivity : AppCompatActivity(), AdapterView.OnItemClickListener
     @Inject
     lateinit var getLeaderBoardGameList: GetLeaderBoardGameList
 
-    @Inject
-    lateinit var getLeaderBoardPageFunc: GetLeaderBoardGamePageFunc
+
 
     @Inject
     lateinit var getLeaderBoardPageCursor: GetLeaderBoardGamePageCursor
@@ -49,7 +47,6 @@ class LeaderBoardActivity : AppCompatActivity(), AdapterView.OnItemClickListener
 
 
     companion object {
-        private const val PageSize = 10
         fun start(context: Context) {
             val intent = Intent(context, LeaderBoardActivity::class.java)
             context.startActivity(intent)
@@ -60,48 +57,50 @@ class LeaderBoardActivity : AppCompatActivity(), AdapterView.OnItemClickListener
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_leader_board)
 
-
-
-
         if (!viewModel.initialized) {
-            viewModel.cursor = getLeaderBoardPageCursor.execute()
-            viewModel.difficulties = getAllDetailedDifficulties.execute()
-                .reflectMapCollection<IDetailedDifficulty, DetailedDifficultyDto>()
-                .toList()
+            doAsync {
+                viewModel.difficulties = getAllDetailedDifficulties.execute()
+                    .reflectMapCollection<IDetailedDifficulty, DetailedDifficultyDto>()
+                    .toList()
+                runOnUiThread {
+                    setDifficultiesView()
+                }
+            }
+            viewModel.initialized = true
+        } else {
+            setDifficultiesView()
         }
 
+        initScoresRecyclerView()
 
+        swipe_container?.setOnRefreshListener { reloadScoresRecyclerView() }
+        swipe_container?.setColorSchemeResources(
+            R.color.primaryColor,
+            R.color.secondaryColor
+        )
+        tv_leaderBoard_filter?.onItemClickListener = this
+
+    }
+
+    private fun initScoresRecyclerView() {
         scores_rv?.apply {
             layoutManager = LinearLayoutManager(this@LeaderBoardActivity)
             adapter = GamesAdapter(
                 viewModel.cursor
             )
         }
-
         scores_rv?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
 
                 val llManager = recyclerView.layoutManager as LinearLayoutManager?
                 if (!viewModel.isLoading) {
-                    if (llManager != null && llManager.findLastCompletelyVisibleItemPosition() == viewModel.cursor.size - 1) {
-                        if (viewModel.cursor.size % viewModel.cursor.pageSize == 0) {
-                            loadMore()
-                        }
+                    if (llManager?.findLastCompletelyVisibleItemPosition() == viewModel.cursor.size - 1 && viewModel.cursor.hasNext == true) {
+                        loadMore()
                     }
                 }
             }
         })
-
-        swipe_container?.setOnRefreshListener { refreshRecyclerView() }
-        swipe_container?.setColorSchemeResources(
-            R.color.primaryColor,
-            R.color.secondaryColor
-        )
-
-        tv_leaderBoard_filter?.onItemClickListener = this
-        setDifficultiesView()
-
     }
 
     private fun loadMore() {
@@ -109,7 +108,7 @@ class LeaderBoardActivity : AppCompatActivity(), AdapterView.OnItemClickListener
         viewModel.isLoading = true
         doAsync {
             viewModel.cursor.loadNext()
-            viewModel.cursor.addAll(viewModel.cursor.sortedByDescending { game -> game.eventCount })
+            viewModel.cursor.addAll(viewModel.cursor)
             runOnUiThread {
                 scores_rv?.adapter?.notifyDataSetChanged()
                 viewModel.isLoading = false
@@ -129,7 +128,7 @@ class LeaderBoardActivity : AppCompatActivity(), AdapterView.OnItemClickListener
             viewModel.currentDifficulty = viewModel.difficulties.firstOrNull()
             tv_leaderBoard_filter?.setText(viewModel.currentDifficulty?.name, false)
             swipe_container?.isRefreshing = true
-            refreshRecyclerView()
+            reloadScoresRecyclerView()
         } else {
             tv_leaderBoard_filter?.isEnabled = false
         }
@@ -137,14 +136,18 @@ class LeaderBoardActivity : AppCompatActivity(), AdapterView.OnItemClickListener
     }
 
 
-    private fun refreshRecyclerView() {
+    private fun reloadScoresRecyclerView() {
         scores_rv?.visibility = View.GONE
         if (NetworkUtils.isNetworkAvailable(this)) {
 
             doAsync {
                 try {
-                    viewModel.cursor.resetPage()
-                    viewModel.cursor.addAll(viewModel.cursor.loadCurrent().sortedByDescending {game -> game.eventCount  })
+                    viewModel.currentDifficulty?.id?.let { difficultyId ->
+                        getLeaderBoardPageCursor.execute(
+                            difficultyId
+                        )
+                    }?.let { viewModel.cursor.copy(it) }
+                    viewModel.cursor.addAll(viewModel.cursor.loadCurrent())
                     runOnUiThread {
                         scores_rv?.visibility = View.VISIBLE
                         swipe_container?.isRefreshing = false
@@ -176,13 +179,8 @@ class LeaderBoardActivity : AppCompatActivity(), AdapterView.OnItemClickListener
 
     override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         viewModel.currentDifficulty = parent?.getItemAtPosition(position) as DetailedDifficultyDto
-        viewModel.cursor.loadFunc = viewModel.currentDifficulty?.id?.let { difficultyId ->
-            getLeaderBoardPageFunc.execute(
-                difficultyId
-            )
-        }
         swipe_container?.isRefreshing = true
-        refreshRecyclerView()
+        reloadScoresRecyclerView()
     }
 
 }

@@ -2,7 +2,6 @@ package com.esgi.nova.games.ui.leaderboard.view_models
 
 import androidx.lifecycle.ViewModel
 import com.esgi.nova.dtos.difficulty.DetailedDifficultyDto
-import com.esgi.nova.games.infrastructure.api.models.LeaderBoardGameView
 import com.esgi.nova.games.ports.ILeaderBoardGameView
 import com.esgi.nova.infrastructure.api.pagination.PageCursor
 import com.esgi.nova.infrastructure.ports.IPageCursor
@@ -15,7 +14,14 @@ class LeaderBoardViewModel : ViewModel(), IViewModelState {
 
     var currentDifficulty: DetailedDifficultyDto? = null
 
-    lateinit var cursor: IPageCursor<ILeaderBoardGameView>
+    var cursor: IPageCursor<ILeaderBoardGameView> =
+        PageCursor(null) { cursor1, cursor2 ->
+            val res = cursor2.eventCount.compareTo(cursor1.eventCount)
+            if (res == 0) {
+                return@PageCursor cursor1.id.compareTo(cursor2.id)
+            }
+            return@PageCursor res
+        }
 
 
     var isLoading = false

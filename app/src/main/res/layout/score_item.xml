@@ -46,7 +46,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/position_gl"
                 android:fontFamily="@font/starcruiser"
-                tools:text="1" />
+                android:text="1" />
 
             <TextView
                 android:id="@+id/username_tv"
@@ -59,7 +59,7 @@
                 app:layout_constraintEnd_toStartOf="@id/trophy_iv"
                 app:layout_constraintTop_toTopOf="parent"
                 android:textAlignment="center"
-                tools:text="Nom du joueur"/>
+                android:text="Nom du joueur"/>
 
             <TextView
                 android:id="@+id/round_description_tv"
@@ -70,7 +70,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/position_gl"
                 app:layout_constraintTop_toBottomOf="@id/username_tv"
-                tools:text="@string/rounds" />
+                app:layout_constraintHorizontal_chainStyle="spread"
+                android:text="@string/rounds" />
 
             <TextView
                 android:id="@+id/round_tv"
@@ -80,7 +81,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/round_description_tv"
                 app:layout_constraintTop_toBottomOf="@id/username_tv"
-                tools:text="10" />
+                app:layout_constraintEnd_toStartOf="@id/duration_description_tv"
+                android:text="10" />
 
             <TextView
                 android:id="@+id/duration_description_tv"
@@ -91,7 +93,7 @@
                 app:layout_constraintStart_toEndOf="@+id/round_tv"
                 app:layout_constraintTop_toBottomOf="@id/username_tv"
                 app:layout_constraintEnd_toStartOf="@id/duration_tv"
-                tools:text="@string/duration" />
+                android:text="@string/duration" />
 
 
             <TextView
@@ -103,7 +105,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/duration_description_tv"
                 app:layout_constraintTop_toBottomOf="@id/username_tv"
-                tools:text="HH:MM:SS" />
+                android:text="HH:MM:SS" />
 
 
             <ImageView

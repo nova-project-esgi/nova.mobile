@@ -27,7 +27,6 @@ class LeaderBoardScoreViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
 
     fun bind(score: ILeaderBoardGameView, position: Int) {
         usernameTv?.text = score.user.username
-
         roundTv?.text = "${score.eventCount}"
         durationTv?.text = LocalTime.ofSecondOfDay(score.duration.toLong()).toString()
         positionTv?.text = "${position + 1}"
