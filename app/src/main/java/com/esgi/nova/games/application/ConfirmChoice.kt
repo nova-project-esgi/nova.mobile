@@ -31,7 +31,10 @@ class ConfirmChoice @Inject constructor(
 
                 choice.resources.forEach { resource ->
                     gameResourceDbRepository.getById(gameId)?.let { gameResource ->
-                        val updateResourceValue = gameResource.total + resource.changeValue
+                        var updateResourceValue = gameResource.total + resource.changeValue
+                        if (updateResourceValue < 0 ) {
+                            updateResourceValue = 0
+                        }
                         gameResourceDbRepository.update(
                             GameResource(
                                 resourceId = resource.id,

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/login_bg"
-    tools:context=".EndGameActivity">
+    tools:context=".games.ui.game.endgame.EndGameActivity">
 
     <TextView
         android:id="@+id/end_title"
@@ -14,7 +14,8 @@
         app:layout_constraintBottom_toTopOf="@id/end_message"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:textSize="30sp"/>
 
     <TextView
         android:id="@+id/end_message"
@@ -23,7 +24,8 @@
         app:layout_constraintBottom_toTopOf="@id/turn_recap"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/end_title" />
+        app:layout_constraintTop_toBottomOf="@id/end_title"
+        android:textSize="24sp"/>
 
     <TextView
         android:id="@+id/turn_recap"
@@ -38,23 +40,39 @@
         android:id="@+id/resources_recap"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/resources_list"
+        app:layout_constraintBottom_toTopOf="@id/resources_recap_ll"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/turn_recap" />
 
     <LinearLayout
-        android:id="@+id/resources_list"
+        android:id="@+id/resources_recap_ll"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:footerDividersEnabled="false"
         android:gravity="center"
         android:headerDividersEnabled="false"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/return_to_dashboard"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/resources_recap">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/resources_recap_rv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" />
     </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/return_to_dashboard"
+        android:text="@string/return_to_dashboard"
+        app:layout_constraintTop_toBottomOf="@id/resources_recap_ll"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

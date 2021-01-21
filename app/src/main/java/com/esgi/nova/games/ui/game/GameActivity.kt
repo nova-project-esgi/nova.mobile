@@ -13,6 +13,7 @@ import com.esgi.nova.ui.dashboard.DashboardActivity
 import com.esgi.nova.R
 import com.esgi.nova.events.ports.IDetailedChoice
 import com.esgi.nova.games.application.*
+import com.esgi.nova.games.ui.endgame.EndGameActivity
 import com.esgi.nova.games.ui.game.adapters.GameResourcesAdapter
 import com.esgi.nova.games.ui.game.fragments.ChoiceDetailFragment
 import com.esgi.nova.games.ui.game.fragments.ChoicesListFragment
@@ -123,6 +124,14 @@ class GameActivity : AppCompatActivity(), Observer<IDetailedChoice?>, OnChoiceCo
 
     }
 
+    private fun startEndGameActivity() {
+        runOnUiThread {
+            EndGameActivity.start(this@GameActivity)
+            finish()
+        }
+
+    }
+
     private fun loadGame() {
         val difficultyId = intent.getUUIDExtra(DifficultyIdKey)
         if (difficultyId != null) {
@@ -202,9 +211,13 @@ class GameActivity : AppCompatActivity(), Observer<IDetailedChoice?>, OnChoiceCo
     override fun onChoiceConfirmed(choice: IDetailedChoice) {
         doAsync {
             val isEnded =
-                confirmChoice.execute(gameId = gameViewModel.id, choiceId = choice.id, duration = gameViewModel.duration)
+                confirmChoice.execute(
+                    gameId = gameViewModel.id,
+                    choiceId = choice.id,
+                    duration = gameViewModel.duration
+                )
             if (isEnded) {
-                DashboardActivity.start(this@GameActivity)
+                startEndGameActivity()
             } else {
                 runOnUiThread {
                     choicesListViewModel.select(null)

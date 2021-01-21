@@ -16,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Nova.NoActionBar">
         <activity android:name=".parameters.ui.ParametersActivity" />
-        <activity android:name=".EndGameActivity" />
+        <activity android:name=".games.ui.endgame.EndGameActivity" />
         <service android:name=".sound.services.BackgroundSoundService" />
         <activity android:name=".users.ui.LoginActivity">
             <intent-filter>

@@ -156,13 +156,5 @@ class InitSetupActivity : AppCompatActivity() {
     }
 
 
-    private fun navigateToDashboardPage() {
-        val intent = Intent(this, DashboardActivity::class.java)
-        startActivity(intent)
-        finish()
-    }
-
-
-
 
 }
