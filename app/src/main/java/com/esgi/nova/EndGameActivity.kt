@@ -35,9 +35,12 @@ class EndGameActivity : AppCompatActivity() {
             var resources = game?.resources
 
             runOnUiThread {
-                end_message?.text = turnTotal?.let {
+                end_title?.text = getResources().getString(R.string.end_game_title)
+                end_message?.text = getResources().getString(R.string.end_game_message)
+                turn_recap?.text = turnTotal?.let {
                     getResources().getQuantityString(R.plurals.turn_recap, it, turnTotal)
                 }
+
             }
         }
     }

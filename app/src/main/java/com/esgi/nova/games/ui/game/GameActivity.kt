@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.esgi.nova.EndGameActivity
 import com.esgi.nova.ui.dashboard.DashboardActivity
 import com.esgi.nova.R
 import com.esgi.nova.events.ports.IDetailedChoice
@@ -123,6 +124,14 @@ class GameActivity : AppCompatActivity(), Observer<IDetailedChoice?>, OnChoiceCo
 
     }
 
+    private fun startEndGameActivity() {
+        runOnUiThread {
+            EndGameActivity.start(this@GameActivity)
+            finish()
+        }
+
+    }
+
     private fun loadGame() {
         val difficultyId = intent.getUUIDExtra(DifficultyIdKey)
         if (difficultyId != null) {
@@ -204,7 +213,7 @@ class GameActivity : AppCompatActivity(), Observer<IDetailedChoice?>, OnChoiceCo
             val isEnded =
                 confirmChoice.execute(gameId = gameViewModel.id, choiceId = choice.id, duration = gameViewModel.duration)
             if (isEnded) {
-                DashboardActivity.start(this@GameActivity)
+                startEndGameActivity()
             } else {
                 runOnUiThread {
                     choicesListViewModel.select(null)

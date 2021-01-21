@@ -14,7 +14,8 @@
         app:layout_constraintBottom_toTopOf="@id/end_message"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:textSize="30sp"/>
 
     <TextView
         android:id="@+id/end_message"
@@ -23,7 +24,8 @@
         app:layout_constraintBottom_toTopOf="@id/turn_recap"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/end_title" />
+        app:layout_constraintTop_toBottomOf="@id/end_title"
+        android:textSize="24sp"/>
 
     <TextView
         android:id="@+id/turn_recap"
