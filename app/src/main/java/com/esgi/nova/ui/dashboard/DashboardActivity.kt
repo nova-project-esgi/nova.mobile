@@ -14,7 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.esgi.nova.LeaderBoardActivity
+import com.esgi.nova.games.ui.leaderboard.LeaderBoardActivity
 import com.esgi.nova.R
 import com.esgi.nova.difficulties.application.GetAllDetailedDifficulties
 import com.esgi.nova.difficulties.ports.IDetailedDifficulty
@@ -22,9 +22,10 @@ import com.esgi.nova.dtos.difficulty.DetailedDifficultyDto
 import com.esgi.nova.games.application.CreateGame
 import com.esgi.nova.games.infrastructure.data.game.models.CanLaunchGame
 import com.esgi.nova.games.infrastructure.data.game.models.CanResumeGame
-import com.esgi.nova.games.ui.GameActivity
+import com.esgi.nova.games.ui.game.GameActivity
 import com.esgi.nova.parameters.ui.ParametersActivity
 import com.esgi.nova.resources.application.GetImageResourceWrappersByDifficultyId
+import com.esgi.nova.sound.services.BackgroundSoundService
 import com.esgi.nova.ui.dashboard.adapters.DashBoardResourcesAdapter
 import com.esgi.nova.ui.dashboard.view_models.DashboardViewModel
 import com.esgi.nova.utils.reflectMapCollection
@@ -69,6 +70,7 @@ class DashboardActivity : AppCompatActivity(), View.OnClickListener, AdapterView
         init_new_game_btn.setOnClickListener(this)
         resume_game_btn.setOnClickListener(this)
         supportActionBar?.setDisplayShowTitleEnabled(false)
+        BackgroundSoundService.start(this)
 
         doAsync {
             val canLaunch = canLaunchGame.execute()

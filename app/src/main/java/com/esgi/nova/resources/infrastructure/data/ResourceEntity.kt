@@ -10,6 +10,7 @@ import java.util.*
 
 @Entity(tableName = "resources")
 data class ResourceEntity(
+    @ColumnInfo(name = "id")
     @PrimaryKey
     @field:TypeConverters(UUIDConverter::class)
     override var id: UUID = UUID.randomUUID(),

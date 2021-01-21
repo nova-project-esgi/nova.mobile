@@ -5,7 +5,7 @@ import com.esgi.nova.games.application.models.GameForCreation
 import com.esgi.nova.games.infrastructure.api.exceptions.GameNotFoundException
 import com.esgi.nova.games.infrastructure.api.models.GameForUpdate
 import com.esgi.nova.games.infrastructure.api.models.GameResume
-import com.esgi.nova.games.infrastructure.dto.LeaderBoardGameView
+import com.esgi.nova.games.infrastructure.api.models.LeaderBoardGameView
 import com.esgi.nova.games.ports.IGame
 import com.esgi.nova.games.ports.IGameForCreation
 import com.esgi.nova.games.ports.IGameEdition
@@ -48,7 +48,7 @@ class GameApiRepository @Inject constructor(getUserToken: GetUserToken, updateUs
             )
         }
     }
-    fun getDefaultGamesList(difficultyId: UUID, page: Int, pageSize: Int): PageMetadata<LeaderBoardGameView>? {
+    fun getDefaultGamesList(difficultyId: UUID, page: Int?, pageSize: Int?): PageMetadata<LeaderBoardGameView>? {
         return gameService.getLeaderBoardGamesByDifficulty(difficultyId.toString(), page, pageSize).execute().body()
     }
 

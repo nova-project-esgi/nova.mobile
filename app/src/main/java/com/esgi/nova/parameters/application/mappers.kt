@@ -8,7 +8,7 @@ import com.esgi.nova.parameters.ports.IParameters
 fun IParameters.toLanguageParameters(appLanguage: IAppLanguage?): ILanguageParameters = LanguageParameters(
     selectedLanguage = appLanguage,
     hasNotifications = this.hasNotifications,
-    hasMusic = this.hasMusic,
+    hasSound = this.hasSound,
     hasDailyEvents = this.hasDailyEvents,
     isDarkMode = this.isDarkMode
 )

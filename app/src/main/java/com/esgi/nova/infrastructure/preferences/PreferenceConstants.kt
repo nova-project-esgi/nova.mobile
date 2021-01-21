@@ -24,4 +24,9 @@ object PreferenceConstants {
         const val HasMusicKey = "hasMusic"
     }
 
+    object Sound{
+        const val Key = "sound"
+        const val BackgroundSoundPositionKey = "backgroundSoundPosition"
+    }
+
 }

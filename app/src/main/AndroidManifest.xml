@@ -17,6 +17,7 @@
         android:theme="@style/Theme.Nova.NoActionBar">
         <activity android:name=".parameters.ui.ParametersActivity" />
         <activity android:name=".EndGameActivity" />
+        <service android:name=".sound.services.BackgroundSoundService" />
         <activity android:name=".users.ui.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,9 +25,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".games.ui.GameActivity" />
-        <activity android:name=".ui.init.InitSetupActivity" />
-        <activity android:name=".LeaderBoardActivity" />
+        <activity android:name=".games.ui.game.GameActivity" />
+        <activity android:name=".ui.init.InitSetupActivity" android:screenOrientation="portrait" />
+        <activity android:name="com.esgi.nova.games.ui.leaderboard.LeaderBoardActivity" />
         <activity
             android:name=".ui.dashboard.DashboardActivity"
             android:theme="@style/Theme.Nova"/>

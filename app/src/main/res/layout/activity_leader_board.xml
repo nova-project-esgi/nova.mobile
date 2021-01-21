@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/simple_bg"
-    tools:context=".LeaderBoardActivity">
+    tools:context=".games.ui.leaderboard.LeaderBoardActivity">
 
 
     <TextView

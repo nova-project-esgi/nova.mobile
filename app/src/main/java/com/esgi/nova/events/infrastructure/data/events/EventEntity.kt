@@ -13,6 +13,7 @@ import java.util.*
 
 @Entity(tableName = "events")
 data class EventEntity(
+    @ColumnInfo(name = "id")
     @PrimaryKey()
     @field:TypeConverters(UUIDConverter::class)
     override var id: UUID = UUID.randomUUID(),

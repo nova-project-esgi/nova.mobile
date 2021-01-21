@@ -2,7 +2,7 @@ package com.esgi.nova.games.application
 
 import com.esgi.nova.games.infrastructure.api.GameApiRepository
 import com.esgi.nova.infrastructure.api.pagination.PageMetadata
-import com.esgi.nova.games.infrastructure.dto.LeaderBoardGameView
+import com.esgi.nova.games.infrastructure.api.models.LeaderBoardGameView
 import java.util.*
 import javax.inject.Inject
 
@@ -12,3 +12,4 @@ class GetLeaderBoardGameList @Inject constructor(private val gameApiRepository: 
         return gameApiRepository.getDefaultGamesList(difficultyId, page, pageSize)
     }
 }
+

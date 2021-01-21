@@ -6,5 +6,5 @@ interface IParameters {
     val isDarkMode: Boolean
     val hasDailyEvents: Boolean
     val hasNotifications: Boolean
-    val hasMusic: Boolean
+    val hasSound: Boolean
 }
