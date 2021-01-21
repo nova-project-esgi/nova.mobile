@@ -5,10 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.ProgressBar
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -21,6 +18,7 @@ import com.esgi.nova.difficulties.ports.IDetailedDifficulty
 import com.esgi.nova.dtos.difficulty.DetailedDifficultyDto
 import com.esgi.nova.games.application.GetLeaderBoardGameList
 import com.esgi.nova.games.infrastructure.dto.LeaderBoardGameView
+import com.esgi.nova.infrastructure.api.pagination.PageMetadata
 import com.esgi.nova.users.exceptions.InvalidDifficultyException
 import com.esgi.nova.utils.NetworkUtils
 import com.esgi.nova.utils.reflectMapCollection
@@ -31,6 +29,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class LeaderBoardActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
+
 
     @Inject
     lateinit var getLeaderBoardGameList: GetLeaderBoardGameList
@@ -43,6 +42,8 @@ class LeaderBoardActivity : AppCompatActivity(), AdapterView.OnItemClickListener
     private lateinit var currentDifficulty: DetailedDifficultyDto
 
     private var games = mutableListOf<LeaderBoardGameView>()
+
+    private var canLoadMoreGames = true
 
     private var isLoading = false
 
@@ -75,16 +76,17 @@ class LeaderBoardActivity : AppCompatActivity(), AdapterView.OnItemClickListener
                 val llManager = recyclerView.layoutManager as LinearLayoutManager?
                 if (!isLoading) {
                     if (llManager != null && llManager.findLastCompletelyVisibleItemPosition() == games.size - 1) {
-                        if (games.size%10 == 0 ) {
+                        if (games.size%10 == 0  && canLoadMoreGames) {
                             loadMore()
-
+                        } else {
+                            displayNoMoreGamesMessage()
                         }
                     }
                 }
             }
         })
 
-        swipe_container.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener { refreshRecyclerView() })
+        swipe_container.setOnRefreshListener { refreshRecyclerView() }
         swipe_container.setColorSchemeResources(
             android.R.color.holo_blue_bright,
             android.R.color.holo_green_light,
@@ -97,21 +99,42 @@ class LeaderBoardActivity : AppCompatActivity(), AdapterView.OnItemClickListener
 
     }
 
+    private fun displayNoMoreGamesMessage() {
+        if (games.isNotEmpty()){
+            val toast = Toast.makeText(
+                this@LeaderBoardActivity,
+                getString(R.string.no_more_game_to_load),
+                Toast.LENGTH_SHORT
+            )
+            toast.show()
+        }
+    }
+
     private fun loadMore() {
         pb_load_more.visibility = ProgressBar.VISIBLE
         isLoading = true
         doAsync {
             val moreGames = getLeaderBoardGameList.execute(currentDifficulty.id, games.size/PAGE_SIZE, PAGE_SIZE)
             runOnUiThread {
-                moreGames?.values?.forEach {
-                    games.add(it)
-                }
-                games.sortByDescending { game -> game.eventCount }
-                scores_rv.adapter?.notifyDataSetChanged()
-                isLoading = false
-                pb_load_more.visibility = ProgressBar.GONE
+                addMoreGames(moreGames)
             }
         }
+    }
+
+    private fun addMoreGames(moreGames: PageMetadata<LeaderBoardGameView>?) {
+        moreGames?.let { newGames ->
+            if (newGames.values.isEmpty()) {
+                displayNoMoreGamesMessage()
+            } else {
+                newGames.values.forEach {
+                    games.add(it)
+                }
+                scores_rv.adapter?.notifyDataSetChanged()
+            }
+        }
+        verifyGameList()
+        isLoading = false
+        pb_load_more.visibility = ProgressBar.GONE
     }
 
     private fun generateDifficulties() {
@@ -123,27 +146,31 @@ class LeaderBoardActivity : AppCompatActivity(), AdapterView.OnItemClickListener
                     result.reflectMapCollection<IDetailedDifficulty, DetailedDifficultyDto>()
                         .toList()
                 runOnUiThread {
-                    val arrayAdapter = ArrayAdapter(
-                        this@LeaderBoardActivity,
-                        R.layout.list_item,
-                        difficulties
-                    )
-                    tv_leaderBoard_filter.setAdapter(arrayAdapter)
-                    tv_leaderBoard_filter.inputType = 0
-                    if (difficulties.isNotEmpty()) {
-                        currentDifficulty = difficulties[0]
-                        tv_leaderBoard_filter.setText(difficulties[0].name, false)
-                        swipe_container.isRefreshing = true
-                        refreshRecyclerView()
-                    } else {
-                        tv_leaderBoard_filter.isEnabled = false
-                    }
-                    tv_leaderBoard_filter.onItemClickListener = this@LeaderBoardActivity
+                    addDifficultiesToView()
                 }
             } catch (e: Error) {
 
             }
         }
+    }
+
+    private fun addDifficultiesToView() {
+        val arrayAdapter = ArrayAdapter(
+            this@LeaderBoardActivity,
+            R.layout.list_item,
+            difficulties
+        )
+        tv_leaderBoard_filter.setAdapter(arrayAdapter)
+        tv_leaderBoard_filter.inputType = 0
+        if (difficulties.isNotEmpty()) {
+            currentDifficulty = difficulties[0]
+            tv_leaderBoard_filter.setText(difficulties[0].name, false)
+            swipe_container.isRefreshing = true
+            refreshRecyclerView()
+        } else {
+            tv_leaderBoard_filter.isEnabled = false
+        }
+        tv_leaderBoard_filter.onItemClickListener = this@LeaderBoardActivity
     }
 
 
@@ -158,14 +185,14 @@ class LeaderBoardActivity : AppCompatActivity(), AdapterView.OnItemClickListener
                         0,
                         PAGE_SIZE
                     )
-                    execute?.let {
-                        games.clear()
-                        games.addAll(it.values)
-                        games.sortByDescending { game -> game.eventCount }
-                    }
                     runOnUiThread {
+                        execute?.let {
+                            games.clear()
+                            games.addAll(it.values)
+                        }
+                        verifyGameList()
                         scores_rv.visibility = View.VISIBLE
-                        swipe_container.setRefreshing(false)
+                        swipe_container.isRefreshing = false
                     }
                 } catch (e: InvalidDifficultyException) {
                     val toast = Toast.makeText(
@@ -184,6 +211,14 @@ class LeaderBoardActivity : AppCompatActivity(), AdapterView.OnItemClickListener
             toast.show()
             scores_rv.visibility = View.VISIBLE
             swipe_container.isRefreshing = false
+        }
+    }
+
+    private fun verifyGameList() {
+        if (games.isEmpty()) {
+            tv_no_games.visibility = TextView.VISIBLE
+        } else {
+            tv_no_games.visibility = TextView.GONE
         }
     }
 
