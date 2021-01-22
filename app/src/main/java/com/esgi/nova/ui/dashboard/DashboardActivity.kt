@@ -24,7 +24,7 @@ import com.esgi.nova.games.infrastructure.data.game.models.CanLaunchGame
 import com.esgi.nova.games.infrastructure.data.game.models.CanResumeGame
 import com.esgi.nova.games.ui.game.GameActivity
 import com.esgi.nova.parameters.ui.ParametersActivity
-import com.esgi.nova.resources.application.GetImageResourceWrappersByDifficultyId
+import com.esgi.nova.resources.application.GetImageStartValueResourceWrappersByDifficultyId
 import com.esgi.nova.sound.services.BackgroundSoundService
 import com.esgi.nova.ui.dashboard.adapters.DashBoardResourcesAdapter
 import com.esgi.nova.ui.dashboard.view_models.DashboardViewModel
@@ -45,7 +45,7 @@ class DashboardActivity : AppCompatActivity(), View.OnClickListener, AdapterView
     lateinit var getAllDetailedDifficulties: GetAllDetailedDifficulties
 
     @Inject
-    lateinit var getImageResourceWrappersByDifficultyId: GetImageResourceWrappersByDifficultyId
+    lateinit var getImageStartValueResourceWrappersByDifficultyId: GetImageStartValueResourceWrappersByDifficultyId
 
     @Inject
     lateinit var canLaunchGame: CanLaunchGame
@@ -166,7 +166,7 @@ class DashboardActivity : AppCompatActivity(), View.OnClickListener, AdapterView
         doAsync {
             dashBoardViewModel.selectedDifficulty?.let { selectedDifficulty ->
                 val resources =
-                    getImageResourceWrappersByDifficultyId.execute(selectedDifficulty.id)
+                    getImageStartValueResourceWrappersByDifficultyId.execute(selectedDifficulty.id)
                 runOnUiThread {
                     dashBoardViewModel.wrapperResources.clear()
                     dashBoardViewModel.wrapperResources.addAll(resources)

@@ -10,10 +10,10 @@ import android.widget.CompoundButton
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.esgi.nova.ui.init.InitSetupActivity
 import com.esgi.nova.R
 import com.esgi.nova.dtos.languages.AppLanguageDto
 import com.esgi.nova.languages.application.GetAllLanguages
+import com.esgi.nova.languages.application.GetSelectedLanguage
 import com.esgi.nova.languages.ports.IAppLanguage
 import com.esgi.nova.parameters.application.GetParameters
 import com.esgi.nova.parameters.application.SaveParameters
@@ -21,6 +21,7 @@ import com.esgi.nova.parameters.application.toLanguageParameters
 import com.esgi.nova.parameters.ports.ILanguageParameters
 import com.esgi.nova.parameters.ui.view_models.ParametersViewModel
 import com.esgi.nova.ui.dashboard.DashboardActivity
+import com.esgi.nova.ui.init.InitSetupActivity
 import com.esgi.nova.users.ui.LoginActivity
 import com.esgi.nova.utils.reflectMapCollection
 import dagger.hilt.android.AndroidEntryPoint
@@ -130,7 +131,8 @@ class ParametersActivity : AppCompatActivity(), View.OnClickListener,
     private fun saveParameters() {
         val updateParameters  = parametersViewModel.toLanguageParameters(parametersViewModel.selectedLanguage)
         doAsync {
-            val savedParameters = saveParameters.execute(updateParameters)
+            val previousParams = getParameters.execute()
+            saveParameters.execute(updateParameters)
             runOnUiThread {
                 val toast = Toast.makeText(
                     this@ParametersActivity,
@@ -138,13 +140,13 @@ class ParametersActivity : AppCompatActivity(), View.OnClickListener,
                     Toast.LENGTH_LONG
                 )
                 toast.show()
-                checkChanges(savedParameters)
+                checkChanges(previousParams)
             }
         }
     }
 
-    private fun checkChanges(savedParameters: ILanguageParameters) {
-        if (savedParameters.selectedLanguage?.id != parametersViewModel.selectedLanguage?.id || (savedParameters.hasDailyEvents && !parametersViewModel.hasDailyEvents)) {
+    private fun checkChanges(previousParams: ILanguageParameters) {
+        if (previousParams.selectedLanguage?.id != parametersViewModel.selectedLanguage?.id) {
             InitSetupActivity.startResynchronize(this)
             finish()
         } else {

@@ -6,8 +6,8 @@
 
     <gradient
         android:angle="45"
-        android:endColor="@color/primaryColor"
-        android:startColor="@color/secondaryColor"
+        android:endColor="@color/backgroundColor"
+        android:startColor="@color/primaryLightColor"
         android:type="linear" />
 
     <size
@@ -16,6 +16,6 @@
 
     <stroke
         android:width="2dp"
-        android:color="@color/secondaryColor" />
+        android:color="@color/secondaryDarkColor" />
 
 </shape>

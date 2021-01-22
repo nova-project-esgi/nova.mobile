@@ -79,7 +79,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/TextAppearance.AppCompat.Title"
-            android:textColor="@color/secondaryColor"
+            android:textColor="@color/secondaryDarkColor"
             android:fontFamily="@font/digital"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@id/round_description_tv"
@@ -125,7 +125,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/TextAppearance.AppCompat.Title"
-            android:textColor="@color/secondaryColor"
+            android:textColor="@color/secondaryDarkColor"
             android:fontFamily="@font/digital"
             android:textStyle="bold"
             android:text="HH:MM:SS"/>
