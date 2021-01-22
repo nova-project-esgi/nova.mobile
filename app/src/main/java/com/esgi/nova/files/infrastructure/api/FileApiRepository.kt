@@ -8,7 +8,7 @@ import retrofit2.Retrofit
 import javax.inject.Inject
 
 class FileApiRepository @Inject constructor(getUserToken: GetUserToken, updateUserToken: UpdateUserToken): ApiRepository(getUserToken,updateUserToken) {
-    private lateinit var fileService: FileService
+    private var fileService: FileService
 
     init {
         val retrofit = Retrofit.Builder()

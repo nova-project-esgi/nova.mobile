@@ -9,9 +9,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.esgi.nova.ui.dashboard.DashboardActivity
 import com.esgi.nova.R
 import com.esgi.nova.events.ports.IDetailedChoice
+import com.esgi.nova.files.dtos.FileWrapperDto
 import com.esgi.nova.games.application.*
 import com.esgi.nova.games.ui.game.adapters.GameResourcesAdapter
 import com.esgi.nova.games.ui.game.fragments.ChoiceDetailFragment
@@ -19,11 +19,14 @@ import com.esgi.nova.games.ui.game.fragments.ChoicesListFragment
 import com.esgi.nova.games.ui.game.fragments.OnChoiceConfirmedListener
 import com.esgi.nova.games.ui.game.view_models.ChoicesListViewModel
 import com.esgi.nova.games.ui.game.view_models.GameViewModel
+import com.esgi.nova.ui.dashboard.DashboardActivity
 import com.esgi.nova.utils.clear
 import com.esgi.nova.utils.getUUIDExtra
 import com.esgi.nova.utils.putUUIDExtra
+import com.esgi.nova.utils.recyclerViewOrientation
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_event.*
+import kotlinx.android.synthetic.main.activity_game.*
+import org.jetbrains.anko.contentView
 import org.jetbrains.anko.doAsync
 import java.time.LocalTime
 import java.util.*
@@ -58,6 +61,7 @@ class GameActivity : AppCompatActivity(), Observer<IDetailedChoice?>, OnChoiceCo
 
     companion object {
         const val DifficultyIdKey = "DifficultyId"
+        const val ResourceSnackBarDurationMs = 2000
         fun start(context: Context): Context {
             val intent = Intent(context, GameActivity::class.java)
             context.startActivity(intent)
@@ -75,7 +79,7 @@ class GameActivity : AppCompatActivity(), Observer<IDetailedChoice?>, OnChoiceCo
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.activity_event)
+        setContentView(R.layout.activity_game)
         choicesListViewModel.selected.observe(this@GameActivity, this@GameActivity)
 
         doAsync {
@@ -92,7 +96,7 @@ class GameActivity : AppCompatActivity(), Observer<IDetailedChoice?>, OnChoiceCo
             choicesListViewModel.setChoices(gameViewModel.event.data.choices)
             event_title_tv?.text = gameViewModel.event.data.title
             event_description_tv?.text = gameViewModel.event.data.description
-            event_background_img?.setImageBitmap(gameViewModel.event.img)
+            event_background_img?.setImageBitmap(gameViewModel.event.file)
             round_tv?.text = gameViewModel.rounds.toString()
             initResources()
             onChanged(choicesListViewModel.selected.value)
@@ -101,11 +105,10 @@ class GameActivity : AppCompatActivity(), Observer<IDetailedChoice?>, OnChoiceCo
 
     private fun initResources() {
         resources_rv?.apply {
-            val orientation =
-                if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) RecyclerView.VERTICAL else RecyclerView.HORIZONTAL
+
             layoutManager = LinearLayoutManager(
                 this@GameActivity,
-                orientation,
+                resources.configuration.recyclerViewOrientation,
                 false
             )
             adapter =
@@ -163,6 +166,9 @@ class GameActivity : AppCompatActivity(), Observer<IDetailedChoice?>, OnChoiceCo
             gameViewModel.copyGame(game)
             getNextEvent.execute(game.id)?.let { event ->
                 gameViewModel.event = event
+                runOnUiThread {
+                    choicesListViewModel.select(null);
+                }
                 initGame()
                 return
             }
@@ -202,13 +208,15 @@ class GameActivity : AppCompatActivity(), Observer<IDetailedChoice?>, OnChoiceCo
     override fun onChoiceConfirmed(choice: IDetailedChoice) {
         doAsync {
             val isEnded =
-                confirmChoice.execute(gameId = gameViewModel.id, choiceId = choice.id, duration = gameViewModel.duration)
+                confirmChoice.execute(
+                    gameId = gameViewModel.id,
+                    choiceId = choice.id,
+                    duration = gameViewModel.duration
+                )
             if (isEnded) {
                 DashboardActivity.start(this@GameActivity)
             } else {
-                runOnUiThread {
-                    choicesListViewModel.select(null)
-                }
+                showChangeResourcesSnackBar()
                 nextRound()
             }
         }
@@ -236,6 +244,28 @@ class GameActivity : AppCompatActivity(), Observer<IDetailedChoice?>, OnChoiceCo
             }
         }
         gameViewModel.timer?.scheduleAtFixedRate(timerTask, 0, 1000)
+    }
+
+
+    private fun showChangeResourcesSnackBar() {
+        choicesListViewModel.selected.value?.let { choice ->
+            val choiceResourcesChanges = getFileWrapperForSelectedChoiceResources(choice)
+            contentView?.let {
+                ResourcesChangeSnackBar.make(
+                    it, choiceResourcesChanges, ResourceSnackBarDurationMs
+                )?.show()
+            }
+        }
+    }
+
+    private fun getFileWrapperForSelectedChoiceResources(choice: IDetailedChoice): List<FileWrapperDto<IDetailedChoice.IChangeValueResource>> {
+        return choice.resources.mapNotNull { choiceResource ->
+            gameViewModel.resources
+                .firstOrNull { gameResource -> gameResource.data.id == choiceResource.id }
+                ?.let { gameResource ->
+                    FileWrapperDto(choiceResource, gameResource.file)
+                }
+        }
     }
 
 }

@@ -26,7 +26,7 @@ class DifficultyResourceViewHolder(inflater: LayoutInflater, parent: ViewGroup) 
     fun bind(resource: IFileWrapper<IDetailedDifficulty.IStartValueResource>) {
         name?.text = resource.data.name
         startValue?.text = resource.data.startValue.toString()
-        icon?.setImageBitmap(resource.img)
+        icon?.setImageBitmap(resource.file)
     }
 
 }

@@ -4,8 +4,7 @@ import com.esgi.nova.events.application.GetDailyEvent
 import com.esgi.nova.events.infrastructure.data.events.EventDbRepository
 import com.esgi.nova.events.ports.IDetailedEvent
 import com.esgi.nova.files.application.GetFileBitmapById
-import com.esgi.nova.files.application.model.FileWrapper
-import com.esgi.nova.files.infrastructure.fs.FileStorageRepository
+import com.esgi.nova.files.dtos.FileWrapperDto
 import com.esgi.nova.files.infrastructure.ports.IFileWrapper
 import com.esgi.nova.games.application.models.GameEvent
 import com.esgi.nova.games.infrastructure.data.game_event.GameEventDbRepository
@@ -42,7 +41,7 @@ class GetNextEvent @Inject constructor(
                     )
                 )
                 getFileBitmapById.execute(FsConstants.Paths.Events, event.id)?.let { img ->
-                    return FileWrapper(event, img)
+                    return FileWrapperDto(event, img)
                 }
             }
         }
@@ -70,7 +69,7 @@ class GetNextEvent @Inject constructor(
             ))
             eventDbRepository.getDetailedEventById(id = selectedEventId)?.let { event ->
                 getFileBitmapById.execute(FsConstants.Paths.Events, event.id)?.let { img ->
-                    return FileWrapper(event, img)
+                    return FileWrapperDto(event, img)
                 }
             }
         }

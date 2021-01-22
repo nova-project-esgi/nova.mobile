@@ -16,7 +16,7 @@ class SynchronizeLanguages @Inject constructor(
 
 ) : Synchronize {
     override fun execute() {
-        val selectedLanguage: String = languageSystemRepository.getLanguage()
+        val selectedLanguage: String = languageDbRepository.getSelectedLanguage()?.tag ?: languageSystemRepository.getLanguage()
         val languages = languageApiRepository.getAll();
 
         languageDbRepository.upsertCollection(languages.reflectMapCollection<IDefaultLanguage, AppLanguage>())

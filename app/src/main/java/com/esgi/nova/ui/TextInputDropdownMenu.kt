@@ -52,7 +52,7 @@ class TextInputDropdownMenu : AppCompatAutoCompleteTextView {
             super.onRestoreInstanceState(state)
             return
         }
-        val customSavedState: CustomSavedState = state as CustomSavedState
+        val customSavedState: CustomSavedState = state
         setText(customSavedState.text, false)
         super.onRestoreInstanceState(customSavedState.superState)
     }

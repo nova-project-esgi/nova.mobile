@@ -37,9 +37,6 @@ class ChoiceDetailFragment : Fragment(), View.OnClickListener {
 
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-    }
 
     override fun onClick(v: View?) {
         when (v) {

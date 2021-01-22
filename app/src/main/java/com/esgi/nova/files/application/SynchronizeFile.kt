@@ -12,8 +12,7 @@ class SynchronizeFile @Inject constructor(
     fun execute(
         url: String,
         destinationDir: String,
-        fileName: String,
-        resolveFileExtension: Boolean = true
+        fileName: String
     ) {
         fileApiRepository.getFile(url)?.let { fileStreamResume ->
             fileStorageRepository.saveFile(

@@ -17,7 +17,7 @@ open class ApiRepository @Inject constructor(
     private val updateUserToken: UpdateUserToken
 ) {
 
-    lateinit var genericService: GenericService
+    var genericService: GenericService
 
     init {
         val retrofit = Retrofit.Builder()
@@ -26,7 +26,7 @@ open class ApiRepository @Inject constructor(
         genericService = retrofit.create(GenericService::class.java)
     }
 
-    inline protected fun <reified T : Any> Response<*>.getLocatedContent(): T? {
+    protected inline fun <reified T : Any> Response<*>.getLocatedContent(): T? {
         this@getLocatedContent.headers()[HttpConstants.Headers.Location]?.let { location ->
             return try{
                 val req = this@ApiRepository.genericService.get(location).execute()

@@ -31,13 +31,15 @@ class ChoicesListFragment : Fragment(), OnChoiceClicked, Observer<List<IDetailed
         return inflater.inflate(R.layout.choices_list_fragment, container, false)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         viewModel.choices.value?.let { choices ->
             this.choices = choices.toMutableList()
         }
         initChoicesList()
         viewModel.choices.observe(viewLifecycleOwner, this)
+        super.onViewCreated(view, savedInstanceState)
     }
 
     fun initChoicesList() {
