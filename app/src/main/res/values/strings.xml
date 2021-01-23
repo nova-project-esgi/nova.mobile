@@ -59,4 +59,5 @@
     <string name="return_to_dashboard">Menu</string>
     <string name="no_more_game_to_load">No more games are available</string>
     <string name="no_games_available">No games are available for this difficulty</string>
+    <string name="increase">Increase</string>
 </resources>

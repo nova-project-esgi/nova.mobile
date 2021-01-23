@@ -17,7 +17,7 @@ class GetLastEndedGame @Inject constructor(
             gameDbRepository.getLastEndedGameId(userId)?.let { id ->
                 gameDbRepository.getRecappedGameById(id)?.let { recappedGame ->
                     val resourceWrappers = getAllImageResourceWrappers.execute()
-                    return recappedGame.toRecappedGameWithResourceIcons(resourceWrappers)
+                    recappedGame.toRecappedGameWithResourceIcons(resourceWrappers)
                 }
             }
         }

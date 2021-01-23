@@ -17,13 +17,13 @@ class GameResourceViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
 
 
     init {
-        amount = itemView.findViewById(R.id.amount)
+        amount = itemView.findViewById(R.id.change_amount_tv)
         icon = itemView.findViewById(R.id.resource_icon_iv)
     }
 
     fun bind(resource: IFileWrapper<ITotalValueResource>) {
         amount?.text = resource.data.total.toString()
-        icon?.setImageBitmap(resource.img)
+        icon?.setImageBitmap(resource.file)
     }
 
 }

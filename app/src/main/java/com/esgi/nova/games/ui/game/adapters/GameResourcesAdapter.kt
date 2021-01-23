@@ -27,3 +27,4 @@ class GameResourcesAdapter(private val resources: List<IFileWrapper<ITotalValueR
 }
 
 
+
