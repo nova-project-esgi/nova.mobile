@@ -22,11 +22,16 @@ class GameDbRepository @Inject constructor(
     BaseRepository<UUID, GameEntity, IGame>() {
 
 
-    override fun toEntity(el: IGame): GameEntity = el.reflectMapNotNull()
+    override fun toEntity(el: IGame): GameEntity =  GameEntity(
+        id = el.id,
+        difficultyId = el.difficultyId,
+        userId =  el.userId,
+        duration = el.duration,
+        isEnded = el.isEnded
+    )
 
 
-    override fun toEntities(entities: Collection<IGame>): Collection<GameEntity> =
-        entities.reflectMapCollection()
+    override fun toEntities(entities: Collection<IGame>): Collection<GameEntity> = entities.map { toEntity(it) }
 
     fun getGameEditionById(id: UUID): IGameEdition? {
         val game = getById(id)

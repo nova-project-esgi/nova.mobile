@@ -1,8 +1,5 @@
 package com.esgi.nova.games.infrastructure.data.game_resource
 
-import com.esgi.nova.games.infrastructure.data.game_event.GameEventDao
-import com.esgi.nova.games.infrastructure.data.game_event.GameEventEntity
-import com.esgi.nova.games.ports.IGameEvent
 import com.esgi.nova.games.ports.IGameResource
 import com.esgi.nova.infrastructure.data.repository.BaseRepository
 import com.esgi.nova.utils.reflectMapCollection
@@ -18,5 +15,7 @@ class GameResourceDbRepository @Inject constructor(override val dao: GameResourc
 
 
     override fun toEntities(entities: Collection<IGameResource>): Collection<GameResourceEntity> = entities.reflectMapCollection()
+
+    fun getByResourceIdAndGameId(gameId: UUID, resourceId: UUID) = dao.getByGameAndResourceId(gameId, resourceId).firstOrNull ()
 }
 

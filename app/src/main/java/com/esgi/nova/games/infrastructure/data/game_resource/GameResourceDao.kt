@@ -13,6 +13,7 @@ abstract class GameResourceDao : BaseDao<UUID, GameResourceEntity>() {
     @Query("SELECT * FROM game_resource WHERE game_id = :id")
     abstract override fun getById(id: UUID): List<GameResourceEntity>
 
+
     @Query("DELETE FROM game_resource")
     abstract override fun deleteAll()
 
@@ -31,4 +32,7 @@ abstract class GameResourceDao : BaseDao<UUID, GameResourceEntity>() {
     @Query("SELECT * FROM game_resource WHERE game_id = :gameId")
     @Transaction
     abstract fun getAllGameWithResourceById(gameId: UUID): List<GameWithResource>
+
+    @Query("SELECT * FROM game_resource WHERE game_id = :gameId AND  resource_id = :resourceId ")
+    abstract fun getByGameAndResourceId(gameId: UUID, resourceId: UUID): List<GameResourceEntity>
 }

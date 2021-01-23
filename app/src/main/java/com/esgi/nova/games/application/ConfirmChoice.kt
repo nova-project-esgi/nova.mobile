@@ -28,42 +28,52 @@ class ConfirmChoice @Inject constructor(
 
         gameDbRepository.getById(gameId)?.let { game ->
             choiceResourceDbRepository.getDetailedChoiceById(choiceId)?.let { choice ->
-
                 choice.resources.forEach { resource ->
-                    gameResourceDbRepository.getById(gameId)?.let { gameResource ->
-                        var updateResourceValue = gameResource.total + resource.changeValue
-                        if (updateResourceValue < 0 ) {
-                            updateResourceValue = 0
-                        }
-                        gameResourceDbRepository.update(
-                            GameResource(
-                                resourceId = resource.id,
-                                gameId = gameId,
-                                total = updateResourceValue
+                    gameResourceDbRepository.getByResourceIdAndGameId(gameId, resource.id)
+                        ?.let { gameResource ->
+                            var updateResourceValue = gameResource.total + resource.changeValue
+                            if (updateResourceValue < 0) {
+                                updateResourceValue = 0
+                            }
+                            gameResourceDbRepository.update(
+                                GameResource(
+                                    resourceId = resource.id,
+                                    gameId = gameId,
+                                    total = updateResourceValue
+                                )
                             )
-                        )
-                        if (updateResourceValue <= 0) {
-                            isEnded = true
+                            if (updateResourceValue <= 0) {
+                                isEnded = true
+                            }
                         }
-                    }
                 }
 
-                gameDbRepository.update(
-                    Game(
-                        id = gameId,
-                        difficultyId = game.difficultyId,
-                        isEnded = isEnded,
-                        duration = duration,
-                        userId = user.id
+                try {
+                    gameDbRepository.update(
+                        Game(
+                            id = gameId,
+                            difficultyId = game.difficultyId,
+                            isEnded = isEnded,
+                            duration = duration,
+                            userId = user.id
+                        )
                     )
-                )
+
+                } catch (e: Exception) {
+                    println(e)
+                }
 
                 gameDbRepository.getGameEditionById(gameId)?.let { gameEdition ->
                     doAsync {
-                        try{
+                        try {
                             gameApiRepository.update(gameId, gameEdition)
-                        } catch (e: GameNotFoundException){
-                            gameApiRepository.createGame(GameForCreation(username = user.username, difficultyId = game.difficultyId))
+                        } catch (e: GameNotFoundException) {
+                            gameApiRepository.createGame(
+                                GameForCreation(
+                                    username = user.username,
+                                    difficultyId = game.difficultyId
+                                )
+                            )
                             gameApiRepository.update(gameId, gameEdition)
                         }
                     }
