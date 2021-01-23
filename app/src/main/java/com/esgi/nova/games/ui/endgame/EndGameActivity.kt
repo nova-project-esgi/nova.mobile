@@ -2,21 +2,17 @@ package com.esgi.nova.games.ui.endgame
 
 import android.content.Context
 import android.content.Intent
-import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.esgi.nova.R
 import com.esgi.nova.games.application.GetLastEndedGame
 import com.esgi.nova.games.ui.endgame.view_models.EndGameViewModel
-import com.esgi.nova.games.ui.game.GameActivity
 import com.esgi.nova.games.ui.game.adapters.GameResourcesAdapter
 import com.esgi.nova.ui.dashboard.DashboardActivity
-import com.esgi.nova.ui.dashboard.adapters.DashBoardResourcesAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_dashboard.*
 import kotlinx.android.synthetic.main.activity_end_game.*
@@ -70,7 +66,7 @@ class EndGameActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun findLosingResourceName(): String? {
         return endGameViewModel.resources
-            .firstOrNull{ resource-> resource.data.total == 0 }?.data?.name
+            .firstOrNull { resource -> resource.data.total == 0 }?.data?.name
     }
 
     private fun loadEndGameData() {
