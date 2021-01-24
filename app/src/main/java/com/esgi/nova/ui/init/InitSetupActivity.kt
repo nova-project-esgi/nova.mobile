@@ -9,7 +9,7 @@ import com.esgi.nova.R
 import com.esgi.nova.application_state.application.ClearState
 import com.esgi.nova.application_state.application.IsSynchronized
 import com.esgi.nova.application_state.application.SetSynchronized
-import com.esgi.nova.difficulties.application.GetAllDetailedDifficulties
+import com.esgi.nova.difficulties.application.GetAllDetailedDifficultiesSortedByRank
 import com.esgi.nova.difficulties.application.SynchronizeDifficulties
 import com.esgi.nova.events.application.GetAllDetailedEvents
 import com.esgi.nova.events.application.GetAllImageDetailedEventWrappers
@@ -45,40 +45,13 @@ class InitSetupActivity : AppCompatActivity() {
     lateinit var synchronizeLastActiveGame: SynchronizeLastActiveGame
 
     @Inject
-    lateinit var getAllImageResourceWrappers: GetAllImageResourceWrappers
-
-    @Inject
-    lateinit var getAllImageDetailedEventWrappers: GetAllImageDetailedEventWrappers
-
-    @Inject
-    lateinit var getAllDetailedDifficulties: GetAllDetailedDifficulties
-
-    @Inject
-    lateinit var getAllDetailedEvents: GetAllDetailedEvents
-
-
-    @Inject
-    lateinit var createGame: CreateGame
-
-    @Inject
     lateinit var isSynchronized: IsSynchronized
 
     @Inject
     lateinit var setSynchronized: SetSynchronized
 
-    @Inject
-    lateinit var getCurrentGame: GetCurrentGame
 
-    @Inject
-    lateinit var getNextEvent: GetNextEvent
-
-    @Inject
-    lateinit var confirmChoice: ConfirmChoice
-
-    @Inject
-    lateinit var clearState: ClearState
-
-    val viewModel by viewModels<InitViewModel>()
+    private val viewModel by viewModels<InitViewModel>()
 
     lateinit var stepsList: List<Synchronize>
 

@@ -15,6 +15,7 @@ data class DifficultyEntity(
     @PrimaryKey
     @field:TypeConverters(UUIDConverter::class)
     override var id: UUID = UUID.randomUUID(),
-    @ColumnInfo(name = "name") override var name: String
+    @ColumnInfo(name = "name") override var name: String,
+    @ColumnInfo(name = "rank") override var rank: Int
 ): IDifficulty{
 }

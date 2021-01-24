@@ -15,7 +15,7 @@ class SynchronizeDifficulties @Inject constructor(
 ) : Synchronize {
 
     override fun execute() {
-        val language = languageDbRepository.getSelectedLanguage()?.tag ?: ""
+        val language = languageDbRepository.getSelectedLanguage()?.apiLocale ?: ""
 
         val difficulties = difficultiesApiRepository
             .getAllTranslatedDifficulties(language)

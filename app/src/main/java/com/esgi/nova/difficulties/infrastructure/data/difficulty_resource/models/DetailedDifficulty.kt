@@ -6,6 +6,7 @@ import java.util.*
 data class DetailedDifficulty(
     override val id: UUID,
     override val name: String,
-    override val resources: MutableList<IDetailedDifficulty.IStartValueResource> = mutableListOf()
+    override val resources: MutableList<IDetailedDifficulty.IStartValueResource> = mutableListOf(),
+    override val rank: Int
 ) : IDetailedDifficulty {
 }

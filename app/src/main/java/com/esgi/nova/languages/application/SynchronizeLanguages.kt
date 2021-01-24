@@ -16,12 +16,12 @@ class SynchronizeLanguages @Inject constructor(
 
 ) : Synchronize {
     override fun execute() {
-        val selectedLanguage: String = languageDbRepository.getSelectedLanguage()?.tag ?: languageSystemRepository.getLanguage()
+        val selectedLanguage: String = languageDbRepository.getSelectedLanguage()?.androidLocale ?: languageSystemRepository.getLanguage()
         val languages = languageApiRepository.getAll();
 
         languageDbRepository.upsertCollection(languages.reflectMapCollection<IDefaultLanguage, AppLanguage>())
 
-        val selectLanguage = languages.firstOrNull { it.tag == selectedLanguage }
+        val selectLanguage = languages.firstOrNull { it.androidLocale == selectedLanguage }
             ?: languages.firstOrNull { it.isDefault }
 
         selectLanguage?.let {

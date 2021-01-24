@@ -13,7 +13,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.esgi.nova.R
 import com.esgi.nova.dtos.languages.AppLanguageDto
 import com.esgi.nova.languages.application.GetAllLanguages
-import com.esgi.nova.languages.application.GetSelectedLanguage
 import com.esgi.nova.languages.ports.IAppLanguage
 import com.esgi.nova.parameters.application.GetParameters
 import com.esgi.nova.parameters.application.SaveParameters
@@ -105,7 +104,7 @@ class ParametersActivity : AppCompatActivity(), View.OnClickListener,
         )
         tv_language_option?.setAdapter(arrayAdapter)
         if (parametersViewModel.selectedLanguage != null) {
-            tv_language_option?.setText(parametersViewModel.selectedLanguage?.tag, false)
+            tv_language_option?.setText(parametersViewModel.selectedLanguage?.androidLocale, false)
         } else {
             tv_language_option?.isEnabled = false
         }

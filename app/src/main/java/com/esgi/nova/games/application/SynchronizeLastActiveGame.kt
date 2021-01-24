@@ -34,7 +34,7 @@ class SynchronizeLastActiveGame @Inject constructor(
 ) : Synchronize {
 
     override fun execute() {
-        val language: String = languageDbRepository.getSelectedLanguage()?.tag ?: ""
+        val language: String = languageDbRepository.getSelectedLanguage()?.apiLocale ?: ""
         userStorageRepository.getUserResume()?.let { user ->
             gameApiRepository.getLastActiveGameForUser(username = user.username)?.let { gameState ->
                 val gameResources =

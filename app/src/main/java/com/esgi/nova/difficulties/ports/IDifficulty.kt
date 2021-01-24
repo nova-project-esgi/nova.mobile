@@ -6,4 +6,5 @@ import java.util.*
 interface IDifficulty : IIdEntity<UUID> {
     override val id: UUID
     val name: String
+    val rank: Int
 }

@@ -21,7 +21,7 @@ class SynchronizeEvents @Inject constructor(
 ) : Synchronize {
 
     override fun execute() {
-        val language = languageDbRepository.getSelectedLanguage()?.tag ?: ""
+        val language = languageDbRepository.getSelectedLanguage()?.apiLocale ?: ""
         val translatedEventsWrappers = eventApiRepository.getAllTranslatedEvents(language)
         val translatedEvents = translatedEventsWrappers.map { it.data }
         val eventChoices = translatedEvents.flatMap { event -> event.choices }

@@ -11,7 +11,7 @@ class AppLanguageDto(
 ) : IAppLanguage {
     override fun toString(): String {
         if (subCode != null) {
-            return "$code - $subCode"
+            return androidLocale
         }
         return code
     }

@@ -9,8 +9,8 @@
     <string name="resources">Resources :</string>
     <string name="tgl_btn_on">YES</string>
     <string name="tgl_btn_off">NO</string>
-    <string name="connexion">Connection</string>
-    <string name="identifiant">username</string>
+    <string name="connection">Connection</string>
+    <string name="username">username</string>
     <string name="password">password</string>
     <string name="register">Sign up</string>
     <plurals name="turn_recap">
@@ -44,7 +44,7 @@
     <string name="daily_event">Activate daily events</string>
     <string name="log_out">Logout</string>
     <string name="save">Save</string>
-    <string name="crew_message">Crew message...</string>
+    <string name="crew_message">Crew message…</string>
     <string name="loading">Loading</string>
     <string name="loading_step_1">Initial checking…</string>
     <string name="loading_step_2">Ammo stock is ok…</string>

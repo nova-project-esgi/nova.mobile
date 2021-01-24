@@ -35,4 +35,5 @@ abstract class GameDao : BaseDao<UUID, GameEntity>() {
 
     @Delete
     abstract override fun delete(entity: GameEntity)
+
 }

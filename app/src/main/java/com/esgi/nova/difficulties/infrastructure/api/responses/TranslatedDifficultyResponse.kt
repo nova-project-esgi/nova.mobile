@@ -9,7 +9,7 @@ data class TranslatedDifficultyResponse(
     override val id: UUID,
     val language: String,
     override val name: String,
-    val resources: List<DifficultyResourceResponse>
+    val resources: List<DifficultyResourceResponse>, override val rank: Int
 ): IDifficulty {
 
     fun toDifficultyWithResourceResumes() =
@@ -22,7 +22,8 @@ data class TranslatedDifficultyResponse(
                     startValue = it.startValue
                 )
             }.toMutableList(),
-            name = name
+            name = name,
+            rank = rank
         )
 }
 

@@ -16,7 +16,7 @@ class SynchronizeResources @Inject constructor(
     private val languageDbRepository: LanguageDbRepository
 ): Synchronize {
     override fun execute() {
-        val language = languageDbRepository.getSelectedLanguage()?.tag ?: ""
+        val language = languageDbRepository.getSelectedLanguage()?.apiLocale ?: ""
         val resources = resourceApiRepository.getAll(language)
 
         val fileSynchronizations = resources.map { resourceWrapper ->

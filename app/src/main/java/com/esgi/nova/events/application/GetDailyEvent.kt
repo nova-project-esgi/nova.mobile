@@ -25,7 +25,7 @@ class GetDailyEvent @Inject constructor(
 
     fun execute(
         gameId: UUID,
-        language: String = languageDbRepository.getSelectedLanguage()?.tag ?: ""
+        language: String = languageDbRepository.getSelectedLanguage()?.androidLocale ?: ""
     ): DetailedEvent? {
 
         if (gameDbRepository.hasDailyEventByDate(gameId, LocalDate.now())) {

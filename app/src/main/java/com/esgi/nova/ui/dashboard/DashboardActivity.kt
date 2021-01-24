@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.esgi.nova.games.ui.leaderboard.LeaderBoardActivity
 import com.esgi.nova.R
-import com.esgi.nova.difficulties.application.GetAllDetailedDifficulties
+import com.esgi.nova.difficulties.application.GetAllDetailedDifficultiesSortedByRank
 import com.esgi.nova.difficulties.ports.IDetailedDifficulty
 import com.esgi.nova.dtos.difficulty.DetailedDifficultyDto
 import com.esgi.nova.games.application.CreateGame
@@ -42,7 +42,7 @@ class DashboardActivity : AppCompatActivity(), View.OnClickListener, AdapterView
     lateinit var createGame: CreateGame
 
     @Inject
-    lateinit var getAllDetailedDifficulties: GetAllDetailedDifficulties
+    lateinit var getAllDetailedDifficultiesSortedByRank: GetAllDetailedDifficultiesSortedByRank
 
     @Inject
     lateinit var getImageStartValueResourceWrappersByDifficultyId: GetImageStartValueResourceWrappersByDifficultyId
@@ -107,7 +107,7 @@ class DashboardActivity : AppCompatActivity(), View.OnClickListener, AdapterView
         if (!dashBoardViewModel.initialized) {
             doAsync {
                 if (!dashBoardViewModel.initialized) {
-                    dashBoardViewModel.difficulties = getAllDetailedDifficulties
+                    dashBoardViewModel.difficulties = getAllDetailedDifficultiesSortedByRank
                         .execute()
                         .reflectMapCollection<IDetailedDifficulty, DetailedDifficultyDto>()
                         .toMutableList()
@@ -133,7 +133,7 @@ class DashboardActivity : AppCompatActivity(), View.OnClickListener, AdapterView
         )
         difficulty_tv?.setAdapter(arrayAdapter)
         if (dashBoardViewModel.selectedDifficulty != null) {
-            difficulty_tv?.setText(dashBoardViewModel.selectedDifficulty?.name, false)
+            difficulty_tv?.setText(dashBoardViewModel.selectedDifficulty.toString(), false)
         } else {
             difficulty_tv?.isEnabled = false
         }

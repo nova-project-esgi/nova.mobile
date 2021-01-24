@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.esgi.nova.R
-import com.esgi.nova.difficulties.application.GetAllDetailedDifficulties
+import com.esgi.nova.difficulties.application.GetAllDetailedDifficultiesSortedByRank
 import com.esgi.nova.difficulties.ports.IDetailedDifficulty
 import com.esgi.nova.dtos.difficulty.DetailedDifficultyDto
 import com.esgi.nova.games.application.GetLeaderBoardGameList
@@ -21,7 +21,6 @@ import com.esgi.nova.users.exceptions.InvalidDifficultyException
 import com.esgi.nova.utils.NetworkUtils
 import com.esgi.nova.utils.reflectMapCollection
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.android.synthetic.main.activity_leader_board.*
 import org.jetbrains.anko.doAsync
 import javax.inject.Inject
@@ -30,14 +29,12 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class LeaderBoardActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
 
-    @Inject
-    lateinit var getLeaderBoardGameList: GetLeaderBoardGameList
 
     @Inject
     lateinit var getLeaderBoardPageCursor: GetLeaderBoardGamePageCursor
 
     @Inject
-    lateinit var getAllDetailedDifficulties: GetAllDetailedDifficulties
+    lateinit var getAllDetailedDifficultiesSortedByRank: GetAllDetailedDifficultiesSortedByRank
 
 
     val viewModel by viewModels<LeaderBoardViewModel>()
@@ -55,7 +52,7 @@ class LeaderBoardActivity : AppCompatActivity(), AdapterView.OnItemClickListener
 
         if (!viewModel.initialized) {
             doAsync {
-                viewModel.difficulties = getAllDetailedDifficulties.execute()
+                viewModel.difficulties = getAllDetailedDifficultiesSortedByRank.execute()
                     .reflectMapCollection<IDetailedDifficulty, DetailedDifficultyDto>()
                     .toList()
                 runOnUiThread {
@@ -124,7 +121,7 @@ class LeaderBoardActivity : AppCompatActivity(), AdapterView.OnItemClickListener
         tv_leaderBoard_filter?.setAdapter(arrayAdapter)
         if (viewModel.difficulties.isNotEmpty()) {
             viewModel.currentDifficulty = viewModel.difficulties.firstOrNull()
-            tv_leaderBoard_filter?.setText(viewModel.currentDifficulty?.name, false)
+            tv_leaderBoard_filter?.setText(viewModel.currentDifficulty.toString(), false)
             swipe_container?.isRefreshing = true
             reloadScoresRecyclerView()
         } else {

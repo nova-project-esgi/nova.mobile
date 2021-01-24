@@ -39,6 +39,7 @@ class DifficultyWithResource(
         DetailedDifficulty(
             id = difficulty.id,
             name = difficulty.name,
-            resources = mutableListOf(toStartValueResource())
+            resources = mutableListOf(toStartValueResource()),
+            rank = difficulty.rank
         )
 }

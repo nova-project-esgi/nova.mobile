@@ -78,7 +78,7 @@
             android:textColorHint="@color/primaryColor"
             app:boxStrokeColor="@color/primaryColor"
             app:endIconTint="@color/primaryColor"
-            android:hint="@string/identifiant"
+            android:hint="@string/username"
             app:errorEnabled="true"
             app:endIconMode="clear_text">
 
@@ -145,7 +145,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/primaryColor"
-        android:text="@string/connexion"
+        android:text="@string/connection"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/buttons_v_gl"
         app:layout_constraintStart_toStartOf="@+id/start_input_gl"

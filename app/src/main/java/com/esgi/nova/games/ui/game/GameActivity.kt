@@ -216,13 +216,13 @@ class GameActivity : AppCompatActivity(), Observer<IDetailedChoice?>, OnChoiceCo
 
     override fun onChoiceConfirmed(choice: IDetailedChoice) {
         doAsync {
-            val isEnded =
+            gameViewModel.isEnded =
                 confirmChoice.execute(
                     gameId = gameViewModel.id,
                     choiceId = choice.id,
                     duration = gameViewModel.duration
                 )
-            if (isEnded) {
+            if (gameViewModel.isEnded) {
                 startEndGameActivity()
             } else {
                 showChangeResourcesSnackBar()

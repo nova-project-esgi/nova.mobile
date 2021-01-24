@@ -45,12 +45,17 @@ class EndGameActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_end_game)
 
-        doAsync {
-            if (!endGameViewModel.initialized) {
+        if (!endGameViewModel.initialized) {
+            doAsync {
                 loadEndGameData()
+                initEndGameDisplay()
             }
+        } else {
             initEndGameDisplay()
         }
+
+
+
 
         return_to_dashboard?.setOnClickListener(this)
     }

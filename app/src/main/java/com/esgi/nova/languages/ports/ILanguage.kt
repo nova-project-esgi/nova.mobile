@@ -7,7 +7,13 @@ interface ILanguage: IIdEntity<UUID> {
     override val id: UUID
     val code: String
     val subCode: String?
-    val tag: String get() {
+    val androidLocale: String get() {
+        subCode?.let {
+            return code+"_"+subCode
+        }
+        return code
+    }
+    val apiLocale: String get() {
         subCode?.let {
             return "$code-$subCode"
         }
