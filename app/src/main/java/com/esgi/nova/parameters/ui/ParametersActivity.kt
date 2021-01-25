@@ -104,7 +104,7 @@ class ParametersActivity : AppCompatActivity(), View.OnClickListener,
         )
         tv_language_option?.setAdapter(arrayAdapter)
         if (parametersViewModel.selectedLanguage != null) {
-            tv_language_option?.setText(parametersViewModel.selectedLanguage?.androidLocale, false)
+            tv_language_option?.setText(parametersViewModel.selectedLanguage?.tag, false)
         } else {
             tv_language_option?.isEnabled = false
         }

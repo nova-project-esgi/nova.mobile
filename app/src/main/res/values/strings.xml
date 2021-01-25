@@ -49,7 +49,8 @@
     <string name="loading_step_3">Thrusters preheating…</string>
     <string name="loading_step_4">Storing beer in space fridge…</string>
     <string name="loading_step_5">Hyper space ignition</string>
-    <string name="loading_step_6">Let\'s go!!</string>
+    <string name="loading_step_6">Blaster cleaning…</string>
+    <string name="loading_step_7">Let\'s go!!</string>
     <string name="title">Title</string>
     <string name="rounds">Rounds :</string>
     <string name="duration">Duration :</string>

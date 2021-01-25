@@ -13,6 +13,9 @@ abstract class GameEventDao : BaseDao<UUID, GameEventEntity>() {
     @Query("SELECT * FROM game_event WHERE game_id = :id")
     abstract override fun getById(id: UUID): List<GameEventEntity>
 
+    @Query("SELECT * FROM game_event WHERE event_id = :id")
+    abstract fun getAllByEventId(id: UUID): List<GameEventEntity>
+
     @Query("DELETE FROM game_event")
     abstract override fun deleteAll()
 
@@ -27,6 +30,8 @@ abstract class GameEventDao : BaseDao<UUID, GameEventEntity>() {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract override fun insertOne(entity: GameEventEntity): Unit
+
+
 
     @Query("SELECT * FROM game_event WHERE game_id = :gameId")
     @Transaction

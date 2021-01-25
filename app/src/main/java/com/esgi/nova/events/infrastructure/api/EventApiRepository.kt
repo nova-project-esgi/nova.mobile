@@ -41,7 +41,7 @@ class EventApiRepository @Inject constructor(getUserToken: GetUserToken, updateU
             .getDailyEvent(language = language, gameId = gameId)
             .execute()
             .body()?.let {
-                LinkWrapper(it.toResumedEvent(isDaily = true), it.backgroundUrl)
+                LinkWrapper(it.toResumedEvent(), it.backgroundUrl)
             }
 
 }

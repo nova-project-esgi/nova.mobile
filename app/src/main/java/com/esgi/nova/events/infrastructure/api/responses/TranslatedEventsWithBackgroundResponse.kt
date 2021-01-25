@@ -16,7 +16,7 @@ data class TranslatedEventsWithBackgroundResponse(
     override val isDaily: Boolean = false
 ): IDetailedEvent{
 
-    fun toResumedEvent(isDaily: Boolean = false) = ResumedEvent(
+    fun toResumedEvent() = ResumedEvent(
         choices = choices.map { it.toResumedChoice() }.toMutableList(),
         title = title,
         id = id,

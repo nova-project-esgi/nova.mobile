@@ -5,11 +5,6 @@ import com.esgi.nova.infrastructure.data.dao.BaseDao
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.doAsyncResult
 
-@FunctionalInterface
-interface BinaryPredicate<First, Second> {
-    fun compare(first: First, second: Second): Boolean
-}
-
 abstract class BaseRepository<Id, Entity, Element> where Entity : Element, Element : IIdEntity<Id> {
 
     protected abstract val dao: BaseDao<Id, Entity>
@@ -43,6 +38,30 @@ abstract class BaseRepository<Id, Entity, Element> where Entity : Element, Eleme
         elements: Collection<Element>,
         entities: Collection<Element>,
         test: (el: Element, entity: Element) -> Boolean
+    ){
+        elements.forEach { element ->
+            if (entities.any { entity -> test.invoke(element, entity) }) {
+                update(element)
+            } else {
+                insertOne(element)
+            }
+        }
+    }
+
+    fun upsertCollection(elements: Collection<Element>) {
+        val entities = dao.getAll()
+        upsertCollection(elements, entities) { entity, element -> entity.id == element.id }
+    }
+
+    fun upsertCollection(elements: Collection<Element>, test: (el: Element, entity: Element) -> Boolean) {
+        val entities = dao.getAll()
+        upsertCollection(elements, entities, test)
+    }
+
+    fun synchronizeCollection(
+        elements: Collection<Element>,
+        entities: Collection<Element>,
+        test: (el: Element, entity: Element) -> Boolean
     ) {
         elements.forEach { element ->
             if (entities.any { entity -> test.invoke(element, entity) }) {
@@ -58,14 +77,14 @@ abstract class BaseRepository<Id, Entity, Element> where Entity : Element, Eleme
         }
     }
 
-    fun upsertCollection(elements: Collection<Element>) {
+    fun synchronizeCollection(elements: Collection<Element>) {
         val entities = dao.getAll()
-        upsertCollection(elements, entities) { entity, element -> entity.id == element.id }
+        synchronizeCollection(elements, entities) { entity, element -> entity.id == element.id }
     }
 
-    fun upsertCollection(elements: Collection<Element>, test: (el: Element, entity: Element) -> Boolean) {
+    fun synchronizeCollection(elements: Collection<Element>, test: (el: Element, entity: Element) -> Boolean) {
         val entities = dao.getAll()
-        upsertCollection(elements, entities, test)
+        synchronizeCollection(elements, entities, test)
     }
 
     fun getAllAsync() = doAsyncResult { dao.getAll() }

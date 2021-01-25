@@ -15,13 +15,13 @@ class SynchronizeDifficulties @Inject constructor(
 ) : Synchronize {
 
     override fun execute() {
-        val language = languageDbRepository.getSelectedLanguage()?.apiLocale ?: ""
+        val language = languageDbRepository.getSelectedLanguage()?.tag ?: ""
 
         val difficulties = difficultiesApiRepository
             .getAllTranslatedDifficulties(language)
         val difficultyResources =
             difficulties.flatMap { resumedDifficulty -> resumedDifficulty.resources }
-        difficultiesDbRepository.upsertCollection(difficulties)
-        difficultiesResourceDbRepository.upsertCollection(difficultyResources)
+        difficultiesDbRepository.synchronizeCollection(difficulties)
+        difficultiesResourceDbRepository.synchronizeCollection(difficultyResources)
     }
 }

@@ -34,7 +34,7 @@ class SynchronizeLastActiveGame @Inject constructor(
 ) : Synchronize {
 
     override fun execute() {
-        val language: String = languageDbRepository.getSelectedLanguage()?.apiLocale ?: ""
+        val language: String = languageDbRepository.getSelectedLanguage()?.tag ?: ""
         userStorageRepository.getUserResume()?.let { user ->
             gameApiRepository.getLastActiveGameForUser(username = user.username)?.let { gameState ->
                 val gameResources =
@@ -68,11 +68,11 @@ class SynchronizeLastActiveGame @Inject constructor(
         gameDbRepository.update(gameState)
         val gameResourcesEntities = gameResourceDbRepository.getAllById(gameState.id)
         val gameEventEntities = gameEventDbRepository.getAllById(gameState.id)
-        gameResourceDbRepository.upsertCollection(
+        gameResourceDbRepository.synchronizeCollection(
             gameResources,
             gameResourcesEntities
         ) { gameResource, gameResourceEntity -> gameResource.resourceId == gameResourceEntity.resourceId }
-        gameEventDbRepository.upsertCollection(
+        gameEventDbRepository.synchronizeCollection(
             gameEvents,
             gameEventEntities
         ) { gamEvent, gameEventEntity -> gamEvent.eventId == gameEventEntity.eventId }

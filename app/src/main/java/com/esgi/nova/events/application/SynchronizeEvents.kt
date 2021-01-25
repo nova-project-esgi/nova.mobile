@@ -21,14 +21,20 @@ class SynchronizeEvents @Inject constructor(
 ) : Synchronize {
 
     override fun execute() {
-        val language = languageDbRepository.getSelectedLanguage()?.apiLocale ?: ""
+        val language = languageDbRepository.getSelectedLanguage()?.tag ?: ""
         val translatedEventsWrappers = eventApiRepository.getAllTranslatedEvents(language)
         val translatedEvents = translatedEventsWrappers.map { it.data }
         val eventChoices = translatedEvents.flatMap { event -> event.choices }
         val choiceResources = eventChoices.flatMap { choice -> choice.resources }
+
         eventDbRepository.upsertCollection(translatedEvents)
-        choiceDbRepository.upsertCollection(eventChoices)
-        choiceResourceDbRepository.upsertCollection(choiceResources)
+        eventDbRepository.getAllNonDailyEvents().forEach { event ->
+            if(!translatedEvents.any { translatedEvent -> translatedEvent.id == event.id }){
+                eventDbRepository.delete(event)
+            }
+        }
+        choiceDbRepository.synchronizeCollection(eventChoices)
+        choiceResourceDbRepository.synchronizeCollection(choiceResources)
 
         val fileSynchronizations = translatedEventsWrappers.map { eventWrapper ->
             FileSynchronizationDto(
@@ -41,5 +47,4 @@ class SynchronizeEvents @Inject constructor(
 
     }
 }
-
 

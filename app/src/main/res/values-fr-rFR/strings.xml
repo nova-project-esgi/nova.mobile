@@ -43,7 +43,7 @@
     <string name="loading_step_3">Préchauffage des propulseurs…</string>
     <string name="loading_step_4">Stockage des bières dans le réfrigérateur spatiale…</string>
     <string name="loading_step_5">Déclenchement de l\'hyper espace</string>
-    <string name="loading_step_6">"En avant !! "</string>
+    <string name="loading_step_7">"En avant !! "</string>
     <string name="title">Titre</string>
     <string name="rounds">Tours:</string>
     <string name="duration">Durée:</string>
@@ -56,4 +56,5 @@
     <string name="username">Nom d\'utilisateur</string>
     <string name="resource_fetching_msg">La récupération des données de jeu peu impacter votre consommation réseau, voulez-vous continuer ?</string>
     <string name="network_warning">Avertissement réseau !</string>
+    <string name="loading_step_6">Lustrage des pistolets lasers...</string>
 </resources>

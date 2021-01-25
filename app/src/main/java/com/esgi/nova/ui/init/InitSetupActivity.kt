@@ -9,6 +9,7 @@ import com.esgi.nova.R
 import com.esgi.nova.application_state.application.IsSynchronized
 import com.esgi.nova.application_state.application.SetSynchronizeState
 import com.esgi.nova.difficulties.application.SynchronizeDifficulties
+import com.esgi.nova.events.application.DeleteOrphansDailyEvents
 import com.esgi.nova.events.application.SynchronizeEvents
 import com.esgi.nova.games.application.*
 import com.esgi.nova.languages.application.SynchronizeLanguages
@@ -21,6 +22,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_init_setup.*
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.textResource
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -42,6 +44,10 @@ class InitSetupActivity : AppCompatActivity() {
     lateinit var synchronizeLastActiveGame: SynchronizeLastActiveGame
 
     @Inject
+    lateinit var deleteOrphansDailyEvents: DeleteOrphansDailyEvents
+
+
+    @Inject
     lateinit var isSynchronized: IsSynchronized
 
     @Inject
@@ -53,7 +59,7 @@ class InitSetupActivity : AppCompatActivity() {
     lateinit var stepsList: List<Synchronize>
 
     companion object {
-        const val SynchronizeStepsTotal = 6
+        const val SynchronizeStepsTotal = 7
 
         fun startWithUserConfirmation(context: Context): Context {
             context.alert {
@@ -86,7 +92,8 @@ class InitSetupActivity : AppCompatActivity() {
             synchronizeResources,
             synchronizeDifficulties,
             synchronizeEvents,
-            synchronizeLastActiveGame
+            synchronizeLastActiveGame,
+            deleteOrphansDailyEvents
         )
 
         setSynchronizeState.execute(false)
@@ -115,12 +122,13 @@ class InitSetupActivity : AppCompatActivity() {
         val loadingTextString = getString(R.string.resourceLoadingPrompt) + " $index / $SynchronizeStepsTotal"
         loading_tv?.text = loadingTextString
         when(index){
-            1 -> loading_description_tv?.text = getString(R.string.loading_step_1)
-            2 -> loading_description_tv?.text = getString(R.string.loading_step_2)
-            3 -> loading_description_tv?.text = getString(R.string.loading_step_3)
-            4 -> loading_description_tv?.text = getString(R.string.loading_step_4)
-            5 -> loading_description_tv?.text = getString(R.string.loading_step_5)
-            6 -> loading_description_tv?.text = getString(R.string.loading_step_6)
+            1 -> loading_description_tv?.textResource = R.string.loading_step_1
+            2 -> loading_description_tv?.textResource = R.string.loading_step_2
+            3 -> loading_description_tv?.textResource = R.string.loading_step_3
+            4 -> loading_description_tv?.textResource = R.string.loading_step_4
+            5 -> loading_description_tv?.textResource = R.string.loading_step_5
+            6 -> loading_description_tv?.textResource = R.string.loading_step_6
+            7 -> loading_description_tv?.textResource = R.string.loading_step_7
         }
     }
 

@@ -35,6 +35,9 @@ class EventDbRepository @Inject constructor(
             })
     }
 
+    fun getAllDailyEvents(): List<IEvent> = dao.getAllByIsDaily(true)
+    fun getAllNonDailyEvents(): List<IEvent> = dao.getAllByIsDaily(false)
+
 
     fun getCount() = dao.getAll().size
 

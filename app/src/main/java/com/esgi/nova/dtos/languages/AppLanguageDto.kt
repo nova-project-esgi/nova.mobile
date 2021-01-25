@@ -11,7 +11,7 @@ class AppLanguageDto(
 ) : IAppLanguage {
     override fun toString(): String {
         if (subCode != null) {
-            return androidLocale
+            return tag
         }
         return code
     }
