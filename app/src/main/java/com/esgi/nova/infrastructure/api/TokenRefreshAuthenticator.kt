@@ -21,9 +21,10 @@ class TokenRefreshAuthenticator(val updateUserToken: UpdateUserToken) :
             .build()
 
     private fun Response.createSignedRequest(): Request? = try {
-        updateUserToken.execute()?.let { user ->
-            this.request().signWithToken(user.token)
-        }
+         null
+    //        updateUserToken.execute()?.let { user ->
+//            this.request().signWithToken(user.token)
+//        }
     } catch (error: Throwable) {
         null
     }

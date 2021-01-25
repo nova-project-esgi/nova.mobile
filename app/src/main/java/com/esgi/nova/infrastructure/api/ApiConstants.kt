@@ -15,6 +15,7 @@ object ApiConstants {
         const val Daily = "daily/"
         const val Resources = "resources/"
         const val Users = "users/"
+        const val Login = "login/"
     }
 
     object CustomMediaType {

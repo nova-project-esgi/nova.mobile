@@ -1,5 +1,6 @@
-package com.esgi.nova.infrastructure.api
+package com.esgi.nova.infrastructure.api.interceptors
 
+import com.esgi.nova.infrastructure.api.HttpConstants
 import com.esgi.nova.users.application.GetUserToken
 import okhttp3.Interceptor
 import okhttp3.Request

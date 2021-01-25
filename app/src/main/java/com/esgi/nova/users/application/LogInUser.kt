@@ -11,9 +11,10 @@ class LogInUser @Inject constructor(
     private val authApiRepository: AuthApiRepository,
     private val userStorageRepository: UserStorageRepository
 ) {
-    fun execute(userLogin: ILogUser) {
+    suspend fun execute(userLogin: ILogUser) {
         val connectedUser = authApiRepository.logUser(userLogin) ?: throw UserNotFoundException()
         userStorageRepository.saveUser(connectedUser.toConnectedUserPassword(userLogin.password))
+
     }
 }
 

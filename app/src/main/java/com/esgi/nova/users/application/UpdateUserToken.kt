@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 class UpdateUserToken @Inject constructor(private val userStorageRepository: UserStorageRepository, private val userApiRepository: AuthApiRepository){
 
-    fun execute(): IConnectedUser?{
+    suspend fun execute(): IConnectedUser?{
         userStorageRepository.getUser()?.let { user ->
             userApiRepository.logUser(user)?.let{ connectedUser ->
                 userStorageRepository.saveUser(connectedUser.toConnectedUserPassword(user.password))

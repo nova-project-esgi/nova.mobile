@@ -1,5 +1,7 @@
 package com.esgi.nova.users.exceptions
 
-class UserNotFoundException : Throwable() {
+import java.lang.Exception
+
+class UserNotFoundException : Exception() {
 
 }
