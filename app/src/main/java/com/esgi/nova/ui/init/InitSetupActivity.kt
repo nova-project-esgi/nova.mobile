@@ -6,23 +6,20 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.esgi.nova.R
-import com.esgi.nova.application_state.application.ClearState
 import com.esgi.nova.application_state.application.IsSynchronized
-import com.esgi.nova.application_state.application.SetSynchronized
-import com.esgi.nova.difficulties.application.GetAllDetailedDifficultiesSortedByRank
+import com.esgi.nova.application_state.application.SetSynchronizeState
 import com.esgi.nova.difficulties.application.SynchronizeDifficulties
-import com.esgi.nova.events.application.GetAllDetailedEvents
-import com.esgi.nova.events.application.GetAllImageDetailedEventWrappers
 import com.esgi.nova.events.application.SynchronizeEvents
 import com.esgi.nova.games.application.*
 import com.esgi.nova.languages.application.SynchronizeLanguages
 import com.esgi.nova.ports.Synchronize
-import com.esgi.nova.resources.application.GetAllImageResourceWrappers
 import com.esgi.nova.resources.application.SynchronizeResources
 import com.esgi.nova.ui.dashboard.DashboardActivity
 import com.esgi.nova.ui.init.view_models.InitViewModel
+import com.esgi.nova.users.ui.LoginActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_init_setup.*
+import org.jetbrains.anko.alert
 import org.jetbrains.anko.doAsync
 import javax.inject.Inject
 
@@ -48,7 +45,7 @@ class InitSetupActivity : AppCompatActivity() {
     lateinit var isSynchronized: IsSynchronized
 
     @Inject
-    lateinit var setSynchronized: SetSynchronized
+    lateinit var setSynchronizeState: SetSynchronizeState
 
 
     private val viewModel by viewModels<InitViewModel>()
@@ -56,23 +53,28 @@ class InitSetupActivity : AppCompatActivity() {
     lateinit var stepsList: List<Synchronize>
 
     companion object {
-        const val ResynchronizeKey = "ResynchronizeKey"
         const val SynchronizeStepsTotal = 6
 
-        fun start(context: Context): Context {
-            val intent = Intent(context, InitSetupActivity::class.java)
-            context.startActivity(intent)
+        fun startWithUserConfirmation(context: Context): Context {
+            context.alert {
+                val intent = Intent(context, InitSetupActivity::class.java)
+                messageResource = R.string.resource_fetching_msg
+                titleResource = R.string.network_warning
+                iconResource = R.drawable.baseline_warning_amber_400_24dp
+                negativeButton(R.string.cancel) { }
+                positiveButton(R.string.yes) { context.startActivity(intent) }
+            }.show()
             return context
         }
 
-        fun startResynchronize(context: Context): Context {
-            val intent = Intent(context, InitSetupActivity::class.java)
-            intent.putExtra(ResynchronizeKey, true)
-            context.startActivity(intent)
-            return context
-        }
+
+
+
     }
 
+    override fun onBackPressed() {
+        LoginActivity.startReconnection(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -87,14 +89,8 @@ class InitSetupActivity : AppCompatActivity() {
             synchronizeLastActiveGame
         )
 
-
-        if (!isSynchronized.execute() || intent.getBooleanExtra(ResynchronizeKey, false)) {
-            loadData()
-        } else {
-            DashboardActivity.start(this@InitSetupActivity)
-            finish()
-        }
-
+        setSynchronizeState.execute(false)
+        loadData()
     }
 
     private fun loadData() {
@@ -109,7 +105,7 @@ class InitSetupActivity : AppCompatActivity() {
             }
 
             runOnUiThread { setLoadingText(viewModel.currentStep) }
-            setSynchronized.execute()
+            setSynchronizeState.execute(true)
             DashboardActivity.start(this@InitSetupActivity)
             finish()
         }

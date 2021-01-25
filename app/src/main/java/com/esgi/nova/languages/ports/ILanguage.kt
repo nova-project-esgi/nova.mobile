@@ -6,18 +6,14 @@ import java.util.*
 interface ILanguage: IIdEntity<UUID> {
     override val id: UUID
     val code: String
-    val subCode: String?
-    val androidLocale: String get() {
-        subCode?.let {
-            return code+"_"+subCode
+    val subCode: String
+    val androidLocale: String
+        get() {
+            return code + "_" + subCode
         }
-        return code
-    }
-    val apiLocale: String get() {
-        subCode?.let {
+    val apiLocale: String
+        get() {
             return "$code-$subCode"
         }
-        return code
-    }
 }
 

@@ -1,5 +1,6 @@
 package com.esgi.nova.games.ui.game.view_models
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.esgi.nova.events.ports.IDetailedEvent
 import com.esgi.nova.files.infrastructure.ports.IFileWrapper
@@ -22,6 +23,11 @@ class GameViewModel(
     override var duration: Int = 0
     override var rounds: Int = 0
     var timer: Timer? = null
+    val isLoading = MutableLiveData<Boolean>()
+
+    fun setLoading(isLoading: Boolean) {
+        this.isLoading.value = isLoading
+    }
 
 
     fun copyGame(game: IRecappedGameWithResourceIcons) {
@@ -30,9 +36,11 @@ class GameViewModel(
         duration = game.duration
         rounds = game.rounds
         difficultyId = game.difficultyId
-        userId =game.userId
+        userId = game.userId
         isEnded = game.isEnded
     }
 
     override var initialized: Boolean = false
+
+
 }

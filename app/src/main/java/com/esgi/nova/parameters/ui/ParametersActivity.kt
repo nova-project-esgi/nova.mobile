@@ -146,8 +146,7 @@ class ParametersActivity : AppCompatActivity(), View.OnClickListener,
 
     private fun checkChanges(previousParams: ILanguageParameters) {
         if (previousParams.selectedLanguage?.id != parametersViewModel.selectedLanguage?.id) {
-            InitSetupActivity.startResynchronize(this)
-            finish()
+            InitSetupActivity.startWithUserConfirmation(this)
         } else {
             DashboardActivity.start(this)
             finish()

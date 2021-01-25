@@ -17,9 +17,9 @@ class ApplicationStateStorageRepository  @Inject constructor(
     fun isSynchronized() =
         preference.getBoolean(PreferenceConstants.ApplicationState.IsSynchronizedKey, false)
 
-    fun setSynchronized() =
+    fun setSynchronizationState(isSynchronized: Boolean) =
         with(preference.edit()) {
-            putBoolean(PreferenceConstants.ApplicationState.IsSynchronizedKey, true)
+            putBoolean(PreferenceConstants.ApplicationState.IsSynchronizedKey, isSynchronized)
             apply()
         }
 

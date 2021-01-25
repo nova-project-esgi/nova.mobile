@@ -6,6 +6,6 @@ import java.util.*
 data class LanguageResponse(
     override val id: UUID,
     override val code: String,
-    override val subCode: String?,
+    override val subCode: String,
     override val isDefault: Boolean): IDefaultLanguage{
 }

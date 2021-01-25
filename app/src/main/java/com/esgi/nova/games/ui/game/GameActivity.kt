@@ -2,13 +2,12 @@ package com.esgi.nova.games.ui.game
 
 import android.content.Context
 import android.content.Intent
-import android.content.res.Configuration
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.esgi.nova.R
 import com.esgi.nova.events.ports.IDetailedChoice
 import com.esgi.nova.files.dtos.FileWrapperDto
@@ -27,6 +26,7 @@ import com.esgi.nova.utils.putUUIDExtra
 import com.esgi.nova.utils.recyclerViewOrientation
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_game.*
+import kotlinx.android.synthetic.main.view_loading.*
 import org.jetbrains.anko.contentView
 import org.jetbrains.anko.doAsync
 import java.time.LocalTime
@@ -35,7 +35,7 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class GameActivity : AppCompatActivity(), Observer<IDetailedChoice?>, OnChoiceConfirmedListener {
+class GameActivity : AppCompatActivity(), OnChoiceConfirmedListener {
 
     @Inject
     lateinit var getCurrentGame: GetCurrentGame
@@ -81,32 +81,37 @@ class GameActivity : AppCompatActivity(), Observer<IDetailedChoice?>, OnChoiceCo
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_game)
-        choicesListViewModel.selected.observe(this@GameActivity, this@GameActivity)
+        choicesListViewModel.selected.observe(this){choice -> onSelectedChoiceChanged(choice)}
+        gameViewModel.isLoading.observe(this) { loading -> onLoadingChanged(loading) }
 
-        doAsync {
-            if (!gameViewModel.initialized) {
+        if (!gameViewModel.initialized) {
+            gameViewModel.setLoading(true)
+            doAsync {
                 loadGame()
                 gameViewModel.initialized = true
+                runOnUiThread {
+                    initGame()
+                }
             }
+        } else {
             initGame()
         }
     }
 
+
     private fun initGame() {
-        runOnUiThread {
-            choicesListViewModel.setChoices(gameViewModel.event.data.choices)
-            event_title_tv?.text = gameViewModel.event.data.title
-            event_description_tv?.text = gameViewModel.event.data.description
-            event_background_img?.setImageBitmap(gameViewModel.event.file)
-            round_tv?.text = gameViewModel.rounds.toString()
-            initResources()
-            onChanged(choicesListViewModel.selected.value)
-        }
+        choicesListViewModel.setChoices(gameViewModel.event.data.choices)
+        event_title_tv?.text = gameViewModel.event.data.title
+        event_description_tv?.text = gameViewModel.event.data.description
+        event_background_img?.setImageBitmap(gameViewModel.event.file)
+        round_tv?.text = gameViewModel.rounds.toString()
+        initResources()
+        onSelectedChoiceChanged(choicesListViewModel.selected.value)
+        gameViewModel.setLoading(false)
     }
 
     private fun initResources() {
         resources_rv?.apply {
-
             layoutManager = LinearLayoutManager(
                 this@GameActivity,
                 resources.configuration.recyclerViewOrientation,
@@ -177,8 +182,9 @@ class GameActivity : AppCompatActivity(), Observer<IDetailedChoice?>, OnChoiceCo
                 gameViewModel.event = event
                 runOnUiThread {
                     choicesListViewModel.select(null);
+                    initGame()
                 }
-                initGame()
+
                 return
             }
         }
@@ -186,7 +192,7 @@ class GameActivity : AppCompatActivity(), Observer<IDetailedChoice?>, OnChoiceCo
     }
 
 
-    override fun onChanged(t: IDetailedChoice?) {
+    fun onSelectedChoiceChanged(t: IDetailedChoice?) {
         if (t == null) {
             supportFragmentManager
                 .beginTransaction()
@@ -203,6 +209,7 @@ class GameActivity : AppCompatActivity(), Observer<IDetailedChoice?>, OnChoiceCo
 
     override fun onStart() {
         super.onStart()
+
         startTimer()
     }
 
@@ -215,6 +222,7 @@ class GameActivity : AppCompatActivity(), Observer<IDetailedChoice?>, OnChoiceCo
     }
 
     override fun onChoiceConfirmed(choice: IDetailedChoice) {
+        gameViewModel.setLoading(true)
         doAsync {
             gameViewModel.isEnded =
                 confirmChoice.execute(
@@ -274,6 +282,16 @@ class GameActivity : AppCompatActivity(), Observer<IDetailedChoice?>, OnChoiceCo
                 ?.let { gameResource ->
                     FileWrapperDto(choiceResource, gameResource.file)
                 }
+        }
+    }
+
+    fun onLoadingChanged(loading: Boolean?) {
+        if (loading == true) {
+            loader?.visibility = View.VISIBLE
+            stopTimer()
+        } else {
+            loader?.visibility = View.GONE
+            startTimer()
         }
     }
 

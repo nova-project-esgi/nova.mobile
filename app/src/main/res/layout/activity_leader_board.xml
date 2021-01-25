@@ -12,7 +12,7 @@
         android:id="@+id/score_title_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/scoreBoard_name"
+        android:text="@string/leaderboard"
         android:textAlignment="center"
         android:textSize="@dimen/title_size"
         android:fontFamily="@font/stracruiser_italic"

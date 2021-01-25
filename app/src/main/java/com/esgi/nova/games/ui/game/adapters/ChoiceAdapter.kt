@@ -20,6 +20,7 @@ class ChoiceAdapter(private val choices: List<IDetailedChoice>, private val choi
     override fun onBindViewHolder(holder: ChoiceViewHolder, position: Int) {
         val choice: IDetailedChoice = choices[position]
         holder.bind(choice, choiceClickedListener)
+
     }
 
     override fun getItemCount(): Int = choices.size

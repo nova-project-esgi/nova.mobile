@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">NOVA</string>
-    <string name="to_leaderboard">Classement</string>
-    <string name="to_parameters">Options</string>
-    <string name="scoreBoard_name">Classement</string>
+    <string name="leaderboard">Classement</string>
+    <string name="settings">Options</string>
     <string name="new_game">Nouvelle partie</string>
     <string name="difficulty">Difficulté</string>
-    <string name="timer">Temps</string>
-    <string name="resources">Ressources</string>
-    <string name="tgl_btn_on">OUI</string>
-    <string name="tgl_btn_off">NON</string>
-    <string name="password">mot de passe</string>
+    <string name="timer">Temps :</string>
+    <string name="resources">Ressources :</string>
+    <string name="yes">Oui</string>
+    <string name="no">NON</string>
+    <string name="password">Mot de passe</string>
     <string name="register">Inscription</string>
     <string name="resourceLoadingPrompt">Chargement des données</string>
     <string name="invalid_username_msg">Le nom d\'utilisateur doit faire  être entre 6 et 20 caractères</string>
@@ -27,15 +26,13 @@
     <string name="end_game_title">Vous  avez perdu</string>
     <string name="end_game_message">"Vous dérivez dans l'espace pour toujours "</string>
     <string name="end_game_resources_recap">Vous êtes à cours de %1$s</string>
-    <string name="settings">Paramètres</string>
     <string name="open_settings">Ouvrir les paramètres</string>
-    <string name="show_leader_board">Ouvrir le tableau des scores</string>
+    <string name="open_leaderboard">Accéder au classement</string>
     <string name="trophy">Trophé</string>
     <string name="dark_mode">Mode sombre</string>
     <string name="language">Langue</string>
-    <string name="notifications">Notifications</string>
     <string name="music">Musique</string>
-    <string name="notification">Notification</string>
+    <string name="notifications">Notification</string>
     <string name="daily_event">Activer les évènements journaliers</string>
     <string name="log_out">Déconnexion</string>
     <string name="save">Sauvegarder</string>
@@ -51,10 +48,12 @@
     <string name="rounds">Tours:</string>
     <string name="duration">Durée:</string>
     <string name="score_fetch_error_msg">Une erreur est survenue pendant la récupération des scores</string>
-    <string name="return_to_dashboard">Menu</string>
+    <string name="menu">Menu</string>
     <string name="no_more_game_to_load">Plus de parties disponibles</string>
     <string name="no_games_available">Pas de parties disponibles pour cette difficulté</string>
     <string name="increase">Augmenter</string>
     <string name="connection">Connexion</string>
-    <string name="username">Non d\'utilisateur</string>
+    <string name="username">Nom d\'utilisateur</string>
+    <string name="resource_fetching_msg">La récupération des données de jeu peu impacter votre consommation réseau, voulez-vous continuer ?</string>
+    <string name="network_warning">Avertissement réseau !</string>
 </resources>

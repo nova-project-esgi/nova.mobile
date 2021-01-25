@@ -7,7 +7,7 @@ class AppLanguageDto(
     override val isSelected: Boolean,
     override val id: UUID,
     override val code: String,
-    override val subCode: String?
+    override val subCode: String
 ) : IAppLanguage {
     override fun toString(): String {
         if (subCode != null) {

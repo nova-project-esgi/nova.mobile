@@ -15,7 +15,7 @@
         app:layout_constraintBottom_toTopOf="@id/til_language_option"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:text="@string/to_parameters"
+        android:text="@string/settings"
         android:textAlignment="center"
         android:fontFamily="@font/stracruiser_italic"
         android:textColor="@color/secondaryColor"
@@ -107,7 +107,7 @@
         android:padding="15dp"
         android:textColor="@color/primaryColor"
         android:checked="true"
-        android:text="@string/notification"/>
+        android:text="@string/notifications"/>
 
     <com.google.android.material.switchmaterial.SwitchMaterial
         android:id="@+id/s_music_option"

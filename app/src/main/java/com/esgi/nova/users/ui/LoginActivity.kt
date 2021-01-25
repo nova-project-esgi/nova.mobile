@@ -13,10 +13,12 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.esgi.nova.R
+import com.esgi.nova.application_state.application.IsSynchronized
 import com.esgi.nova.dtos.user.UserLoginDto
 import com.esgi.nova.events.application.SynchronizeEvents
 import com.esgi.nova.parameters.application.SetCurrentTheme
 import com.esgi.nova.sound.application.SwitchSound
+import com.esgi.nova.ui.dashboard.DashboardActivity
 import com.esgi.nova.ui.init.InitSetupActivity
 import com.esgi.nova.users.application.HasConnectedUser
 import com.esgi.nova.users.application.LogInUser
@@ -57,6 +59,9 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, TextWatcher {
     @Inject
     lateinit var switchSound: SwitchSound
 
+    @Inject
+    lateinit var isSynchronized: IsSynchronized
+
     val loginViewModel by viewModels<LoginViewModel>()
 
 
@@ -85,8 +90,11 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, TextWatcher {
                     logOutUser.execute()
                     initUser()
                 } else if (hasConnectedUser.execute()) {
-                    InitSetupActivity.start(this@LoginActivity)
-                    finish()
+                    if (isSynchronized.execute()) {
+                        DashboardActivity.start(this@LoginActivity)
+                    } else {
+                        InitSetupActivity.startWithUserConfirmation(this@LoginActivity)
+                    }
                 } else {
                     initUser()
                 }
@@ -156,10 +164,14 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, TextWatcher {
         doAsync {
             try{
                 logInUser.execute(user)
+                val isSynchronized = isSynchronized.execute()
                 runOnUiThread {
                     setViewVisibility(ProgressBar.GONE)
-                    InitSetupActivity.start(this@LoginActivity)
-                    finish()
+                    if (isSynchronized) {
+                        DashboardActivity.start(this@LoginActivity)
+                    } else {
+                        InitSetupActivity.startWithUserConfirmation(this@LoginActivity)
+                    }
                 }
             } catch (e: UserNotFoundException) {
                 runOnUiThread {
@@ -170,6 +182,8 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, TextWatcher {
             }
         }
     }
+
+
 
     private fun openBrowserForRegister() {
         val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(RegisterUrl))
@@ -184,7 +198,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, TextWatcher {
             btn_login?.isEnabled = false
             btn_register?.isEnabled = false
         }
-        progress_overlay?.visibility = state
+        loader?.visibility = state
     }
 
     override fun afterTextChanged(s: Editable?) {

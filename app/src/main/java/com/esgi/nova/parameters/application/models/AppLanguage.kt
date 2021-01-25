@@ -7,6 +7,6 @@ data class AppLanguage(
     override val isSelected: Boolean = false,
     override val id: UUID,
     override val code: String,
-    override val subCode: String?
+    override val subCode: String
 ) : IAppLanguage {
 }

@@ -13,8 +13,8 @@
     <item
         android:id="@+id/leaderboard_btn"
         android:icon="@drawable/baseline_leaderboard_white_24"
-        android:title="@string/to_leaderboard"
-        android:contentDescription="@string/show_leader_board"
+        android:title="@string/leaderboard"
+        android:contentDescription="@string/open_leaderboard"
         app:showAsAction="ifRoom" />
 
 </menu>

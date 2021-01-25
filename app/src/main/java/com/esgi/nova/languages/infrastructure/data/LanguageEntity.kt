@@ -16,7 +16,7 @@ data class LanguageEntity(
     @field:TypeConverters(UUIDConverter::class)
     override var id: UUID = UUID.randomUUID(),
     @ColumnInfo(name = "code") override var code: String,
-    @ColumnInfo(name = "sub_code") override var subCode: String?,
+    @ColumnInfo(name = "sub_code") override var subCode: String,
     @ColumnInfo(name = "is_selected") override var isSelected: Boolean = false
 ): IAppLanguage {
 }

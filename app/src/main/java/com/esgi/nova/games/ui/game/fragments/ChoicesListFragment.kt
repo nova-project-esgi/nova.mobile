@@ -42,7 +42,7 @@ class ChoicesListFragment : Fragment(), OnChoiceClicked, Observer<List<IDetailed
         super.onViewCreated(view, savedInstanceState)
     }
 
-    fun initChoicesList() {
+    private fun initChoicesList() {
         choices_rv?.apply {
             layoutManager = GridLayoutManager(requireContext(), 2)
             adapter = ChoiceAdapter(choices, this@ChoicesListFragment)

@@ -1,27 +1,24 @@
-package com.esgi.nova.games.ui.game
+package com.esgi.nova.ui
 
 import android.content.Context
 import android.util.AttributeSet
-import android.view.View
+import android.widget.FrameLayout
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.recyclerview.widget.RecyclerView
 import com.esgi.nova.R
 import com.google.android.material.snackbar.ContentViewCallback
 
-class ResourcesChangesSnackBarView @JvmOverloads constructor(
+class LoadingView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : ConstraintLayout(context, attrs, defStyleAttr), ContentViewCallback {
 
-    var resourcesRv: RecyclerView
-    var layRoot: ConstraintLayout
+    var loaderFl: FrameLayout
 
     init {
-        View.inflate(context, R.layout.view_resources_changes_snackbar, this)
+        inflate(context, R.layout.view_loading, this)
         clipToPadding = false
-        this.layRoot = findViewById(R.id.snack_constraint)
-        this.resourcesRv = findViewById(R.id.resources_rv)
+        this.loaderFl = findViewById(R.id.loader)
     }
 
     override fun animateContentIn(delay: Int, duration: Int) {
@@ -33,4 +30,3 @@ class ResourcesChangesSnackBarView @JvmOverloads constructor(
     }
 
 }
-

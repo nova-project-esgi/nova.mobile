@@ -34,16 +34,27 @@ class ChoiceDetailFragment : Fragment(), View.OnClickListener {
         choice_description_tv?.text = viewModel.selected.value?.description
         cancel_btn.setOnClickListener(this)
         confirm_btn.setOnClickListener(this)
+        changeButtonsState(true)
+    }
 
+    private fun changeButtonsState(isEnabled: Boolean){
+        confirm_btn?.isEnabled = isEnabled
+        cancel_btn?.isEnabled = isEnabled
     }
 
 
     override fun onClick(v: View?) {
         when (v) {
-            confirm_btn -> viewModel.selected.value?.let { choice ->
-                onChoiceConfirmedListener?.onChoiceConfirmed(choice)
+            confirm_btn -> {
+                viewModel.selected.value?.let { choice ->
+                    onChoiceConfirmedListener?.onChoiceConfirmed(choice)
+                }
+                changeButtonsState(false)
             }
-            cancel_btn -> viewModel.select(null)
+            cancel_btn -> {
+                viewModel.select(null)
+                changeButtonsState(false)
+            }
         }
     }
 

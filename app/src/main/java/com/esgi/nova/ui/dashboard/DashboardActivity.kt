@@ -7,6 +7,8 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.activity.viewModels
@@ -28,9 +30,11 @@ import com.esgi.nova.resources.application.GetImageStartValueResourceWrappersByD
 import com.esgi.nova.sound.services.BackgroundSoundService
 import com.esgi.nova.ui.dashboard.adapters.DashBoardResourcesAdapter
 import com.esgi.nova.ui.dashboard.view_models.DashboardViewModel
+import com.esgi.nova.users.ui.LoginActivity
 import com.esgi.nova.utils.reflectMapCollection
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_dashboard.*
+import kotlinx.android.synthetic.main.view_loading.*
 import org.jetbrains.anko.doAsync
 import javax.inject.Inject
 
@@ -64,6 +68,10 @@ class DashboardActivity : AppCompatActivity(), View.OnClickListener, AdapterView
         }
     }
 
+    override fun onBackPressed() {
+        LoginActivity.startReconnection(this)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
@@ -72,6 +80,12 @@ class DashboardActivity : AppCompatActivity(), View.OnClickListener, AdapterView
         supportActionBar?.setDisplayShowTitleEnabled(false)
         BackgroundSoundService.start(this)
 
+        changeActionsButtonsStates()
+        initResourcesRecyclerView()
+        generateDifficulties()
+    }
+
+    private fun changeActionsButtonsStates() {
         doAsync {
             val canLaunch = canLaunchGame.execute()
             val canResume = canResumeGame.execute()
@@ -80,8 +94,11 @@ class DashboardActivity : AppCompatActivity(), View.OnClickListener, AdapterView
                 resume_game_btn.isEnabled = canResume
             }
         }
-        initResourcesRecyclerView()
-        generateDifficulties()
+    }
+
+    override fun onResume() {
+        changeActionsButtonsStates()
+        super.onResume()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -105,6 +122,7 @@ class DashboardActivity : AppCompatActivity(), View.OnClickListener, AdapterView
     private fun generateDifficulties() {
 
         if (!dashBoardViewModel.initialized) {
+            loader?.visibility = VISIBLE
             doAsync {
                 if (!dashBoardViewModel.initialized) {
                     dashBoardViewModel.difficulties = getAllDetailedDifficultiesSortedByRank
@@ -117,6 +135,7 @@ class DashboardActivity : AppCompatActivity(), View.OnClickListener, AdapterView
                 }
                 runOnUiThread {
                     setDifficultyAutoComplete()
+                    loader?.visibility = GONE
                 }
             }
         } else {
@@ -134,6 +153,7 @@ class DashboardActivity : AppCompatActivity(), View.OnClickListener, AdapterView
         difficulty_tv?.setAdapter(arrayAdapter)
         if (dashBoardViewModel.selectedDifficulty != null) {
             difficulty_tv?.setText(dashBoardViewModel.selectedDifficulty.toString(), false)
+            difficulty_tv?.isEnabled = true
         } else {
             difficulty_tv?.isEnabled = false
         }
