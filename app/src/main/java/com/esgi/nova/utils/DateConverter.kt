@@ -9,7 +9,7 @@ object DateConverter {
     fun fromTimestamp(value: Long): LocalDateTime {
         return LocalDateTime.ofInstant(
             Instant.ofEpochMilli(value),
-            TimeZone.getDefault().toZoneId());
+            TimeZone.getDefault().toZoneId())
     }
     fun dateToTimestamp(date: LocalDateTime): Long {
         return ZonedDateTime.of(

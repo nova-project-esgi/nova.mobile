@@ -5,8 +5,7 @@ import java.util.*
 data class DifficultyResourceResponse(
     val resourceId: UUID,
     val startValue: Int
-) {
-}
+)
 
 
 

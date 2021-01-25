@@ -6,9 +6,7 @@ import com.esgi.nova.events.infrastructure.data.events.EventEntity
 import com.esgi.nova.games.infrastructure.data.game.GameEntity
 import com.esgi.nova.games.infrastructure.data.game_event.GameEventEntity
 
-class GameWithEvent(
-
-) {
+class GameWithEvent {
     @Embedded
     lateinit var gameEvent: GameEventEntity
 

@@ -11,5 +11,4 @@ data class RecappedGame(
     override val difficultyId: UUID,
     override val isEnded: Boolean,
     override val userId: UUID
-) : IRecappedGame {
-}
+) : IRecappedGame

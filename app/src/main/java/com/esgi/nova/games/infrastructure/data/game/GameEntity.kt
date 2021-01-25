@@ -34,5 +34,5 @@ data class GameEntity(
     override var duration: Int = 0,
     @ColumnInfo(name = "is_ended")
     override var isEnded: Boolean
-) : IGame{}
+) : IGame
 

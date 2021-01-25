@@ -11,6 +11,4 @@ data class ResumedEvent(
     override val description: String,
     override val title: String,
     override val isDaily: Boolean = false
-) : IResumedEvent{
-
-}
+) : IResumedEvent

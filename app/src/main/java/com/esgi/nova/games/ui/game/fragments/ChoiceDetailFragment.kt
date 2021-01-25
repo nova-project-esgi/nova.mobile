@@ -6,9 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import com.esgi.nova.R
+import com.esgi.nova.databinding.ChoiceDetailFragmentBinding
 import com.esgi.nova.games.ui.game.view_models.ChoicesListViewModel
-import kotlinx.android.synthetic.main.choice_detail_fragment.*
 
 class ChoiceDetailFragment : Fragment(), View.OnClickListener {
 
@@ -19,39 +18,43 @@ class ChoiceDetailFragment : Fragment(), View.OnClickListener {
             }
     }
 
+    private var _binding: ChoiceDetailFragmentBinding? = null
+    private val binding get() = _binding!!
+
     private var onChoiceConfirmedListener: OnChoiceConfirmedListener? = null
     private val viewModel by activityViewModels<ChoicesListViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.choice_detail_fragment, container, false)
+    ): View {
+        _binding = ChoiceDetailFragmentBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        choice_description_tv?.text = viewModel.selected.value?.description
-        cancel_btn.setOnClickListener(this)
-        confirm_btn.setOnClickListener(this)
+        binding.choiceDescriptionTv.text = viewModel.selected.value?.description
+        binding.cancelBtn.setOnClickListener(this)
+        binding.confirmBtn.setOnClickListener(this)
         changeButtonsState(true)
     }
 
-    private fun changeButtonsState(isEnabled: Boolean){
-        confirm_btn?.isEnabled = isEnabled
-        cancel_btn?.isEnabled = isEnabled
+    private fun changeButtonsState(isEnabled: Boolean) {
+        binding.confirmBtn.isEnabled = isEnabled
+        binding.cancelBtn.isEnabled = isEnabled
     }
 
 
     override fun onClick(v: View?) {
         when (v) {
-            confirm_btn -> {
+            binding.confirmBtn -> {
                 viewModel.selected.value?.let { choice ->
                     onChoiceConfirmedListener?.onChoiceConfirmed(choice)
                 }
                 changeButtonsState(false)
             }
-            cancel_btn -> {
+            binding.cancelBtn -> {
                 viewModel.select(null)
                 changeButtonsState(false)
             }

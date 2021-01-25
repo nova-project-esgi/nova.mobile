@@ -7,5 +7,4 @@ data class DifficultyResource(
     override val resourceId: UUID,
     override val difficultyId: UUID,
     override val startValue: Int
-) : IDifficultyResource {
-}
+) : IDifficultyResource

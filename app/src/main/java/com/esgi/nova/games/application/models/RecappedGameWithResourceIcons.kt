@@ -13,5 +13,4 @@ class RecappedGameWithResourceIcons(
     override val difficultyId: UUID,
     override val isEnded: Boolean,
     override val userId: UUID
-) : IRecappedGameWithResourceIcons {
-}
+) : IRecappedGameWithResourceIcons

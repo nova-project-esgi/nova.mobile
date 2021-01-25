@@ -41,6 +41,4 @@ data class DifficultyResourceEntity(
     override var difficultyId: UUID = UUID.randomUUID(),
     @ColumnInfo(name = "start_value")
     override var startValue: Int
-): IDifficultyResource {
-
-}
+): IDifficultyResource

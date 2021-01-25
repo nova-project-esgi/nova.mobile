@@ -43,7 +43,5 @@ data class GameEventEntity(
     @ColumnInfo(name = "link_time")
     @field:TypeConverters(DateConverter::class)
     override var linkTime: LocalDateTime
-): IGameEvent {
-
-}
+): IGameEvent
 

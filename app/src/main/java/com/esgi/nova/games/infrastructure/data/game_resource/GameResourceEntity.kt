@@ -40,7 +40,5 @@ data class GameResourceEntity(
     override var gameId: UUID = UUID.randomUUID(),
     @ColumnInfo(name = "total")
     override var total: Int
-): IGameResource{
-
-}
+): IGameResource
 

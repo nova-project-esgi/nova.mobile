@@ -13,5 +13,4 @@ data class GameState(
     override val duration: Int,
     override val isEnded: Boolean,
     override val userId: UUID
-) : IGameState {
-}
+) : IGameState

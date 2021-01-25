@@ -6,9 +6,7 @@ import com.esgi.nova.difficulties.infrastructure.data.difficulty.DifficultyEntit
 import com.esgi.nova.difficulties.infrastructure.data.difficulty_resource.DifficultyResourceEntity
 import com.esgi.nova.resources.infrastructure.data.ResourceEntity
 
-class DifficultyWithResource(
-
-) {
+class DifficultyWithResource {
     @Embedded
     lateinit var difficultyResource: DifficultyResourceEntity
 

@@ -7,9 +7,7 @@ import com.esgi.nova.games.infrastructure.data.game.GameEntity
 import com.esgi.nova.games.infrastructure.data.game_resource.GameResourceEntity
 import com.esgi.nova.resources.infrastructure.data.ResourceEntity
 
-class GameWithResource(
-
-) {
+class GameWithResource {
     @Embedded
     lateinit var gameResource: GameResourceEntity
 

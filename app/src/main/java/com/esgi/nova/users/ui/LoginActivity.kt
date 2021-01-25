@@ -13,6 +13,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.esgi.nova.R
 import com.esgi.nova.application_state.application.IsSynchronized
+import com.esgi.nova.databinding.ActivityLoginBinding
 import com.esgi.nova.dtos.user.UserLoginDto
 import com.esgi.nova.events.application.SynchronizeEvents
 import com.esgi.nova.parameters.application.SetCurrentTheme
@@ -27,22 +28,27 @@ import com.esgi.nova.users.exceptions.InvalidPasswordException
 import com.esgi.nova.users.exceptions.InvalidUsernameException
 import com.esgi.nova.users.ui.view_models.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import org.jetbrains.anko.doAsync
-import java.lang.Exception
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
-
-
+//class LoginViewModelFactory(
+//    private val dataSource: SleepDatabaseDao,
+//    private val application: Application) : ViewModelProvider.Factory {
+//    @Suppress("unchecked_cast")
+//    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+//        if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
+//            return LoginViewModel(dataSource, application) as T
+//        }
+//        throw IllegalArgumentException("Unknown ViewModel class")
+//    }
+//}
 @AndroidEntryPoint
 class LoginActivity : AppCompatActivity(), View.OnClickListener, TextWatcher, CoroutineScope  {
 
-    @Inject
-    lateinit var service: SynchronizeEvents
 
     @Inject
     lateinit var logInUser: LogInUser
@@ -71,6 +77,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, TextWatcher, Co
         get() = Dispatchers.Main + job
 
     private lateinit var job: Job
+    private lateinit var binding: ActivityLoginBinding
 
     companion object {
         const val ReconnectionKey: String = "ReconnectionKey"
@@ -86,9 +93,12 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, TextWatcher, Co
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setCurrentTheme.execute()
-        setContentView(R.layout.activity_login)
-        btn_login?.setOnClickListener(this)
-        btn_register?.setOnClickListener(this)
+        binding = ActivityLoginBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+
+        binding.btnLogin.setOnClickListener(this)
+        binding.btnRegister.setOnClickListener(this)
         job = Job()
 
         if (!loginViewModel.initialized) {
@@ -121,24 +131,24 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, TextWatcher, Co
     }
 
     private fun initInputs() {
-        ti_password?.setText(loginViewModel.password)
-        ti_login?.setText(loginViewModel.username)
-        ti_password?.addTextChangedListener(this@LoginActivity)
-        ti_login?.addTextChangedListener(this@LoginActivity)
+        binding.tiPassword.setText(loginViewModel.password)
+        binding.tiLogin.setText(loginViewModel.username)
+        binding.tiPassword.addTextChangedListener(this@LoginActivity)
+        binding.tiLogin.addTextChangedListener(this@LoginActivity)
     }
 
 
     override fun onClick(view: View?) {
         when (view) {
-            btn_login -> loginClick()
-            btn_register -> openBrowserForRegister()
+            binding.btnLogin -> loginClick()
+            binding.btnRegister -> openBrowserForRegister()
         }
     }
 
     private fun loginClick() {
         val userLoginDto = UserLoginDto(
-            username = ti_login?.text.toString().trim(),
-            password = ti_password?.text.toString().trim()
+            username = binding.tiLogin.text.toString().trim(),
+            password = binding.tiPassword.text.toString().trim()
         )
         resetTextviewColors()
         setViewVisibility(ProgressBar.VISIBLE)
@@ -153,18 +163,18 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, TextWatcher, Co
 //                toast.show()
 //            }
         } catch (e: InvalidUsernameException) {
-            et_login?.error = resources.getString(R.string.invalid_username_msg)
+            binding.etLogin.error = resources.getString(R.string.invalid_username_msg)
         }catch(e: InvalidPasswordException){
-            et_password?.error = resources.getString(R.string.invalid_password_msg)
+            binding.etPassword.error = resources.getString(R.string.invalid_password_msg)
         }
         setViewVisibility(ProgressBar.GONE)
 
     }
 
     private fun resetTextviewColors() {
-        et_login?.error = null
-        et_password?.error = null
-        tv_errorString?.visibility = TextView.GONE
+        binding.etLogin.error = null
+        binding.etPassword.error = null
+        binding.tvErrorString.visibility = TextView.GONE
     }
 
     private fun login(user: UserLoginDto) {
@@ -197,19 +207,19 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, TextWatcher, Co
 
     private fun setViewVisibility(state: Int) {
         if (state == ProgressBar.GONE) {
-            btn_login?.isEnabled = true
-            btn_register?.isEnabled = true
+            binding.btnLogin.isEnabled = true
+            binding.btnRegister.isEnabled = true
         } else if (state == ProgressBar.VISIBLE) {
-            btn_login?.isEnabled = false
-            btn_register?.isEnabled = false
+            binding.btnLogin.isEnabled = false
+            binding.btnRegister.isEnabled = false
         }
-        loader?.visibility = state
+        binding.loader.visibility = state
     }
 
     override fun afterTextChanged(s: Editable?) {
         when (s) {
-            ti_password -> loginViewModel.password = ti_password?.text.toString()
-            ti_login -> loginViewModel.username = ti_login?.text.toString()
+            binding.tiPassword -> loginViewModel.password = binding.tiPassword.text.toString()
+            binding.tiLogin -> loginViewModel.username = binding.tiLogin.text.toString()
         }
     }
 

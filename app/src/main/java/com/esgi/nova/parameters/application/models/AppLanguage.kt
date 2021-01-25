@@ -8,5 +8,4 @@ data class AppLanguage(
     override val id: UUID,
     override val code: String,
     override val subCode: String
-) : IAppLanguage {
-}
+) : IAppLanguage

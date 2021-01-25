@@ -7,9 +7,7 @@ import com.esgi.nova.events.infrastructure.data.choices.ChoiceEntity
 import com.esgi.nova.events.infrastructure.data.choices.models.DetailedChoice
 import com.esgi.nova.resources.infrastructure.data.ResourceEntity
 
-class ChoiceWithResource(
-
-) {
+class ChoiceWithResource {
     @Embedded
     lateinit var choiceResource: ChoiceResourceEntity
 

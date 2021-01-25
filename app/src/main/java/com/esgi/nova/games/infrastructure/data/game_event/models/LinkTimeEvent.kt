@@ -9,5 +9,4 @@ data class LinkTimeEvent(
     override val title: String,
     override val description: String,
     override val linkTime: LocalDateTime
-) : ILinkTimeEvent {
-}
+) : ILinkTimeEvent

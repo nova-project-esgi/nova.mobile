@@ -6,5 +6,4 @@ data class Resource(
     val id: UUID,
     val name: String,
     val value: Int
-) {
-}
+)

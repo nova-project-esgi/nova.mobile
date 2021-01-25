@@ -5,5 +5,4 @@ import java.util.*
 data class Event (
     val id: UUID = UUID.randomUUID(),
     val description: String,
-    val title: String){
-}
+    val title: String)

@@ -19,7 +19,7 @@ open class ApiRepository @Inject constructor(@ApplicationContext protected val c
             _genericService ?: apiBuilder()
                 .build().create(GenericService::class.java)
 
-    private var _genericService: GenericService? = null;
+    private var _genericService: GenericService? = null
 
 
     protected val gsonBuilder: GsonBuilder

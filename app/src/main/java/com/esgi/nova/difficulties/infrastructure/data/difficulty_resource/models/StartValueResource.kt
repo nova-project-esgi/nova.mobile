@@ -7,5 +7,4 @@ data class StartValueResource(
     override val id: UUID,
     override val name: String,
     override val startValue: Int
-) : IDetailedDifficulty.IStartValueResource {
-}
+) : IDetailedDifficulty.IStartValueResource

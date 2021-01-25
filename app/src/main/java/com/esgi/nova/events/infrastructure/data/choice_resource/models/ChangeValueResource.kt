@@ -7,5 +7,4 @@ data class ChangeValueResource(
     override val id: UUID,
     override val name: String,
     override val changeValue: Int
-) : IDetailedChoice.IChangeValueResource {
-}
+) : IDetailedChoice.IChangeValueResource

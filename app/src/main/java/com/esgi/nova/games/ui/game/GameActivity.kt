@@ -6,9 +6,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.esgi.nova.R
+import com.esgi.nova.databinding.ActivityGameBinding
 import com.esgi.nova.events.ports.IDetailedChoice
 import com.esgi.nova.files.dtos.FileWrapperDto
 import com.esgi.nova.games.application.*
@@ -25,8 +25,6 @@ import com.esgi.nova.utils.getUUIDExtra
 import com.esgi.nova.utils.putUUIDExtra
 import com.esgi.nova.utils.recyclerViewOrientation
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_game.*
-import kotlinx.android.synthetic.main.view_loading.*
 import org.jetbrains.anko.contentView
 import org.jetbrains.anko.doAsync
 import java.time.LocalTime
@@ -58,6 +56,7 @@ class GameActivity : AppCompatActivity(), OnChoiceConfirmedListener {
 
     val choicesListViewModel by viewModels<ChoicesListViewModel>()
     val gameViewModel by viewModels<GameViewModel>()
+    private lateinit var binding: ActivityGameBinding
 
 
     companion object {
@@ -79,9 +78,10 @@ class GameActivity : AppCompatActivity(), OnChoiceConfirmedListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityGameBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        setContentView(R.layout.activity_game)
-        choicesListViewModel.selected.observe(this){choice -> onSelectedChoiceChanged(choice)}
+        choicesListViewModel.selected.observe(this) { choice -> onSelectedChoiceChanged(choice) }
         gameViewModel.isLoading.observe(this) { loading -> onLoadingChanged(loading) }
 
         if (!gameViewModel.initialized) {
@@ -101,17 +101,17 @@ class GameActivity : AppCompatActivity(), OnChoiceConfirmedListener {
 
     private fun initGame() {
         choicesListViewModel.setChoices(gameViewModel.event.data.choices)
-        event_title_tv?.text = gameViewModel.event.data.title
-        event_description_tv?.text = gameViewModel.event.data.description
-        event_background_img?.setImageBitmap(gameViewModel.event.file)
-        round_tv?.text = gameViewModel.rounds.toString()
+        binding.eventTitleTv.text = gameViewModel.event.data.title
+        binding.eventDescriptionTv.text = gameViewModel.event.data.description
+        binding.eventBackgroundImg.setImageBitmap(gameViewModel.event.file)
+        binding.roundTv.text = gameViewModel.rounds.toString()
         initResources()
         onSelectedChoiceChanged(choicesListViewModel.selected.value)
         gameViewModel.setLoading(false)
     }
 
     private fun initResources() {
-        resources_rv?.apply {
+        binding.resourcesRv.apply {
             layoutManager = LinearLayoutManager(
                 this@GameActivity,
                 resources.configuration.recyclerViewOrientation,
@@ -181,7 +181,7 @@ class GameActivity : AppCompatActivity(), OnChoiceConfirmedListener {
             getNextEvent.execute(game.id)?.let { event ->
                 gameViewModel.event = event
                 runOnUiThread {
-                    choicesListViewModel.select(null);
+                    choicesListViewModel.select(null)
                     initGame()
                 }
 
@@ -255,7 +255,7 @@ class GameActivity : AppCompatActivity(), OnChoiceConfirmedListener {
             override fun run() {
                 runOnUiThread {
                     gameViewModel.duration++
-                    timer_tv?.text =
+                    binding.timerTv.text =
                         LocalTime.ofSecondOfDay(gameViewModel.duration.toLong()).toString()
                 }
             }
@@ -287,10 +287,10 @@ class GameActivity : AppCompatActivity(), OnChoiceConfirmedListener {
 
     fun onLoadingChanged(loading: Boolean?) {
         if (loading == true) {
-            loader?.visibility = View.VISIBLE
+            binding.root.loaderFl.visibility = View.VISIBLE
             stopTimer()
         } else {
-            loader?.visibility = View.GONE
+            binding.root.loaderFl.visibility = View.GONE
             startTimer()
         }
     }

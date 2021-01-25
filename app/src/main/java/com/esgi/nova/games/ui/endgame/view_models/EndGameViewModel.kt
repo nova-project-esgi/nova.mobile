@@ -6,7 +6,7 @@ import com.esgi.nova.games.ports.IRecappedGameWithResourceIcons
 import com.esgi.nova.games.ports.ITotalValueResource
 import com.esgi.nova.ui.IViewModelState
 
-class EndGameViewModel() : ViewModel(), IViewModelState {
+class EndGameViewModel : ViewModel(), IViewModelState {
 
     override var initialized: Boolean = false
 

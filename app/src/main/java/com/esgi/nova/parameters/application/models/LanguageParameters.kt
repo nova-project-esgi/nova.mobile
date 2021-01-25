@@ -10,6 +10,4 @@ data class LanguageParameters(
     override val hasDailyEvents: Boolean,
     override val hasNotifications: Boolean,
     override val hasSound: Boolean
-): ILanguageParameters {
-
-}
+): ILanguageParameters

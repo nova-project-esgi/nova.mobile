@@ -6,7 +6,7 @@ import com.esgi.nova.dtos.difficulty.DetailedDifficultyDto
 import com.esgi.nova.files.infrastructure.ports.IFileWrapper
 import com.esgi.nova.ui.IViewModelState
 
-class DashboardViewModel() : ViewModel(), IViewModelState {
+class DashboardViewModel : ViewModel(), IViewModelState {
     override var initialized: Boolean = false
 
     var difficulties: List<DetailedDifficultyDto> = listOf()

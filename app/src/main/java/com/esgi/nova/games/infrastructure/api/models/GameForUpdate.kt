@@ -10,5 +10,4 @@ data class GameForUpdate(
     override val events: MutableList<IGameEventEdition>,
     override val duration: Int,
     override val isEnded: Boolean?
-) : IGameEdition {
-}
+) : IGameEdition

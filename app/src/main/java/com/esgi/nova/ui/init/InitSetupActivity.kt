@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.esgi.nova.R
 import com.esgi.nova.application_state.application.IsSynchronized
 import com.esgi.nova.application_state.application.SetSynchronizeState
+import com.esgi.nova.databinding.ActivityInitSetupBinding
 import com.esgi.nova.difficulties.application.SynchronizeDifficulties
 import com.esgi.nova.events.application.DeleteOrphansDailyEvents
 import com.esgi.nova.events.application.SynchronizeEvents
@@ -19,7 +20,6 @@ import com.esgi.nova.ui.dashboard.DashboardActivity
 import com.esgi.nova.ui.init.view_models.InitViewModel
 import com.esgi.nova.users.ui.LoginActivity
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_init_setup.*
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.textResource
@@ -57,6 +57,7 @@ class InitSetupActivity : AppCompatActivity() {
     private val viewModel by viewModels<InitViewModel>()
 
     lateinit var stepsList: List<Synchronize>
+    private lateinit var binding: ActivityInitSetupBinding
 
     companion object {
         const val SynchronizeStepsTotal = 7
@@ -84,7 +85,8 @@ class InitSetupActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_init_setup)
+        binding = ActivityInitSetupBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         viewModel.stepLimit = SynchronizeStepsTotal + 1
 
         stepsList = listOf(
@@ -119,16 +121,17 @@ class InitSetupActivity : AppCompatActivity() {
     }
 
     private fun setLoadingText(index: Int) {
-        val loadingTextString = getString(R.string.resourceLoadingPrompt) + " $index / $SynchronizeStepsTotal"
-        loading_tv?.text = loadingTextString
-        when(index){
-            1 -> loading_description_tv?.textResource = R.string.loading_step_1
-            2 -> loading_description_tv?.textResource = R.string.loading_step_2
-            3 -> loading_description_tv?.textResource = R.string.loading_step_3
-            4 -> loading_description_tv?.textResource = R.string.loading_step_4
-            5 -> loading_description_tv?.textResource = R.string.loading_step_5
-            6 -> loading_description_tv?.textResource = R.string.loading_step_6
-            7 -> loading_description_tv?.textResource = R.string.loading_step_7
+        val loadingTextString =
+            getString(R.string.resourceLoadingPrompt) + " $index / $SynchronizeStepsTotal"
+        binding.loadingTv.text = loadingTextString
+        when (index) {
+            1 -> binding.loadingDescriptionTv.textResource = R.string.loading_step_1
+            2 -> binding.loadingDescriptionTv.textResource = R.string.loading_step_2
+            3 -> binding.loadingDescriptionTv.textResource = R.string.loading_step_3
+            4 -> binding.loadingDescriptionTv.textResource = R.string.loading_step_4
+            5 -> binding.loadingDescriptionTv.textResource = R.string.loading_step_5
+            6 -> binding.loadingDescriptionTv.textResource = R.string.loading_step_6
+            7 -> binding.loadingDescriptionTv.textResource = R.string.loading_step_7
         }
     }
 

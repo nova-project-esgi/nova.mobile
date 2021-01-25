@@ -28,5 +28,5 @@ data class ChoiceEntity(
     override var eventId: UUID = UUID.randomUUID(),
     @ColumnInfo(name = "title") override val title: String,
     @ColumnInfo(name = "description") override val description: String
-): IChoice{}
+): IChoice
 

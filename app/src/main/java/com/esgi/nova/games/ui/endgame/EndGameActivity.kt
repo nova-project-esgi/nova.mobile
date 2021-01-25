@@ -9,16 +9,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.esgi.nova.R
+import com.esgi.nova.databinding.ActivityEndGameBinding
 import com.esgi.nova.games.application.GetLastEndedGame
 import com.esgi.nova.games.ui.endgame.view_models.EndGameViewModel
 import com.esgi.nova.games.ui.game.adapters.GameResourcesAdapter
 import com.esgi.nova.ui.dashboard.DashboardActivity
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_dashboard.*
-import kotlinx.android.synthetic.main.activity_end_game.*
-import kotlinx.android.synthetic.main.activity_game.*
 import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.toast
 import javax.inject.Inject
 
 
@@ -28,7 +25,7 @@ class EndGameActivity : AppCompatActivity(), View.OnClickListener {
     @Inject
     lateinit var getLastEndedGame: GetLastEndedGame
 
-
+    private lateinit var binding: ActivityEndGameBinding
     val endGameViewModel by viewModels<EndGameViewModel>()
 
     companion object {
@@ -45,8 +42,8 @@ class EndGameActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_end_game)
-
+        binding = ActivityEndGameBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         if (!endGameViewModel.initialized) {
             doAsync {
                 loadEndGameData()
@@ -59,18 +56,19 @@ class EndGameActivity : AppCompatActivity(), View.OnClickListener {
 
 
 
-        return_to_dashboard?.setOnClickListener(this)
+        binding.returnToDashboard.setOnClickListener(this)
     }
 
     private fun initEndGameDisplay() {
         runOnUiThread {
-            end_title?.text = getString(R.string.end_game_title)
-            end_message?.text = getString(R.string.end_game_message)
-            turn_recap?.text = endGameViewModel.rounds.let { rounds ->
+            binding.endTitle.text = getString(R.string.end_game_title)
+            binding.endMessage.text = getString(R.string.end_game_message)
+            binding.turnRecap.text = endGameViewModel.rounds.let { rounds ->
                 resources.getQuantityString(R.plurals.turn_recap, rounds, rounds)
             }
             val losingResource = findLosingResourceName()
-            resources_recap?.text = getString(R.string.end_game_resources_recap, losingResource)
+            binding.resourcesRecap.text =
+                getString(R.string.end_game_resources_recap, losingResource)
             initResources()
         }
     }
@@ -89,7 +87,7 @@ class EndGameActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun initResources() {
 
-        resources_recap_rv?.apply {
+        binding.resourcesRecapRv.apply {
             val orientation = RecyclerView.HORIZONTAL
             layoutManager = LinearLayoutManager(
                 this@EndGameActivity,
@@ -102,7 +100,7 @@ class EndGameActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(view: View?) {
         when (view) {
-            return_to_dashboard ->
+            binding.returnToDashboard ->
                 DashboardActivity.start(this@EndGameActivity)
         }
     }

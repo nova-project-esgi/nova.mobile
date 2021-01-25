@@ -10,5 +10,4 @@ class ResumedChoice(
     override val eventId: UUID,
     override val title: String,
     override val description: String
-) : IResumedChoice {
-}
+) : IResumedChoice

@@ -5,9 +5,7 @@ import com.esgi.nova.dtos.languages.AppLanguageDto
 import com.esgi.nova.parameters.ports.IParameters
 import com.esgi.nova.ui.IViewModelState
 
-class ParametersViewModel(
-
-) : ViewModel(), IParameters, IViewModelState {
+class ParametersViewModel : ViewModel(), IParameters, IViewModelState {
     override var isDarkMode: Boolean = false
     override var hasDailyEvents: Boolean = false
     override var hasNotifications: Boolean = false

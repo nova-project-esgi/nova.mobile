@@ -9,6 +9,4 @@ data class TranslatedChoiceResourceResponse(
     val language: String,
     override val name: String,
     override val changeValue: Int
-): IDetailedChoice.IChangeValueResource {
-
-}
+): IDetailedChoice.IChangeValueResource

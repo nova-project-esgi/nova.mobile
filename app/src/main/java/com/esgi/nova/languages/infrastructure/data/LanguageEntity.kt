@@ -18,5 +18,4 @@ data class LanguageEntity(
     @ColumnInfo(name = "code") override var code: String,
     @ColumnInfo(name = "sub_code") override var subCode: String,
     @ColumnInfo(name = "is_selected") override var isSelected: Boolean = false
-): IAppLanguage {
-}
+): IAppLanguage

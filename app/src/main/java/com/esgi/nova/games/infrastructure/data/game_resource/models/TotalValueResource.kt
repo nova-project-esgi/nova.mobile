@@ -7,6 +7,5 @@ data class TotalValueResource(
     override val id: UUID,
     override val name: String,
     override val total: Int
-) : ITotalValueResource {
-}
+) : ITotalValueResource
 

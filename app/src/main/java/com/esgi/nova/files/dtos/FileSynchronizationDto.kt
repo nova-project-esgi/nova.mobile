@@ -5,5 +5,4 @@ data class FileSynchronizationDto(
     val destinationDir: String,
     val fileName: String,
     val resolveFileExtension: Boolean = true
-) {
-}
+)

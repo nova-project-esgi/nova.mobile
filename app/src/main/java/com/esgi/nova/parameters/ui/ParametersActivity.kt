@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.esgi.nova.R
+import com.esgi.nova.databinding.ActivityParametersBinding
 import com.esgi.nova.dtos.languages.AppLanguageDto
 import com.esgi.nova.languages.application.GetAllLanguages
 import com.esgi.nova.languages.ports.IAppLanguage
@@ -24,7 +25,6 @@ import com.esgi.nova.ui.init.InitSetupActivity
 import com.esgi.nova.users.ui.LoginActivity
 import com.esgi.nova.utils.reflectMapCollection
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_parameters.*
 import org.jetbrains.anko.doAsync
 import javax.inject.Inject
 
@@ -42,6 +42,7 @@ class ParametersActivity : AppCompatActivity(), View.OnClickListener,
     @Inject
     lateinit var saveParameters: SaveParameters
 
+    private lateinit var binding: ActivityParametersBinding
 
     val parametersViewModel by viewModels<ParametersViewModel>()
 
@@ -56,15 +57,16 @@ class ParametersActivity : AppCompatActivity(), View.OnClickListener,
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_parameters)
+        binding = ActivityParametersBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         setContent()
 
-        btn_save_option?.setOnClickListener(this)
-        btn_disconnect_option?.setOnClickListener(this)
-        s_dark_mode_option?.setOnCheckedChangeListener(this)
-        s_download_option?.setOnCheckedChangeListener(this)
-        s_notification_option?.setOnCheckedChangeListener(this)
-        s_music_option?.setOnCheckedChangeListener(this)
+        binding.btnSaveOption.setOnClickListener(this)
+        binding.btnDisconnectOption.setOnClickListener(this)
+        binding.sDarkModeOption.setOnCheckedChangeListener(this)
+        binding.sDownloadOption.setOnCheckedChangeListener(this)
+        binding.sNotificationOption.setOnCheckedChangeListener(this)
+        binding.sMusicOption.setOnCheckedChangeListener(this)
     }
 
     private fun setContent() {
@@ -90,10 +92,10 @@ class ParametersActivity : AppCompatActivity(), View.OnClickListener,
     }
 
     private fun setUpParameters() {
-        s_download_option?.isChecked = parametersViewModel.hasDailyEvents
-        s_dark_mode_option?.isChecked = parametersViewModel.isDarkMode
-        s_notification_option?.isChecked = parametersViewModel.hasNotifications
-        s_music_option?.isChecked = parametersViewModel.hasSound
+        binding.sDownloadOption.isChecked = parametersViewModel.hasDailyEvents
+        binding.sDarkModeOption.isChecked = parametersViewModel.isDarkMode
+        binding.sNotificationOption.isChecked = parametersViewModel.hasNotifications
+        binding.sMusicOption.isChecked = parametersViewModel.hasSound
     }
 
     private fun setLanguageAutocomplete() {
@@ -102,19 +104,19 @@ class ParametersActivity : AppCompatActivity(), View.OnClickListener,
             R.layout.list_item,
             parametersViewModel.languages
         )
-        tv_language_option?.setAdapter(arrayAdapter)
+        binding.tvLanguageOption.setAdapter(arrayAdapter)
         if (parametersViewModel.selectedLanguage != null) {
-            tv_language_option?.setText(parametersViewModel.selectedLanguage?.tag, false)
+            binding.tvLanguageOption.setText(parametersViewModel.selectedLanguage?.tag, false)
         } else {
-            tv_language_option?.isEnabled = false
+            binding.tvLanguageOption.isEnabled = false
         }
-        tv_language_option?.onItemClickListener = this
+        binding.tvLanguageOption.onItemClickListener = this
     }
 
     override fun onClick(v: View?) {
-        if (v == btn_save_option) {
+        if (v == binding.btnSaveOption) {
             saveParameters()
-        } else if (v == btn_disconnect_option) {
+        } else if (v == binding.btnDisconnectOption) {
             disconnectUser()
         }
     }
@@ -160,10 +162,10 @@ class ParametersActivity : AppCompatActivity(), View.OnClickListener,
 
     override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
         when (buttonView) {
-            s_dark_mode_option -> parametersViewModel.isDarkMode = isChecked
-            s_download_option -> parametersViewModel.hasDailyEvents = isChecked
-            s_notification_option -> parametersViewModel.hasNotifications = isChecked
-            s_music_option -> parametersViewModel.hasSound = isChecked
+            binding.sDarkModeOption -> parametersViewModel.isDarkMode = isChecked
+            binding.sDownloadOption -> parametersViewModel.hasDailyEvents = isChecked
+            binding.sNotificationOption -> parametersViewModel.hasNotifications = isChecked
+            binding.sMusicOption -> parametersViewModel.hasSound = isChecked
         }
     }
 }

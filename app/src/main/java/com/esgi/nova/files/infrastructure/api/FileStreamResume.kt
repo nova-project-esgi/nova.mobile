@@ -8,7 +8,4 @@ data class FileStreamResume(
     override val data: InputStream,
     override val fileSize: Long
 
-) : IFileStreamResume {
-
-
-}
+) : IFileStreamResume

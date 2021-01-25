@@ -15,7 +15,7 @@ class LanguageSystemRepository @Inject constructor(@ApplicationContext private v
 
     fun updateResources(language: String, country: String): Context {
         Lingver.getInstance().setLocale(context, language, country)
-        return context;
+        return context
     }
 
 

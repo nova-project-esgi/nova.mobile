@@ -10,5 +10,4 @@ data class DetailedEvent(
     override val description: String,
     override val title: String,
     override val isDaily: Boolean
-) : IDetailedEvent {
-}
+) : IDetailedEvent

@@ -8,5 +8,4 @@ data class DetailedDifficulty(
     override val name: String,
     override val resources: MutableList<IDetailedDifficulty.IStartValueResource> = mutableListOf(),
     override val rank: Int
-) : IDetailedDifficulty {
-}
+) : IDetailedDifficulty

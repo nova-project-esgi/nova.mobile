@@ -8,5 +8,4 @@ data class Parameters(
     override val hasDailyEvents: Boolean,
     override val hasNotifications: Boolean,
     override val hasSound: Boolean
-) : IParameters {
-}
+) : IParameters

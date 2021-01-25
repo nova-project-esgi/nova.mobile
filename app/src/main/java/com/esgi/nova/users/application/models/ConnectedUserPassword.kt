@@ -11,5 +11,4 @@ class ConnectedUserPassword(
     override val username: String,
     override val token: String,
     override val id: UUID
-) : IConnectedUserPassword {
-}
+) : IConnectedUserPassword

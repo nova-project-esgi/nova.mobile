@@ -9,5 +9,4 @@ class Game(
     override val duration: Int,
     override val isEnded: Boolean,
     override val userId: UUID
-) : IGame {
-}
+) : IGame

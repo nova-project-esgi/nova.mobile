@@ -8,7 +8,4 @@ data class FileStreamResumeWithDestination(
     override val data: InputStream,
     override val fileSize: Long,
     override val destinationDir: String, override val fileNameWithoutExtension: String
-) : IFileStreamResumeWithDestination {
-
-
-}
+) : IFileStreamResumeWithDestination

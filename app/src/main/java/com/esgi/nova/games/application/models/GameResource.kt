@@ -7,5 +7,4 @@ data class GameResource(
     override val resourceId: UUID,
     override val gameId: UUID,
     override val total: Int
-) : IGameResource {
-}
+) : IGameResource

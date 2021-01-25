@@ -12,9 +12,7 @@ import com.esgi.nova.events.ports.IDetailedChoice
 import com.esgi.nova.files.infrastructure.ports.IFileWrapper
 import com.esgi.nova.games.ui.game.adapters.GameResourcesChangesAdapter
 import com.esgi.nova.utils.findSuitableParent
-import com.esgi.nova.utils.recyclerViewOrientation
 import com.google.android.material.snackbar.BaseTransientBottomBar
-import kotlinx.android.synthetic.main.view_resources_changes_snackbar.view.*
 
 class ResourcesChangeSnackBar(
     parent: ViewGroup,
@@ -50,7 +48,7 @@ class ResourcesChangeSnackBar(
                     parent,
                     false
                 ) as ResourcesChangesSnackBarView
-                customView.resources_rv?.apply {
+                customView.resourcesRv.apply {
                     layoutManager = LinearLayoutManager(
                         context,
                         RecyclerView.HORIZONTAL,

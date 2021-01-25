@@ -41,6 +41,4 @@ data class ChoiceResourceEntity(
     override var choiceId: UUID = UUID.randomUUID(),
     @ColumnInfo(name = "change_value")
     override var changeValue: Int
-): IChoiceResource {
-
-}
+): IChoiceResource

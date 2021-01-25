@@ -16,14 +16,12 @@ class TextInputDropdownMenu : AppCompatAutoCompleteTextView {
         return false
     }
 
-    constructor(context: Context) : super(context) {
-    }
+    constructor(context: Context) : super(context)
 
     constructor(
         context: Context,
         attrs: AttributeSet
-    ) : super(context, attrs) {
-    }
+    ) : super(context, attrs)
 
     constructor(
         context: Context,
@@ -60,7 +58,7 @@ class TextInputDropdownMenu : AppCompatAutoCompleteTextView {
     private class CustomSavedState : BaseSavedState {
         var text: String? = null
 
-        constructor(superState: Parcelable?) : super(superState) {}
+        constructor(superState: Parcelable?) : super(superState)
         constructor(source: Parcel) : super(source) {
             text = source.readString()
         }

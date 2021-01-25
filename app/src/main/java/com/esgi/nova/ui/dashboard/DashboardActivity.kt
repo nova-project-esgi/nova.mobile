@@ -16,8 +16,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.esgi.nova.games.ui.leaderboard.LeaderBoardActivity
 import com.esgi.nova.R
+import com.esgi.nova.databinding.ActivityDashboardBinding
 import com.esgi.nova.difficulties.application.GetAllDetailedDifficultiesSortedByRank
 import com.esgi.nova.difficulties.ports.IDetailedDifficulty
 import com.esgi.nova.dtos.difficulty.DetailedDifficultyDto
@@ -25,6 +25,7 @@ import com.esgi.nova.games.application.CreateGame
 import com.esgi.nova.games.infrastructure.data.game.models.CanLaunchGame
 import com.esgi.nova.games.infrastructure.data.game.models.CanResumeGame
 import com.esgi.nova.games.ui.game.GameActivity
+import com.esgi.nova.games.ui.leaderboard.LeaderBoardActivity
 import com.esgi.nova.parameters.ui.ParametersActivity
 import com.esgi.nova.resources.application.GetImageStartValueResourceWrappersByDifficultyId
 import com.esgi.nova.sound.services.BackgroundSoundService
@@ -33,8 +34,6 @@ import com.esgi.nova.ui.dashboard.view_models.DashboardViewModel
 import com.esgi.nova.users.ui.LoginActivity
 import com.esgi.nova.utils.reflectMapCollection
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_dashboard.*
-import kotlinx.android.synthetic.main.view_loading.*
 import org.jetbrains.anko.doAsync
 import javax.inject.Inject
 
@@ -59,6 +58,7 @@ class DashboardActivity : AppCompatActivity(), View.OnClickListener, AdapterView
 
     val dashBoardViewModel by viewModels<DashboardViewModel>()
 
+    private lateinit var binding: ActivityDashboardBinding
 
 
     companion object {
@@ -74,9 +74,10 @@ class DashboardActivity : AppCompatActivity(), View.OnClickListener, AdapterView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_dashboard)
-        init_new_game_btn.setOnClickListener(this)
-        resume_game_btn.setOnClickListener(this)
+        binding = ActivityDashboardBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        binding.initNewGameBtn.setOnClickListener(this)
+        binding.resumeGameBtn.setOnClickListener(this)
         supportActionBar?.setDisplayShowTitleEnabled(false)
         BackgroundSoundService.start(this)
 
@@ -90,8 +91,8 @@ class DashboardActivity : AppCompatActivity(), View.OnClickListener, AdapterView
             val canLaunch = canLaunchGame.execute()
             val canResume = canResumeGame.execute()
             runOnUiThread {
-                init_new_game_btn.isEnabled = canLaunch
-                resume_game_btn.isEnabled = canResume
+                binding.initNewGameBtn.isEnabled = canLaunch
+                binding.resumeGameBtn.isEnabled = canResume
             }
         }
     }
@@ -122,7 +123,7 @@ class DashboardActivity : AppCompatActivity(), View.OnClickListener, AdapterView
     private fun generateDifficulties() {
 
         if (!dashBoardViewModel.initialized) {
-            loader?.visibility = VISIBLE
+            binding.root.loaderFl.visibility = VISIBLE
             doAsync {
                 if (!dashBoardViewModel.initialized) {
                     dashBoardViewModel.difficulties = getAllDetailedDifficultiesSortedByRank
@@ -135,7 +136,7 @@ class DashboardActivity : AppCompatActivity(), View.OnClickListener, AdapterView
                 }
                 runOnUiThread {
                     setDifficultyAutoComplete()
-                    loader?.visibility = GONE
+                    binding.root.loaderFl.visibility = GONE
                 }
             }
         } else {
@@ -150,27 +151,27 @@ class DashboardActivity : AppCompatActivity(), View.OnClickListener, AdapterView
             R.layout.list_item,
             dashBoardViewModel.difficulties
         )
-        difficulty_tv?.setAdapter(arrayAdapter)
+        binding.difficultyTv.setAdapter(arrayAdapter)
         if (dashBoardViewModel.selectedDifficulty != null) {
-            difficulty_tv?.setText(dashBoardViewModel.selectedDifficulty.toString(), false)
-            difficulty_tv?.isEnabled = true
+            binding.difficultyTv.setText(dashBoardViewModel.selectedDifficulty.toString(), false)
+            binding.difficultyTv.isEnabled = true
         } else {
-            difficulty_tv?.isEnabled = false
+            binding.difficultyTv.isEnabled = false
         }
-        difficulty_tv?.onItemClickListener = this
+        binding.difficultyTv.onItemClickListener = this
     }
 
 
     override fun onClick(view: View?) {
         when (view) {
-            init_new_game_btn -> dashBoardViewModel.selectedDifficulty?.let { selectedDifficulty ->
+            binding.initNewGameBtn -> dashBoardViewModel.selectedDifficulty?.let { selectedDifficulty ->
                 GameActivity.newGame(
                     this@DashboardActivity,
                     selectedDifficulty.id
                 )
             }
 
-            resume_game_btn -> GameActivity.start(this@DashboardActivity)
+            binding.resumeGameBtn -> GameActivity.start(this@DashboardActivity)
         }
 
     }
@@ -190,7 +191,7 @@ class DashboardActivity : AppCompatActivity(), View.OnClickListener, AdapterView
                 runOnUiThread {
                     dashBoardViewModel.wrapperResources.clear()
                     dashBoardViewModel.wrapperResources.addAll(resources)
-                    resources_rv?.adapter?.notifyDataSetChanged()
+                    binding.resourcesRv.adapter?.notifyDataSetChanged()
                 }
             }
 
@@ -198,7 +199,7 @@ class DashboardActivity : AppCompatActivity(), View.OnClickListener, AdapterView
     }
 
     private fun initResourcesRecyclerView() {
-        resources_rv?.apply {
+        binding.resourcesRv.apply {
             layoutManager =
                 if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
                     LinearLayoutManager(
