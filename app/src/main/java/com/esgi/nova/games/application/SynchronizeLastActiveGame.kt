@@ -60,7 +60,7 @@ class SynchronizeLastActiveGame @Inject constructor(
         }
     }
 
-    private fun updateExistingGame(
+    private suspend fun updateExistingGame(
         gameState: IGameState,
         gameResources: List<GameResource>,
         gameEvents: List<GameEvent>

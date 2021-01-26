@@ -10,7 +10,7 @@ class GetParameters @Inject constructor(
     private val parametersStorageRepository: ParametersStorageRepository
 ) {
 
-    fun execute(): ILanguageParameters {
+    suspend fun execute(): ILanguageParameters {
         return parametersStorageRepository
             .get()
             .toLanguageParameters(languageDbRepository.getSelectedLanguage())

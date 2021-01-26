@@ -6,6 +6,6 @@ import javax.inject.Inject
 
 class GetAllLanguages @Inject constructor(private val languageDbRepository: LanguageDbRepository) {
 
-    fun execute(): List<IAppLanguage> = languageDbRepository.getAll()
+    suspend fun execute(): List<IAppLanguage> = languageDbRepository.getAll()
 }
 

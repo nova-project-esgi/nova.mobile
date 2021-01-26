@@ -7,5 +7,5 @@ class GetAllDetailedDifficultiesSortedByRank @Inject constructor(
     private val difficultiesResourceDbRepository: DifficultyResourceDbRepository
 ) {
 
-    fun execute()  = difficultiesResourceDbRepository.getAllDetailedDifficulties().sortedBy { it.rank }
+    suspend fun execute()  = difficultiesResourceDbRepository.getAllDetailedDifficulties().sortedBy { it.rank }
 }

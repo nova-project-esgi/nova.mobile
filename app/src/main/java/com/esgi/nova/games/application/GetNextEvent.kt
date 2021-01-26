@@ -29,7 +29,7 @@ class GetNextEvent @Inject constructor(
         const val LastEventLimit = 3
     }
 
-    fun execute(gameId: UUID): IFileWrapper<IDetailedEvent>? {
+    suspend fun execute(gameId: UUID): IFileWrapper<IDetailedEvent>? {
 
         if(parametersStorageRepository.get().hasDailyEvents){
             getDailyEvent.execute(gameId)?.let { event ->

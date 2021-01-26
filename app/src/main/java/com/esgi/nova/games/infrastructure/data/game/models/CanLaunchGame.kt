@@ -8,7 +8,7 @@ class CanLaunchGame @Inject constructor(
     private val eventDbRepository: EventDbRepository
 ) {
 
-    fun execute(): Boolean = eventDbRepository.getCount() > 0
+    suspend fun execute(): Boolean = eventDbRepository.getCount() > 0
 }
 
 

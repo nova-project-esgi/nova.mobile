@@ -13,7 +13,7 @@ class GetAllImageDetailedEventWrappers @Inject constructor(
     private val getFileBitmapById: GetFileBitmapById
 ) {
 
-    fun execute(): List<IFileWrapper<IDetailedEvent>> {
+    suspend fun execute(): List<IFileWrapper<IDetailedEvent>> {
         return eventDbRepository
             .getAllDetailedEvent()
             .mapNotNull { event ->

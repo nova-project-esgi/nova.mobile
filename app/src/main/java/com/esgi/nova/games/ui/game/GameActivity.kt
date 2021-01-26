@@ -140,7 +140,7 @@ class GameActivity : AppCompatActivity(), OnChoiceConfirmedListener {
 
     }
 
-    private fun loadGame() {
+    private suspend fun loadGame() {
         val difficultyId = intent.getUUIDExtra(DifficultyIdKey)
         if (difficultyId != null) {
             createGame(difficultyId)
@@ -150,7 +150,7 @@ class GameActivity : AppCompatActivity(), OnChoiceConfirmedListener {
         }
     }
 
-    private fun reloadGame() {
+    private suspend fun reloadGame() {
         getCurrentGame.execute()?.let { game ->
             gameViewModel.copyGame(game)
             getCurrentEvent.execute(game.id)?.let { event ->
@@ -165,7 +165,7 @@ class GameActivity : AppCompatActivity(), OnChoiceConfirmedListener {
         startDashboard()
     }
 
-    private fun createGame(difficultyId: UUID) {
+    private suspend fun createGame(difficultyId: UUID) {
         createGame.execute(difficultyId)?.let { game ->
             gameViewModel.copyGame(game)
             getNextEvent.execute(game.id)?.let { event ->
@@ -175,7 +175,7 @@ class GameActivity : AppCompatActivity(), OnChoiceConfirmedListener {
         intent.clear()
     }
 
-    private fun nextRound() {
+    private suspend fun nextRound() {
         getCurrentGame.execute()?.let { game ->
             gameViewModel.copyGame(game)
             getNextEvent.execute(game.id)?.let { event ->
@@ -217,7 +217,7 @@ class GameActivity : AppCompatActivity(), OnChoiceConfirmedListener {
         super.onStop()
         stopTimer()
         doAsync {
-            updateGame.execute(gameViewModel)
+            updateGame.execute(game = gameViewModel)
         }
     }
 

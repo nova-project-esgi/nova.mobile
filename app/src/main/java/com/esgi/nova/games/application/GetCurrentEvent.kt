@@ -15,7 +15,7 @@ class GetCurrentEvent @Inject constructor(
     private val getFileBitmapById: GetFileBitmapById
 ) {
 
-    fun execute(gameId: UUID): FileWrapperDto<IDetailedEvent>? =
+    suspend fun execute(gameId: UUID): FileWrapperDto<IDetailedEvent>? =
         gameEventDbRepository.getLastGameEventByGame(gameId)?.let { gameEvent ->
             eventDbRepository.getDetailedEventById(gameEvent.eventId)?.let { event ->
                 getFileBitmapById.execute(FsConstants.Paths.Events, event.id)?.let { file ->

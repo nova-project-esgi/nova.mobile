@@ -12,7 +12,7 @@ class GetLastEndedGame @Inject constructor(
     private val userStorageRepository: UserStorageRepository
 ) {
 
-    fun execute(): IRecappedGameWithResourceIcons? =
+    suspend fun execute(): IRecappedGameWithResourceIcons? =
         userStorageRepository.getUserId()?.let { userId ->
             gameDbRepository.getLastEndedGameId(userId)?.let { id ->
                 gameDbRepository.getRecappedGameById(id)?.let { recappedGame ->

@@ -14,7 +14,7 @@ class SaveParameters @Inject constructor(
     private var switchSound: SwitchSound
 ) {
 
-    fun execute(params: ILanguageParameters): ILanguageParameters {
+    suspend fun execute(params: ILanguageParameters): ILanguageParameters {
         parametersStorageRepository.save(params)
         switchTheme.execute(params.isDarkMode)
         switchSound.execute(params.hasSound)

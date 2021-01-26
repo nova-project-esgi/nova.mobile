@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 class SelectLanguage @Inject constructor(private val languageDbRepository: LanguageDbRepository) {
 
-    fun execute(languageId: UUID): IAppLanguage?{
+    suspend fun execute(languageId: UUID): IAppLanguage?{
         languageDbRepository.getById(languageId)?.let { language ->
             val selectedLanguage =
                 AppLanguage(

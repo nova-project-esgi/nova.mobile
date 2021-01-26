@@ -9,7 +9,7 @@ class GetRecappedGame @Inject constructor(
     private val gameDbRepository: GameDbRepository
 ){
 
-    fun execute(id: UUID): IRecappedGame? = gameDbRepository.getRecappedGameById(id)
+    suspend fun execute(id: UUID): IRecappedGame? = gameDbRepository.getRecappedGameById(id)
 }
 
 

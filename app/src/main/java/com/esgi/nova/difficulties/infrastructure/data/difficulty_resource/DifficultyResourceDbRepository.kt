@@ -14,13 +14,13 @@ class DifficultyResourceDbRepository @Inject constructor(override val dao: Diffi
     BaseRepository<UUID, DifficultyResourceEntity, IDifficultyResource>() {
 
 
-    fun getAllDetailedDifficulties(): List<IDetailedDifficulty> =
+    suspend fun getAllDetailedDifficulties(): List<IDetailedDifficulty> =
         dao.getAllDifficultyWithResource().toDetailedDifficulties()
 
-    fun getDetailedDifficultyById(id: UUID): IDetailedDifficulty? =
+    suspend fun getDetailedDifficultyById(id: UUID): IDetailedDifficulty? =
         dao.getAllDifficultyWithResourceById(id).toDetailedDifficulty()
 
-    fun getDifficultyResourcesByDifficultyId(id: UUID): List<IDetailedDifficulty.IStartValueResource> =
+    suspend fun getDifficultyResourcesByDifficultyId(id: UUID): List<IDetailedDifficulty.IStartValueResource> =
         dao.getAllDifficultyWithResourceById(id).toDetailedDifficulty()?.resources ?: listOf()
 
     override fun toEntity(el: IDifficultyResource): DifficultyResourceEntity =

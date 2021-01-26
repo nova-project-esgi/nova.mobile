@@ -12,7 +12,7 @@ class GetCurrentGame @Inject constructor(
     private val userStorageRepository: UserStorageRepository
 ) {
 
-    fun execute(): IRecappedGameWithResourceIcons? =
+    suspend fun execute(): IRecappedGameWithResourceIcons? =
         userStorageRepository.getUserId()?.let { userId ->
             gameDbRepository.getActiveGameId(userId)?.let { id ->
                 gameDbRepository.getRecappedGameById(id)?.let { resumedGame ->

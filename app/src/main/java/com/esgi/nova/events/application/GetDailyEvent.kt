@@ -25,27 +25,25 @@ class GetDailyEvent @Inject constructor(
 
     suspend fun execute(
         gameId: UUID,
-        language: String = languageDbRepository.getSelectedLanguage()?.tag ?: ""
+        language: String? = null
     ): DetailedEvent? {
-
+        val lang = language ?: languageDbRepository.getSelectedLanguage()?.tag ?: ""
         if (gameDbRepository.hasDailyEventByDate(gameId, LocalDate.now())) {
             return null
         }
 
-        eventApiRepository.getDailyEvent(language, gameId)?.let { eventWrapper ->
-            eventDbRepository.insertOne(eventWrapper.data)
-            choiceDbRepository.insertAll(eventWrapper.data.choices)
-            eventWrapper.data.choices.forEach { choice ->
-                choiceResourceDbRepository.insertAll(choice.resources)
-            }
-            synchronizeFile.execute(
-                eventWrapper.link.href,
-                FsConstants.Paths.Events,
-                eventWrapper.data.id.toString()
-            )
-            return eventDbRepository.getDetailedEventById(eventWrapper.data.id)
+        val eventWrapper = eventApiRepository.getDailyEvent(lang, gameId)
+        eventDbRepository.insertOne(eventWrapper.data)
+        choiceDbRepository.insertAll(eventWrapper.data.choices)
+        eventWrapper.data.choices.forEach { choice ->
+            choiceResourceDbRepository.insertAll(choice.resources)
         }
-        return null
+        synchronizeFile.execute(
+            eventWrapper.link.href,
+            FsConstants.Paths.Events,
+            eventWrapper.data.id.toString()
+        )
+        return eventDbRepository.getDetailedEventById(eventWrapper.data.id)
     }
 }
 

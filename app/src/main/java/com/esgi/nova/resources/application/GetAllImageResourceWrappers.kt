@@ -12,7 +12,7 @@ class GetAllImageResourceWrappers @Inject constructor(
     private val getFileBitmapById: GetFileBitmapById
 ) {
 
-    fun execute():List<IFileWrapper<IResource>>{
+    suspend fun execute(): List<IFileWrapper<IResource>> {
         return resourceDbRepository
             .getAll()
             .mapNotNull { resource ->

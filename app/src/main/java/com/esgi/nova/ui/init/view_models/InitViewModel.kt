@@ -1,23 +1,76 @@
 package com.esgi.nova.ui.init.view_models
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.hilt.Assisted
+import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.*
+import com.esgi.nova.application_state.application.IsSynchronized
+import com.esgi.nova.application_state.application.SetSynchronizeState
+import com.esgi.nova.difficulties.application.SynchronizeDifficulties
+import com.esgi.nova.events.application.DeleteOrphansDailyEvents
+import com.esgi.nova.events.application.SynchronizeEvents
+import com.esgi.nova.games.application.SynchronizeLastActiveGame
+import com.esgi.nova.languages.application.SynchronizeLanguages
+import com.esgi.nova.ports.Synchronize
+import com.esgi.nova.resources.application.SynchronizeResources
 import com.esgi.nova.ui.IAppViewModel
+import kotlinx.coroutines.launch
 
-class InitViewModel : ViewModel(), IAppViewModel {
+class InitViewModel @ViewModelInject constructor(
+    synchronizeEvents: SynchronizeEvents,
+    synchronizeDifficulties: SynchronizeDifficulties,
+    synchronizeLanguages: SynchronizeLanguages,
+    synchronizeResources: SynchronizeResources,
+    synchronizeLastActiveGame: SynchronizeLastActiveGame,
+    deleteOrphansDailyEvents: DeleteOrphansDailyEvents,
+    private val isSynchronized: IsSynchronized,
+    private val setSynchronizeState: SetSynchronizeState,
+    @Assisted private val savedStateHandle: SavedStateHandle
+) : ViewModel(), IAppViewModel {
+
     override var initialized: Boolean = false
 
     override val unexpectedError: LiveData<Boolean>
         get() = _unexpectedError
 
-    private var _unexpectedError =  MutableLiveData<Boolean>()
-    var currentStep: Int
-        get() = _currentStep
-        set(value) {
-            _currentStep = if (value < stepLimit) value else _currentStep
+    private var _unexpectedError = MutableLiveData<Boolean>()
+
+    val currentInitStep: LiveData<Int>
+        get() = _currentInitStep
+
+    private var _currentInitStep = MutableLiveData<Int>()
+
+    val navigateToDashboard: LiveData<Boolean>
+        get() = _navigateToDashboard
+    private var _navigateToDashboard = MutableLiveData<Boolean>()
+
+    private val stepsList: List<Synchronize> = listOf(
+        synchronizeLanguages,
+        synchronizeResources,
+        synchronizeDifficulties,
+        synchronizeEvents,
+        synchronizeLastActiveGame,
+        deleteOrphansDailyEvents
+    )
+
+    fun loadContent() {
+        if (initialized) return
+
+        viewModelScope.launch {
+            stepsList.forEach { sync ->
+                sync.execute()
+                _currentInitStep.value = _currentInitStep.value?.plus(1)
+            }
+            _currentInitStep.value = _currentInitStep.value?.plus(1)
+            setSynchronizeState.execute(true)
+            _navigateToDashboard.value = true
         }
-    var stepLimit = 0
-    private var _currentStep = 0
+        initialized = true
+//
+//        runOnUiThread { setLoadingText(viewModel.currentStep) }
+//
+//        DashboardActivity.start(this@InitSetupActivity)
+//        finish()
+    }
+
 
 }

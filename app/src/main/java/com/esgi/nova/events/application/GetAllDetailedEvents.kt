@@ -8,6 +8,6 @@ class GetAllDetailedEvents @Inject constructor(
     private val eventDbRepository: EventDbRepository
 ) {
 
-    fun execute(): List<IDetailedEvent>  = eventDbRepository.getAllDetailedEvent()
+    suspend fun execute(): List<IDetailedEvent>  = eventDbRepository.getAllDetailedEvent()
 }
 

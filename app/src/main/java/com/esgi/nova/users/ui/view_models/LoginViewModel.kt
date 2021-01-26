@@ -124,7 +124,6 @@ class LoginViewModel @ViewModelInject constructor(
                 _invalidPassword.value = true
             }
         }
-
     }
 
     private fun login(userLoginDto: UserLoginDto) {

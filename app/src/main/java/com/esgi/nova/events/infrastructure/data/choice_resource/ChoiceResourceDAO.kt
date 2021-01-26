@@ -5,38 +5,38 @@ import com.esgi.nova.infrastructure.data.dao.BaseDao
 import java.util.*
 
 @Dao
-abstract class ChoiceResourceDAO : BaseDao<UUID, ChoiceResourceEntity>() {
+abstract class ChoiceResourceDAO : BaseDao<UUID, ChoiceResourceEntity> {
 
     @Query("SELECT * FROM choice_resource")
-    abstract override fun getAll(): List<ChoiceResourceEntity>
+    abstract override suspend fun getAll(): List<ChoiceResourceEntity>
 
     @Query("DELETE FROM choice_resource")
-    abstract override fun deleteAll()
+    abstract override suspend fun deleteAll()
 
     @Query("SELECT * FROM choice_resource WHERE choice_id = :id")
-    abstract override fun getById(id: UUID): List<ChoiceResourceEntity>
+    abstract override suspend fun getById(id: UUID): List<ChoiceResourceEntity>
 
     @Query("SELECT * FROM choice_resource WHERE choice_id IN (:ids)")
-    abstract override fun loadAllByIds(ids: List<UUID>): List<ChoiceResourceEntity>
+    abstract override suspend fun loadAllByIds(ids: List<UUID>): List<ChoiceResourceEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract override fun insertAll(vararg entities: ChoiceResourceEntity)
+    abstract override suspend fun insertAll(vararg entities: ChoiceResourceEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract override fun insertAll(entities: Collection<ChoiceResourceEntity>): Unit
+    abstract override suspend fun insertAll(entities: Collection<ChoiceResourceEntity>): Unit
 
     @Delete
-    abstract override fun delete(entity: ChoiceResourceEntity)
+    abstract override suspend fun delete(entity: ChoiceResourceEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract override fun insertOne(entity: ChoiceResourceEntity): Unit
+    abstract override suspend fun insertOne(entity: ChoiceResourceEntity): Unit
 
 
     @Query("SELECT * FROM choice_resource")
     @Transaction
-    abstract fun getAllChoiceWithResource(): List<ChoiceWithResource>
+    abstract suspend fun getAllChoiceWithResource(): List<ChoiceWithResource>
 
     @Query("SELECT * FROM choice_resource WHERE choice_id = :id")
     @Transaction
-    abstract fun getAllChoiceWithResourceByChoiceId(id: UUID): List<ChoiceWithResource>
+    abstract suspend fun getAllChoiceWithResourceByChoiceId(id: UUID): List<ChoiceWithResource>
 }

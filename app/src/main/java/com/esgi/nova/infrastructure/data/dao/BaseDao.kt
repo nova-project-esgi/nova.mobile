@@ -1,32 +1,34 @@
 package com.esgi.nova.infrastructure.data.dao
 
-import androidx.room.*
+import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Update
 
 
-@Dao
-abstract class BaseDao<Id,  Entity> {
+interface BaseDao<Id, Entity> {
 
 
-    abstract fun getAll(): List< @JvmSuppressWildcards Entity>
+    suspend fun getAll(): List<@JvmSuppressWildcards Entity>
 
-    abstract fun getById(id: Id): List<Entity>
+    suspend fun getById(id: Id): List<@JvmSuppressWildcards Entity>
 
-    abstract fun deleteAll()
+    suspend fun deleteAll()
 
-    abstract fun loadAllByIds(ids: List<@JvmSuppressWildcards  Id>): List< @JvmSuppressWildcards Entity>
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract fun insertAll(vararg entities: Entity)
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract fun insertOne(entity: Entity): Unit
+    suspend fun loadAllByIds(ids: List<@JvmSuppressWildcards Id>): List<@JvmSuppressWildcards Entity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract fun insertAll(entities: Collection<@JvmSuppressWildcards Entity>): Unit
+    suspend fun insertAll(vararg entities: Entity)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertOne(entity: Entity): Unit
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAll(entities: Collection<@JvmSuppressWildcards Entity>): Unit
 
     @Update
-    abstract fun update(obj: Entity)
+    suspend fun update(obj: Entity)
 
     @Delete
-    abstract fun delete(entity: Entity)
+    suspend fun delete(entity: Entity)
 }

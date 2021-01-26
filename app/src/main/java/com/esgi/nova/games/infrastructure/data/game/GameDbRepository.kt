@@ -33,7 +33,7 @@ class GameDbRepository @Inject constructor(
 
     override fun toEntities(entities: Collection<IGame>): Collection<GameEntity> = entities.map { toEntity(it) }
 
-    fun getGameEditionById(id: UUID): IGameEdition? {
+    suspend fun getGameEditionById(id: UUID): IGameEdition? {
         val game = getById(id)
         game?.let {
             return GameEdition(
@@ -46,7 +46,7 @@ class GameDbRepository @Inject constructor(
         return null
     }
 
-    fun getRecappedGameById(id: UUID): IRecappedGame? {
+    suspend fun getRecappedGameById(id: UUID): IRecappedGame? {
         getById(id)?.let {game ->
             return RecappedGame(
                 id = game.id,
@@ -62,7 +62,7 @@ class GameDbRepository @Inject constructor(
         return null
     }
 
-    fun hasDailyEventByDate(gameId: UUID, date: LocalDate): Boolean {
+    suspend fun hasDailyEventByDate(gameId: UUID, date: LocalDate): Boolean {
         return gameEventDao.getAllGameWithEventById(gameId)
             .any { gameWithEvent -> gameWithEvent.gameEvent.linkTime.toLocalDate() == date }
     }
@@ -78,7 +78,7 @@ class GameDbRepository @Inject constructor(
         return dao.getByIsEndedAndUserId(false, userId).map { it.id }
     }
 
-    fun setActiveGamesEnded(userId: UUID): List<UUID> {
+    suspend fun setActiveGamesEnded(userId: UUID): List<UUID> {
         return dao.getByIsEndedAndUserId(false, userId).map { game ->
             game.isEnded = true
             dao.update(game)

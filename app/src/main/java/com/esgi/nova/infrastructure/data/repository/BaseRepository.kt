@@ -2,8 +2,6 @@ package com.esgi.nova.infrastructure.data.repository
 
 import com.esgi.nova.infrastructure.data.IIdEntity
 import com.esgi.nova.infrastructure.data.dao.BaseDao
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.doAsyncResult
 
 abstract class BaseRepository<Id, Entity, Element> where Entity : Element, Element : IIdEntity<Id> {
 
@@ -11,34 +9,34 @@ abstract class BaseRepository<Id, Entity, Element> where Entity : Element, Eleme
     protected abstract fun toEntity(el: Element): Entity
     protected abstract fun toEntities(entities: Collection<Element>): Collection<Entity>
 
-    fun getAll(): List<@JvmSuppressWildcards Element> = dao.getAll()
-    fun getById(id: Id): Element? = dao.getById(id).firstOrNull()
-    fun getAllById(id: Id): List<Element> = dao.getById(id)
-    fun exists(id: Id): Boolean = getById(id) != null
+    suspend fun getAll(): List<@JvmSuppressWildcards Element> = dao.getAll()
+    suspend fun getById(id: Id): Element? = dao.getById(id).firstOrNull()
+    suspend fun getAllById(id: Id): List<Element> = dao.getById(id)
+    suspend fun exists(id: Id): Boolean = getById(id) != null
 
-    fun deleteAll() = dao.deleteAll()
-    fun loadAllByIds(ids: List<Id>) = dao.loadAllByIds(ids)
-    fun insertAll(entities: Collection<Element>) = dao.insertAll(toEntities(entities))
-    fun insertOne(element: Element): Id{
+    suspend fun deleteAll() = dao.deleteAll()
+    suspend fun loadAllByIds(ids: List<Id>) = dao.loadAllByIds(ids)
+    suspend fun insertAll(entities: Collection<Element>) = dao.insertAll(toEntities(entities))
+    suspend fun insertOne(element: Element): Id {
         val entity = toEntity(element)
         dao.insertOne(entity)
         return entity.id
     }
 
-    fun update(entity: Element) = dao.update(toEntity(entity))
-    fun delete(entity: Element) = dao.delete(toEntity(entity))
-    fun replace(id: Id, element: Element): Id {
+    suspend fun update(entity: Element) = dao.update(toEntity(entity))
+    suspend fun delete(entity: Element) = dao.delete(toEntity(entity))
+    suspend fun replace(id: Id, element: Element): Id {
         dao.getById(id).forEach { entity ->
             delete(entity)
         }
         return insertOne(element)
     }
 
-    fun upsertCollection(
+    suspend fun upsertCollection(
         elements: Collection<Element>,
         entities: Collection<Element>,
         test: (el: Element, entity: Element) -> Boolean
-    ){
+    ) {
         elements.forEach { element ->
             if (entities.any { entity -> test.invoke(element, entity) }) {
                 update(element)
@@ -48,17 +46,20 @@ abstract class BaseRepository<Id, Entity, Element> where Entity : Element, Eleme
         }
     }
 
-    fun upsertCollection(elements: Collection<Element>) {
+    suspend fun upsertCollection(elements: Collection<Element>) {
         val entities = dao.getAll()
         upsertCollection(elements, entities) { entity, element -> entity.id == element.id }
     }
 
-    fun upsertCollection(elements: Collection<Element>, test: (el: Element, entity: Element) -> Boolean) {
+    suspend fun upsertCollection(
+        elements: Collection<Element>,
+        test: (el: Element, entity: Element) -> Boolean
+    ) {
         val entities = dao.getAll()
         upsertCollection(elements, entities, test)
     }
 
-    fun synchronizeCollection(
+    suspend fun synchronizeCollection(
         elements: Collection<Element>,
         entities: Collection<Element>,
         test: (el: Element, entity: Element) -> Boolean
@@ -77,19 +78,16 @@ abstract class BaseRepository<Id, Entity, Element> where Entity : Element, Eleme
         }
     }
 
-    fun synchronizeCollection(elements: Collection<Element>) {
+    suspend fun synchronizeCollection(elements: Collection<Element>) {
         val entities = dao.getAll()
         synchronizeCollection(elements, entities) { entity, element -> entity.id == element.id }
     }
 
-    fun synchronizeCollection(elements: Collection<Element>, test: (el: Element, entity: Element) -> Boolean) {
+    suspend fun synchronizeCollection(
+        elements: Collection<Element>,
+        test: (el: Element, entity: Element) -> Boolean
+    ) {
         val entities = dao.getAll()
         synchronizeCollection(elements, entities, test)
     }
-
-    fun getAllAsync() = doAsyncResult { dao.getAll() }
-    fun deleteAllAsync() = doAsync { dao.deleteAll() }
-    fun loadAllByIdsAsync(ids: List<Id>) = doAsyncResult { dao.loadAllByIds(ids) }
-    fun insertAllAsync(entities: Collection<Element>) = doAsync { insertAll(entities) }
-    fun deleteAsync(entity: Element) = doAsync { delete(entity) }
 }

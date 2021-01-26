@@ -5,31 +5,31 @@ import com.esgi.nova.infrastructure.data.dao.BaseDao
 import java.util.*
 
 @Dao
-abstract class DifficultyDAO : BaseDao<UUID, DifficultyEntity>() {
+abstract class DifficultyDAO : BaseDao<UUID, DifficultyEntity> {
 
     @Query("SELECT * FROM difficulties")
-    abstract override fun getAll(): List<DifficultyEntity>
+    abstract override suspend fun getAll(): List<DifficultyEntity>
 
     @Query("SELECT * FROM difficulties WHERE id = :id")
-    abstract override fun getById(id: UUID): List<DifficultyEntity>
+    abstract override suspend fun getById(id: UUID): List<DifficultyEntity>
 
     @Query("DELETE FROM difficulties")
-    abstract override fun deleteAll()
+    abstract override suspend fun deleteAll()
 
     @Query("SELECT * FROM difficulties WHERE id IN (:ids)")
-    abstract override fun loadAllByIds(ids: List<UUID>): List<DifficultyEntity>
+    abstract override suspend fun loadAllByIds(ids: List<UUID>): List<DifficultyEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract override fun insertAll(vararg entities: DifficultyEntity)
+    abstract override suspend fun insertAll(vararg entities: DifficultyEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract override fun insertAll(entities: Collection<DifficultyEntity>): Unit
+    abstract override suspend fun insertAll(entities: Collection<DifficultyEntity>): Unit
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract override fun insertOne(entity: DifficultyEntity): Unit
+    abstract override suspend fun insertOne(entity: DifficultyEntity): Unit
 
     @Delete
-    abstract override fun delete(entity: DifficultyEntity)
+    abstract override suspend fun delete(entity: DifficultyEntity)
 
 }
 

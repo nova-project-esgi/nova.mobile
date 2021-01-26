@@ -5,28 +5,28 @@ import com.esgi.nova.infrastructure.data.dao.BaseDao
 import java.util.*
 
 @Dao
-abstract class ChoiceDAO : BaseDao<UUID, ChoiceEntity>() {
+abstract class ChoiceDAO : BaseDao<UUID, ChoiceEntity> {
     @Query("SELECT * FROM choices")
-    abstract override fun getAll(): List<ChoiceEntity>
+    abstract override suspend fun getAll(): List<ChoiceEntity>
 
     @Query("SELECT * FROM choices WHERE id = :id")
-    abstract override fun getById(id: UUID): List<ChoiceEntity>
+    abstract override suspend fun getById(id: UUID): List<ChoiceEntity>
 
     @Query("DELETE FROM choices")
-    abstract override fun deleteAll()
+    abstract override suspend fun deleteAll()
 
     @Query("SELECT * FROM choices WHERE id IN (:ids)")
-    abstract override fun loadAllByIds(ids: List<UUID>): List<ChoiceEntity>
+    abstract override suspend fun loadAllByIds(ids: List<UUID>): List<ChoiceEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract override fun insertAll(vararg entities: ChoiceEntity)
+    abstract override suspend fun insertAll(vararg entities: ChoiceEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract override fun insertAll(entities: Collection<ChoiceEntity>): Unit
+    abstract override suspend fun insertAll(entities: Collection<ChoiceEntity>): Unit
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract override fun insertOne(entity: ChoiceEntity): Unit
+    abstract override suspend fun insertOne(entity: ChoiceEntity): Unit
 
     @Delete
-    abstract override fun delete(entity: ChoiceEntity)
+    abstract override suspend fun delete(entity: ChoiceEntity)
 }

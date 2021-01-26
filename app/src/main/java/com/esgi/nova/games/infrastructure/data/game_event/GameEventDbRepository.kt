@@ -17,11 +17,11 @@ class GameEventDbRepository @Inject constructor(override val dao: GameEventDao) 
     override fun toEntities(entities: Collection<IGameEvent>): Collection<GameEventEntity> =
         entities.reflectMapCollection()
 
-    fun getAllEventsByGameOrderByLinkTimeDesc(gameId: UUID): List<IGameEvent> {
+    suspend fun getAllEventsByGameOrderByLinkTimeDesc(gameId: UUID): List<IGameEvent> {
         return getAllById(gameId).sortedByDescending { it.linkTime }
     }
 
-    fun getLastGameEventByGame(gameId: UUID): IGameEvent? {
+    suspend fun getLastGameEventByGame(gameId: UUID): IGameEvent? {
         return getAllEventsByGameOrderByLinkTimeDesc(gameId).firstOrNull()
     }
 

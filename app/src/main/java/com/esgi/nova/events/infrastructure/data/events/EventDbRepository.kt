@@ -19,16 +19,16 @@ class EventDbRepository @Inject constructor(
         entities.reflectMapCollection()
 
 
-    fun getAllEventWithChoices() = dao.getAllEventWithChoices()
+    suspend fun getAllEventWithChoices() = dao.getAllEventWithChoices()
 
-    fun getAllDetailedEvent() = dao.getAllEventWithChoices().map { eventWithChoices ->
+    suspend fun getAllDetailedEvent() = dao.getAllEventWithChoices().map { eventWithChoices ->
         eventWithChoices.event.toDetailedEvent(eventWithChoices.choices
             .flatMap { choice ->
                 choiceResourceDAO.getAllChoiceWithResourceByChoiceId(choice.id)
             })
     }
 
-    fun getDetailedEventById(id: UUID) = dao.getAllEventWithChoicesByEventId(id).firstOrNull()?.let { eventWithChoices ->
+    suspend fun getDetailedEventById(id: UUID) = dao.getAllEventWithChoicesByEventId(id).firstOrNull()?.let { eventWithChoices ->
         eventWithChoices.event.toDetailedEvent(eventWithChoices.choices
             .flatMap { choice ->
                 choiceResourceDAO.getAllChoiceWithResourceByChoiceId(choice.id)
@@ -39,7 +39,7 @@ class EventDbRepository @Inject constructor(
     fun getAllNonDailyEvents(): List<IEvent> = dao.getAllByIsDaily(false)
 
 
-    fun getCount() = dao.getAll().size
+    suspend fun getCount() = dao.getAll().size
 
     fun getAllNonDaily() = dao.getAllByIsDaily(false)
 

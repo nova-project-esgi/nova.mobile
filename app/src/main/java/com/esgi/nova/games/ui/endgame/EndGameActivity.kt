@@ -78,7 +78,7 @@ class EndGameActivity : AppCompatActivity(), View.OnClickListener {
             .firstOrNull { resource -> resource.data.total == 0 }?.data?.name
     }
 
-    private fun loadEndGameData() {
+    private suspend fun loadEndGameData() {
         getLastEndedGame.execute()?.let { game ->
             game.let { endGameViewModel.populate(game) }
         }

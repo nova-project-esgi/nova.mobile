@@ -13,7 +13,7 @@ class ChoiceResourceDbRepository @Inject constructor(override val dao: ChoiceRes
     BaseRepository<UUID, ChoiceResourceEntity, IChoiceResource>() {
 
 
-    fun getAllChoiceWithResource() = dao.getAllChoiceWithResource()
+    suspend fun getAllChoiceWithResource() = dao.getAllChoiceWithResource()
 
     override fun toEntities(entities: Collection<IChoiceResource>): Collection<ChoiceResourceEntity> =
         entities.reflectMapCollection()
@@ -23,10 +23,10 @@ class ChoiceResourceDbRepository @Inject constructor(override val dao: ChoiceRes
     }
 
 
-    fun getAllDetailedChoices(): List<IDetailedChoice> =
+    suspend fun getAllDetailedChoices(): List<IDetailedChoice> =
         dao.getAllChoiceWithResource().toDetailedChoices()
 
-    fun getDetailedChoiceById(choiceId: UUID): IDetailedChoice? =
+    suspend fun getDetailedChoiceById(choiceId: UUID): IDetailedChoice? =
         dao.getAllChoiceWithResourceByChoiceId(choiceId).toDetailedChoices().firstOrNull()
 
 

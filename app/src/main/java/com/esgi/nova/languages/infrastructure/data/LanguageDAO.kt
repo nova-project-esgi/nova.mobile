@@ -5,31 +5,31 @@ import com.esgi.nova.infrastructure.data.dao.BaseDao
 import java.util.*
 
 @Dao
-abstract class LanguageDAO : BaseDao<UUID, LanguageEntity>() {
+abstract class LanguageDAO : BaseDao<UUID, LanguageEntity> {
     @Query("SELECT * FROM languages")
-    abstract override fun getAll(): List<LanguageEntity>
+    abstract override suspend fun getAll(): List<LanguageEntity>
 
     @Query("SELECT * FROM languages WHERE is_selected = 1")
-    abstract fun getSelectedLanguage(): List<LanguageEntity>
+    abstract suspend fun getSelectedLanguage(): List<LanguageEntity>
 
     @Query("SELECT * FROM languages WHERE id = :id")
-    abstract override fun getById(id: UUID): List<LanguageEntity>
+    abstract override suspend fun getById(id: UUID): List<LanguageEntity>
 
     @Query("DELETE FROM languages")
-    abstract override fun deleteAll()
+    abstract override suspend fun deleteAll()
 
     @Query("SELECT * FROM languages WHERE id IN (:ids)")
-    abstract override fun loadAllByIds(ids: List<UUID>): List<LanguageEntity>
+    abstract override suspend fun loadAllByIds(ids: List<UUID>): List<LanguageEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract override fun insertAll(vararg entities: LanguageEntity)
+    abstract override suspend fun insertAll(vararg entities: LanguageEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract override fun insertAll(entities: Collection<LanguageEntity>): Unit
+    abstract override suspend fun insertAll(entities: Collection<LanguageEntity>): Unit
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract override fun insertOne(entity: LanguageEntity): Unit
+    abstract override suspend fun insertOne(entity: LanguageEntity): Unit
 
     @Delete
-    abstract override fun delete(entity: LanguageEntity)
+    abstract override suspend fun delete(entity: LanguageEntity)
 }
