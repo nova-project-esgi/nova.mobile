@@ -1,6 +1,7 @@
 package com.esgi.nova.users.infrastructure.data
 
 import android.content.Context
+import androidx.lifecycle.viewModelScope
 import com.esgi.nova.infrastructure.preferences.PreferenceConstants
 import com.esgi.nova.infrastructure.preferences.getUUID
 import com.esgi.nova.infrastructure.preferences.putUUID
@@ -11,6 +12,7 @@ import com.esgi.nova.users.ports.IConnectedUserPassword
 import com.esgi.nova.users.ports.ILogUser
 import com.esgi.nova.users.ports.IUserRecapped
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
 

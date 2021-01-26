@@ -9,7 +9,7 @@ class UpdateUserToken @Inject constructor(private val userStorageRepository: Use
 
     suspend fun execute(): IConnectedUser?{
         userStorageRepository.getUser()?.let { user ->
-            userApiRepository.logUser(user)?.let{ connectedUser ->
+            userApiRepository.logUser(user).let{ connectedUser ->
                 userStorageRepository.saveUser(connectedUser.toConnectedUserPassword(user.password))
                 return connectedUser
             }

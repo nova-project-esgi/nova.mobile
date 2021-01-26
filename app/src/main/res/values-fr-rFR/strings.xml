@@ -57,4 +57,5 @@
     <string name="resource_fetching_msg">La récupération des données de jeu peu impacter votre consommation réseau, voulez-vous continuer ?</string>
     <string name="network_warning">Avertissement réseau !</string>
     <string name="loading_step_6">Lustrage des pistolets lasers...</string>
+    <string name="unexpected_error_msg">Erreur innatendue</string>
 </resources>

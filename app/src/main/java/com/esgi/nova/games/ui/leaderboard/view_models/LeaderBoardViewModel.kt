@@ -1,14 +1,21 @@
 package com.esgi.nova.games.ui.leaderboard.view_models
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.esgi.nova.dtos.difficulty.DetailedDifficultyDto
 import com.esgi.nova.games.ports.ILeaderBoardGameView
 import com.esgi.nova.infrastructure.api.pagination.PageCursor
 import com.esgi.nova.infrastructure.ports.IPageCursor
-import com.esgi.nova.ui.IViewModelState
+import com.esgi.nova.ui.IAppViewModel
 
-class LeaderBoardViewModel : ViewModel(), IViewModelState {
+class LeaderBoardViewModel : ViewModel(), IAppViewModel {
     override var initialized: Boolean = false
+
+    override val unexpectedError: LiveData<Boolean>
+        get() = _unexpectedError
+
+    private var _unexpectedError =  MutableLiveData<Boolean>()
 
     var difficulties: List<DetailedDifficultyDto> = listOf()
 

@@ -25,7 +25,7 @@ class AuthApiRepository @Inject constructor(@ApplicationContext  context: Contex
 
     suspend fun logUser(
         loginUser: ILogUser
-    ): IConnectedUser? {
+    ): IConnectedUser {
        return authService.logWithUsernameAndPassword(loginUser.reflectMapNotNull())
     }
 

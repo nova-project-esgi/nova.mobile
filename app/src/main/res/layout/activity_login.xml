@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,20 +8,20 @@
     android:background="@drawable/login_bg"
     tools:context=".users.ui.LoginActivity">
 
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/end_input_gl"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.80"
-        />
+        app:layout_constraintGuide_percent="0.80" />
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/start_input_gl"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.20"
-        />
+        app:layout_constraintGuide_percent="0.20" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/inputs_hl_gl"
@@ -35,6 +36,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.75" />
+
     <TextView
         android:id="@+id/title_tv"
         android:layout_width="0dp"
@@ -47,8 +49,7 @@
         android:fontFamily="@font/stracruiser_italic"
         android:text="@string/app_name"
         android:textSize="@dimen/title_size"
-        android:textColor="@color/secondaryLightColor"
-        />
+        android:textColor="@color/secondaryLightColor" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/login_cl"
@@ -57,8 +58,8 @@
         app:layout_constraintTop_toBottomOf="@+id/inputs_hl_gl"
         app:layout_constraintBottom_toTopOf="@+id/password_cl"
         app:layout_constraintStart_toEndOf="@id/start_input_gl"
-        app:layout_constraintEnd_toStartOf="@id/end_input_gl"
-        >
+        app:layout_constraintEnd_toStartOf="@id/end_input_gl">
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/et_login"
             android:layout_width="match_parent"
@@ -92,8 +93,8 @@
         app:layout_constraintBottom_toTopOf="@id/buttons_hl_gl"
         app:layout_constraintTop_toBottomOf="@+id/login_cl"
         app:layout_constraintStart_toEndOf="@id/start_input_gl"
-        app:layout_constraintEnd_toStartOf="@id/end_input_gl"
-        >
+        app:layout_constraintEnd_toStartOf="@id/end_input_gl">
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/et_password"
             android:layout_width="0dp"
@@ -119,6 +120,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
     <TextView
         android:id="@+id/tv_errorString"
         android:layout_width="wrap_content"
@@ -129,8 +131,7 @@
         app:layout_constraintBottom_toTopOf="@id/buttons_hl_gl"
         app:layout_constraintEnd_toStartOf="@+id/end_input_gl"
         app:layout_constraintStart_toStartOf="@+id/start_input_gl"
-        app:layout_constraintTop_toBottomOf="@id/password_cl"/>
-
+        app:layout_constraintTop_toBottomOf="@id/password_cl" />
 
 
     <com.google.android.material.button.MaterialButton
@@ -142,11 +143,9 @@
         app:layout_constraintBottom_toTopOf="@id/btn_register"
         app:layout_constraintEnd_toStartOf="@+id/end_input_gl"
         app:layout_constraintStart_toStartOf="@+id/start_input_gl"
-        app:layout_constraintTop_toBottomOf="@id/buttons_hl_gl"
-        >
+        app:layout_constraintTop_toBottomOf="@id/buttons_hl_gl">
 
     </com.google.android.material.button.MaterialButton>
-
 
 
     <com.google.android.material.button.MaterialButton
@@ -158,8 +157,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/end_input_gl"
         app:layout_constraintStart_toStartOf="@+id/start_input_gl"
-        app:layout_constraintTop_toBottomOf="@id/btn_login"
-        />
+        app:layout_constraintTop_toBottomOf="@id/btn_login" />
 
     <FrameLayout
         android:id="@+id/loader"
