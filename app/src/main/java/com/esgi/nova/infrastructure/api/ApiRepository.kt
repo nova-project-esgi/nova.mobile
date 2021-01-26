@@ -39,16 +39,11 @@ open class ApiRepository @Inject constructor(@ApplicationContext protected val c
             .client(httpClientBuilder.build())
     }
 
-    protected inline fun <reified T : Any> Response<*>.getLocatedContent(): T? {
-        this@getLocatedContent.headers()[HttpConstants.Headers.Location]?.let { location ->
-            return try {
-                val req = this@ApiRepository.genericService.get(location).execute()
-                Gson().fromJson(req.body()?.string(), T::class.java)
-            } catch (e: Exception) {
-                null
-            }
+    protected suspend inline fun <reified T : Any> Response<*>.getLocatedContent(): T? {
+        return this@getLocatedContent.headers()[HttpConstants.Headers.Location]?.let { location ->
+            val res = this@ApiRepository.genericService.get(location)
+            Gson().fromJson(res.body()?.charStream(), T::class.java)
         }
-        return null
     }
 
 }

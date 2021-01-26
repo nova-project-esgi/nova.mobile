@@ -24,27 +24,22 @@ class EventApiRepository @Inject constructor(
         .create(EventService::class.java)
 
 
-    fun getAllTranslatedEvents(language: String): List<LinkWrapper<IResumedEvent>> =
+    suspend fun getAllTranslatedEvents(language: String): List<LinkWrapper<IResumedEvent>> =
         eventService
             .getAllTranslatedEvents(language = language)
-            .execute()
-            .body()
-            ?.map { LinkWrapper(it.toResumedEvent(), it.backgroundUrl) } ?: listOf()
+            .map { LinkWrapper(it.toResumedEvent(), it.backgroundUrl) } ?: listOf()
 
 
-    fun getOneTranslatedEvent(eventId: UUID, language: String): LinkWrapper<IResumedEvent>? =
+    suspend fun getOneTranslatedEvent(eventId: UUID, language: String): LinkWrapper<IResumedEvent> =
         eventService
             .getOneTranslatedEvent(eventId = eventId.toString(), language = language)
-            .execute()
-            .body()
-            ?.let { event -> LinkWrapper(event.toResumedEvent(), event.backgroundUrl) }
+            .let { event -> LinkWrapper(event.toResumedEvent(), event.backgroundUrl) }
 
 
-    fun getDailyEvent(language: String, gameId: UUID): LinkWrapper<IResumedEvent>? =
+    suspend fun getDailyEvent(language: String, gameId: UUID): LinkWrapper<IResumedEvent> =
         eventService
             .getDailyEvent(language = language, gameId = gameId)
-            .execute()
-            .body()?.let {
+            .let {
                 LinkWrapper(it.toResumedEvent(), it.backgroundUrl)
             }
 

@@ -13,5 +13,5 @@ interface DifficultyService {
 
     @Headers("${HttpConstants.Headers.Accept}: ${ApiConstants.CustomMediaType.Application.TranslatedDifficulty}")
     @GET("${ApiConstants.EndPoints.Difficulties}${ApiConstants.EndPoints.Load}")
-    fun getAllTranslatedDifficulties(@Query("language") language: String): Call<List<TranslatedDifficultyResponse>>?
+    suspend fun getAllTranslatedDifficulties(@Query("language") language: String): List<TranslatedDifficultyResponse>
 }

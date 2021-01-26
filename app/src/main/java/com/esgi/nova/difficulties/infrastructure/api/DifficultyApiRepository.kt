@@ -22,12 +22,10 @@ class DifficultyApiRepository @Inject constructor(
         .build()
         .create(DifficultyService::class.java)
 
-    fun getAllTranslatedDifficulties(language: String): List<ResumedDifficulty> {
+    suspend fun getAllTranslatedDifficulties(language: String): List<ResumedDifficulty> {
         return difficultiesService
             .getAllTranslatedDifficulties(language = language)
-            ?.execute()
-            ?.body()
-            ?.map { it -> it.toDifficultyWithResourceResumes() } ?: listOf()
+            .map { it -> it.toDifficultyWithResourceResumes() } ?: listOf()
     }
 }
 

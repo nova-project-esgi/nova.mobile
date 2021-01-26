@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 class GetLeaderBoardGameList @Inject constructor(private val gameApiRepository: GameApiRepository) {
 
-    fun execute(difficultyId: UUID, page: Int, pageSize: Int): PageMetadata<LeaderBoardGameView>? {
+    suspend fun execute(difficultyId: UUID, page: Int, pageSize: Int): PageMetadata<LeaderBoardGameView>? {
         return gameApiRepository.getDefaultGamesList(difficultyId, page, pageSize)
     }
 }

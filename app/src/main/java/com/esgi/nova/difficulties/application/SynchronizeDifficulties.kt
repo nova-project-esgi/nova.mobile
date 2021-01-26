@@ -14,7 +14,7 @@ class SynchronizeDifficulties @Inject constructor(
     private val languageDbRepository: LanguageDbRepository
 ) : Synchronize {
 
-    override fun execute() {
+    override suspend fun execute() {
         val language = languageDbRepository.getSelectedLanguage()?.tag ?: ""
 
         val difficulties = difficultiesApiRepository

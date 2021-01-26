@@ -33,10 +33,10 @@ class SynchronizeLastActiveGame @Inject constructor(
     private val choiceResourceDbRepository: ChoiceResourceDbRepository
 ) : Synchronize {
 
-    override fun execute() {
+    override suspend fun execute() {
         val language: String = languageDbRepository.getSelectedLanguage()?.tag ?: ""
         userStorageRepository.getUserResume()?.let { user ->
-            gameApiRepository.getLastActiveGameForUser(username = user.username)?.let { gameState ->
+            gameApiRepository.getLastActiveGameForUser(username = user.username).let { gameState ->
                 val gameResources =
                     gameState.resources.map { resource -> resource.toGameResource(gameId = gameState.id) }
                 val gameEvents =
@@ -78,7 +78,7 @@ class SynchronizeLastActiveGame @Inject constructor(
         ) { gamEvent, gameEventEntity -> gamEvent.eventId == gameEventEntity.eventId }
     }
 
-    private fun recreateGame(
+    private suspend fun recreateGame(
         user: IUserRecapped,
         gameState: IGameState,
         gameResources: List<GameResource>,
@@ -92,7 +92,7 @@ class SynchronizeLastActiveGame @Inject constructor(
         gameEvents.forEach { gameEvent ->
             if (!eventDbRepository.exists(gameEvent.eventId)) {
                 eventApiRepository.getOneTranslatedEvent(gameEvent.eventId, language)
-                    ?.let { event ->
+                    .let { event ->
                         val choiceResources =
                             event.data.choices.flatMap { choice -> choice.resources }
                         eventDbRepository.insertOne(event.data)

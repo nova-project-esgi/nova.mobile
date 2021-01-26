@@ -7,6 +7,6 @@ import retrofit2.http.GET
 interface LanguageService {
 
     @GET("${ApiConstants.EndPoints.Languages}${ApiConstants.EndPoints.Load}")
-    fun getAll(): Call<List<LanguageResponse>>
+    suspend fun getAll(): List<LanguageResponse>
 }
 

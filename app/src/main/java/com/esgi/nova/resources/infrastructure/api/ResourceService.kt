@@ -10,5 +10,5 @@ interface ResourceService {
 
     @Headers("Accept: ${ApiConstants.CustomMediaType.Application.TranslatedResource}")
     @GET("${ApiConstants.EndPoints.Resources}${ApiConstants.EndPoints.Load}")
-    fun getAll(@Query("language") language: String): Call<List<TranslatedResourceResponse>>
+    suspend fun getAll(@Query("language") language: String): List<TranslatedResourceResponse>
 }

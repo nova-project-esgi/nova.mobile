@@ -11,9 +11,9 @@ interface IPageCursor<T>: MutableSet<T> {
     val nextPage: Int
     val previousPage: Int
     var loadFunc: IGetPage<T>?
-    fun loadNext(): MutableSet<T>
-    fun loadPrevious(): MutableSet<T>
-    fun loadCurrent(): MutableSet<T>
+    suspend fun loadNext(): MutableSet<T>
+    suspend fun loadPrevious(): MutableSet<T>
+    suspend fun loadCurrent(): MutableSet<T>
     fun resetPage()
     fun copy(cursor: IPageCursor<T>)
 }

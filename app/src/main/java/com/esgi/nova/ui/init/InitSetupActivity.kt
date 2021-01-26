@@ -74,9 +74,6 @@ class InitSetupActivity : AppCompatActivity() {
             return context
         }
 
-
-
-
     }
 
     override fun onBackPressed() {

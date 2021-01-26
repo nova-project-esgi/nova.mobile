@@ -1,5 +1,5 @@
 package com.esgi.nova.ports
 
 interface Synchronize {
-    fun execute()
+    suspend fun execute()
 }

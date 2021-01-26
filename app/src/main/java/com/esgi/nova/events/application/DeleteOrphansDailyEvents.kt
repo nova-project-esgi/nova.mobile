@@ -10,7 +10,7 @@ class DeleteOrphansDailyEvents @Inject constructor(
     private val gameEventDbRepository: GameEventDbRepository
 ) : Synchronize {
 
-    override fun execute() {
+    override suspend fun execute() {
         eventDbRepository.getAllDailyEvents().forEach { dailyEvent ->
             if(!gameEventDbRepository.eventHasGame(eventId = dailyEvent.id)){
                 eventDbRepository.delete(dailyEvent)

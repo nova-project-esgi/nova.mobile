@@ -40,20 +40,20 @@ class PageCursor<T>(override var loadFunc: IGetPage<T>? = null, comparator: Comp
         }
     }
 
-    override fun loadNext(): MutableSet<T> {
-        val pageMetadata = loadFunc?.get(nextPage, _pageSize)
+    override suspend fun loadNext(): MutableSet<T> {
+        val pageMetadata = loadFunc?.invoke(nextPage, _pageSize)
         updatePagination(pageMetadata)
         return this
     }
 
-    override fun loadPrevious(): MutableSet<T> {
-        val pageMetadata = loadFunc?.get(previousPage, _pageSize)
+    override suspend fun loadPrevious(): MutableSet<T> {
+        val pageMetadata = loadFunc?.invoke(previousPage, _pageSize)
         updatePagination(pageMetadata)
         return this
     }
 
-    override fun loadCurrent(): MutableSet<T> {
-        val pageMetadata = loadFunc?.get(page, _pageSize)
+    override suspend fun loadCurrent(): MutableSet<T> {
+        val pageMetadata = loadFunc?.invoke(page, _pageSize)
         updatePagination(pageMetadata)
         return this
     }

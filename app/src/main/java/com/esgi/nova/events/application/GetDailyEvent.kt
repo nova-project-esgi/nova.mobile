@@ -23,7 +23,7 @@ class GetDailyEvent @Inject constructor(
     private val gameDbRepository: GameDbRepository
 ) {
 
-    fun execute(
+    suspend fun execute(
         gameId: UUID,
         language: String = languageDbRepository.getSelectedLanguage()?.tag ?: ""
     ): DetailedEvent? {

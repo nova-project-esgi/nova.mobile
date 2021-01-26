@@ -9,7 +9,6 @@ import com.esgi.nova.games.infrastructure.api.exceptions.GameNotFoundException
 import com.esgi.nova.games.infrastructure.data.game.GameDbRepository
 import com.esgi.nova.games.infrastructure.data.game_resource.GameResourceDbRepository
 import com.esgi.nova.users.infrastructure.data.UserStorageRepository
-import org.jetbrains.anko.doAsync
 import java.util.*
 import javax.inject.Inject
 
@@ -22,7 +21,7 @@ class ConfirmChoice @Inject constructor(
     private val userRepository: UserStorageRepository
 ) {
 
-    fun execute(gameId: UUID, choiceId: UUID, duration: Int): Boolean {
+    suspend fun execute(gameId: UUID, choiceId: UUID, duration: Int): Boolean {
         var isEnded = false
         val user = userRepository.getUserResume() ?: return true
 
@@ -64,7 +63,6 @@ class ConfirmChoice @Inject constructor(
                 }
 
                 gameDbRepository.getGameEditionById(gameId)?.let { gameEdition ->
-                    doAsync {
                         try {
                             gameApiRepository.update(gameId, gameEdition)
                         } catch (e: GameNotFoundException) {
@@ -78,9 +76,7 @@ class ConfirmChoice @Inject constructor(
                         }
                     }
                 }
-
             }
-        }
         return isEnded
     }
 }

@@ -9,7 +9,7 @@ class SynchronizeFile @Inject constructor(
     private val fileStorageRepository: FileStorageRepository
 ) {
 
-    fun execute(
+    suspend fun execute(
         url: String,
         destinationDir: String,
         fileName: String

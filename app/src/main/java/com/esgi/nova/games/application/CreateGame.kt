@@ -22,7 +22,7 @@ class CreateGame @Inject constructor(
     private val getAllImageResourceWrappers: GetAllImageResourceWrappers
 ) {
 
-    fun execute(difficultyId: UUID): RecappedGameWithResourceIcons? {
+    suspend fun execute(difficultyId: UUID): RecappedGameWithResourceIcons? {
         userStorageRepository.getUserResume()?.let { user ->
             difficultyResourceDbRepository.getDetailedDifficultyById(difficultyId)
                 ?.let { difficulty ->

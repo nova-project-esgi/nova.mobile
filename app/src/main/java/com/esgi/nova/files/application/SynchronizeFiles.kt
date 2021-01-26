@@ -10,7 +10,7 @@ class SynchronizeFiles @Inject constructor(
     private val fileStorageRepository: FileStorageRepository
 ) {
 
-    fun execute(
+    suspend fun execute(
         fileSynchronizations: List<FileSynchronizationDto>
     ) {
         val files = fileSynchronizations.mapNotNull { fileSynchro ->
