@@ -12,7 +12,7 @@ import com.esgi.nova.games.application.SynchronizeLastActiveGame
 import com.esgi.nova.languages.application.SynchronizeLanguages
 import com.esgi.nova.ports.Synchronize
 import com.esgi.nova.resources.application.SynchronizeResources
-import com.esgi.nova.ui.IAppViewModel
+import com.esgi.nova.ui.AppViewModel
 import kotlinx.coroutines.launch
 
 class InitViewModel @ViewModelInject constructor(
@@ -25,14 +25,8 @@ class InitViewModel @ViewModelInject constructor(
     private val isSynchronized: IsSynchronized,
     private val setSynchronizeState: SetSynchronizeState,
     @Assisted private val savedStateHandle: SavedStateHandle
-) : ViewModel(), IAppViewModel {
+) : AppViewModel() {
 
-    override var initialized: Boolean = false
-
-    override val unexpectedError: LiveData<Boolean>
-        get() = _unexpectedError
-
-    private var _unexpectedError = MutableLiveData<Boolean>()
 
     val currentInitStep: LiveData<Int>
         get() = _currentInitStep

@@ -62,4 +62,5 @@
     <string name="resource_fetching_msg">Nova resources fetching could impact your network consumption, continue ?</string>
     <string name="network_warning">Network warning !</string>
     <string name="unexpected_error_msg">Unexpected error !</string>
+    <string name="settings_saved">Settings saved</string>
 </resources>

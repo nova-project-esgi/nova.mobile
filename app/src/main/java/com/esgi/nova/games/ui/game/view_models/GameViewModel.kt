@@ -7,10 +7,10 @@ import com.esgi.nova.events.ports.IDetailedEvent
 import com.esgi.nova.files.infrastructure.ports.IFileWrapper
 import com.esgi.nova.games.ports.IRecappedGameWithResourceIcons
 import com.esgi.nova.games.ports.ITotalValueResource
-import com.esgi.nova.ui.IAppViewModel
+import com.esgi.nova.ui.AppViewModel
 import java.util.*
 
-class GameViewModel : ViewModel(), IRecappedGameWithResourceIcons, IAppViewModel {
+class GameViewModel :AppViewModel(),  IRecappedGameWithResourceIcons  {
 
     lateinit var event: IFileWrapper<IDetailedEvent>
     override lateinit var difficultyId: UUID

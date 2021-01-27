@@ -8,7 +8,7 @@ import com.esgi.nova.dtos.user.UserLoginDto
 import com.esgi.nova.infrastructure.api.exceptions.NoConnectionException
 import com.esgi.nova.parameters.application.SetCurrentTheme
 import com.esgi.nova.sound.application.SwitchSound
-import com.esgi.nova.ui.IAppViewModel
+import com.esgi.nova.ui.AppViewModel
 import com.esgi.nova.users.application.HasConnectedUser
 import com.esgi.nova.users.application.LogInUser
 import com.esgi.nova.users.application.LogOutUser
@@ -29,14 +29,7 @@ class LoginViewModel @ViewModelInject constructor(
     private val switchSound: SwitchSound,
     private val isSynchronized: IsSynchronized,
     @Assisted private val savedStateHandle: SavedStateHandle
-) : ViewModel(), IAppViewModel {
-
-
-    override var initialized: Boolean = false
-    override val unexpectedError: LiveData<Boolean>
-        get() = _unexpectedError
-
-    private var _unexpectedError =  MutableLiveData<Boolean>()
+) :  AppViewModel() {
 
     val user: LiveData<LogUser>
         get() = _user
@@ -66,9 +59,6 @@ class LoginViewModel @ViewModelInject constructor(
         get() = _unavailableNetwork
     private var _unavailableNetwork = MutableLiveData<Boolean>()
 
-    val isLogging: LiveData<Boolean>
-        get() = _isLogging
-    private var _isLogging = MutableLiveData<Boolean>()
 
     fun initialize(isReconnection: Boolean) {
         if (initialized) {
@@ -105,18 +95,13 @@ class LoginViewModel @ViewModelInject constructor(
         _user.value?.password = password
     }
 
-    fun logoutUser() {
-        viewModelScope.launch {
-            logOutUser.execute()
-        }
-    }
 
     fun tryLogin() {
         val userLoginDto = user.value?.reflectMap<LogUser, UserLoginDto>()
         userLoginDto?.let {
             try {
                 userLoginDto.validate()
-                _isLogging.value = true
+                setLoading()
                 login(userLoginDto)
             } catch (e: InvalidUsernameException) {
                 _invalidUsername.value = true
@@ -142,7 +127,7 @@ class LoginViewModel @ViewModelInject constructor(
             } catch (e: Exception) {
                 _unexpectedError.value = true
             } finally {
-                _isLogging.value = false
+                unsetLoading()
             }
         }
     }

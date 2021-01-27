@@ -1,29 +1,45 @@
 package com.esgi.nova.games.ui.endgame.view_models
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.esgi.nova.files.infrastructure.ports.IFileWrapper
+import androidx.lifecycle.viewModelScope
+import com.esgi.nova.games.application.GetLastEndedGame
 import com.esgi.nova.games.ports.IRecappedGameWithResourceIcons
-import com.esgi.nova.games.ports.ITotalValueResource
-import com.esgi.nova.ui.IAppViewModel
+import com.esgi.nova.ui.AppViewModel
+import kotlinx.coroutines.*
+import kotlin.coroutines.CoroutineContext
+import kotlin.coroutines.EmptyCoroutineContext
 
-class EndGameViewModel : ViewModel(), IAppViewModel {
+class EndGameViewModel @ViewModelInject constructor(
+    private val getLastEndedGame: GetLastEndedGame,
+    ) :  AppViewModel() {
 
-    override var initialized: Boolean = false
 
-    override val unexpectedError: LiveData<Boolean>
-        get() = _unexpectedError
+    val recappedGame: LiveData<IRecappedGameWithResourceIcons>
+        get() = _recappedGame
 
-    private var _unexpectedError =  MutableLiveData<Boolean>()
+    private var _recappedGame = MutableLiveData<IRecappedGameWithResourceIcons>()
 
-    var resources: List<IFileWrapper<ITotalValueResource>> = listOf()
-    var rounds: Int = 0
+    val loosingResource: String?
+        get() = resources?.firstOrNull { resource -> resource.data.total == 0 }?.data?.name
 
-    fun populate(iRecappedGameWithResourceIcons: IRecappedGameWithResourceIcons) {
-        resources = iRecappedGameWithResourceIcons.resources
-        rounds = iRecappedGameWithResourceIcons.rounds
+    var rounds = recappedGame.value?.rounds
+    var resources = recappedGame.value?.resources
+
+
+    fun initialize() {
+        if (initialized) return
+        setLoading()
+        viewModelScope.launch {
+            getLastEndedGame.execute()?.let { game ->
+                _recappedGame.value = game
+            }
+            unsetLoading()
+        }
         initialized = true
     }
+
 
 }

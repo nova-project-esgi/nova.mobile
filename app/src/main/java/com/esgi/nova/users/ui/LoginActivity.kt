@@ -7,6 +7,8 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
@@ -82,12 +84,12 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, TextWatcher {
             Toast.makeText(this, R.string.unexpected_error_msg, Toast.LENGTH_LONG).show()
         }
 
-        loginViewModel.isLogging.observe(this) { isLogging ->
+        loginViewModel.isLoading.observe(this) { isLogging ->
             if (isLogging) {
                 removeInputsErrors()
-                setViewVisibility(ProgressBar.VISIBLE)
+                setViewVisibility(VISIBLE)
             } else {
-                setViewVisibility(ProgressBar.GONE)
+                setViewVisibility(GONE)
             }
         }
 
@@ -122,10 +124,10 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, TextWatcher {
     }
 
     private fun setViewVisibility(state: Int) {
-        if (state == ProgressBar.GONE) {
+        if (state == GONE) {
             binding.btnLogin.isEnabled = true
             binding.btnRegister.isEnabled = true
-        } else if (state == ProgressBar.VISIBLE) {
+        } else if (state == VISIBLE) {
             binding.btnLogin.isEnabled = false
             binding.btnRegister.isEnabled = false
         }
