@@ -10,7 +10,7 @@ abstract class EventDAO : BaseDao<UUID, EventEntity> {
     abstract override suspend fun getAll(): List<EventEntity>
 
     @Query("SELECT * FROM events WHERE isDaily = :isDaily")
-    abstract fun getAllByIsDaily(isDaily: Boolean): List<EventEntity>
+    abstract suspend fun getAllByIsDaily(isDaily: Boolean): List<EventEntity>
 
     @Query("SELECT * FROM events WHERE id = :id")
     abstract override suspend fun getById(id: UUID): List<EventEntity>

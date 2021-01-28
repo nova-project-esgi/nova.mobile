@@ -25,7 +25,7 @@ class GameEventDbRepository @Inject constructor(override val dao: GameEventDao) 
         return getAllEventsByGameOrderByLinkTimeDesc(gameId).firstOrNull()
     }
 
-    fun eventHasGame(eventId: UUID): Boolean = dao.getAllByEventId(eventId).isNotEmpty()
+    suspend fun eventHasGame(eventId: UUID): Boolean = dao.getAllByEventId(eventId).isNotEmpty()
 
 
 }

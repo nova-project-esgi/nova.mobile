@@ -3,6 +3,7 @@ package com.esgi.nova.ui.init
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.esgi.nova.R
@@ -13,7 +14,6 @@ import com.esgi.nova.ui.init.view_models.InitViewModel
 import com.esgi.nova.users.ui.LoginActivity
 import dagger.hilt.android.AndroidEntryPoint
 import org.jetbrains.anko.alert
-import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.textResource
 
 @AndroidEntryPoint
@@ -48,28 +48,26 @@ class InitSetupActivity : AppCompatActivity() {
         binding = ActivityInitSetupBinding.inflate(layoutInflater)
         setContentView(binding.root)
         viewModel.currentInitStep.observe(this) { step -> setLoadingText(step) }
-        viewModel.navigateToDashboard.observe(this) { DashboardActivity.start(this@InitSetupActivity) }
+        viewModel.navigateToDashboard.observe(this) { navigateToDashboard() }
+        viewModel.networkError.observe(this) { handleNetworkError() }
+        viewModel.unexpectedError.observe(this) { handleUnexpectedError() }
         viewModel.loadContent()
 
     }
 
-//    private fun loadData() {
+    private fun navigateToDashboard() {
+        DashboardActivity.start(this@InitSetupActivity)
+    }
 
-//
-//        doAsync {
-//            stepsList.slice(viewModel.currentStep until stepsList.size).forEach { sync ->
-//                viewModel.currentStep
-//                runOnUiThread { setLoadingText(viewModel.currentStep + 1) }
-//                sync.execute()
-//                viewModel.currentStep++
-//            }
-//
-//            runOnUiThread { setLoadingText(viewModel.currentStep) }
-//            setSynchronizeState.execute(true)
-//            DashboardActivity.start(this@InitSetupActivity)
-//            finish()
-//        }
-//    }
+    private fun handleNetworkError() {
+        Toast.makeText(this, R.string.network_not_available_msg, Toast.LENGTH_SHORT).show()
+        LoginActivity.start(this)
+    }
+
+    private fun handleUnexpectedError() {
+        Toast.makeText(this, R.string.unexpected_error_msg, Toast.LENGTH_SHORT).show()
+        LoginActivity.start(this)
+    }
 
     private fun setLoadingText(index: Int) {
         val loadingTextString =

@@ -6,15 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.esgi.nova.databinding.ChoicesListFragmentBinding
 import com.esgi.nova.events.ports.IDetailedChoice
 import com.esgi.nova.games.ui.game.adapters.ChoiceAdapter
-import com.esgi.nova.games.ui.game.view_models.ChoicesListViewModel
+import com.esgi.nova.games.ui.game.view_models.GameViewModel
 import org.jetbrains.anko.support.v4.runOnUiThread
 
-class ChoicesListFragment : Fragment(), OnChoiceClicked, Observer<List<IDetailedChoice>> {
+class ChoicesListFragment : Fragment(), OnChoiceClicked {
 
     companion object {
         fun newInstance() =
@@ -24,8 +23,7 @@ class ChoicesListFragment : Fragment(), OnChoiceClicked, Observer<List<IDetailed
     private var _binding: ChoicesListFragmentBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel by activityViewModels<ChoicesListViewModel>()
-    private var choices: MutableList<IDetailedChoice> = mutableListOf()
+    private val viewModel by activityViewModels<GameViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,34 +34,29 @@ class ChoicesListFragment : Fragment(), OnChoiceClicked, Observer<List<IDetailed
     }
 
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        viewModel.choices.value?.let { choices ->
-            this.choices = choices.toMutableList()
-        }
+        viewModel.newChoices.observe(viewLifecycleOwner) { choices -> updateChoices(choices) }
         initChoicesList()
-        viewModel.choices.observe(viewLifecycleOwner, this)
+
         super.onViewCreated(view, savedInstanceState)
+    }
+
+    private fun updateChoices(choices: List<IDetailedChoice>) {
+        runOnUiThread {
+            viewModel.updateChoices(choices)
+            binding.choicesRv.adapter?.notifyDataSetChanged()
+        }
     }
 
     private fun initChoicesList() {
         binding.choicesRv.apply {
             layoutManager = GridLayoutManager(requireContext(), 2)
-            adapter = ChoiceAdapter(choices, this@ChoicesListFragment)
+            adapter = ChoiceAdapter(viewModel.choices, this@ChoicesListFragment)
         }
     }
 
     override fun clicked(choice: IDetailedChoice) {
         viewModel.select(choice)
-    }
-
-    override fun onChanged(choicesList: List<IDetailedChoice>?) {
-        runOnUiThread {
-            choices.clear()
-            choices.addAll(choicesList ?: listOf())
-            binding.choicesRv.adapter?.notifyDataSetChanged()
-        }
-
     }
 
 }

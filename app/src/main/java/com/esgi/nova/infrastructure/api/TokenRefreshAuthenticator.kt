@@ -1,6 +1,7 @@
 package com.esgi.nova.infrastructure.api
 
 import com.esgi.nova.users.application.UpdateUserToken
+import kotlinx.coroutines.runBlocking
 import okhttp3.Authenticator
 import okhttp3.Request
 import okhttp3.Response
@@ -21,10 +22,11 @@ class TokenRefreshAuthenticator(val updateUserToken: UpdateUserToken) :
             .build()
 
     private fun Response.createSignedRequest(): Request? = try {
-         null
-    //        updateUserToken.execute()?.let { user ->
-//            this.request().signWithToken(user.token)
-//        }
+        runBlocking {
+            updateUserToken.execute()?.let { user ->
+                return@runBlocking this@createSignedRequest.request().signWithToken(user.token)
+            }
+        }
     } catch (error: Throwable) {
         null
     }

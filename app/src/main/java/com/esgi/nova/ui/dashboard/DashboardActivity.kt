@@ -73,27 +73,32 @@ class DashboardActivity : AppCompatActivity(), View.OnClickListener, AdapterView
         viewModel.isLoading.observe(this) { isLoading ->
             onLoading(isLoading)
         }
+        viewModel.difficulties.observe(this) { difficulties ->
+            setDifficultyAutoComplete(
+                difficulties
+            )
+        }
+        viewModel.selectedDifficulty.observe(this) { selectedDifficulty ->
+            setSelectedDifficulty(
+                selectedDifficulty
+            )
+        }
         viewModel.initialize()
 
-//        changeActionsButtonsStates()
-        setDifficultyAutoComplete()
         initResourcesRecyclerView()
-//        generateDifficulties()
     }
 
-//    private fun changeActionsButtonsStates() {
-//        doAsync {
-//            val canLaunch = canLaunchGame.execute()
-//            val canResume = canResumeGame.execute()
-//            runOnUiThread {
-//                binding.initNewGameBtn.isEnabled = canLaunch
-//                binding.resumeGameBtn.isEnabled = canResume
-//            }
-//        }
-//    }
+    private fun setSelectedDifficulty(selectedDifficulty: DetailedDifficultyDto) {
+        binding.difficultyTv.setText(selectedDifficulty.toString(), false)
+    }
+
+    private fun changeActionsButtonsStates() {
+        binding.initNewGameBtn.isEnabled = viewModel.canLaunch.value == true
+        binding.resumeGameBtn.isEnabled = viewModel.canResume.value == true
+    }
 
     override fun onResume() {
-//        changeActionsButtonsStates()
+        viewModel.initialize()
         super.onResume()
     }
 
@@ -114,44 +119,18 @@ class DashboardActivity : AppCompatActivity(), View.OnClickListener, AdapterView
         return super.onOptionsItemSelected(item)
     }
 
-    private fun generateDifficulties() {
 
-//        if (!dashBoardViewModel.initialized) {
-//            binding.root.loaderFl.visibility = VISIBLE
-//            doAsync {
-//                if (!dashBoardViewModel.initialized) {
-//                    dashBoardViewModel.difficulties = getAllDetailedDifficultiesSortedByRank
-//                        .execute()
-//                        .reflectMapCollection<IDetailedDifficulty, DetailedDifficultyDto>()
-//                        .toMutableList()
-//                    dashBoardViewModel.initialized = true
-//                    dashBoardViewModel.selectedDifficulty = dashBoardViewModel.difficulties.first()
-//                    updateResources(selectedDifficulty)
-//                }
-//                runOnUiThread {
-//                    setDifficultyAutoComplete()
-//                    binding.root.loaderFl.visibility = GONE
-//                }
-//            }
-//        } else {
-//            setDifficultyAutoComplete()
-//        }
-//        setDifficultyAutoComplete()
+    private fun setDifficultyAutoComplete(difficulties: List<DetailedDifficultyDto>) {
 
-    }
+        val arrayAdapter = ArrayAdapter(
+            this,
+            R.layout.list_item,
+            difficulties
+        )
+        binding.difficultyTv.setAdapter(arrayAdapter)
+        binding.difficultyTv.isEnabled = true
+        binding.difficultyTv.onItemClickListener = this
 
-    private fun setDifficultyAutoComplete() {
-        viewModel.difficulties.value?.let { difficulties ->
-            val arrayAdapter = ArrayAdapter(
-                this,
-                R.layout.list_item,
-                difficulties
-            )
-            binding.difficultyTv.setAdapter(arrayAdapter)
-            binding.difficultyTv.setText(viewModel.selectedDifficulty.toString(), false)
-            binding.difficultyTv.isEnabled = true
-            binding.difficultyTv.onItemClickListener = this
-        }
     }
 
 
@@ -193,16 +172,19 @@ class DashboardActivity : AppCompatActivity(), View.OnClickListener, AdapterView
                         3
                     )
                 }
-            adapter =
-                DashBoardResourcesAdapter(
-                    viewModel.wrapperResources
-                )
+            adapter = DashBoardResourcesAdapter(
+                viewModel.wrapperResources
+            )
         }
     }
 
     private fun onLoading(isLoading: Boolean) {
-        binding.resumeGameBtn.isEnabled = isLoading
-        binding.initNewGameBtn.isEnabled = isLoading
+        if (isLoading) {
+            binding.resumeGameBtn.isEnabled = false
+            binding.initNewGameBtn.isEnabled = false
+        } else {
+            changeActionsButtonsStates()
+        }
         binding.root.loaderFl.visibility = if (isLoading) VISIBLE else GONE
     }
 

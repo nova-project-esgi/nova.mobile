@@ -1,5 +1,6 @@
 package com.esgi.nova.games.application
 
+import android.util.Log
 import com.esgi.nova.events.infrastructure.api.EventApiRepository
 import com.esgi.nova.events.infrastructure.data.choice_resource.ChoiceResourceDbRepository
 import com.esgi.nova.events.infrastructure.data.choices.ChoiceDbRepository
@@ -7,6 +8,7 @@ import com.esgi.nova.events.infrastructure.data.events.EventDbRepository
 import com.esgi.nova.files.application.SynchronizeFile
 import com.esgi.nova.games.application.models.GameEvent
 import com.esgi.nova.games.application.models.GameResource
+import com.esgi.nova.games.exceptions.GameNotFoundException
 import com.esgi.nova.games.infrastructure.api.GameApiRepository
 import com.esgi.nova.games.infrastructure.data.game.GameDbRepository
 import com.esgi.nova.games.infrastructure.data.game_event.GameEventDbRepository
@@ -36,27 +38,36 @@ class SynchronizeLastActiveGame @Inject constructor(
     override suspend fun execute() {
         val language: String = languageDbRepository.getSelectedLanguage()?.tag ?: ""
         userStorageRepository.getUserResume()?.let { user ->
-            gameApiRepository.getLastActiveGameForUser(username = user.username).let { gameState ->
-                val gameResources =
-                    gameState.resources.map { resource -> resource.toGameResource(gameId = gameState.id) }
-                val gameEvents =
-                    gameState.events.map { event -> event.toGameEvent(gameId = gameState.id) }
-                if (gameDbRepository.getActiveGameId(userId = user.id) != gameState.id) {
-                    recreateGame(
-                        user = user,
-                        gameState = gameState,
-                        gameResources = gameResources,
-                        gameEvents = gameEvents,
-                        language = language
-                    )
-                } else {
-                    updateExistingGame(
-                        gameState = gameState,
-                        gameResources = gameResources,
-                        gameEvents = gameEvents
-                    )
-                }
+            try {
+                gameApiRepository.getLastActiveGameForUser(username = user.username)
+                    .let { gameState ->
+                        val gameResources =
+                            gameState.resources.map { resource -> resource.toGameResource(gameId = gameState.id) }
+                        val gameEvents =
+                            gameState.events.map { event -> event.toGameEvent(gameId = gameState.id) }
+                        if (gameDbRepository.getActiveGameId(userId = user.id) != gameState.id) {
+                            recreateGame(
+                                user = user,
+                                gameState = gameState,
+                                gameResources = gameResources,
+                                gameEvents = gameEvents,
+                                language = language
+                            )
+                        } else {
+                            updateExistingGame(
+                                gameState = gameState,
+                                gameResources = gameResources,
+                                gameEvents = gameEvents
+                            )
+                        }
+                    }
+            } catch (e: GameNotFoundException) {
+                Log.d(
+                    SynchronizeLastActiveGame::class.qualifiedName,
+                    "Last active game for user ${user.username} not found"
+                )
             }
+
         }
     }
 

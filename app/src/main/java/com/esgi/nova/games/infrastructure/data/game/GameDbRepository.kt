@@ -8,8 +8,6 @@ import com.esgi.nova.games.ports.IGame
 import com.esgi.nova.games.ports.IGameEdition
 import com.esgi.nova.games.ports.IRecappedGame
 import com.esgi.nova.infrastructure.data.repository.BaseRepository
-import com.esgi.nova.utils.reflectMapCollection
-import com.esgi.nova.utils.reflectMapNotNull
 import java.time.LocalDate
 import java.util.*
 import javax.inject.Inject
@@ -67,14 +65,15 @@ class GameDbRepository @Inject constructor(
             .any { gameWithEvent -> gameWithEvent.gameEvent.linkTime.toLocalDate() == date }
     }
 
-    fun getActiveGameId(userId: UUID): UUID? {
+    suspend fun getActiveGameId(userId: UUID): UUID? {
         return dao.getByIsEndedAndUserId(false, userId).firstOrNull()?.id
     }
 
-    fun getLastEndedGameId(userId: UUID): UUID? {
+    suspend fun getLastEndedGameId(userId: UUID): UUID? {
         return dao.getLast(true, userId).firstOrNull()?.id
     }
-    fun getActiveGamesIds(userId: UUID): List<UUID> {
+
+    suspend fun getActiveGamesIds(userId: UUID): List<UUID> {
         return dao.getByIsEndedAndUserId(false, userId).map { it.id }
     }
 

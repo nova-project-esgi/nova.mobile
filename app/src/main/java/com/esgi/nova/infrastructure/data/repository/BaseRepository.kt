@@ -25,6 +25,12 @@ abstract class BaseRepository<Id, Entity, Element> where Entity : Element, Eleme
 
     suspend fun update(entity: Element) = dao.update(toEntity(entity))
     suspend fun delete(entity: Element) = dao.delete(toEntity(entity))
+    suspend fun deleteById(id: Id) {
+        getById(id)?.let { entity ->
+            delete(entity)
+        }
+    }
+
     suspend fun replace(id: Id, element: Element): Id {
         dao.getById(id).forEach { entity ->
             delete(entity)

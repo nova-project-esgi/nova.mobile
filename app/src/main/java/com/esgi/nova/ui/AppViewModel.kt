@@ -18,7 +18,7 @@ abstract class AppViewModel : ViewModel() {
 
     val isLoading: LiveData<Boolean>
         get() = _isLoading
-    private var _isLoading = MutableLiveData<Boolean>()
+    private var _isLoading = MutableLiveData(false)
 
     private var loadingCnt = 0
 
@@ -37,13 +37,17 @@ abstract class AppViewModel : ViewModel() {
         _isLoading.value = loadingCnt != 0
     }
 
-    protected fun loadingLaunch(
+    protected open fun loadingLaunch(
         block: suspend CoroutineScope.() -> Unit
     ): Job {
         setLoading()
+
         return viewModelScope.launch {
-            block.invoke(this)
-            unsetLoading()
+            try {
+                block.invoke(this)
+            } finally {
+                unsetLoading()
+            }
         }
     }
 }

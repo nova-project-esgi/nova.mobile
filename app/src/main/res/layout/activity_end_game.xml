@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.esgi.nova.ui.LoadingView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/login_bg"
-    tools:context=".games.ui.game.endgame.EndGameActivity">
+    tools:context=".games.ui.endgame.EndGameActivity">
 
     <TextView
         android:id="@+id/end_title"
@@ -15,31 +15,39 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:textSize="30sp"/>
+        android:text="@string/end_game_title"
+        android:textColor="@color/primaryLightColor"
+        android:textSize="30sp" />
 
     <TextView
         android:id="@+id/end_message"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="@string/end_game_message"
+        android:textAlignment="center"
+        android:textColor="@color/primaryLightColor"
         app:layout_constraintBottom_toTopOf="@id/turn_recap"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/end_title"
-        android:textSize="24sp"/>
+        android:textSize="24sp" />
 
     <TextView
         android:id="@+id/turn_recap"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:textAlignment="center"
+        android:textColor="@color/primaryLightColor"
         app:layout_constraintTop_toBottomOf="@id/end_message"
-        app:layout_constraintBottom_toTopOf="@id/resources_recap"/>
+        app:layout_constraintBottom_toTopOf="@id/resources_recap" />
 
     <TextView
         android:id="@+id/resources_recap"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/primaryLightColor"
         app:layout_constraintBottom_toTopOf="@id/resources_recap_ll"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -73,6 +81,6 @@
         app:layout_constraintTop_toBottomOf="@id/resources_recap_ll"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</com.esgi.nova.ui.LoadingView>

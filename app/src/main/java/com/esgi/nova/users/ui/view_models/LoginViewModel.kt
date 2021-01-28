@@ -2,7 +2,10 @@ package com.esgi.nova.users.ui.view_models
 
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.viewModelScope
 import com.esgi.nova.application_state.application.IsSynchronized
 import com.esgi.nova.dtos.user.UserLoginDto
 import com.esgi.nova.infrastructure.api.exceptions.NoConnectionException
@@ -33,7 +36,7 @@ class LoginViewModel @ViewModelInject constructor(
 
     val user: LiveData<LogUser>
         get() = _user
-    private var _user = MutableLiveData<LogUser>()
+    private var _user = MutableLiveData(LogUser("", ""))
 
     val navigateToDashboard: LiveData<Boolean>
         get() = _navigateToDashboard
@@ -97,7 +100,7 @@ class LoginViewModel @ViewModelInject constructor(
 
 
     fun tryLogin() {
-        val userLoginDto = user.value?.reflectMap<LogUser, UserLoginDto>()
+        val userLoginDto = _user.value?.reflectMap<LogUser, UserLoginDto>()
         userLoginDto?.let {
             try {
                 userLoginDto.validate()

@@ -62,12 +62,6 @@ class DashboardViewModel @ViewModelInject constructor(
             _canLaunch.value = canLaunchGame.execute()
             _canResume.value = canResumeGame.execute()
         }
-//        setLoading()
-//        viewModelScope.launch {
-//            _canLaunch.value = canLaunchGame.execute()
-//            _canResume.value = canResumeGame.execute()
-//            unsetLoading()
-//        }
     }
 
     fun selectDifficulty(difficultyDto: DetailedDifficultyDto) {
@@ -89,16 +83,10 @@ class DashboardViewModel @ViewModelInject constructor(
                 .execute()
                 .reflectMapCollection<IDetailedDifficulty, DetailedDifficultyDto>()
                 .toMutableList()
-            _selectedDifficulty.value = difficulties.value?.first()
+
+            difficulties.value?.firstOrNull()?.let { difficulty ->
+                selectDifficulty(difficulty)
+            }
         }
-//        setLoading()
-//        viewModelScope.launch {
-//            difficulties = getAllDetailedDifficultiesSortedByRank
-//                .execute()
-//                .reflectMapCollection<IDetailedDifficulty, DetailedDifficultyDto>()
-//                .toMutableList()
-//            selectedDifficulty = difficulties.first()
-//            unsetLoading()
-//        }
     }
 }

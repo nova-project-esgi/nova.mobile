@@ -56,7 +56,11 @@
     <string name="username">Nom d\'utilisateur</string>
     <string name="resource_fetching_msg">La récupération des données de jeu peu impacter votre consommation réseau, voulez-vous continuer ?</string>
     <string name="network_warning">Avertissement réseau !</string>
-    <string name="loading_step_6">Lustrage des pistolets lasers...</string>
+    <string name="loading_step_6">Lustrage des pistolets lasers…</string>
     <string name="unexpected_error_msg">Erreur innatendue</string>
     <string name="settings_saved">Paramètres sauvegardés</string>
+    <plurals name="turn_recap">
+        <item quantity="one">Vous avez survécu %d tour.</item>
+        <item quantity="other">Vous avez survécu %d tours.</item>
+    </plurals>
 </resources>

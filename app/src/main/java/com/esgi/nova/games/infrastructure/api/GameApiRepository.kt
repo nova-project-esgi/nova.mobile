@@ -1,8 +1,6 @@
 package com.esgi.nova.games.infrastructure.api
 
 import android.content.Context
-import com.esgi.nova.games.application.models.GameForCreation
-import com.esgi.nova.games.infrastructure.api.models.GameForUpdate
 import com.esgi.nova.games.infrastructure.api.models.GameResume
 import com.esgi.nova.games.infrastructure.api.models.LeaderBoardGameView
 import com.esgi.nova.games.ports.IGame
@@ -31,21 +29,14 @@ class GameApiRepository @Inject constructor(
         .create(GameService::class.java)
 
     suspend fun createGame(game: IGameForCreation): IGame? {
-        val test = game.reflectMapNotNull<IGameForCreation, GameForCreation>()
-        return gameService.createGame(test).getLocatedContent<GameResume>()
+        return gameService.createGame(game.reflectMapNotNull()).getLocatedContent<GameResume>()
     }
 
     suspend fun update(id: UUID, game: IGameEdition) {
-        val gamet = game.reflectMapNotNull<IGameEdition, GameForUpdate>()
-        val res = gameService.uploadGame(
+        gameService.updateGame(
             id,
-            gamet
+            game.reflectMapNotNull()
         )
-//        if(res.code() ==  HttpConstants.Codes.NotFound){
-//            throw GameNotFoundException(
-//                id
-//            )
-//        }
     }
 
     suspend fun getDefaultGamesList(

@@ -14,7 +14,7 @@ abstract class GameEventDao : BaseDao<UUID, GameEventEntity> {
     abstract override suspend fun getById(id: UUID): List<GameEventEntity>
 
     @Query("SELECT * FROM game_event WHERE event_id = :id")
-    abstract fun getAllByEventId(id: UUID): List<GameEventEntity>
+    abstract suspend fun getAllByEventId(id: UUID): List<GameEventEntity>
 
     @Query("DELETE FROM game_event")
     abstract override suspend fun deleteAll()

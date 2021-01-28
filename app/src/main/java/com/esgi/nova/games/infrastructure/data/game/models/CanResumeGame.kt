@@ -9,6 +9,6 @@ class CanResumeGame @Inject constructor(
     private val userStorageRepository: UserStorageRepository
 ) {
 
-    fun execute(): Boolean = userStorageRepository.getUserId()
-        ?.let { userId -> gameDbRepository.getActiveGameId(userId)} != null
+    suspend fun execute(): Boolean = userStorageRepository.getUserId()
+        ?.let { userId -> gameDbRepository.getActiveGameId(userId) } != null
 }

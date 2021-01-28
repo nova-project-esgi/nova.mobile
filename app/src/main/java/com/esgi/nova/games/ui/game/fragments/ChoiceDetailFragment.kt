@@ -7,22 +7,20 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.esgi.nova.databinding.ChoiceDetailFragmentBinding
-import com.esgi.nova.games.ui.game.view_models.ChoicesListViewModel
+import com.esgi.nova.games.ui.game.view_models.GameViewModel
 
 class ChoiceDetailFragment : Fragment(), View.OnClickListener {
 
     companion object {
-        fun newInstance(onChoiceConfirmedListener: OnChoiceConfirmedListener) =
-            ChoiceDetailFragment().apply {
-                this.onChoiceConfirmedListener = onChoiceConfirmedListener
-            }
+        fun newInstance() =
+            ChoiceDetailFragment()
     }
 
     private var _binding: ChoiceDetailFragmentBinding? = null
     private val binding get() = _binding!!
 
-    private var onChoiceConfirmedListener: OnChoiceConfirmedListener? = null
-    private val viewModel by activityViewModels<ChoicesListViewModel>()
+    //    private var onChoiceConfirmedListener: OnChoiceConfirmedListener? = null
+    private val viewModel by activityViewModels<GameViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,7 +32,7 @@ class ChoiceDetailFragment : Fragment(), View.OnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.choiceDescriptionTv.text = viewModel.selected.value?.description
+        binding.choiceDescriptionTv.text = viewModel.selectedChoice.value?.description
         binding.cancelBtn.setOnClickListener(this)
         binding.confirmBtn.setOnClickListener(this)
         changeButtonsState(true)
@@ -49,9 +47,10 @@ class ChoiceDetailFragment : Fragment(), View.OnClickListener {
     override fun onClick(v: View?) {
         when (v) {
             binding.confirmBtn -> {
-                viewModel.selected.value?.let { choice ->
-                    onChoiceConfirmedListener?.onChoiceConfirmed(choice)
-                }
+                viewModel.confirmChoice()
+//                viewModel.selected.value?.let { choice ->
+//                    onChoiceConfirmedListener?.onChoiceConfirmed(choice)
+//                }
                 changeButtonsState(false)
             }
             binding.cancelBtn -> {

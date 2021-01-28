@@ -55,7 +55,6 @@ class ParametersActivity : AppCompatActivity(), View.OnClickListener,
         super.onCreate(savedInstanceState)
         binding = ActivityParametersBinding.inflate(layoutInflater)
         setContentView(binding.root)
-//        setContent()
 
         binding.btnSaveOption.setOnClickListener(this)
         binding.btnDisconnectOption.setOnClickListener(this)
@@ -63,25 +62,71 @@ class ParametersActivity : AppCompatActivity(), View.OnClickListener,
         binding.sDownloadOption.setOnCheckedChangeListener(this)
         binding.sNotificationOption.setOnCheckedChangeListener(this)
         binding.sMusicOption.setOnCheckedChangeListener(this)
+        binding.tvLanguageOption.onItemClickListener = this
 
         viewModel.selectedLanguage.observe(this) { selectedLanguage ->
-            binding.tvLanguageOption.setText(selectedLanguage?.tag, false)
+            selectLanguage(selectedLanguage)
+        }
+        viewModel.languages.observe(this) { languages ->
+            setLanguageAutocomplete(languages)
         }
         viewModel.parameters.observe(this) { parameters ->
             setUpParameters(parameters)
         }
         viewModel.parametersSaved.observe(this) {
-            Toast.makeText(this, R.string.settings_saved, Toast.LENGTH_LONG).show()
+            showSavedMessage()
         }
         viewModel.startResynchronize.observe(this) {
-            InitSetupActivity.startWithUserConfirmation(this)
+            startInitSetupActivity()
         }
         viewModel.startDashboard.observe(this) {
-            DashboardActivity.start(this)
+            startDashBoardActivity()
         }
+        viewModel.isLoading.observe(this) {
+            handleLoading(it)
+        }
+
         viewModel.initialize()
 
-        setLanguageAutocomplete()
+    }
+
+    private fun handleLoading(isLoading: Boolean?) {
+        if (isLoading == true) {
+            binding.btnSaveOption.isEnabled = false
+            binding.btnDisconnectOption.isEnabled = false
+            binding.sDarkModeOption.isEnabled = false
+            binding.sDownloadOption.isEnabled = false
+            binding.sNotificationOption.isEnabled = false
+            binding.sMusicOption.isEnabled = false
+            binding.tvLanguageOption.isEnabled = false
+            binding.root.loaderFl.visibility = View.VISIBLE
+        } else {
+            binding.root.loaderFl.visibility = View.GONE
+            binding.btnSaveOption.isEnabled = true
+            binding.btnDisconnectOption.isEnabled = true
+            binding.sDarkModeOption.isEnabled = true
+            binding.sDownloadOption.isEnabled = true
+            binding.sNotificationOption.isEnabled = true
+            binding.sMusicOption.isEnabled = true
+            binding.tvLanguageOption.isEnabled = true
+        }
+    }
+
+    private fun startDashBoardActivity() {
+        DashboardActivity.start(this)
+    }
+
+    private fun startInitSetupActivity() {
+        InitSetupActivity.startWithUserConfirmation(this)
+    }
+
+    private fun showSavedMessage() {
+        Toast.makeText(this, R.string.settings_saved, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun selectLanguage(selectedLanguage: AppLanguageDto?) {
+        binding.tvLanguageOption.setText(selectedLanguage?.tag, false)
+        binding.tvLanguageOption.isEnabled = true
     }
 
 
@@ -92,15 +137,14 @@ class ParametersActivity : AppCompatActivity(), View.OnClickListener,
         binding.sMusicOption.isChecked = parameters.hasSound
     }
 
-    private fun setLanguageAutocomplete() {
+    private fun setLanguageAutocomplete(languages: List<AppLanguageDto>) {
         val arrayAdapter = ArrayAdapter(
             this,
             R.layout.list_item,
-            viewModel.languages
+            languages
         )
         binding.tvLanguageOption.setAdapter(arrayAdapter)
         binding.tvLanguageOption.isEnabled = false
-        binding.tvLanguageOption.onItemClickListener = this
     }
 
     override fun onClick(v: View?) {

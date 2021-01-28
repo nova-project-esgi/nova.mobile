@@ -1,5 +1,6 @@
 package com.esgi.nova.games.application
 
+import android.util.Log
 import com.esgi.nova.events.application.GetDailyEvent
 import com.esgi.nova.events.infrastructure.data.events.EventDbRepository
 import com.esgi.nova.events.ports.IDetailedEvent
@@ -8,6 +9,7 @@ import com.esgi.nova.files.dtos.FileWrapperDto
 import com.esgi.nova.files.infrastructure.ports.IFileWrapper
 import com.esgi.nova.games.application.models.GameEvent
 import com.esgi.nova.games.infrastructure.data.game_event.GameEventDbRepository
+import com.esgi.nova.infrastructure.api.exceptions.NoConnectionException
 import com.esgi.nova.infrastructure.fs.FsConstants
 import com.esgi.nova.parameters.infrastructure.storage.ParametersStorageRepository
 import java.time.LocalDateTime
@@ -31,18 +33,22 @@ class GetNextEvent @Inject constructor(
 
     suspend fun execute(gameId: UUID): IFileWrapper<IDetailedEvent>? {
 
-        if(parametersStorageRepository.get().hasDailyEvents){
-            getDailyEvent.execute(gameId)?.let { event ->
-                gameEventDbRepository.insertOne(
-                    GameEvent(
-                        eventId = event.id,
-                        gameId = gameId,
-                        linkTime = LocalDateTime.now(ZoneOffset.UTC)
+        if(parametersStorageRepository.get().hasDailyEvents) {
+            try {
+                getDailyEvent.execute(gameId)?.let { event ->
+                    gameEventDbRepository.insertOne(
+                        GameEvent(
+                            eventId = event.id,
+                            gameId = gameId,
+                            linkTime = LocalDateTime.now(ZoneOffset.UTC)
+                        )
                     )
-                )
-                getFileBitmapById.execute(FsConstants.Paths.Events, event.id)?.let { img ->
-                    return FileWrapperDto(event, img)
+                    getFileBitmapById.execute(FsConstants.Paths.Events, event.id)?.let { img ->
+                        return FileWrapperDto(event, img)
+                    }
                 }
+            } catch (e: NoConnectionException) {
+                Log.d(GetNextEvent::class.qualifiedName, "Cannot fetch daily event from api")
             }
         }
 

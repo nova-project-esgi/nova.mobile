@@ -28,20 +28,21 @@ class EventDbRepository @Inject constructor(
             })
     }
 
-    suspend fun getDetailedEventById(id: UUID) = dao.getAllEventWithChoicesByEventId(id).firstOrNull()?.let { eventWithChoices ->
-        eventWithChoices.event.toDetailedEvent(eventWithChoices.choices
-            .flatMap { choice ->
-                choiceResourceDAO.getAllChoiceWithResourceByChoiceId(choice.id)
-            })
-    }
+    suspend fun getDetailedEventById(id: UUID) =
+        dao.getAllEventWithChoicesByEventId(id).firstOrNull()?.let { eventWithChoices ->
+            eventWithChoices.event.toDetailedEvent(eventWithChoices.choices
+                .flatMap { choice ->
+                    choiceResourceDAO.getAllChoiceWithResourceByChoiceId(choice.id)
+                })
+        }
 
-    fun getAllDailyEvents(): List<IEvent> = dao.getAllByIsDaily(true)
-    fun getAllNonDailyEvents(): List<IEvent> = dao.getAllByIsDaily(false)
+    suspend fun getAllDailyEvents(): List<IEvent> = dao.getAllByIsDaily(true)
+    suspend fun getAllNonDailyEvents(): List<IEvent> = dao.getAllByIsDaily(false)
 
 
     suspend fun getCount() = dao.getAll().size
 
-    fun getAllNonDaily() = dao.getAllByIsDaily(false)
+    suspend fun getAllNonDaily() = dao.getAllByIsDaily(false)
 
 
 }

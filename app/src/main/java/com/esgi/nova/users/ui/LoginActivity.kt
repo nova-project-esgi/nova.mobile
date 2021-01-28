@@ -9,7 +9,6 @@ import android.text.TextWatcher
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -45,6 +44,12 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, TextWatcher {
         fun startReconnection(context: Context): Context {
             val intent = Intent(context, LoginActivity::class.java)
             intent.putExtra(ReconnectionKey, true)
+            context.startActivity(intent)
+            return context
+        }
+
+        fun start(context: Context): Context {
+            val intent = Intent(context, LoginActivity::class.java)
             context.startActivity(intent)
             return context
         }
@@ -131,7 +136,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, TextWatcher {
             binding.btnLogin.isEnabled = false
             binding.btnRegister.isEnabled = false
         }
-        binding.loader.visibility = state
+        binding.root.loaderFl.visibility = state
     }
 
     override fun afterTextChanged(s: Editable?) {

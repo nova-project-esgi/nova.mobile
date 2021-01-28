@@ -1,12 +1,12 @@
 package com.esgi.nova.infrastructure.api
 
 import android.content.Context
+import com.esgi.nova.infrastructure.api.error_handling.ErrorsCallAdapterFactory
 import com.esgi.nova.infrastructure.api.interceptors.AuthorizationRequestInterceptor
 import com.esgi.nova.users.application.GetUserToken
 import com.esgi.nova.users.application.UpdateUserToken
 import dagger.hilt.android.qualifiers.ApplicationContext
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Inject
 
@@ -22,13 +22,14 @@ open class AuthenticatedApiRepository @Inject constructor(
             AuthorizationRequestInterceptor(this@AuthenticatedApiRepository.getUserToken)
         val authResponseInterceptor =
             TokenRefreshAuthenticator(this@AuthenticatedApiRepository.updateUserToken)
-        httpClientBuilder
-            .addInterceptor(authRequestInterceptor)
+        val client = httpClientBuilder
+            .addNetworkInterceptor(authRequestInterceptor)
             .authenticator(authResponseInterceptor)
             .build()
         return Retrofit.Builder().baseUrl(baseUrl)
+            .addCallAdapterFactory(ErrorsCallAdapterFactory())
             .addConverterFactory(GsonConverterFactory.create(gsonBuilder.create()))
-            .client(httpClientBuilder.build())
+            .client(client)
     }
 
 
