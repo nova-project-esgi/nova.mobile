@@ -35,7 +35,7 @@ class CreateGame @Inject constructor(
                             try {
                                 gameApiRepository.update(endedGameId, endedGame)
                             } catch (e: NoConnectionException) {
-                                Log.d(CreateGame::class.qualifiedName, "Cannot update game on api")
+                                Log.i(CreateGame::class.qualifiedName, "Cannot update game on api")
                             } catch (e: GameNotFoundException) {
                                 gameDbRepository.deleteById(endedGameId);
                             }
@@ -57,7 +57,7 @@ class CreateGame @Inject constructor(
                                 dbGameId = gameDbRepository.replace(dbGameId, game)
                             }
                     } catch (e: NoConnectionException) {
-                        Log.d(CreateGame::class.qualifiedName, "Cannot create game on api")
+                        Log.i(CreateGame::class.qualifiedName, "Cannot create game on api")
                     }
 
 

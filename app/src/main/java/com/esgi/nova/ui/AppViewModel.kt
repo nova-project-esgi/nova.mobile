@@ -12,8 +12,8 @@ abstract class AppViewModel : ViewModel() {
 
     val unexpectedError: LiveData<Boolean>
         get() = _unexpectedError
-
     protected var _unexpectedError = MutableLiveData<Boolean>()
+
     protected var initialized: Boolean = false
 
     val isLoading: LiveData<Boolean>
@@ -26,7 +26,6 @@ abstract class AppViewModel : ViewModel() {
         loadingCnt++
         updateIsLoading()
     }
-
     fun unsetLoading() {
         loadingCnt--
         loadingCnt = if (loadingCnt >= 0) loadingCnt else 0

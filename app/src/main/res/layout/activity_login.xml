@@ -159,5 +159,4 @@
         app:layout_constraintStart_toStartOf="@+id/start_input_gl"
         app:layout_constraintTop_toBottomOf="@id/btn_login" />
 
-
 </com.esgi.nova.ui.LoadingView>

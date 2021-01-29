@@ -48,7 +48,7 @@ class GetNextEvent @Inject constructor(
                     }
                 }
             } catch (e: NoConnectionException) {
-                Log.d(GetNextEvent::class.qualifiedName, "Cannot fetch daily event from api")
+                Log.i(GetNextEvent::class.qualifiedName, "Cannot fetch daily event from api")
             }
         }
 

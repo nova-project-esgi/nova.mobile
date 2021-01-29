@@ -62,7 +62,7 @@ class SynchronizeLastActiveGame @Inject constructor(
                         }
                     }
             } catch (e: GameNotFoundException) {
-                Log.d(
+                Log.i(
                     SynchronizeLastActiveGame::class.qualifiedName,
                     "Last active game for user ${user.username} not found"
                 )

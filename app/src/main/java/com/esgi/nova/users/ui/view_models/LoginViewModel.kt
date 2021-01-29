@@ -21,17 +21,18 @@ import com.esgi.nova.users.exceptions.InvalidUsernameException
 import com.esgi.nova.users.exceptions.UserNotFoundException
 import com.esgi.nova.users.ui.models.LogUser
 import com.esgi.nova.utils.reflectMap
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import kotlin.coroutines.CoroutineContext
 
-class LoginViewModel @ViewModelInject constructor(
+class LoginViewModel constructor(
     private val logInUser: LogInUser,
     private val hasConnectedUser: HasConnectedUser,
-    private val setCurrentTheme: SetCurrentTheme,
     private val logOutUser: LogOutUser,
     private val retrieveUser: RetrieveUser,
-    private val switchSound: SwitchSound,
     private val isSynchronized: IsSynchronized,
-    @Assisted private val savedStateHandle: SavedStateHandle
 ) :  AppViewModel() {
 
     val user: LiveData<LogUser>

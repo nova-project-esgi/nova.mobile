@@ -105,7 +105,7 @@ class ConfirmChoice @Inject constructor(
                     gameApiRepository.update(gameId, gameEdition)
                 }
             } catch (e: NoConnectionException) {
-                Log.d(ConfirmChoice::class.qualifiedName, "No connection for updating game")
+                Log.i(ConfirmChoice::class.qualifiedName, "No connection for updating game")
             }
         }
     }

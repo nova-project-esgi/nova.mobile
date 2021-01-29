@@ -82,7 +82,7 @@ class FileStorageRepository @Inject constructor( @ApplicationContext private val
                     }
                     outputStream.write(fileReader, 0, read)
                     fileSizeDownloaded += read.toLong()
-                    Log.d(
+                    Log.i(
                         FileStorageRepository::class.java.name,
                         "file download: $fileSizeDownloaded of $fileSize"
                     )

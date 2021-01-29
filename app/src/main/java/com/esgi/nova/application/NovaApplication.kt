@@ -10,7 +10,6 @@ import dagger.hilt.android.HiltAndroidApp
 class NovaApplication : Application() {
 
 
-
     override fun onCreate() {
         super.onCreate()
         Lingver.init(this)

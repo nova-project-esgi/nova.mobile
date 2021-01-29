@@ -213,7 +213,6 @@ class GameViewModel @ViewModelInject constructor(
                 Log.e(GameViewModel::class.qualifiedName, e.message.toString())
                 _unexpectedError.value = true
             }
-
         }
     }
 
