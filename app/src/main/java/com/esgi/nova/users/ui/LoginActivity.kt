@@ -26,12 +26,14 @@ import com.esgi.nova.users.application.HasConnectedUser
 import com.esgi.nova.users.application.LogInUser
 import com.esgi.nova.users.application.LogOutUser
 import com.esgi.nova.users.application.RetrieveUser
+import com.esgi.nova.users.ui.view_models.BaseLoginViewModel
 import com.esgi.nova.users.ui.view_models.LoginViewModel
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.components.ActivityComponent
+import org.jetbrains.anko.longToast
 import javax.inject.Inject
 
 interface LoginViewModelFactory : ViewModelProvider.Factory
@@ -88,9 +90,9 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, TextWatcher {
 
 
     @Inject lateinit var viewModelFactory: LoginViewModelFactory
-    private lateinit var viewModel: LoginViewModel
+    private lateinit var viewModel: BaseLoginViewModel
 
-//    private val viewModel by viewModels<LoginViewModel>()
+//    private val viewModel:ILoginViewModel by viewModels<LoginViewModel>()
 
     private lateinit var binding: ActivityLoginBinding
 
@@ -115,7 +117,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, TextWatcher {
         super.onCreate(savedInstanceState)
         setCurrentTheme.execute()
         binding = ActivityLoginBinding.inflate(layoutInflater)
-        viewModel = ViewModelProvider(this, viewModelFactory).get(LoginViewModel::class.java)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(BaseLoginViewModel::class.java)
 
         setContentView(binding.root)
 
@@ -144,7 +146,9 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, TextWatcher {
             Toast.makeText(this, R.string.user_not_exist_msg, Toast.LENGTH_LONG).show()
         }
         viewModel.unexpectedError.observe(this) {
-            Toast.makeText(this, R.string.unexpected_error_msg, Toast.LENGTH_LONG).show()
+            runOnUiThread {
+                Toast.makeText(this, R.string.unexpected_error_msg, Toast.LENGTH_LONG).show()
+            }
         }
 
         viewModel.isLoading.observe(this) { isLogging ->

@@ -27,44 +27,62 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlin.coroutines.CoroutineContext
 
+abstract class BaseLoginViewModel : AppViewModel() {
+    abstract val user: LiveData<LogUser>
+    abstract val navigateToDashboard: LiveData<Boolean>
+    abstract val navigateToInitSetup: LiveData<Boolean>
+    abstract val invalidUsername: LiveData<Boolean>
+    abstract val invalidPassword: LiveData<Boolean>
+    abstract val userNotFound: LiveData<Boolean>
+    abstract val unavailableNetwork: LiveData<Boolean>
+
+    abstract fun initialize(isReconnection: Boolean)
+
+    abstract fun updateUsername(username: String)
+
+    abstract fun updatePassword(password: String)
+
+    abstract fun tryLogin()
+}
+
 class LoginViewModel constructor(
     private val logInUser: LogInUser,
     private val hasConnectedUser: HasConnectedUser,
     private val logOutUser: LogOutUser,
     private val retrieveUser: RetrieveUser,
     private val isSynchronized: IsSynchronized,
-) :  AppViewModel() {
+) : BaseLoginViewModel() {
 
-    val user: LiveData<LogUser>
+    override val user: LiveData<LogUser>
         get() = _user
     private var _user = MutableLiveData(LogUser("", ""))
 
-    val navigateToDashboard: LiveData<Boolean>
+    override val navigateToDashboard: LiveData<Boolean>
         get() = _navigateToDashboard
     private var _navigateToDashboard = MutableLiveData<Boolean>()
 
-    val navigateToInitSetup: LiveData<Boolean>
+    override val navigateToInitSetup: LiveData<Boolean>
         get() = _navigateToInitSetup
     private var _navigateToInitSetup = MutableLiveData<Boolean>()
 
-    val invalidUsername: LiveData<Boolean>
+    override val invalidUsername: LiveData<Boolean>
         get() = _invalidUsername
     private var _invalidUsername = MutableLiveData<Boolean>()
 
-    val invalidPassword: LiveData<Boolean>
+    override val invalidPassword: LiveData<Boolean>
         get() = _invalidPassword
     private var _invalidPassword = MutableLiveData<Boolean>()
 
-    val userNotFound: LiveData<Boolean>
+    override val userNotFound: LiveData<Boolean>
         get() = _userNotFound
     private var _userNotFound = MutableLiveData<Boolean>()
 
-    val unavailableNetwork: LiveData<Boolean>
+    override val unavailableNetwork: LiveData<Boolean>
         get() = _unavailableNetwork
     private var _unavailableNetwork = MutableLiveData<Boolean>()
 
 
-    fun initialize(isReconnection: Boolean) {
+    override fun initialize(isReconnection: Boolean) {
         if (initialized) {
             return;
         }
@@ -91,16 +109,16 @@ class LoginViewModel constructor(
         }
     }
 
-    fun updateUsername(username: String) {
+    override fun updateUsername(username: String) {
         _user.value?.username = username
     }
 
-    fun updatePassword(password: String) {
+    override fun updatePassword(password: String) {
         _user.value?.password = password
     }
 
 
-    fun tryLogin() {
+    override fun tryLogin() {
         val userLoginDto = _user.value?.reflectMap<LogUser, UserLoginDto>()
         userLoginDto?.let {
             try {

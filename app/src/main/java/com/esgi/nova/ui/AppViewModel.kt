@@ -10,13 +10,13 @@ import kotlinx.coroutines.launch
 
 abstract class AppViewModel : ViewModel() {
 
-    val unexpectedError: LiveData<Boolean>
+    open val unexpectedError: LiveData<Boolean>
         get() = _unexpectedError
     protected var _unexpectedError = MutableLiveData<Boolean>()
 
     protected var initialized: Boolean = false
 
-    val isLoading: LiveData<Boolean>
+    open val isLoading: LiveData<Boolean>
         get() = _isLoading
     private var _isLoading = MutableLiveData(false)
 
