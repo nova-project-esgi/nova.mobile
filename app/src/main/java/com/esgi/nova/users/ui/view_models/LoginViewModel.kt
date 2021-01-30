@@ -1,17 +1,11 @@
 package com.esgi.nova.users.ui.view_models
 
-import androidx.hilt.Assisted
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.esgi.nova.application_state.application.IsSynchronized
 import com.esgi.nova.dtos.user.UserLoginDto
 import com.esgi.nova.infrastructure.api.exceptions.NoConnectionException
-import com.esgi.nova.parameters.application.SetCurrentTheme
-import com.esgi.nova.sound.application.SwitchSound
-import com.esgi.nova.ui.AppViewModel
 import com.esgi.nova.users.application.HasConnectedUser
 import com.esgi.nova.users.application.LogInUser
 import com.esgi.nova.users.application.LogOutUser
@@ -21,29 +15,7 @@ import com.esgi.nova.users.exceptions.InvalidUsernameException
 import com.esgi.nova.users.exceptions.UserNotFoundException
 import com.esgi.nova.users.ui.models.LogUser
 import com.esgi.nova.utils.reflectMap
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import kotlin.coroutines.CoroutineContext
-
-abstract class BaseLoginViewModel : AppViewModel() {
-    abstract val user: LiveData<LogUser>
-    abstract val navigateToDashboard: LiveData<Boolean>
-    abstract val navigateToInitSetup: LiveData<Boolean>
-    abstract val invalidUsername: LiveData<Boolean>
-    abstract val invalidPassword: LiveData<Boolean>
-    abstract val userNotFound: LiveData<Boolean>
-    abstract val unavailableNetwork: LiveData<Boolean>
-
-    abstract fun initialize(isReconnection: Boolean)
-
-    abstract fun updateUsername(username: String)
-
-    abstract fun updatePassword(password: String)
-
-    abstract fun tryLogin()
-}
 
 class LoginViewModel constructor(
     private val logInUser: LogInUser,

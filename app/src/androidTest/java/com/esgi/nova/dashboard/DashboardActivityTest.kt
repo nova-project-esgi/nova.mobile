@@ -1,4 +1,4 @@
-package com.esgi.nova
+package com.esgi.nova.dashboard
 
 import android.graphics.Bitmap
 import androidx.test.ext.junit.runners.AndroidJUnit4

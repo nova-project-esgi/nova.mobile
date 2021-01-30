@@ -11,72 +11,17 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.esgi.nova.R
-import com.esgi.nova.application_state.application.IsSynchronized
 import com.esgi.nova.databinding.ActivityLoginBinding
 import com.esgi.nova.parameters.application.SetCurrentTheme
 import com.esgi.nova.sound.application.SwitchSound
 import com.esgi.nova.ui.dashboard.DashboardActivity
 import com.esgi.nova.ui.init.InitSetupActivity
-import com.esgi.nova.users.application.HasConnectedUser
-import com.esgi.nova.users.application.LogInUser
-import com.esgi.nova.users.application.LogOutUser
-import com.esgi.nova.users.application.RetrieveUser
 import com.esgi.nova.users.ui.view_models.BaseLoginViewModel
-import com.esgi.nova.users.ui.view_models.LoginViewModel
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.components.ActivityComponent
-import org.jetbrains.anko.longToast
 import javax.inject.Inject
-
-interface LoginViewModelFactory : ViewModelProvider.Factory
-
-@Suppress("UNCHECKED_CAST")
-class LoginViewModelFactoryImpl (
-    private val logInUser: LogInUser,
-    private val hasConnectedUser: HasConnectedUser,
-    private val logOutUser: LogOutUser,
-    private val retrieveUser: RetrieveUser,
-    private val isSynchronized: IsSynchronized,
-) : LoginViewModelFactory {
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return LoginViewModel(
-            logInUser = logInUser,
-            hasConnectedUser = hasConnectedUser,
-            logOutUser = logOutUser,
-            retrieveUser = retrieveUser,
-            isSynchronized = isSynchronized
-        ) as T
-    }
-}
-
-@Module
-@InstallIn(ActivityComponent::class)
-class LoginActivityModule {
-
-    @Provides
-    fun provideCalculatorViewModelFactory(
-        logInUser: LogInUser,
-        hasConnectedUser: HasConnectedUser,
-        logOutUser: LogOutUser,
-        retrieveUser: RetrieveUser,
-        isSynchronized: IsSynchronized,
-    ): LoginViewModelFactory =
-        LoginViewModelFactoryImpl(
-            logInUser = logInUser,
-            hasConnectedUser = hasConnectedUser,
-            logOutUser = logOutUser,
-            retrieveUser = retrieveUser,
-            isSynchronized = isSynchronized
-        )
-}
 
 @AndroidEntryPoint
 class LoginActivity : AppCompatActivity(), View.OnClickListener, TextWatcher {
@@ -92,7 +37,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, TextWatcher {
     @Inject lateinit var viewModelFactory: LoginViewModelFactory
     private lateinit var viewModel: BaseLoginViewModel
 
-//    private val viewModel:ILoginViewModel by viewModels<LoginViewModel>()
 
     private lateinit var binding: ActivityLoginBinding
 

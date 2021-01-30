@@ -11,24 +11,8 @@ import com.esgi.nova.games.application.CreateGame
 import com.esgi.nova.games.infrastructure.data.game.models.CanLaunchGame
 import com.esgi.nova.games.infrastructure.data.game.models.CanResumeGame
 import com.esgi.nova.resources.application.GetImageStartValueResourceWrappersByDifficultyId
-import com.esgi.nova.ui.AppViewModel
 import com.esgi.nova.utils.reflectMapCollection
 
-
-abstract class BaseDashboardViewModel : AppViewModel() {
-    abstract val canLaunch: LiveData<Boolean>
-    abstract val canResume: LiveData<Boolean>
-    abstract val difficulties: LiveData<List<DetailedDifficultyDto>>
-    abstract val selectedDifficulty: LiveData<DetailedDifficultyDto>
-    abstract val wrapperResources: List<IFileWrapper<IDetailedDifficulty.IStartValueResource>>
-    abstract val newResources: LiveData<List<IFileWrapper<IDetailedDifficulty.IStartValueResource>>>
-
-    abstract fun initialize()
-
-    abstract fun selectDifficulty(difficultyDto: DetailedDifficultyDto)
-
-    abstract fun setResourcesWrappers(wrappers: List<IFileWrapper<IDetailedDifficulty.IStartValueResource>>)
-}
 
 class DashboardViewModel @ViewModelInject constructor(
     private val createGame: CreateGame,

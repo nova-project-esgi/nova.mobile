@@ -12,15 +12,6 @@ import com.esgi.nova.infrastructure.api.exceptions.NoConnectionException
 import com.esgi.nova.languages.application.SynchronizeLanguages
 import com.esgi.nova.ports.Synchronize
 import com.esgi.nova.resources.application.SynchronizeResources
-import com.esgi.nova.ui.AppViewModel
-
-abstract class BaseInitViewModel : AppViewModel() {
-    abstract val currentInitStep: LiveData<Int>
-    abstract val navigateToDashboard: LiveData<Boolean>
-    abstract val networkError: LiveData<Boolean>
-
-    abstract fun loadContent()
-}
 
 class InitViewModel @ViewModelInject constructor(
     synchronizeEvents: SynchronizeEvents,

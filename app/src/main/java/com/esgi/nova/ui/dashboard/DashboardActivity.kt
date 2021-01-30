@@ -11,88 +11,25 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.esgi.nova.R
-import com.esgi.nova.application_state.application.IsSynchronized
 import com.esgi.nova.databinding.ActivityDashboardBinding
-import com.esgi.nova.difficulties.application.GetAllDetailedDifficultiesSortedByRank
 import com.esgi.nova.difficulties.ports.IDetailedDifficulty
 import com.esgi.nova.dtos.difficulty.DetailedDifficultyDto
 import com.esgi.nova.files.infrastructure.ports.IFileWrapper
-import com.esgi.nova.games.application.CreateGame
-import com.esgi.nova.games.infrastructure.data.game.models.CanLaunchGame
-import com.esgi.nova.games.infrastructure.data.game.models.CanResumeGame
 import com.esgi.nova.games.ui.game.GameActivity
 import com.esgi.nova.games.ui.leaderboard.LeaderBoardActivity
 import com.esgi.nova.parameters.ui.ParametersActivity
-import com.esgi.nova.resources.application.GetImageStartValueResourceWrappersByDifficultyId
 import com.esgi.nova.ui.dashboard.adapters.DashBoardResourcesAdapter
 import com.esgi.nova.ui.dashboard.view_models.BaseDashboardViewModel
-import com.esgi.nova.ui.dashboard.view_models.DashboardViewModel
-import com.esgi.nova.users.application.HasConnectedUser
-import com.esgi.nova.users.application.LogInUser
-import com.esgi.nova.users.application.LogOutUser
-import com.esgi.nova.users.application.RetrieveUser
 import com.esgi.nova.users.ui.LoginActivity
-import com.esgi.nova.users.ui.LoginViewModelFactory
-import com.esgi.nova.users.ui.LoginViewModelFactoryImpl
-import com.esgi.nova.users.ui.view_models.BaseLoginViewModel
-import com.esgi.nova.users.ui.view_models.LoginViewModel
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.components.ActivityComponent
 import javax.inject.Inject
 
-
-interface IDashboardViewModelFactory: ViewModelProvider.Factory
-
-@Suppress("UNCHECKED_CAST")
-class DashBoardViewModelFactory (
-    private val createGame: CreateGame,
-    private val getAllDetailedDifficultiesSortedByRank: GetAllDetailedDifficultiesSortedByRank,
-    private val getImageStartValueResourceWrappersByDifficultyId: GetImageStartValueResourceWrappersByDifficultyId,
-    private val canLaunchGame: CanLaunchGame,
-    private val canResumeGame: CanResumeGame,
-) : IDashboardViewModelFactory {
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return DashboardViewModel(
-            createGame = createGame,
-            getAllDetailedDifficultiesSortedByRank = getAllDetailedDifficultiesSortedByRank,
-            getImageStartValueResourceWrappersByDifficultyId = getImageStartValueResourceWrappersByDifficultyId,
-            canLaunchGame = canLaunchGame,
-            canResumeGame = canResumeGame
-        ) as T
-    }
-}
-
-@Module
-@InstallIn(ActivityComponent::class)
-class DashBoardActivityModule {
-
-    @Provides
-    fun provideCalculatorViewModelFactory(
-        createGame: CreateGame,
-        getAllDetailedDifficultiesSortedByRank: GetAllDetailedDifficultiesSortedByRank,
-        getImageStartValueResourceWrappersByDifficultyId: GetImageStartValueResourceWrappersByDifficultyId,
-        canLaunchGame: CanLaunchGame,
-        canResumeGame: CanResumeGame,
-    ): IDashboardViewModelFactory =
-        DashBoardViewModelFactory(
-            createGame = createGame,
-            getAllDetailedDifficultiesSortedByRank = getAllDetailedDifficultiesSortedByRank,
-            getImageStartValueResourceWrappersByDifficultyId = getImageStartValueResourceWrappersByDifficultyId,
-            canLaunchGame = canLaunchGame,
-            canResumeGame = canResumeGame
-        )
-}
 
 @AndroidEntryPoint
 class DashboardActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnItemClickListener {
@@ -119,6 +56,8 @@ class DashboardActivity : AppCompatActivity(), View.OnClickListener, AdapterView
         super.onCreate(savedInstanceState)
         binding = ActivityDashboardBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        viewModel = ViewModelProvider(this, viewModelFactory).get(BaseDashboardViewModel::class.java)
 
         binding.initNewGameBtn.setOnClickListener(this)
         binding.resumeGameBtn.setOnClickListener(this)
