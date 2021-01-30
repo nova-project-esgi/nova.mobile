@@ -14,8 +14,10 @@ class GameResourceDbRepository @Inject constructor(override val dao: GameResourc
     override fun toEntity(el: IGameResource): GameResourceEntity = el.reflectMapNotNull()
 
 
-    override fun toEntities(entities: Collection<IGameResource>): Collection<GameResourceEntity> = entities.reflectMapCollection()
+    override fun toEntities(entities: Collection<IGameResource>): Collection<GameResourceEntity> =
+        entities.reflectMapCollection()
 
-    suspend fun getByResourceIdAndGameId(gameId: UUID, resourceId: UUID) = dao.getByGameAndResourceId(gameId, resourceId).firstOrNull ()
+    suspend fun getByResourceIdAndGameId(gameId: UUID, resourceId: UUID) =
+        dao.getByGameAndResourceId(gameId, resourceId).firstOrNull()
 }
 

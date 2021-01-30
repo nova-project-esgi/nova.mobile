@@ -11,12 +11,12 @@
         android:id="@+id/choice_description_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAlignment="center"
         android:gravity="center"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@id/middle_gl"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/middle_gl"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/middle_gl"
@@ -27,28 +27,27 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/confirm_btn"
-        app:icon="@drawable/baseline_done_white_24"
-        app:layout_constraintTop_toBottomOf="@id/middle_gl"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/cancel_btn"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:backgroundTint="@color/primaryColor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/confirm" />
+        android:backgroundTint="@color/primaryColor"
+        android:text="@string/confirm"
+        app:icon="@drawable/baseline_done_white_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/cancel_btn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/middle_gl" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/cancel_btn"
-        app:layout_constraintTop_toBottomOf="@id/middle_gl"
-        app:layout_constraintStart_toEndOf="@id/confirm_btn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:icon="@drawable/baseline_close_white_24"
-        android:backgroundTint="@color/secondaryColor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/cancel" />
-
+        android:backgroundTint="@color/secondaryColor"
+        android:text="@string/cancel"
+        app:icon="@drawable/baseline_close_white_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/confirm_btn"
+        app:layout_constraintTop_toBottomOf="@id/middle_gl" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -72,7 +72,7 @@ class DashboardViewModel @ViewModelInject constructor(
         }
     }
 
-    override fun setResourcesWrappers(wrappers: List<IFileWrapper<IDetailedDifficulty.IStartValueResource>>){
+    override fun setResourcesWrappers(wrappers: List<IFileWrapper<IDetailedDifficulty.IStartValueResource>>) {
         _wrapperResources.clear()
         _wrapperResources.addAll(wrappers)
     }

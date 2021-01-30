@@ -10,6 +10,6 @@ class AppLanguageDto(
     override val subCode: String
 ) : IAppLanguage {
     override fun toString(): String {
-            return tag
+        return tag
     }
 }

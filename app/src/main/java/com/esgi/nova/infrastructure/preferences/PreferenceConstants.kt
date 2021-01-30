@@ -1,9 +1,7 @@
 package com.esgi.nova.infrastructure.preferences
 
-import com.esgi.nova.application_state.application.IsSynchronized
-
 object PreferenceConstants {
-    object User{
+    object User {
         const val UsernameKey = "username"
         const val TokenKey = "token"
         const val Key = "user"
@@ -11,12 +9,13 @@ object PreferenceConstants {
         const val UserIdKey = "userId"
         const val IsConnectedKey = "isConnected"
     }
-    object ApplicationState{
+
+    object ApplicationState {
         const val Key = "applicationState"
         const val IsSynchronizedKey = "isSynchronized"
     }
 
-    object Parameters{
+    object Parameters {
         const val Key = "parameters"
         const val IsDarkModeKey = "isDarkMode"
         const val HasDailyEventsKey = "hasDailyEvents"
@@ -24,7 +23,7 @@ object PreferenceConstants {
         const val HasMusicKey = "hasMusic"
     }
 
-    object Sound{
+    object Sound {
         const val Key = "sound"
         const val BackgroundSoundPositionKey = "backgroundSoundPosition"
     }

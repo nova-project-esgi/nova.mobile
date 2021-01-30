@@ -6,4 +6,4 @@ import java.util.*
 data class GameForCreation(
     override val username: String,
     override val difficultyId: UUID
-): IGameForCreation
+) : IGameForCreation

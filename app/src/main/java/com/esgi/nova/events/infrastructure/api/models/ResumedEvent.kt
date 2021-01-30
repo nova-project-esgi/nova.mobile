@@ -1,6 +1,5 @@
 package com.esgi.nova.events.infrastructure.api.models
 
-import com.esgi.nova.events.ports.IDetailedChoice
 import com.esgi.nova.events.ports.IResumedChoice
 import com.esgi.nova.events.ports.IResumedEvent
 import java.util.*

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="90dp"
     android:layout_height="90dp"
     android:layout_margin="10dp"
-    android:background="@drawable/circle">
+    android:background="@drawable/circle"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/resource_name_tv"
@@ -14,12 +14,12 @@
         android:layout_height="wrap_content"
 
         android:layout_marginTop="9dp"
-        android:textSize="12sp"
         android:fontFamily="@font/starcruiser"
         android:textColor="@color/secondaryDarkColor"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textSize="12sp"
         app:layout_constraintBottom_toTopOf="@id/resource_icon_iv"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Ammo" />
 
@@ -27,32 +27,28 @@
         android:id="@+id/resource_icon_iv"
         android:layout_width="32dp"
         android:layout_height="32dp"
+        android:contentDescription="@string/trophy"
         android:src="@drawable/first"
-        android:contentDescription="Trophy"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintTop_toBottomOf="@id/resource_name_tv"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/resource_value_tv"
+        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/resource_value_tv">
-    </ImageView>
+        app:layout_constraintTop_toBottomOf="@id/resource_name_tv" />
 
     <TextView
         android:id="@+id/resource_value_tv"
+        style="@style/TextAppearance.AppCompat.Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/digital"
+        android:textColor="@color/secondaryDarkColor"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:fontFamily="@font/digital"
-        style="@style/TextAppearance.AppCompat.Title"
-        android:textColor="@color/secondaryDarkColor"
-        tools:text="15"
-        app:layout_constraintStart_toEndOf="@id/resource_icon_iv"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/resource_name_tv"
         app:layout_constraintBottom_toBottomOf="parent"
-        />
-
-
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/resource_icon_iv"
+        app:layout_constraintTop_toBottomOf="@id/resource_name_tv"
+        tools:text="15" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

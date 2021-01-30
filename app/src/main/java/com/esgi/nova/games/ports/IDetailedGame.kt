@@ -1,6 +1,6 @@
 package com.esgi.nova.games.ports
 
-interface IDetailedGame{
+interface IDetailedGame {
     val resources: MutableList<ITotalValueResource>
     val events: MutableList<ILinkTimeEvent>
     val duration: Int

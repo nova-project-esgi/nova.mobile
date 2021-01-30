@@ -8,27 +8,37 @@ import com.esgi.nova.parameters.ports.IParameters
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
-class ParametersStorageRepository @Inject constructor(@ApplicationContext context: Context): BaseStorageRepository(context) {
+class ParametersStorageRepository @Inject constructor(@ApplicationContext context: Context) :
+    BaseStorageRepository(context) {
 
     override val preferenceKey: String = PreferenceConstants.Parameters.Key
 
 
-    fun save(parameters: IParameters){
+    fun save(parameters: IParameters) {
         with(preference.edit()) {
-            putBoolean(PreferenceConstants.Parameters.HasDailyEventsKey,parameters.hasDailyEvents)
-            putBoolean(PreferenceConstants.Parameters.HasMusicKey,parameters.hasSound)
-            putBoolean(PreferenceConstants.Parameters.HasNotificationsKey,parameters.hasNotifications)
+            putBoolean(PreferenceConstants.Parameters.HasDailyEventsKey, parameters.hasDailyEvents)
+            putBoolean(PreferenceConstants.Parameters.HasMusicKey, parameters.hasSound)
+            putBoolean(
+                PreferenceConstants.Parameters.HasNotificationsKey,
+                parameters.hasNotifications
+            )
             putBoolean(PreferenceConstants.Parameters.IsDarkModeKey, parameters.isDarkMode)
             apply()
         }
     }
 
-    fun get(): IParameters{
+    fun get(): IParameters {
         return Parameters(
             isDarkMode = preference.getBoolean(PreferenceConstants.Parameters.IsDarkModeKey, true),
-            hasDailyEvents = preference.getBoolean(PreferenceConstants.Parameters.HasDailyEventsKey, false),
+            hasDailyEvents = preference.getBoolean(
+                PreferenceConstants.Parameters.HasDailyEventsKey,
+                false
+            ),
             hasSound = preference.getBoolean(PreferenceConstants.Parameters.HasMusicKey, true),
-            hasNotifications = preference.getBoolean(PreferenceConstants.Parameters.HasNotificationsKey, false)
+            hasNotifications = preference.getBoolean(
+                PreferenceConstants.Parameters.HasNotificationsKey,
+                false
+            )
         )
     }
 
@@ -39,6 +49,7 @@ class ParametersStorageRepository @Inject constructor(@ApplicationContext contex
         }
         return get()
     }
+
     fun switchMusic(isOn: Boolean): IParameters {
         with(preference.edit()) {
             putBoolean(PreferenceConstants.Parameters.HasMusicKey, isOn)
@@ -46,6 +57,7 @@ class ParametersStorageRepository @Inject constructor(@ApplicationContext contex
         }
         return get()
     }
+
     fun switchNotification(isOn: Boolean): IParameters {
         with(preference.edit()) {
             putBoolean(PreferenceConstants.Parameters.HasNotificationsKey, isOn)

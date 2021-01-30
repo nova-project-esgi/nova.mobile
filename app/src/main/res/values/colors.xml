@@ -11,5 +11,7 @@
     <color name="backgroundColor">#FFF8E1</color>
     <color name="primaryRedColor">#b71c1c</color>
     <color name="primaryGreenColor">#388e3c</color>
-    <color name="mtrl_textinput_default_box_stroke_color" tools:override="true">@color/primaryColor</color>
+    <color name="mtrl_textinput_default_box_stroke_color" tools:override="true">
+        @color/primaryColor
+    </color>
 </resources>

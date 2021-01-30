@@ -7,43 +7,39 @@
 
     <ImageView
         android:id="@+id/resource_icon_iv"
-        android:padding="3dp"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:background="@drawable/circle"
-        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/resource_icon"
+        android:padding="3dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/change_amount_tv"
-        android:contentDescription="@string/resource_icon" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/change_amount_tv"
-        android:textSize="20sp"
-        android:padding="10dp"
+        style="@style/TextAppearance.AppCompat.Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/digital"
-        style="@style/TextAppearance.AppCompat.Title"
+        android:padding="10dp"
         android:textColor="@color/secondaryDarkColor"
-        app:layout_constraintTop_toTopOf="parent"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/resource_icon_iv"
         app:layout_constraintEnd_toStartOf="@+id/change_icon_iv"
-        android:text="+10"/>
+        app:layout_constraintStart_toEndOf="@+id/resource_icon_iv"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/change_icon_iv"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        app:layout_constraintStart_toEndOf="@id/change_amount_tv"
+        android:contentDescription="@string/increase"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:contentDescription="@string/increase" />
-
-
-
+        app:layout_constraintStart_toEndOf="@id/change_amount_tv"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

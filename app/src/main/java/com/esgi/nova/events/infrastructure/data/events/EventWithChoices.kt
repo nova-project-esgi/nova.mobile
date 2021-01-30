@@ -7,7 +7,7 @@ import com.esgi.nova.events.infrastructure.data.choices.ChoiceEntity
 data class EventWithChoices(
     @Embedded
     val event: EventEntity
-){
+) {
     @Relation(
         parentColumn = "id",
         entityColumn = "event_id"

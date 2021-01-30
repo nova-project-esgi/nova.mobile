@@ -9,8 +9,8 @@ class SwitchSound @Inject constructor(
     @ApplicationContext private val context: Context
 ) {
 
-    fun execute(isOn: Boolean){
-        if(isOn){
+    fun execute(isOn: Boolean) {
+        if (isOn) {
             BackgroundSoundService.start(context)
         } else {
             BackgroundSoundService.stop(context)

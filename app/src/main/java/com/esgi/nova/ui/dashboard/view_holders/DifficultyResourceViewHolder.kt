@@ -10,8 +10,11 @@ import com.esgi.nova.difficulties.ports.IDetailedDifficulty
 import com.esgi.nova.files.infrastructure.ports.IFileWrapper
 
 class DifficultyResourceViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
-    RecyclerView.ViewHolder(inflater.inflate(
-        R.layout.difficulty_resource_item, parent, false)) {
+    RecyclerView.ViewHolder(
+        inflater.inflate(
+            R.layout.difficulty_resource_item, parent, false
+        )
+    ) {
 
     private var icon: ImageView? = null
     private var name: TextView? = null

@@ -1,6 +1,6 @@
 package com.esgi.nova.events.ports
 
-interface IDetailedEvent: IEvent {
+interface IDetailedEvent : IEvent {
 
     val choices: MutableList<out IDetailedChoice>
 

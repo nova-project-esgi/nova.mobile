@@ -8,9 +8,11 @@
         <item name="switchStyle">@style/Widget.App.Switch</item>
 
     </style>
+
     <style name="Stroked" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
         <item name="boxStrokeColor">@color/primaryColor</item>
     </style>
+
     <style name="Widget.App.Switch" parent="Widget.MaterialComponents.CompoundButton.Switch">
         <item name="materialThemeOverlay">@style/ThemeOverlay.App.Switch</item>
     </style>
@@ -18,7 +20,6 @@
     <style name="ThemeOverlay.App.Switch" parent="">
         <item name="colorAccent">@color/primaryDarkColor</item>
     </style>
-
 
 
 </resources>

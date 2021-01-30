@@ -6,9 +6,9 @@ import javax.inject.Inject
 
 class SetCurrentTheme @Inject constructor(
     private val parameterStorageRepository: ParametersStorageRepository
-): ThemeUseCase() {
+) : ThemeUseCase() {
 
-    fun execute(){
+    fun execute() {
         AppCompatDelegate.setDefaultNightMode(
             getThemeFlag(
                 parameterStorageRepository.get().isDarkMode

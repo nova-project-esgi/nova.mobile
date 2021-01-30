@@ -12,7 +12,7 @@ class DeleteOrphansDailyEvents @Inject constructor(
 
     override suspend fun execute() {
         eventDbRepository.getAllDailyEvents().forEach { dailyEvent ->
-            if(!gameEventDbRepository.eventHasGame(eventId = dailyEvent.id)){
+            if (!gameEventDbRepository.eventHasGame(eventId = dailyEvent.id)) {
                 eventDbRepository.delete(dailyEvent)
             }
         }

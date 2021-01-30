@@ -8,5 +8,6 @@ class HasConnectedUser @Inject constructor(
     private val authApiRepository: AuthApiRepository,
     private val userStorageRepository: UserStorageRepository
 ) {
-    fun execute(): Boolean = userStorageRepository.getUserConnectionState() && userStorageRepository.getUser() != null
+    fun execute(): Boolean =
+        userStorageRepository.getUserConnectionState() && userStorageRepository.getUser() != null
 }

@@ -4,4 +4,4 @@ import java.util.*
 
 data class Game(
     val id: UUID
-    )
+)

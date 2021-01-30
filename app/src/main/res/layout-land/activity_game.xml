@@ -44,41 +44,38 @@
         app:layout_constraintGuide_percent=".5" />
 
 
-
-
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:background="@color/primaryColor"
+        android:gravity="bottom"
         app:layout_constraintBottom_toTopOf="@id/round_gl"
         app:layout_constraintEnd_toStartOf="@id/resource_gl"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:background="@color/primaryColor"
-        android:gravity="bottom">
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/round_description_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
+            android:text="@string/rounds"
             app:layout_constraintBottom_toTopOf="@+id/round_tv"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:text="@string/rounds" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:id="@+id/round_tv"
+            style="@style/TextAppearance.AppCompat.Title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/TextAppearance.AppCompat.Title"
-            android:textColor="@color/secondaryDarkColor"
             android:fontFamily="@font/digital"
+            android:textColor="@color/secondaryDarkColor"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/round_description_tv"
-            android:text="0" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/round_description_tv" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -89,8 +86,8 @@
         android:background="@color/primaryColor"
         android:gravity="center"
         android:padding="5dp"
-        app:layout_constraintEnd_toStartOf="@id/resource_gl"
         app:layout_constraintBottom_toTopOf="@id/timerGL"
+        app:layout_constraintEnd_toStartOf="@id/resource_gl"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/round_gl">
 
@@ -104,61 +101,59 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:background="@color/primaryColor"
+        android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/resource_gl"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/timerGL"
-        android:background="@color/primaryColor"
-        android:gravity="center">
+        app:layout_constraintTop_toBottomOf="@id/timerGL">
+
         <TextView
             android:id="@+id/timer_tv"
+            style="@style/TextAppearance.AppCompat.Title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/TextAppearance.AppCompat.Title"
-            android:textColor="@color/secondaryDarkColor"
             android:fontFamily="@font/digital"
-            android:textStyle="bold"
-            android:text="HH:MM:SS"/>
+            android:textColor="@color/secondaryDarkColor"
+            android:textStyle="bold" />
     </LinearLayout>
-
 
 
     <ImageView
         android:id="@+id/event_background_img"
-        android:layout_margin="20dp"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_margin="20dp"
+        android:contentDescription="@string/event_background"
+        app:layout_constraintBottom_toBottomOf="@id/timerGL"
         app:layout_constraintEnd_toEndOf="@id/middle_gl"
         app:layout_constraintStart_toStartOf="@id/resource_gl"
-        app:layout_constraintTop_toBottomOf="@id/event_title_tv"
-        app:layout_constraintBottom_toBottomOf="@id/timerGL"
-        android:contentDescription="@string/event_background" />
+        app:layout_constraintTop_toBottomOf="@id/event_title_tv" />
 
     <View
         style="?attr/divider"
-        android:background="?attr/dividerVertical"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@id/middle_gl"
-        app:layout_constraintEnd_toEndOf="@id/middle_gl"
         android:layout_width="2dp"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:background="?attr/dividerVertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/middle_gl"
+        app:layout_constraintStart_toStartOf="@id/middle_gl"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <TextView
-        android:fontFamily="@font/starcruiser"
         android:id="@+id/event_title_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/starcruiser"
+        android:gravity="center"
         android:text="@string/title"
         android:textAlignment="center"
         android:textSize="20sp"
-        android:gravity="center"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/round_gl"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/middle_gl"
-        app:layout_constraintBottom_toTopOf="@id/round_gl"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/event_description_tv"
@@ -166,19 +161,21 @@
         android:layout_height="0dp"
         android:padding="20dp"
         android:textAlignment="center"
-        app:layout_constraintStart_toEndOf="@id/middle_gl"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/choices_hl_gl"
-        app:layout_constraintTop_toBottomOf="@id/round_gl"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/middle_gl"
+        app:layout_constraintTop_toBottomOf="@id/round_gl" />
+
     <View
         style="?attr/divider"
-        android:background="?attr/dividerHorizontal"
-        app:layout_constraintTop_toBottomOf="@id/event_description_tv"
-        app:layout_constraintBottom_toTopOf="@id/fragment_container"
-        app:layout_constraintStart_toStartOf="@id/middle_gl"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_width="0dp"
-        android:layout_height="2dp" />
+        android:layout_height="2dp"
+        android:background="?attr/dividerHorizontal"
+        app:layout_constraintBottom_toTopOf="@id/fragment_container"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/middle_gl"
+        app:layout_constraintTop_toBottomOf="@id/event_description_tv" />
+
     <FrameLayout
         android:id="@+id/fragment_container"
         android:layout_width="0dp"
@@ -186,8 +183,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/middle_gl"
-        app:layout_constraintTop_toBottomOf="@id/choices_hl_gl"
- />
+        app:layout_constraintTop_toBottomOf="@id/choices_hl_gl" />
 
 
 </com.esgi.nova.ui.LoadingView>

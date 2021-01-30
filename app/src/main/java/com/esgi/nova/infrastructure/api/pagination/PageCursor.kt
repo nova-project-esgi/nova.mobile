@@ -3,9 +3,9 @@ package com.esgi.nova.infrastructure.api.pagination
 import com.esgi.nova.infrastructure.ports.IPageCursor
 import java.util.*
 
-class PageCursor<T>(override var loadFunc: IGetPage<T>? = null, comparator: Comparator<T>? = null) : TreeSet<T>(comparator),
+class PageCursor<T>(override var loadFunc: IGetPage<T>? = null, comparator: Comparator<T>? = null) :
+    TreeSet<T>(comparator),
     IPageCursor<T> {
-
 
 
     override val hasNext: Boolean?
@@ -16,26 +16,27 @@ class PageCursor<T>(override var loadFunc: IGetPage<T>? = null, comparator: Comp
 
     override val pageSize: Int? get() = _pageSize
 
-    override val page: Int get() {
-        pageSize?.let {
-            if (it != 0) {
-                return size / it - 1
+    override val page: Int
+        get() {
+            pageSize?.let {
+                if (it != 0) {
+                    return size / it - 1
+                }
             }
+            return 0
         }
-        return 0
-    }
     override val nextPage: Int get() = page + 1
-    override val previousPage: Int get() = if (page - 1  >= 0) page -1 else 0
+    override val previousPage: Int get() = if (page - 1 >= 0) page - 1 else 0
 
-    private  var _hasNext: Boolean? = null
-    private  var _hasPrevious: Boolean? = null
-    private  var _pageSize: Int? = null
+    private var _hasNext: Boolean? = null
+    private var _hasPrevious: Boolean? = null
+    private var _pageSize: Int? = null
 
-    private fun updatePagination(pageMetadata: PageMetadata<T>?){
+    private fun updatePagination(pageMetadata: PageMetadata<T>?) {
         this.addAll(pageMetadata?.values ?: listOf())
         _hasNext = pageMetadata?.links?.any { link -> link.rel == Link.Relation.NEXT }
         _hasPrevious = pageMetadata?.links?.any { link -> link.rel == Link.Relation.PREVIOUS }
-        if(_pageSize == null){
+        if (_pageSize == null) {
             _pageSize = pageMetadata?.values?.size
         }
     }
@@ -58,7 +59,7 @@ class PageCursor<T>(override var loadFunc: IGetPage<T>? = null, comparator: Comp
         return this
     }
 
-    override fun resetPage(){
+    override fun resetPage() {
         clear()
         _hasPrevious = null
         _hasNext = null

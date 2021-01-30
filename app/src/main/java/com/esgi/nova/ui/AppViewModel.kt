@@ -26,6 +26,7 @@ abstract class AppViewModel : ViewModel() {
         loadingCnt++
         updateIsLoading()
     }
+
     fun unsetLoading() {
         loadingCnt--
         loadingCnt = if (loadingCnt >= 0) loadingCnt else 0

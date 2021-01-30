@@ -7,5 +7,5 @@ data class Link(
     val rel: String,
     val method: String
 ) {
-    val url: URL  get() = URL(href)
+    val url: URL get() = URL(href)
 }

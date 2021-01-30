@@ -3,7 +3,6 @@ package com.esgi.nova.difficulties.infrastructure.api
 import com.esgi.nova.difficulties.infrastructure.api.responses.TranslatedDifficultyResponse
 import com.esgi.nova.infrastructure.api.ApiConstants
 import com.esgi.nova.infrastructure.api.HttpConstants
-import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Query

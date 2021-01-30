@@ -1,7 +1,6 @@
 package com.esgi.nova.users.infrastructure.data
 
 import android.content.Context
-import androidx.lifecycle.viewModelScope
 import com.esgi.nova.infrastructure.preferences.PreferenceConstants
 import com.esgi.nova.infrastructure.preferences.getUUID
 import com.esgi.nova.infrastructure.preferences.putUUID
@@ -12,7 +11,6 @@ import com.esgi.nova.users.ports.IConnectedUserPassword
 import com.esgi.nova.users.ports.ILogUser
 import com.esgi.nova.users.ports.IUserRecapped
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
 
@@ -32,7 +30,7 @@ class UserStorageRepository @Inject constructor(
         }
     }
 
-    fun changeConnectionState(isConnected: Boolean){
+    fun changeConnectionState(isConnected: Boolean) {
         with(preference.edit()) {
             putBoolean(PreferenceConstants.User.IsConnectedKey, isConnected)
             apply()
@@ -40,17 +38,17 @@ class UserStorageRepository @Inject constructor(
     }
 
 
-
     fun getUserToken(): String? = preference.getString(PreferenceConstants.User.TokenKey, null)
 
 
     fun getUsername(): String? = preference.getString(PreferenceConstants.User.UsernameKey, null)
     fun getUserId(): UUID? = preference.getUUID(PreferenceConstants.User.UserIdKey, null)
-    fun getUserConnectionState(): Boolean = preference.getBoolean(PreferenceConstants.User.IsConnectedKey, false)
+    fun getUserConnectionState(): Boolean =
+        preference.getBoolean(PreferenceConstants.User.IsConnectedKey, false)
 
     fun getUserResume(): IUserRecapped? = getUserId()?.let { userId ->
         getUsername()?.let { username ->
-            UserRecapped (username = username, id = userId)
+            UserRecapped(username = username, id = userId)
         }
     }
 
@@ -65,7 +63,7 @@ class UserStorageRepository @Inject constructor(
         return null
     }
 
-    fun removeUser(){
+    fun removeUser() {
         with(preference.edit()) {
             remove(PreferenceConstants.User.TokenKey)
             remove(PreferenceConstants.User.UsernameKey)
@@ -75,8 +73,6 @@ class UserStorageRepository @Inject constructor(
             apply()
         }
     }
-
-
 
 
 }

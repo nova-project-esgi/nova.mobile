@@ -16,6 +16,7 @@ interface ILeaderBoardGameView {
         val total: Int
         val name: String
     }
+
     interface IUserRecapped {
         val id: UUID
         val email: String

@@ -1,6 +1,5 @@
 package com.esgi.nova.utils
 
-import com.google.common.base.Defaults
 import kotlin.reflect.KFunction
 import kotlin.reflect.KProperty1
 import kotlin.reflect.KType
@@ -13,7 +12,8 @@ inline fun <reified In : Any, reified Out : Any> In.reflectMap() =
         callCtrByItem(propertiesByName, this@reflectMap)
     }
 
-inline fun <reified In: Any, reified Out: Any> In.reflectMapNotNull() = this.reflectMap<In, Out>()!!
+inline fun <reified In : Any, reified Out : Any> In.reflectMapNotNull() =
+    this.reflectMap<In, Out>()!!
 
 inline fun <reified In : Any, reified Out : Any> Collection<In>.reflectMapCollection(): Collection<Out> {
     val outCtr = Out::class.primaryConstructor
@@ -52,13 +52,13 @@ inline fun <reified In : Any, reified Out : Any> Array<In>.reflectMapArray(): Ar
 
 fun defaultByTypeName(type: KType): Any? {
     val typeName = type.toString()
-    return when (typeName.replace("kotlin.","")) {
+    return when (typeName.replace("kotlin.", "")) {
         "Boolean" -> false
         "String" -> ""
         else -> {
             return if (typeName == "Int" || typeName == "Float" || typeName == "Double" || typeName ==
                 "Char" || typeName == "Byte" || typeName == "Short" || typeName == "Long"
-            ){
+            ) {
                 0
             } else {
                 null

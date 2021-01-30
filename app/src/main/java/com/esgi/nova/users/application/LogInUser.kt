@@ -1,6 +1,5 @@
 package com.esgi.nova.users.application
 
-import com.esgi.nova.users.exceptions.UserNotFoundException
 import com.esgi.nova.users.infrastructure.api.AuthApiRepository
 import com.esgi.nova.users.infrastructure.data.UserStorageRepository
 import com.esgi.nova.users.ports.ILogUser

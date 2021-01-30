@@ -1,7 +1,5 @@
 package com.esgi.nova.games.infrastructure.api.models
 
-import com.esgi.nova.games.ports.IGameEventState
-import com.esgi.nova.games.ports.IGameResourceState
 import com.esgi.nova.games.ports.IGameState
 import java.util.*
 

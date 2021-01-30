@@ -3,7 +3,6 @@ package com.esgi.nova.utils
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
-import android.os.Build
 
 object NetworkUtils {
 

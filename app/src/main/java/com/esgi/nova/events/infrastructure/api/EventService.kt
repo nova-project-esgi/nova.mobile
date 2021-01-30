@@ -2,7 +2,6 @@ package com.esgi.nova.events.infrastructure.api
 
 import com.esgi.nova.events.infrastructure.api.responses.TranslatedEventsWithBackgroundResponse
 import com.esgi.nova.infrastructure.api.ApiConstants
-import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Path

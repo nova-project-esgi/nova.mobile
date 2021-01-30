@@ -1,5 +1,5 @@
 package com.esgi.nova.infrastructure.ports
 
-interface IClear{
+interface IClear {
     fun clear(): Boolean
 }

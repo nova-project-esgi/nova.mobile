@@ -15,4 +15,4 @@ data class ResourceEntity(
     @field:TypeConverters(UUIDConverter::class)
     override var id: UUID = UUID.randomUUID(),
     @ColumnInfo(name = "name") override var name: String
-): IResource
+) : IResource

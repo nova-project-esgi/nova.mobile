@@ -72,7 +72,7 @@ class ParametersViewModel @ViewModelInject constructor(
     }
 
 
-    fun setSelectedLanguage(languageDto: AppLanguageDto){
+    fun setSelectedLanguage(languageDto: AppLanguageDto) {
         _selectedLanguage.value = languageDto
     }
 

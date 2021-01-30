@@ -9,7 +9,7 @@ import com.esgi.nova.resources.application.GetImageStartValueResourceWrappersByD
 import com.esgi.nova.ui.dashboard.view_models.DashboardViewModel
 
 @Suppress("UNCHECKED_CAST")
-class DashBoardViewModelFactory (
+class DashBoardViewModelFactory(
     private val createGame: CreateGame,
     private val getAllDetailedDifficultiesSortedByRank: GetAllDetailedDifficultiesSortedByRank,
     private val getImageStartValueResourceWrappersByDifficultyId: GetImageStartValueResourceWrappersByDifficultyId,

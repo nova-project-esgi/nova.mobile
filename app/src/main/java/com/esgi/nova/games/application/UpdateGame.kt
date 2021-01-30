@@ -8,7 +8,7 @@ class UpdateGame @Inject constructor(
     private val gameDbRepository: GameDbRepository
 ) {
 
-    suspend fun execute(game: IGame) =  gameDbRepository.update(game)
+    suspend fun execute(game: IGame) = gameDbRepository.update(game)
 
 
 }

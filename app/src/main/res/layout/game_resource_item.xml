@@ -7,34 +7,30 @@
 
     <ImageView
         android:id="@+id/resource_icon_iv"
-        android:padding="3dp"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/change_amount_tv"
         android:background="@drawable/circle"
-        android:contentDescription="@string/resource_icon" />
+        android:contentDescription="@string/resource_icon"
+        android:padding="3dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/change_amount_tv"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/change_amount_tv"
-        android:textSize="20sp"
-        android:padding="10dp"
+        style="@style/TextAppearance.AppCompat.Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/digital"
-        style="@style/TextAppearance.AppCompat.Title"
+        android:padding="10dp"
         android:textColor="@color/secondaryDarkColor"
+        android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/resource_icon_iv"
         app:layout_constraintEnd_toEndOf="parent"
-        android:text="10"/>
-
-
-
+        app:layout_constraintStart_toEndOf="@+id/resource_icon_iv"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

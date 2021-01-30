@@ -8,9 +8,10 @@ import com.esgi.nova.sound.ports.ISoundResume
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
-class SoundStorageRepository @Inject constructor(@ApplicationContext context: Context) : BaseStorageRepository(
-    context
-) {
+class SoundStorageRepository @Inject constructor(@ApplicationContext context: Context) :
+    BaseStorageRepository(
+        context
+    ) {
     override val preferenceKey: String = PreferenceConstants.Sound.Key
 
     fun get(): ISoundResume = SoundResume(

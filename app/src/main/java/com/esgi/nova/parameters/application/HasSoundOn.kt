@@ -5,7 +5,7 @@ import javax.inject.Inject
 
 class HasSoundOn @Inject constructor(
     private val parameterStorageRepository: ParametersStorageRepository
-)  {
+) {
 
     fun execute() = parameterStorageRepository.get().hasSound
 

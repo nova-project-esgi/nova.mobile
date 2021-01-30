@@ -3,7 +3,6 @@ package com.esgi.nova.difficulties.infrastructure.data.difficulty_resource
 import androidx.room.*
 import com.esgi.nova.difficulties.infrastructure.data.difficulty.DifficultyEntity
 import com.esgi.nova.difficulties.ports.IDifficultyResource
-import com.esgi.nova.infrastructure.data.IIdEntity
 import com.esgi.nova.infrastructure.data.UUIDConverter
 import com.esgi.nova.resources.infrastructure.data.ResourceEntity
 import java.util.*
@@ -33,12 +32,12 @@ import java.util.*
     ], primaryKeys = ["resource_id", "difficulty_id"]
 )
 data class DifficultyResourceEntity(
-    @ColumnInfo(name="resource_id")
+    @ColumnInfo(name = "resource_id")
     @field:TypeConverters(UUIDConverter::class)
     override var resourceId: UUID = UUID.randomUUID(),
-    @ColumnInfo(name="difficulty_id")
+    @ColumnInfo(name = "difficulty_id")
     @field:TypeConverters(UUIDConverter::class)
     override var difficultyId: UUID = UUID.randomUUID(),
     @ColumnInfo(name = "start_value")
     override var startValue: Int
-): IDifficultyResource
+) : IDifficultyResource

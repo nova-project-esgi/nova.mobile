@@ -13,11 +13,13 @@ class GetImageStartValueResourceWrappersByDifficultyId @Inject constructor(
     private val resourceDbRepository: DifficultyResourceDbRepository,
     private val getFileBitmapById: GetFileBitmapById
 ) {
-    suspend fun execute(difficultyId: UUID):List<IFileWrapper<IDetailedDifficulty.IStartValueResource>>{
-        return resourceDbRepository.getDifficultyResourcesByDifficultyId(difficultyId).mapNotNull {startValueResource ->
-            getFileBitmapById.execute(FsConstants.Paths.Resources, startValueResource.id)?.let { img ->
-                return@mapNotNull FileWrapperDto(startValueResource, img)
+    suspend fun execute(difficultyId: UUID): List<IFileWrapper<IDetailedDifficulty.IStartValueResource>> {
+        return resourceDbRepository.getDifficultyResourcesByDifficultyId(difficultyId)
+            .mapNotNull { startValueResource ->
+                getFileBitmapById.execute(FsConstants.Paths.Resources, startValueResource.id)
+                    ?.let { img ->
+                        return@mapNotNull FileWrapperDto(startValueResource, img)
+                    }
             }
-        }
     }
 }

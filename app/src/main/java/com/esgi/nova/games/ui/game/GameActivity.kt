@@ -128,11 +128,11 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun startDashboard() {
-            DashboardActivity.start(this@GameActivity)
+        DashboardActivity.start(this@GameActivity)
     }
 
     private fun startEndGameActivity() {
-            EndGameActivity.start(this@GameActivity)
+        EndGameActivity.start(this@GameActivity)
     }
 
     private fun onSelectedChoiceChanged(t: IDetailedChoice?) {

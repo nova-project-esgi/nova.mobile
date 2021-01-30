@@ -37,7 +37,7 @@ class CreateGame @Inject constructor(
                             } catch (e: NoConnectionException) {
                                 Log.i(CreateGame::class.qualifiedName, "Cannot update game on api")
                             } catch (e: GameNotFoundException) {
-                                gameDbRepository.deleteById(endedGameId);
+                                gameDbRepository.deleteById(endedGameId)
                             }
                         }
                     }
@@ -66,7 +66,7 @@ class CreateGame @Inject constructor(
                     gameDbRepository.getRecappedGameById(dbGameId)?.let { resumedGame ->
                         return resumedGame.toRecappedGameWithResourceIcons(resourceWrappers)
                     }
-            }
+                }
         }
         return null
     }

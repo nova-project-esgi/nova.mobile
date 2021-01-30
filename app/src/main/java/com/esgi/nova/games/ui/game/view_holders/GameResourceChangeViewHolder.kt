@@ -1,7 +1,5 @@
 package com.esgi.nova.games.ui.game.view_holders
 
-import android.graphics.Color
-import android.media.Image
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -12,7 +10,6 @@ import com.esgi.nova.events.ports.IDetailedChoice
 import com.esgi.nova.files.infrastructure.ports.IFileWrapper
 import com.esgi.nova.utils.toChangeString
 import org.jetbrains.anko.imageResource
-import org.jetbrains.anko.textColor
 import org.jetbrains.anko.textColorResource
 
 class GameResourceChangeViewHolder(inflater: LayoutInflater, parent: ViewGroup) :

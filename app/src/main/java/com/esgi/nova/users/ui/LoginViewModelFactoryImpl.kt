@@ -9,7 +9,7 @@ import com.esgi.nova.users.application.RetrieveUser
 import com.esgi.nova.users.ui.view_models.LoginViewModel
 
 @Suppress("UNCHECKED_CAST")
-class LoginViewModelFactoryImpl (
+class LoginViewModelFactoryImpl(
     private val logInUser: LogInUser,
     private val hasConnectedUser: HasConnectedUser,
     private val logOutUser: LogOutUser,

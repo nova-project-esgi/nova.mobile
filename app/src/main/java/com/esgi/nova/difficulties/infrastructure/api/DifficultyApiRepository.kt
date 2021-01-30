@@ -6,7 +6,6 @@ import com.esgi.nova.infrastructure.api.AuthenticatedApiRepository
 import com.esgi.nova.users.application.GetUserToken
 import com.esgi.nova.users.application.UpdateUserToken
 import dagger.hilt.android.qualifiers.ApplicationContext
-import retrofit2.Retrofit
 import javax.inject.Inject
 
 
@@ -25,7 +24,7 @@ class DifficultyApiRepository @Inject constructor(
     suspend fun getAllTranslatedDifficulties(language: String): List<ResumedDifficulty> {
         return difficultiesService
             .getAllTranslatedDifficulties(language = language)
-            .map { it -> it.toDifficultyWithResourceResumes() } ?: listOf()
+            .map { it.toDifficultyWithResourceResumes() }
     }
 }
 

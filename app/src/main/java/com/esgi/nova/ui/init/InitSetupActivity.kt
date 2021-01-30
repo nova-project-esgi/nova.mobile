@@ -4,12 +4,10 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.esgi.nova.R
-import com.esgi.nova.application_state.application.IsSynchronized
 import com.esgi.nova.application_state.application.SetSynchronizeState
 import com.esgi.nova.databinding.ActivityInitSetupBinding
 import com.esgi.nova.difficulties.application.SynchronizeDifficulties
@@ -21,12 +19,7 @@ import com.esgi.nova.resources.application.SynchronizeResources
 import com.esgi.nova.ui.dashboard.DashboardActivity
 import com.esgi.nova.ui.init.view_models.BaseInitViewModel
 import com.esgi.nova.ui.init.view_models.InitViewModel
-import com.esgi.nova.users.application.HasConnectedUser
-import com.esgi.nova.users.application.LogInUser
-import com.esgi.nova.users.application.LogOutUser
-import com.esgi.nova.users.application.RetrieveUser
 import com.esgi.nova.users.ui.LoginActivity
-import com.esgi.nova.users.ui.view_models.LoginViewModel
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -40,7 +33,7 @@ import javax.inject.Inject
 interface IInitViewModelFactory : ViewModelProvider.Factory
 
 @Suppress("UNCHECKED_CAST")
-class InitViewModelFactory (
+class InitViewModelFactory(
     private val synchronizeEvents: SynchronizeEvents,
     private val synchronizeDifficulties: SynchronizeDifficulties,
     private val synchronizeLanguages: SynchronizeLanguages,
@@ -94,9 +87,10 @@ class InitSetupActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityInitSetupBinding
 
-    @Inject lateinit var viewModelFactory: IInitViewModelFactory
+    @Inject
+    lateinit var viewModelFactory: IInitViewModelFactory
 
-            companion object {
+    companion object {
         const val SynchronizeStepsTotal = 7
 
         fun startWithUserConfirmation(context: Context): Context {
@@ -121,7 +115,7 @@ class InitSetupActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityInitSetupBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        viewModel = ViewModelProvider(this, viewModelFactory ).get(BaseInitViewModel::class.java)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(BaseInitViewModel::class.java)
         viewModel.currentInitStep.observe(this) { step -> setLoadingText(step) }
         viewModel.navigateToDashboard.observe(this) { navigateToDashboard() }
         viewModel.networkError.observe(this) { handleNetworkError() }
@@ -158,7 +152,6 @@ class InitSetupActivity : AppCompatActivity() {
             7 -> binding.loadingDescriptionTv.textResource = R.string.loading_step_7
         }
     }
-
 
 
 }

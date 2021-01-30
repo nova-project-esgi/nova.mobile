@@ -9,19 +9,19 @@ import com.esgi.nova.R
 import com.esgi.nova.events.ports.IDetailedChoice
 import com.esgi.nova.games.ui.game.fragments.OnChoiceClicked
 
-class ChoiceViewHolder(inflater: LayoutInflater, parent: ViewGroup):
-    RecyclerView.ViewHolder(inflater.inflate(R.layout.choice_list_item, parent, false)), View.OnClickListener {
+class ChoiceViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
+    RecyclerView.ViewHolder(inflater.inflate(R.layout.choice_list_item, parent, false)),
+    View.OnClickListener {
 
     private var onChoiceClicked: OnChoiceClicked? = null
     private var name: Button? = null
     private var choice: IDetailedChoice? = null
-    init
-    {
+
+    init {
         name = itemView.findViewById(R.id.choice_btn)
     }
 
-    fun bind(choice: IDetailedChoice, onChoiceClicked: OnChoiceClicked)
-    {
+    fun bind(choice: IDetailedChoice, onChoiceClicked: OnChoiceClicked) {
 
         this.choice = choice
         this.onChoiceClicked = onChoiceClicked

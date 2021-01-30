@@ -1,20 +1,20 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.dashboard.DashboardActivity" >
+    tools:context=".ui.dashboard.DashboardActivity">
 
     <item
         android:id="@+id/settings_btn"
+        android:contentDescription="@string/open_settings"
         android:icon="@drawable/baseline_settings_white_24"
         android:title="@string/settings"
-        android:contentDescription="@string/open_settings"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/leaderboard_btn"
+        android:contentDescription="@string/open_leaderboard"
         android:icon="@drawable/baseline_leaderboard_white_24"
         android:title="@string/leaderboard"
-        android:contentDescription="@string/open_leaderboard"
         app:showAsAction="ifRoom" />
 
 </menu>

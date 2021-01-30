@@ -21,7 +21,10 @@ class SaveParameters @Inject constructor(
 
         params.selectedLanguage?.let { language ->
             selectLanguage.execute(languageId = language.id)?.let { selectedLanguage ->
-                languageSystemRepository.updateResources(selectedLanguage.code, selectedLanguage.subCode)
+                languageSystemRepository.updateResources(
+                    selectedLanguage.code,
+                    selectedLanguage.subCode
+                )
                 return params.toLanguageParameters(selectedLanguage)
             }
         }

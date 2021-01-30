@@ -10,4 +10,4 @@ data class ConnectedUser(
     override val username: String,
     override val token: String,
     override val id: UUID
-): IConnectedUser
+) : IConnectedUser

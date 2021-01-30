@@ -17,7 +17,8 @@ import java.util.*
         parentColumns = ["id"],
         onDelete = ForeignKey.CASCADE,
         onUpdate = ForeignKey.CASCADE
-)])
+    )]
+)
 data class ChoiceEntity(
     @ColumnInfo(name = "id")
     @PrimaryKey
@@ -28,5 +29,5 @@ data class ChoiceEntity(
     override var eventId: UUID = UUID.randomUUID(),
     @ColumnInfo(name = "title") override val title: String,
     @ColumnInfo(name = "description") override val description: String
-): IChoice
+) : IChoice
 

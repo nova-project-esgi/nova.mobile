@@ -15,4 +15,5 @@ fun Intent.clear() {
 fun Intent.putUUIDExtra(key: String, uuid: UUID) = putExtra(key, uuid.toString())
 
 
-fun Intent.getUUIDExtra(key: String): UUID? = getStringExtra(key)?.let { uuid -> UUID.fromString(uuid) }
+fun Intent.getUUIDExtra(key: String): UUID? =
+    getStringExtra(key)?.let { uuid -> UUID.fromString(uuid) }

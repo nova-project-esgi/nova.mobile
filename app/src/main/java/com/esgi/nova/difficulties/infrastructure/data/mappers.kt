@@ -17,4 +17,5 @@ fun List<DifficultyWithResource>.toDetailedDifficulties(): List<IDetailedDifficu
     return difficultyWithResourcesList
 }
 
-fun List<DifficultyWithResource>.toDetailedDifficulty(): IDetailedDifficulty ? = this.toDetailedDifficulties().firstOrNull()
+fun List<DifficultyWithResource>.toDetailedDifficulty(): IDetailedDifficulty? =
+    this.toDetailedDifficulties().firstOrNull()

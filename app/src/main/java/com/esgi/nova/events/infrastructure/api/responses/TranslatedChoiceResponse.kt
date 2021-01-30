@@ -14,10 +14,16 @@ data class TranslatedChoiceResponse(
     override val title: String,
     override val description: String,
     val language: String
-): IChoice, IDetailedChoice {
+) : IChoice, IDetailedChoice {
 
     fun toResumedChoice() = ResumedChoice(
-        resources = resources.map { ChoiceResource(resourceId = it.id, changeValue = it.changeValue, choiceId = id) }.toMutableList(),
+        resources = resources.map {
+            ChoiceResource(
+                resourceId = it.id,
+                changeValue = it.changeValue,
+                choiceId = id
+            )
+        }.toMutableList(),
         description = description,
         eventId = eventId,
         id = id,

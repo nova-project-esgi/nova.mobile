@@ -1,6 +1,6 @@
 package com.esgi.nova.difficulties.ports
 
-interface IResumedDifficulty:
+interface IResumedDifficulty :
     IDifficulty {
     val resources: MutableList<IDifficultyResource>
 }

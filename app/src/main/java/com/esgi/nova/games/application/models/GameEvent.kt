@@ -8,6 +8,6 @@ data class GameEvent(
     override val eventId: UUID,
     override val gameId: UUID,
     override val linkTime: LocalDateTime
-): IGameEvent {
+) : IGameEvent {
     override val id: UUID = UUID.randomUUID()
 }

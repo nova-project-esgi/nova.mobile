@@ -12,15 +12,14 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.80"
-        />
+        app:layout_constraintGuide_percent="0.80" />
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/start_input_gl"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.20"
-        />
+        app:layout_constraintGuide_percent="0.20" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/inputs_hl_gl"
@@ -42,52 +41,52 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.5" />
+
     <TextView
         android:id="@+id/title_tv"
         android:layout_width="0dp"
-        android:textAlignment="center"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/inputs_hl_gl"
         android:fontFamily="@font/stracruiser_italic"
         android:text="@string/app_name"
-        android:textSize="@dimen/title_size"
+        android:textAlignment="center"
         android:textColor="@color/secondaryLightColor"
-        />
+        android:textSize="@dimen/title_size"
+        app:layout_constraintBottom_toTopOf="@id/inputs_hl_gl"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/login_cl"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/inputs_hl_gl"
         app:layout_constraintBottom_toTopOf="@+id/password_cl"
-        app:layout_constraintStart_toEndOf="@id/start_input_gl"
         app:layout_constraintEnd_toStartOf="@id/end_input_gl"
-        >
+        app:layout_constraintStart_toEndOf="@id/start_input_gl"
+        app:layout_constraintTop_toBottomOf="@+id/inputs_hl_gl">
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/et_login"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:hint="@string/username"
             android:textColorHint="@color/primaryColor"
             app:boxStrokeColor="@color/primaryColor"
+            app:endIconMode="clear_text"
             app:endIconTint="@color/primaryColor"
-            android:hint="@string/username"
             app:errorEnabled="true"
-            app:endIconMode="clear_text">
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/ti_login"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:textColor="@color/secondaryColor"
-                android:inputType="text" />
+                android:inputType="text"
+                android:textColor="@color/secondaryColor" />
         </com.google.android.material.textfield.TextInputLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -97,47 +96,47 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@id/buttons_hl_gl"
-        app:layout_constraintTop_toBottomOf="@+id/login_cl"
-        app:layout_constraintStart_toEndOf="@id/start_input_gl"
         app:layout_constraintEnd_toStartOf="@id/end_input_gl"
-        >
+        app:layout_constraintStart_toEndOf="@id/start_input_gl"
+        app:layout_constraintTop_toBottomOf="@+id/login_cl">
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/et_password"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:hint="@string/password"
             android:textColorHint="@color/primaryColor"
             app:boxStrokeColor="@color/primaryColor"
+            app:endIconMode="clear_text"
             app:endIconTint="@color/primaryColor"
             app:errorEnabled="true"
-            android:hint="@string/password"
-            app:endIconMode="clear_text">
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/ti_password"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:textColor="@color/secondaryColor"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:textColor="@color/secondaryColor" />
         </com.google.android.material.textfield.TextInputLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
     <TextView
         android:id="@+id/tv_errorString"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/user_not_exist_msg"
-        android:visibility="gone"
         android:textColor="@color/design_default_color_error"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@id/buttons_hl_gl"
         app:layout_constraintEnd_toStartOf="@+id/end_input_gl"
         app:layout_constraintStart_toStartOf="@+id/start_input_gl"
-        app:layout_constraintTop_toBottomOf="@id/password_cl"/>
-
+        app:layout_constraintTop_toBottomOf="@id/password_cl" />
 
 
     <com.google.android.material.button.MaterialButton
@@ -149,11 +148,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/buttons_v_gl"
         app:layout_constraintStart_toStartOf="@+id/start_input_gl"
-        app:layout_constraintTop_toBottomOf="@id/buttons_hl_gl"
-        >
+        app:layout_constraintTop_toBottomOf="@id/buttons_hl_gl">
 
     </com.google.android.material.button.MaterialButton>
-
 
 
     <com.google.android.material.button.MaterialButton

@@ -97,27 +97,24 @@ class LoginActivityTest {
             unexpectedError.value = true
 
             onView(withText(R.string.unexpected_error_msg))
-                .inRoot(withDecorView(not( it.window.decorView)))// Here we use decorView
+                .inRoot(withDecorView(not(it.window.decorView)))// Here we use decorView
                 .check(matches(isDisplayed()))
             return@onActivity
         }
 
     }
 
-    @Test @Ignore
+    @Test
     fun displayNetworkError_on_unavailableNetwork() {
         activityRule.scenario.onActivity {
             unavailableNetwork.value = true
 
             onView(withText(R.string.network_not_available_msg))
-                .inRoot(withDecorView(not( it.window.decorView)))// Here we use decorView
+                .inRoot(withDecorView(not(it.window.decorView)))// Here we use decorView
                 .check(matches(isDisplayed()))
             return@onActivity
         }
     }
-
-
-
 
 
     @After

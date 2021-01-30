@@ -11,7 +11,8 @@ class ChoicesListViewModel : ViewModel() {
     fun select(item: IDetailedChoice?) {
         selected.value = item
     }
-    fun setChoices(choices: List<IDetailedChoice>){
+
+    fun setChoices(choices: List<IDetailedChoice>) {
         this.choices.value = choices
     }
 

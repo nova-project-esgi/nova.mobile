@@ -43,5 +43,4 @@ class TokenRefreshAuthenticator(val updateUserToken: UpdateUserToken) :
         }
 
 
-
 }

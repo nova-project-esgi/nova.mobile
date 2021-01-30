@@ -17,15 +17,15 @@
     <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="40dp"
+        android:fontFamily="@font/stracruiser_italic"
         android:text="@string/app_name"
         android:textAlignment="center"
-        android:fontFamily="@font/stracruiser_italic"
-        android:textSize="@dimen/title_size"
         android:textColor="@color/secondaryLightColor"
-        android:layout_marginTop="40dp" />
+        android:textSize="@dimen/title_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ProgressBar
         android:id="@+id/loader_pb"
@@ -36,32 +36,30 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/middle_gl"
-        app:layout_constraintVertical_bias="0.2"/>
+        app:layout_constraintVertical_bias="0.2" />
 
     <TextView
         android:id="@+id/loading_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="@string/loading"
+        android:textColor="@color/primaryColor"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/loader_pb"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias="0.3"
-        android:textColor="@color/primaryColor"
-        android:text="@string/loading"
-        />
+        app:layout_constraintVertical_bias="0.3" />
 
     <TextView
         android:id="@+id/loading_description_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="@string/crew_message"
+        android:textColor="@color/primaryLightColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/loading_tv"
-        android:textColor="@color/primaryLightColor"
-        android:text="@string/crew_message"
-        />
+        app:layout_constraintTop_toBottomOf="@id/loading_tv" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

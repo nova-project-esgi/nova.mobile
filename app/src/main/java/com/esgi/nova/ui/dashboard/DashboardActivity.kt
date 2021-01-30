@@ -32,10 +32,12 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class DashboardActivity : AppCompatActivity(), View.OnClickListener, AdapterView.OnItemClickListener {
+class DashboardActivity : AppCompatActivity(), View.OnClickListener,
+    AdapterView.OnItemClickListener {
 
 
-    @Inject lateinit var viewModelFactory: IDashboardViewModelFactory
+    @Inject
+    lateinit var viewModelFactory: IDashboardViewModelFactory
     private lateinit var viewModel: BaseDashboardViewModel
 
     private lateinit var binding: ActivityDashboardBinding
@@ -57,7 +59,8 @@ class DashboardActivity : AppCompatActivity(), View.OnClickListener, AdapterView
         binding = ActivityDashboardBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        viewModel = ViewModelProvider(this, viewModelFactory).get(BaseDashboardViewModel::class.java)
+        viewModel =
+            ViewModelProvider(this, viewModelFactory).get(BaseDashboardViewModel::class.java)
 
         binding.initNewGameBtn.setOnClickListener(this)
         binding.resumeGameBtn.setOnClickListener(this)

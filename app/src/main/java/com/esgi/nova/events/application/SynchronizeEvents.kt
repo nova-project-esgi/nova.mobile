@@ -29,7 +29,7 @@ class SynchronizeEvents @Inject constructor(
 
         eventDbRepository.upsertCollection(translatedEvents)
         eventDbRepository.getAllNonDailyEvents().forEach { event ->
-            if(!translatedEvents.any { translatedEvent -> translatedEvent.id == event.id }){
+            if (!translatedEvents.any { translatedEvent -> translatedEvent.id == event.id }) {
                 eventDbRepository.delete(event)
             }
         }

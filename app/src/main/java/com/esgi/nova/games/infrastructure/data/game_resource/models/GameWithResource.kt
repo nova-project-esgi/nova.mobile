@@ -2,7 +2,6 @@ package com.esgi.nova.games.infrastructure.data.game_resource.models
 
 import androidx.room.Embedded
 import androidx.room.Relation
-import com.esgi.nova.difficulties.infrastructure.data.difficulty.DifficultyEntity
 import com.esgi.nova.games.infrastructure.data.game.GameEntity
 import com.esgi.nova.games.infrastructure.data.game_resource.GameResourceEntity
 import com.esgi.nova.resources.infrastructure.data.ResourceEntity

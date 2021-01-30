@@ -1,6 +1,6 @@
 package com.esgi.nova.files.infrastructure.ports
 
-interface IFileStreamResumeWithDestination:
+interface IFileStreamResumeWithDestination :
     IFileStreamResume {
     val destinationDir: String
     val fileNameWithoutExtension: String

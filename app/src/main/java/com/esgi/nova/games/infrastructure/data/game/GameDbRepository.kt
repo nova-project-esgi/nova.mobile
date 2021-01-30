@@ -20,24 +20,27 @@ class GameDbRepository @Inject constructor(
     BaseRepository<UUID, GameEntity, IGame>() {
 
 
-    override fun toEntity(el: IGame): GameEntity =  GameEntity(
+    override fun toEntity(el: IGame): GameEntity = GameEntity(
         id = el.id,
         difficultyId = el.difficultyId,
-        userId =  el.userId,
+        userId = el.userId,
         duration = el.duration,
         isEnded = el.isEnded
     )
 
 
-    override fun toEntities(entities: Collection<IGame>): Collection<GameEntity> = entities.map { toEntity(it) }
+    override fun toEntities(entities: Collection<IGame>): Collection<GameEntity> =
+        entities.map { toEntity(it) }
 
     suspend fun getGameEditionById(id: UUID): IGameEdition? {
         val game = getById(id)
         game?.let {
             return GameEdition(
                 duration = game.duration,
-                events = gameEventDao.getAllGameWithEventById(id).map { it.toGameEventEdition() }.toMutableList(),
-                resources = gameResourceDao.getAllGameWithResourceById(id).map { it.toGameResourceEdition() }.toMutableList(),
+                events = gameEventDao.getAllGameWithEventById(id).map { it.toGameEventEdition() }
+                    .toMutableList(),
+                resources = gameResourceDao.getAllGameWithResourceById(id)
+                    .map { it.toGameResourceEdition() }.toMutableList(),
                 isEnded = game.isEnded
             )
         }
@@ -45,7 +48,7 @@ class GameDbRepository @Inject constructor(
     }
 
     suspend fun getRecappedGameById(id: UUID): IRecappedGame? {
-        getById(id)?.let {game ->
+        getById(id)?.let { game ->
             return RecappedGame(
                 id = game.id,
                 duration = game.duration,

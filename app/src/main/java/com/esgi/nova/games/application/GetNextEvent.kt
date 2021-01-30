@@ -25,15 +25,15 @@ class GetNextEvent @Inject constructor(
     private val getFileBitmapById: GetFileBitmapById,
     private val parametersStorageRepository: ParametersStorageRepository
 
-){
+) {
 
-    companion object{
+    companion object {
         const val LastEventLimit = 3
     }
 
     suspend fun execute(gameId: UUID): IFileWrapper<IDetailedEvent>? {
 
-        if(parametersStorageRepository.get().hasDailyEvents) {
+        if (parametersStorageRepository.get().hasDailyEvents) {
             try {
                 getDailyEvent.execute(gameId)?.let { event ->
                     gameEventDbRepository.insertOne(
@@ -64,15 +64,18 @@ class GetNextEvent @Inject constructor(
         while (retry) {
             val idx = Random.nextInt(0, events.size)
             selectedEventId = events[idx].id
-            retry = gameEvents.take(eventLimit).any { gameEvent -> gameEvent.eventId == selectedEventId }
+            retry = gameEvents.take(eventLimit)
+                .any { gameEvent -> gameEvent.eventId == selectedEventId }
         }
 
         selectedEventId?.let {
-            gameEventDbRepository.insertOne(element = GameEvent(
-                eventId = selectedEventId,
-                gameId = gameId,
-                linkTime = LocalDateTime.now(ZoneOffset.UTC)
-            ))
+            gameEventDbRepository.insertOne(
+                element = GameEvent(
+                    eventId = selectedEventId,
+                    gameId = gameId,
+                    linkTime = LocalDateTime.now(ZoneOffset.UTC)
+                )
+            )
             eventDbRepository.getDetailedEventById(id = selectedEventId)?.let { event ->
                 getFileBitmapById.execute(FsConstants.Paths.Events, event.id)?.let { img ->
                     return FileWrapperDto(event, img)

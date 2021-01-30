@@ -11,18 +11,19 @@ import com.esgi.nova.sound.application.GetSoundResume
 import com.esgi.nova.sound.application.SaveSoundResume
 import com.esgi.nova.sound.infrastructure.storage.models.SoundResume
 import dagger.hilt.android.AndroidEntryPoint
-import java.lang.IllegalStateException
 import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class BackgroundSoundService  : Service() {
+class BackgroundSoundService : Service() {
     var player: MediaPlayer? = null
 
     @Inject
     lateinit var hasSoundOn: HasSoundOn
+
     @Inject
     lateinit var getSoundResume: GetSoundResume
+
     @Inject
     lateinit var saveSoundResume: SaveSoundResume
 
@@ -31,6 +32,7 @@ class BackgroundSoundService  : Service() {
             val intent = Intent(context, BackgroundSoundService::class.java)
             context.startService(intent)
         }
+
         fun stop(context: Context) {
             val intent = Intent(context, BackgroundSoundService::class.java)
             context.stopService(intent)
@@ -51,18 +53,17 @@ class BackgroundSoundService  : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        if(hasSoundOn.execute()){
+        if (hasSoundOn.execute()) {
             val resume = getSoundResume.execute()
-            player?.let {player ->
+            player?.let { player ->
                 player.seekTo(resume.backgroundSoundPosition)
                 player.start()
             }
-        }else {
+        } else {
             stopSelf()
         }
-        return  super.onStartCommand(intent, flags, startId)
+        return super.onStartCommand(intent, flags, startId)
     }
-
 
 
     override fun onDestroy() {

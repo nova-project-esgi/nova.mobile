@@ -34,7 +34,8 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, TextWatcher {
     lateinit var switchSound: SwitchSound
 
 
-    @Inject lateinit var viewModelFactory: LoginViewModelFactory
+    @Inject
+    lateinit var viewModelFactory: LoginViewModelFactory
     private lateinit var viewModel: BaseLoginViewModel
 
 

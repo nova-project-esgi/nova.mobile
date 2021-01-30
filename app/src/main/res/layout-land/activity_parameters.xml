@@ -9,10 +9,10 @@
 
     <TextView
         android:id="@+id/tv_option_title"
-        android:fontFamily="@font/stracruiser_italic"
-        android:layout_height="wrap_content"
-        android:text="@string/settings"
         android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/stracruiser_italic"
+        android:text="@string/settings"
         android:textAlignment="center"
         android:textColor="@color/secondaryColor"
         android:textSize="@dimen/title_size"
@@ -140,10 +140,10 @@
         android:backgroundTint="@color/secondaryColor"
         android:text="@string/log_out"
         app:icon="@drawable/baseline_close_white_24"
-        app:layout_constraintTop_toBottomOf="@id/actions_gl"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/btn_save_option"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/actions_gl" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_save_option"

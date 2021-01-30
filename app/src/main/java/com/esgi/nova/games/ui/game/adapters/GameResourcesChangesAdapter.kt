@@ -10,7 +10,10 @@ import com.esgi.nova.games.ui.game.view_holders.GameResourceChangeViewHolder
 class GameResourcesChangesAdapter(private val resources: List<IFileWrapper<IDetailedChoice.IChangeValueResource>>) :
     RecyclerView.Adapter<GameResourceChangeViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GameResourceChangeViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): GameResourceChangeViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         return GameResourceChangeViewHolder(
             inflater,

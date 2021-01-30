@@ -4,7 +4,7 @@ import com.esgi.nova.users.exceptions.InvalidPasswordException
 import com.esgi.nova.users.exceptions.InvalidUsernameException
 import com.esgi.nova.users.ports.ILogUser
 
-class UserLoginDto(username: String, password: String): ILogUser {
+class UserLoginDto(username: String, password: String) : ILogUser {
     override val username: String = username.trim()
     override val password: String = password.trim()
 

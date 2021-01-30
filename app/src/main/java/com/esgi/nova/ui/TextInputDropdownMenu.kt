@@ -9,7 +9,6 @@ import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatAutoCompleteTextView
 
 
-
 class TextInputDropdownMenu : AppCompatAutoCompleteTextView {
 
     override fun getDefaultEditable(): Boolean {
@@ -77,6 +76,7 @@ class TextInputDropdownMenu : AppCompatAutoCompleteTextView {
             override fun createFromParcel(parcel: Parcel): CustomSavedState {
                 return CustomSavedState(parcel)
             }
+
             override fun newArray(size: Int): Array<CustomSavedState?> {
                 return arrayOfNulls(size)
             }

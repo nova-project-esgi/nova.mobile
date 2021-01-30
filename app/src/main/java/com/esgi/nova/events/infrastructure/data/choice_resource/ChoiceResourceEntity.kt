@@ -3,7 +3,6 @@ package com.esgi.nova.events.infrastructure.data.choice_resource
 import androidx.room.*
 import com.esgi.nova.events.infrastructure.data.choices.ChoiceEntity
 import com.esgi.nova.events.ports.IChoiceResource
-import com.esgi.nova.infrastructure.data.IIdEntity
 import com.esgi.nova.infrastructure.data.UUIDConverter
 import com.esgi.nova.resources.infrastructure.data.ResourceEntity
 import java.util.*
@@ -33,12 +32,12 @@ import java.util.*
     ], primaryKeys = ["resource_id", "choice_id"]
 )
 data class ChoiceResourceEntity(
-    @ColumnInfo(name="resource_id")
+    @ColumnInfo(name = "resource_id")
     @field:TypeConverters(UUIDConverter::class)
     override var resourceId: UUID = UUID.randomUUID(),
-    @ColumnInfo(name="choice_id")
+    @ColumnInfo(name = "choice_id")
     @field:TypeConverters(UUIDConverter::class)
     override var choiceId: UUID = UUID.randomUUID(),
     @ColumnInfo(name = "change_value")
     override var changeValue: Int
-): IChoiceResource
+) : IChoiceResource

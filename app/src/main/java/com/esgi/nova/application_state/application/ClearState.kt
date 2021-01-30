@@ -16,7 +16,7 @@ class ClearState @Inject constructor(
     val applicationStateStorageRepository: ApplicationStateStorageRepository
 ) {
 
-    fun execute(){
+    fun execute() {
         db.clear()
         fileStorageRepository.clear()
 //        userStorageRepository.clear()

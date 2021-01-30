@@ -11,4 +11,4 @@ data class GameResume(
     val resourceIds: List<UUID>,
     override val isEnded: Boolean,
     val eventIds: List<UUID>
-): IGame
+) : IGame

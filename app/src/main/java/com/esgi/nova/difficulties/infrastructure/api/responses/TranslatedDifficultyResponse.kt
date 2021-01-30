@@ -10,7 +10,7 @@ data class TranslatedDifficultyResponse(
     val language: String,
     override val name: String,
     val resources: List<DifficultyResourceResponse>, override val rank: Int
-): IDifficulty {
+) : IDifficulty {
 
     fun toDifficultyWithResourceResumes() =
         ResumedDifficulty(

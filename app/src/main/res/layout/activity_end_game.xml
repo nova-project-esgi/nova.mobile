@@ -11,13 +11,13 @@
         android:id="@+id/end_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="@string/end_game_title"
+        android:textColor="@color/primaryLightColor"
+        android:textSize="30sp"
         app:layout_constraintBottom_toTopOf="@id/end_message"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:text="@string/end_game_title"
-        android:textColor="@color/primaryLightColor"
-        android:textSize="30sp" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/end_message"
@@ -26,22 +26,22 @@
         android:text="@string/end_game_message"
         android:textAlignment="center"
         android:textColor="@color/primaryLightColor"
+        android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@id/turn_recap"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/end_title"
-        android:textSize="24sp" />
+        app:layout_constraintTop_toBottomOf="@id/end_title" />
 
     <TextView
         android:id="@+id/turn_recap"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         android:textAlignment="center"
         android:textColor="@color/primaryLightColor"
-        app:layout_constraintTop_toBottomOf="@id/end_message"
-        app:layout_constraintBottom_toTopOf="@id/resources_recap" />
+        app:layout_constraintBottom_toTopOf="@id/resources_recap"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/end_message" />
 
     <TextView
         android:id="@+id/resources_recap"
@@ -74,13 +74,13 @@
     </LinearLayout>
 
     <Button
+        android:id="@+id/return_to_dashboard"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/return_to_dashboard"
         android:text="@string/menu"
-        app:layout_constraintTop_toBottomOf="@id/resources_recap_ll"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/resources_recap_ll" />
 
 </com.esgi.nova.ui.LoadingView>

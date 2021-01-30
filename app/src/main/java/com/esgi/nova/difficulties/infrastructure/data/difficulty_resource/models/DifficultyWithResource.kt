@@ -33,6 +33,7 @@ class DifficultyWithResource {
             name = resource.name,
             startValue = difficultyResource.startValue
         )
+
     fun toDifficultyWithResources() =
         DetailedDifficulty(
             id = difficulty.id,

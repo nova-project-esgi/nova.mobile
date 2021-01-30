@@ -5,7 +5,7 @@ import java.time.LocalDateTime
 import java.util.*
 
 
-interface IGameEvent: IIdEntity<UUID> {
+interface IGameEvent : IIdEntity<UUID> {
     val eventId: UUID
     val gameId: UUID
     val linkTime: LocalDateTime

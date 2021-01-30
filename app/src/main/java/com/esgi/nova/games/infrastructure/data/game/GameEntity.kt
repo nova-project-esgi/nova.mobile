@@ -3,7 +3,6 @@ package com.esgi.nova.games.infrastructure.data.game
 import androidx.room.*
 import com.esgi.nova.difficulties.infrastructure.data.difficulty.DifficultyEntity
 import com.esgi.nova.games.ports.IGame
-import com.esgi.nova.infrastructure.data.IIdEntity
 import com.esgi.nova.infrastructure.data.UUIDConverter
 import java.util.*
 

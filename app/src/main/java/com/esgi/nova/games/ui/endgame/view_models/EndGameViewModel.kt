@@ -10,7 +10,7 @@ import com.esgi.nova.ui.AppViewModel
 
 class EndGameViewModel @ViewModelInject constructor(
     private val getLastEndedGame: GetLastEndedGame,
-    ) :  AppViewModel() {
+) : AppViewModel() {
 
 
     val loosingResource: LiveData<String>

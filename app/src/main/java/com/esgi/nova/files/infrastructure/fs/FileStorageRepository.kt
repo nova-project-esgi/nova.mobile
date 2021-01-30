@@ -13,7 +13,7 @@ import java.io.IOException
 import java.io.OutputStream
 import javax.inject.Inject
 
-class FileStorageRepository @Inject constructor( @ApplicationContext private val context: Context) :
+class FileStorageRepository @Inject constructor(@ApplicationContext private val context: Context) :
     IClear {
 
     private val storageDir get() = context.filesDir

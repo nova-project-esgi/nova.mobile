@@ -5,18 +5,16 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.esgi.nova.events.infrastructure.data.events.EventDAO
-import com.esgi.nova.resources.infrastructure.data.ResourceDAO
-import com.esgi.nova.events.infrastructure.data.events.EventEntity
-import com.esgi.nova.resources.infrastructure.data.ResourceEntity
-import com.esgi.nova.difficulties.infrastructure.data.difficulty.DifficultyEntity
 import com.esgi.nova.difficulties.infrastructure.data.difficulty.DifficultyDAO
-import com.esgi.nova.difficulties.infrastructure.data.difficulty_resource.DifficultyResourceEntity
+import com.esgi.nova.difficulties.infrastructure.data.difficulty.DifficultyEntity
 import com.esgi.nova.difficulties.infrastructure.data.difficulty_resource.DifficultyResourceDAO
-import com.esgi.nova.events.infrastructure.data.choice_resource.ChoiceResourceEntity
+import com.esgi.nova.difficulties.infrastructure.data.difficulty_resource.DifficultyResourceEntity
 import com.esgi.nova.events.infrastructure.data.choice_resource.ChoiceResourceDAO
-import com.esgi.nova.events.infrastructure.data.choices.ChoiceEntity
+import com.esgi.nova.events.infrastructure.data.choice_resource.ChoiceResourceEntity
 import com.esgi.nova.events.infrastructure.data.choices.ChoiceDAO
+import com.esgi.nova.events.infrastructure.data.choices.ChoiceEntity
+import com.esgi.nova.events.infrastructure.data.events.EventDAO
+import com.esgi.nova.events.infrastructure.data.events.EventEntity
 import com.esgi.nova.games.infrastructure.data.game.GameDao
 import com.esgi.nova.games.infrastructure.data.game.GameEntity
 import com.esgi.nova.games.infrastructure.data.game_event.GameEventDao
@@ -24,8 +22,10 @@ import com.esgi.nova.games.infrastructure.data.game_event.GameEventEntity
 import com.esgi.nova.games.infrastructure.data.game_resource.GameResourceDao
 import com.esgi.nova.games.infrastructure.data.game_resource.GameResourceEntity
 import com.esgi.nova.infrastructure.ports.IClear
-import com.esgi.nova.languages.infrastructure.data.LanguageEntity
 import com.esgi.nova.languages.infrastructure.data.LanguageDAO
+import com.esgi.nova.languages.infrastructure.data.LanguageEntity
+import com.esgi.nova.resources.infrastructure.data.ResourceDAO
+import com.esgi.nova.resources.infrastructure.data.ResourceEntity
 
 @Database(
     entities = [

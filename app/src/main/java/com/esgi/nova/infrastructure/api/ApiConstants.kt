@@ -4,8 +4,7 @@ object ApiConstants {
     const val BaseUrl = "http://freenetaccess.freeboxos.fr:8001/"
 
 
-
-    object EndPoints{
+    object EndPoints {
         const val Auth = "auth/"
         const val Difficulties = "difficulties/"
         const val Events = "events/"
