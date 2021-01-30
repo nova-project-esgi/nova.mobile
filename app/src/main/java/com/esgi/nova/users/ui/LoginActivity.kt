@@ -136,7 +136,9 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, TextWatcher {
             binding.etPassword.error = resources.getString(R.string.invalid_password_msg)
         }
         viewModel.invalidUsername.observe(this) {
-            binding.etLogin.error = resources.getString(R.string.invalid_username_msg)
+            runOnUiThread {
+                binding.etLogin.error = resources.getString(R.string.invalid_username_msg)
+            }
         }
 
         viewModel.unavailableNetwork.observe(this) {

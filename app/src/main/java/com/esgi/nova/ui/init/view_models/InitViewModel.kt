@@ -14,6 +14,14 @@ import com.esgi.nova.ports.Synchronize
 import com.esgi.nova.resources.application.SynchronizeResources
 import com.esgi.nova.ui.AppViewModel
 
+abstract class BaseInitViewModel : AppViewModel() {
+    abstract val currentInitStep: LiveData<Int>
+    abstract val navigateToDashboard: LiveData<Boolean>
+    abstract val networkError: LiveData<Boolean>
+
+    abstract fun loadContent()
+}
+
 class InitViewModel @ViewModelInject constructor(
     synchronizeEvents: SynchronizeEvents,
     synchronizeDifficulties: SynchronizeDifficulties,
@@ -22,19 +30,19 @@ class InitViewModel @ViewModelInject constructor(
     synchronizeLastActiveGame: SynchronizeLastActiveGame,
     deleteOrphansDailyEvents: DeleteOrphansDailyEvents,
     private val setSynchronizeState: SetSynchronizeState,
-) : AppViewModel() {
+) : BaseInitViewModel() {
 
 
-    val currentInitStep: LiveData<Int>
+    override val currentInitStep: LiveData<Int>
         get() = _currentInitStep
 
     private var _currentInitStep = MutableLiveData(0)
 
-    val navigateToDashboard: LiveData<Boolean>
+    override val navigateToDashboard: LiveData<Boolean>
         get() = _navigateToDashboard
     private var _navigateToDashboard = MutableLiveData<Boolean>()
 
-    val networkError: LiveData<Boolean>
+    override val networkError: LiveData<Boolean>
         get() = _networkError
     private var _networkError = MutableLiveData<Boolean>()
 
@@ -47,7 +55,7 @@ class InitViewModel @ViewModelInject constructor(
         deleteOrphansDailyEvents
     )
 
-    fun loadContent() {
+    override fun loadContent() {
         if (initialized) return
 
         loadingLaunch {
