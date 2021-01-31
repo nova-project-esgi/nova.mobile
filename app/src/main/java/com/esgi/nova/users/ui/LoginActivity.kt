@@ -76,7 +76,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, TextWatcher {
         binding.btnLogin.setOnClickListener(this)
         binding.btnRegister.setOnClickListener(this)
 
-
         viewModel.navigateToDashboard.observe(this) {
             DashboardActivity.start(this@LoginActivity)
         }
@@ -102,9 +101,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, TextWatcher {
             binding.root.errorSnackBar( R.string.user_not_exist_msg)?.show()
         }
         viewModel.unexpectedError.observe(this) {
-            runOnUiThread {
-                binding.root.unexpectedErrorSnackBar()?.show()
-            }
+            binding.root.unexpectedErrorSnackBar()?.show()
         }
 
         viewModel.isLoading.observe(this) { isLogging ->

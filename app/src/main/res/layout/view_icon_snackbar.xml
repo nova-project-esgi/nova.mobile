@@ -32,7 +32,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:src="@drawable/baseline_warning_amber_400_24dp"
                 app:layout_constraintEnd_toStartOf="@id/icon_div"
                 android:contentDescription="@string/icon"
                 />
@@ -51,7 +50,6 @@
                 android:id="@+id/message_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="mzlefmzlefmzlefmzlefkm"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/icon_div"
