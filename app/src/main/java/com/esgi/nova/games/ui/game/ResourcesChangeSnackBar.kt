@@ -29,21 +29,19 @@ class ResourcesChangeSnackBar(
         )
         getView().setPadding(0, 0, 0, 0)
     }
-
-    companion object {
-
-        fun make(
-            view: View,
+    companion object{
+        fun View.resourcesChangeSnackBar(
             resourcesChanges: List<IFileWrapper<IDetailedChoice.IChangeValueResource>>,
             duration: Int
         ): ResourcesChangeSnackBar? {
 
-            val parent = view.findSuitableParent() ?: throw IllegalArgumentException(
+
+            val parent = this.findSuitableParent() ?: throw IllegalArgumentException(
                 "No suitable parent found from the given view. Please provide a valid view."
             )
 
             try {
-                val customView = LayoutInflater.from(view.context).inflate(
+                val customView = LayoutInflater.from(this.context).inflate(
                     R.layout.layout_resources_changes_snackbar,
                     parent,
                     false
@@ -66,10 +64,8 @@ class ResourcesChangeSnackBar(
             } catch (e: Exception) {
                 e.message?.let { Log.v("exception ", it) }
             }
-
             return null
         }
-
     }
-
 }
+

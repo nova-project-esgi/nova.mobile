@@ -26,7 +26,9 @@ import com.esgi.nova.games.ui.leaderboard.LeaderBoardActivity
 import com.esgi.nova.parameters.ui.ParametersActivity
 import com.esgi.nova.ui.dashboard.adapters.DashBoardResourcesAdapter
 import com.esgi.nova.ui.dashboard.view_models.BaseDashboardViewModel
+import com.esgi.nova.ui.snackbars.IconSnackBar.Companion.confirmSnackBar
 import com.esgi.nova.users.ui.LoginActivity
+import com.esgi.nova.utils.clear
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -44,8 +46,15 @@ class DashboardActivity : AppCompatActivity(), View.OnClickListener,
 
 
     companion object {
+        const val ParameterSavedKey = "ParameterSaved"
         fun start(context: Context) {
             val intent = Intent(context, DashboardActivity::class.java)
+            context.startActivity(intent)
+        }
+
+        fun startFromSavedParameters(context: Context) {
+            val intent = Intent(context, DashboardActivity::class.java)
+            intent.putExtra(ParameterSavedKey, true)
             context.startActivity(intent)
         }
     }
@@ -70,6 +79,9 @@ class DashboardActivity : AppCompatActivity(), View.OnClickListener,
         viewModel.canLaunch.observe(this) { canLaunch ->
             binding.initNewGameBtn.isEnabled = canLaunch
         }
+        viewModel.showParameterSaved.observe(this) {
+            showParameterSaved()
+        }
         viewModel.canResume.observe(this) { canResume ->
             binding.resumeGameBtn.isEnabled = canResume
         }
@@ -89,8 +101,8 @@ class DashboardActivity : AppCompatActivity(), View.OnClickListener,
                 selectedDifficulty
             )
         }
-        viewModel.initialize()
-
+        viewModel.initialize(intent.getBooleanExtra(ParameterSavedKey, false))
+        intent.clear()
         initResourcesRecyclerView()
     }
 
@@ -104,8 +116,12 @@ class DashboardActivity : AppCompatActivity(), View.OnClickListener,
     }
 
     override fun onResume() {
-        viewModel.initialize()
+        viewModel.initialize(intent.getBooleanExtra(ParameterSavedKey, false))
         super.onResume()
+    }
+
+    private fun showParameterSaved() {
+        binding.root.confirmSnackBar(R.string.settings_saved)?.show()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

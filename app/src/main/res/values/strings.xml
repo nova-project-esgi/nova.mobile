@@ -63,4 +63,5 @@
     <string name="unexpected_error_msg">Unexpected error !</string>
     <string name="settings_saved">Settings saved</string>
     <string name="trophy">Trophy</string>
+    <string name="icon">Icon</string>
 </resources>

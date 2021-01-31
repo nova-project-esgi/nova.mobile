@@ -1,29 +1,24 @@
 package com.esgi.nova.games.application
 
-import android.util.Log
 import com.esgi.nova.events.infrastructure.data.choice_resource.ChoiceResourceDbRepository
 import com.esgi.nova.events.ports.IDetailedChoice
 import com.esgi.nova.games.application.models.Game
-import com.esgi.nova.games.application.models.GameForCreation
 import com.esgi.nova.games.application.models.GameResource
-import com.esgi.nova.games.exceptions.GameNotFoundException
 import com.esgi.nova.games.infrastructure.api.GameApiRepository
 import com.esgi.nova.games.infrastructure.data.game.GameDbRepository
 import com.esgi.nova.games.infrastructure.data.game_resource.GameResourceDbRepository
 import com.esgi.nova.games.ports.IGame
-import com.esgi.nova.infrastructure.api.exceptions.NoConnectionException
 import com.esgi.nova.users.infrastructure.data.UserStorageRepository
 import com.esgi.nova.users.ports.IUserRecapped
 import java.util.*
 import javax.inject.Inject
 
-
 class ConfirmChoice @Inject constructor(
     private val gameDbRepository: GameDbRepository,
-    private val gameApiRepository: GameApiRepository,
     private val gameResourceDbRepository: GameResourceDbRepository,
     private val choiceResourceDbRepository: ChoiceResourceDbRepository,
-    private val userRepository: UserStorageRepository
+    private val userRepository: UserStorageRepository,
+    private val updateGameToApi: UpdateGameToApi
 ) {
 
     suspend fun execute(gameId: UUID, choiceId: UUID, duration: Int): Boolean {
@@ -34,7 +29,7 @@ class ConfirmChoice @Inject constructor(
             choiceResourceDbRepository.getDetailedChoiceById(choiceId)?.let { choice ->
                 isEnded = updateGameResources(choice, gameId, isEnded)
                 updateGameToDb(gameId, game, isEnded, duration, user)
-                updateGameToApi(gameId, user, game)
+                updateGameToApi.execute(gameId)
             }
         }
         return isEnded
@@ -86,28 +81,6 @@ class ConfirmChoice @Inject constructor(
         return isEnded1
     }
 
-    private suspend fun updateGameToApi(
-        gameId: UUID,
-        user: IUserRecapped,
-        game: IGame
-    ) {
-        gameDbRepository.getGameEditionById(gameId)?.let { gameEdition ->
-            try {
-                try {
-                    gameApiRepository.update(gameId, gameEdition)
-                } catch (e: GameNotFoundException) {
-                    gameApiRepository.createGame(
-                        GameForCreation(
-                            username = user.username,
-                            difficultyId = game.difficultyId
-                        )
-                    )
-                    gameApiRepository.update(gameId, gameEdition)
-                }
-            } catch (e: NoConnectionException) {
-                Log.i(ConfirmChoice::class.qualifiedName, "No connection for updating game")
-            }
-        }
-    }
+
 }
 

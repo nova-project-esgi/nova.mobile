@@ -14,7 +14,7 @@ class SynchronizeFile @Inject constructor(
         destinationDir: String,
         fileName: String
     ) {
-        fileApiRepository.getFile(url)?.let { fileStreamResume ->
+        fileApiRepository.getFile(url).let { fileStreamResume ->
             fileStorageRepository.saveFile(
                 fileStreamResume.toFileStreamWithDestination(
                     destinationDir,

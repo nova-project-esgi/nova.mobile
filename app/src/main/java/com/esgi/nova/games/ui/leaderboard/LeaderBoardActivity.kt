@@ -15,6 +15,9 @@ import com.esgi.nova.dtos.difficulty.DetailedDifficultyDto
 import com.esgi.nova.games.ports.ILeaderBoardGameView
 import com.esgi.nova.games.ui.leaderboard.adapters.GamesAdapter
 import com.esgi.nova.games.ui.leaderboard.view_models.LeaderBoardViewModel
+import com.esgi.nova.ui.snackbars.IconSnackBar.Companion.infoSnackBar
+import com.esgi.nova.ui.snackbars.IconSnackBar.Companion.networkErrorSnackBar
+import com.esgi.nova.ui.snackbars.IconSnackBar.Companion.unexpectedErrorSnackBar
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -82,11 +85,11 @@ class LeaderBoardActivity : AppCompatActivity(), AdapterView.OnItemClickListener
     }
 
     private fun showUnexpectedErrorMessage() {
-        Toast.makeText(this, R.string.unexpected_error_msg, Toast.LENGTH_SHORT).show()
+        binding.root.unexpectedErrorSnackBar()?.show()
     }
 
     private fun showNetworkErrorMessage() {
-        Toast.makeText(this, R.string.network_not_available_msg, Toast.LENGTH_SHORT).show()
+        binding.root.networkErrorSnackBar()?.show()
     }
 
     private fun handleNewScores(scores: List<ILeaderBoardGameView>) {
@@ -154,12 +157,7 @@ class LeaderBoardActivity : AppCompatActivity(), AdapterView.OnItemClickListener
 
     private fun displayNoMoreGamesMessage(noMoreGames: Boolean) {
         if (noMoreGames) {
-            val toast = Toast.makeText(
-                this@LeaderBoardActivity,
-                getString(R.string.no_more_game_to_load),
-                Toast.LENGTH_SHORT
-            )
-            toast.show()
+            binding.root.infoSnackBar(R.string.no_more_game_to_load)?.show()
         }
     }
 

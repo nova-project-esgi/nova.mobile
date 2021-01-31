@@ -8,6 +8,7 @@ import com.esgi.nova.files.application.GetFileBitmapById
 import com.esgi.nova.files.dtos.FileWrapperDto
 import com.esgi.nova.files.infrastructure.ports.IFileWrapper
 import com.esgi.nova.games.application.models.GameEvent
+import com.esgi.nova.games.exceptions.GameNotFoundException
 import com.esgi.nova.games.infrastructure.data.game_event.GameEventDbRepository
 import com.esgi.nova.infrastructure.api.exceptions.NoConnectionException
 import com.esgi.nova.infrastructure.fs.FsConstants
@@ -23,8 +24,8 @@ class GetNextEvent @Inject constructor(
     private val eventDbRepository: EventDbRepository,
     private val getDailyEvent: GetDailyEvent,
     private val getFileBitmapById: GetFileBitmapById,
-    private val parametersStorageRepository: ParametersStorageRepository
-
+    private val parametersStorageRepository: ParametersStorageRepository,
+    private val updateGameToApi: UpdateGameToApi
 ) {
 
     companion object {
@@ -49,6 +50,9 @@ class GetNextEvent @Inject constructor(
                 }
             } catch (e: NoConnectionException) {
                 Log.i(GetNextEvent::class.qualifiedName, "Cannot fetch daily event from api")
+            } catch( e: GameNotFoundException){
+                Log.i(GetNextEvent::class.qualifiedName, "Cannot find game with id $gameId in api try to synchronize...")
+                updateGameToApi.execute(gameId)
             }
         }
 

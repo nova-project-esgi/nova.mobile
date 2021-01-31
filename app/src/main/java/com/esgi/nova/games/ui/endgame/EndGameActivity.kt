@@ -16,6 +16,7 @@ import com.esgi.nova.games.ports.ITotalValueResource
 import com.esgi.nova.games.ui.endgame.view_models.EndGameViewModel
 import com.esgi.nova.games.ui.game.adapters.GameResourcesAdapter
 import com.esgi.nova.ui.dashboard.DashboardActivity
+import com.esgi.nova.ui.snackbars.IconSnackBar.Companion.unexpectedErrorSnackBar
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -59,7 +60,7 @@ class EndGameActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun onUnexpectedError() {
-        Toast.makeText(this, R.string.unexpected_error_msg, Toast.LENGTH_SHORT).show()
+        binding.root.unexpectedErrorSnackBar()?.show()
         navigateToDashboard()
     }
 

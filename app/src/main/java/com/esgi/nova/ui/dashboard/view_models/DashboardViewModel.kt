@@ -30,6 +30,10 @@ class DashboardViewModel @ViewModelInject constructor(
         get() = _canResume
     private var _canResume = MutableLiveData<Boolean>()
 
+    override val showParameterSaved: LiveData<Boolean>
+        get() = _showParameterSaved
+    private var _showParameterSaved = MutableLiveData<Boolean>()
+
 
     override val difficulties: LiveData<List<DetailedDifficultyDto>> get() = _difficulties
     private var _difficulties = MutableLiveData<List<DetailedDifficultyDto>>()
@@ -45,10 +49,12 @@ class DashboardViewModel @ViewModelInject constructor(
     private var _newResources =
         MutableLiveData<List<IFileWrapper<IDetailedDifficulty.IStartValueResource>>>()
 
-    override fun initialize() {
+    override fun initialize(hasSavedParameters: Boolean) {
 
         initActionsAvailability()
-
+        if (hasSavedParameters) {
+            _showParameterSaved.value = hasSavedParameters
+        }
         if (initialized) return
 
 

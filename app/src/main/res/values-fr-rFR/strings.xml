@@ -59,6 +59,7 @@
     <string name="loading_step_6">Lustrage des pistolets lasers…</string>
     <string name="unexpected_error_msg">Erreur innatendue</string>
     <string name="settings_saved">Paramètres sauvegardés</string>
+    <string name="icon">Icon</string>
     <plurals name="turn_recap">
         <item quantity="one">Vous avez survécu %d tour.</item>
         <item quantity="other">Vous avez survécu %d tours.</item>

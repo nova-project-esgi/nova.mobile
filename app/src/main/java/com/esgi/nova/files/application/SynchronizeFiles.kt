@@ -13,8 +13,8 @@ class SynchronizeFiles @Inject constructor(
     suspend fun execute(
         fileSynchronizations: List<FileSynchronizationDto>
     ) {
-        val files = fileSynchronizations.mapNotNull { fileSynchro ->
-            fileApiRepository.getFile(fileSynchro.url)?.toFileStreamWithDestination(
+        val files = fileSynchronizations.map { fileSynchro ->
+            fileApiRepository.getFile(fileSynchro.url).toFileStreamWithDestination(
                 fileSynchro.destinationDir,
                 fileSynchro.fileName
             )

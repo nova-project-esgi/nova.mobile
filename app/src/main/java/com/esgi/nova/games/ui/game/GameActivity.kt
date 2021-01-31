@@ -16,11 +16,13 @@ import com.esgi.nova.files.infrastructure.ports.IFileWrapper
 import com.esgi.nova.games.application.*
 import com.esgi.nova.games.ports.ITotalValueResource
 import com.esgi.nova.games.ui.endgame.EndGameActivity
+import com.esgi.nova.games.ui.game.ResourcesChangeSnackBar.Companion.resourcesChangeSnackBar
 import com.esgi.nova.games.ui.game.adapters.GameResourcesAdapter
 import com.esgi.nova.games.ui.game.fragments.ChoiceDetailFragment
 import com.esgi.nova.games.ui.game.fragments.ChoicesListFragment
 import com.esgi.nova.games.ui.game.view_models.GameViewModel
 import com.esgi.nova.ui.dashboard.DashboardActivity
+import com.esgi.nova.ui.snackbars.IconSnackBar.Companion.unexpectedErrorSnackBar
 import com.esgi.nova.utils.clear
 import com.esgi.nova.utils.getUUIDExtra
 import com.esgi.nova.utils.putUUIDExtra
@@ -85,7 +87,7 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun onUnexpectedError() {
-        Toast.makeText(this, R.string.unexpected_error_msg, Toast.LENGTH_SHORT).show()
+        binding.root.unexpectedErrorSnackBar()?.show()
         startDashboard()
     }
 
@@ -170,8 +172,8 @@ class GameActivity : AppCompatActivity() {
 
     private fun showChangeResourcesSnackBar(changesResources: List<IFileWrapper<IDetailedChoice.IChangeValueResource>>) {
         contentView?.let {
-            ResourcesChangeSnackBar.make(
-                it, changesResources, ResourceSnackBarDurationMs
+            binding.root.resourcesChangeSnackBar(
+                 changesResources, ResourceSnackBarDurationMs
             )?.show()
         }
     }

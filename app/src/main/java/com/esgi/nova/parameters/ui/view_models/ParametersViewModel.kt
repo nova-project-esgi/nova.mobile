@@ -30,9 +30,6 @@ class ParametersViewModel @ViewModelInject constructor(
     val parameters: LiveData<Parameters> get() = _parameters
     private var _parameters = MutableLiveData<Parameters>()
 
-    val parametersSaved: LiveData<Boolean> get() = _parametersSaved
-    private var _parametersSaved = MutableLiveData<Boolean>()
-
 
     val startDashboard: LiveData<Boolean> get() = _startDashboard
     private var _startDashboard = MutableLiveData<Boolean>()
@@ -60,7 +57,6 @@ class ParametersViewModel @ViewModelInject constructor(
             loadingLaunch {
                 val previousParams = getParameters.execute()
                 saveParameters.execute(languageParams)
-                _parametersSaved.value = true
 
                 if (previousParams.selectedLanguage?.id != selectedLanguage.value?.id) {
                     _startResynchronize.value = true

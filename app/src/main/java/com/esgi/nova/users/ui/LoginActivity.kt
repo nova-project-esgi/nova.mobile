@@ -1,6 +1,7 @@
 package com.esgi.nova.users.ui
 
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -19,12 +20,19 @@ import com.esgi.nova.parameters.application.SetCurrentTheme
 import com.esgi.nova.sound.application.SwitchSound
 import com.esgi.nova.ui.dashboard.DashboardActivity
 import com.esgi.nova.ui.init.InitSetupActivity
+import com.esgi.nova.ui.snackbars.IconSnackBar.Companion.errorSnackBar
+import com.esgi.nova.ui.snackbars.IconSnackBar.Companion.iconSnackBar
+import com.esgi.nova.ui.snackbars.IconSnackBar.Companion.networkErrorSnackBar
+import com.esgi.nova.ui.snackbars.IconSnackBar.Companion.unexpectedErrorSnackBar
 import com.esgi.nova.users.ui.view_models.BaseLoginViewModel
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import org.jetbrains.anko.design.snackbar
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class LoginActivity : AppCompatActivity(), View.OnClickListener, TextWatcher {
+
 
 
     @Inject
@@ -37,7 +45,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, TextWatcher {
     @Inject
     lateinit var viewModelFactory: LoginViewModelFactory
     private lateinit var viewModel: BaseLoginViewModel
-
 
     private lateinit var binding: ActivityLoginBinding
 
@@ -78,7 +85,9 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, TextWatcher {
         }
 
         viewModel.invalidPassword.observe(this) {
-            binding.etPassword.error = resources.getString(R.string.invalid_password_msg)
+            runOnUiThread {
+                binding.etPassword.error = resources.getString(R.string.invalid_password_msg)
+            }
         }
         viewModel.invalidUsername.observe(this) {
             runOnUiThread {
@@ -87,14 +96,14 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, TextWatcher {
         }
 
         viewModel.unavailableNetwork.observe(this) {
-            Toast.makeText(this, R.string.network_not_available_msg, Toast.LENGTH_LONG).show()
+            binding.root.networkErrorSnackBar()?.show()
         }
         viewModel.userNotFound.observe(this) {
-            Toast.makeText(this, R.string.user_not_exist_msg, Toast.LENGTH_LONG).show()
+            binding.root.errorSnackBar( R.string.user_not_exist_msg)?.show()
         }
         viewModel.unexpectedError.observe(this) {
             runOnUiThread {
-                Toast.makeText(this, R.string.unexpected_error_msg, Toast.LENGTH_LONG).show()
+                binding.root.unexpectedErrorSnackBar()?.show()
             }
         }
 

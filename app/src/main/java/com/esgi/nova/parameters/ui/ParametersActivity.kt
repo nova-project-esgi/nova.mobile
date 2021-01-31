@@ -7,7 +7,6 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.CompoundButton
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.esgi.nova.R
@@ -20,6 +19,7 @@ import com.esgi.nova.parameters.ui.models.Parameters
 import com.esgi.nova.parameters.ui.view_models.ParametersViewModel
 import com.esgi.nova.ui.dashboard.DashboardActivity
 import com.esgi.nova.ui.init.InitSetupActivity
+import com.esgi.nova.ui.snackbars.IconSnackBar.Companion.confirmSnackBar
 import com.esgi.nova.users.ui.LoginActivity
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -73,9 +73,7 @@ class ParametersActivity : AppCompatActivity(), View.OnClickListener,
         viewModel.parameters.observe(this) { parameters ->
             setUpParameters(parameters)
         }
-        viewModel.parametersSaved.observe(this) {
-            showSavedMessage()
-        }
+
         viewModel.startResynchronize.observe(this) {
             startInitSetupActivity()
         }
@@ -113,16 +111,13 @@ class ParametersActivity : AppCompatActivity(), View.OnClickListener,
     }
 
     private fun startDashBoardActivity() {
-        DashboardActivity.start(this)
+        DashboardActivity.startFromSavedParameters(this)
     }
 
     private fun startInitSetupActivity() {
         InitSetupActivity.startWithUserConfirmation(this)
     }
 
-    private fun showSavedMessage() {
-        Toast.makeText(this, R.string.settings_saved, Toast.LENGTH_SHORT).show()
-    }
 
     private fun selectLanguage(selectedLanguage: AppLanguageDto?) {
         binding.tvLanguageOption.setText(selectedLanguage?.tag, false)
