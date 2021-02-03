@@ -7,7 +7,6 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.Root
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
@@ -28,36 +27,11 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
-
-open class ToastMatcher : TypeSafeMatcher<Root>() {
-
-    override fun describeTo(description: Description) {
-        description?.appendText("is toast")
-    }
-
-    override fun matchesSafely(item: Root): Boolean {
-        val type: Int? = item.windowLayoutParams?.get()?.type
-        if (type == WindowManager.LayoutParams.TYPE_TOAST) {
-            val windowToken: IBinder = item.decorView.windowToken
-            val appToken: IBinder = item.decorView.applicationWindowToken
-            if (windowToken === appToken) { // means this window isn't contained by any other windows.
-                return true
-            }
-        }
-        return false
-    }
-
-}
-
 @Suppress("UNCHECKED_CAST")
 @HiltAndroidTest
 @UninstallModules(LoginActivityModule::class)
 @RunWith(AndroidJUnit4::class)
 class LoginActivityTest {
-
-//    private lateinit var decorView: View
-
-    private lateinit var decorView: View
 
     val invalidPassword = MutableLiveData<Boolean>()
     val invalidUsername = MutableLiveData<Boolean>()

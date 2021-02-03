@@ -11,7 +11,6 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.esgi.nova.R
@@ -21,13 +20,10 @@ import com.esgi.nova.sound.application.SwitchSound
 import com.esgi.nova.ui.dashboard.DashboardActivity
 import com.esgi.nova.ui.init.InitSetupActivity
 import com.esgi.nova.ui.snackbars.IconSnackBar.Companion.errorSnackBar
-import com.esgi.nova.ui.snackbars.IconSnackBar.Companion.iconSnackBar
 import com.esgi.nova.ui.snackbars.IconSnackBar.Companion.networkErrorSnackBar
 import com.esgi.nova.ui.snackbars.IconSnackBar.Companion.unexpectedErrorSnackBar
 import com.esgi.nova.users.ui.view_models.BaseLoginViewModel
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import org.jetbrains.anko.design.snackbar
 import javax.inject.Inject
 
 @AndroidEntryPoint
