@@ -39,17 +39,17 @@ import org.junit.runner.RunWith
 class LoginActionTest {
 
     private val fakeUser = LogUser("Johnathan", "Doeby")
-    private val shortNameFakeUser = LogUser("jonny", "Dowyvy")
+    private val shortNameFakeUser = LogUser("jonnnny", "Dowyvjjy")
 
 
     val fakeViewModel = LoginViewModel(
         logInUser = mock {
-            onBlocking  { execute(fakeUser) } .doAnswer {}
-            onBlocking{ execute(shortNameFakeUser) }.doThrow(UserNotFoundException())
+            onBlocking { execute(fakeUser) } doAnswer {}
+            onBlocking { execute(shortNameFakeUser) } doThrow(UserNotFoundException())
         },
         hasConnectedUser = mock { on { execute() } doReturn (false) },
         logOutUser = mock { on { execute() } doAnswer {} },
-        retrieveUser = mock { on { execute() } doAnswer { fakeUser } },
+        retrieveUser = mock { on { execute() } doAnswer { null } },
         isSynchronized = mock { on { execute() } doReturn (false) },
     )
 
@@ -85,9 +85,13 @@ class LoginActionTest {
     @Test
     fun login_doesnt_work_with_bad_credentials() {
 
+        onView(ViewMatchers.withId(R.id.ti_login)).perform(ViewActions.clearText())
         onView(ViewMatchers.withId(R.id.ti_login)).perform(ViewActions.typeText(shortNameFakeUser.username))
+        onView(ViewMatchers.withId(R.id.ti_password)).perform(ViewActions.clearText())
         onView(ViewMatchers.withId(R.id.ti_password)).perform(ViewActions.typeText(shortNameFakeUser.password))
         onView(ViewMatchers.withId(R.id.btn_login)).perform(ViewActions.click())
+
+
         onView(
             Matchers.allOf(
                 ViewMatchers.withId(R.id.message_tv),
