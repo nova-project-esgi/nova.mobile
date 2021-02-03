@@ -32,7 +32,7 @@ class ParametersStorageRepository @Inject constructor(@ApplicationContext contex
             isDarkMode = preference.getBoolean(PreferenceConstants.Parameters.IsDarkModeKey, true),
             hasDailyEvents = preference.getBoolean(
                 PreferenceConstants.Parameters.HasDailyEventsKey,
-                false
+                true
             ),
             hasSound = preference.getBoolean(PreferenceConstants.Parameters.HasMusicKey, true),
             hasNotifications = preference.getBoolean(
