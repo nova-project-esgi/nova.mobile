@@ -1,8 +1,8 @@
 package com.esgi.nova.infrastructure.api
 
 object ApiConstants {
-    const val BaseUrl = "http://freenetaccess.freeboxos.fr:8001/"
-
+    const val BaseUrl = "https://nova-cloud-api.azurewebsites.net/"
+    const val SecureNetworkOn = true
 
     object EndPoints {
         const val Auth = "auth/"

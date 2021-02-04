@@ -25,20 +25,20 @@ class EventApiRepository @Inject constructor(
     suspend fun getAllTranslatedEvents(language: String): List<LinkWrapper<IResumedEvent>> =
         eventService
             .getAllTranslatedEvents(language = language)
-            .map { LinkWrapper(it.toResumedEvent(), it.backgroundUrl) }
+            .map { LinkWrapper(it.toResumedEvent(), it.backgroundUrl.toSecuredLink()) }
 
 
     suspend fun getOneTranslatedEvent(eventId: UUID, language: String): LinkWrapper<IResumedEvent> =
         eventService
             .getOneTranslatedEvent(eventId = eventId.toString(), language = language)
-            .let { event -> LinkWrapper(event.toResumedEvent(), event.backgroundUrl) }
+            .let { event -> LinkWrapper(event.toResumedEvent(), event.backgroundUrl.toSecuredLink()) }
 
 
     suspend fun getDailyEvent(language: String, gameId: UUID): LinkWrapper<IResumedEvent> =
         eventService
             .getDailyEvent(language = language, gameId = gameId)
             .let {
-                LinkWrapper(it.toResumedEvent(), it.backgroundUrl)
+                LinkWrapper(it.toResumedEvent(), it.backgroundUrl.toSecuredLink())
             }
 
 }

@@ -1,3 +1,5 @@
 package com.esgi.nova.infrastructure.api
 
-data class LinkWrapper<out Data>(val data: Data, val link: Link)
+import com.esgi.nova.infrastructure.api.pagination.ILink
+
+data class LinkWrapper<out Data>(val data: Data, val link: ILink)

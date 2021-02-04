@@ -32,10 +32,10 @@ class PageCursor<T>(override var loadFunc: IGetPage<T>? = null, comparator: Comp
     private var _hasPrevious: Boolean? = null
     private var _pageSize: Int? = null
 
-    private fun updatePagination(pageMetadata: PageMetadata<T>?) {
+    private fun updatePagination(pageMetadata: IPageMetadata<T>?) {
         this.addAll(pageMetadata?.values ?: listOf())
-        _hasNext = pageMetadata?.links?.any { link -> link.rel == Link.Relation.NEXT }
-        _hasPrevious = pageMetadata?.links?.any { link -> link.rel == Link.Relation.PREVIOUS }
+        _hasNext = pageMetadata?.links?.any { link -> link.rel == ILink.Relation.NEXT }
+        _hasPrevious = pageMetadata?.links?.any { link -> link.rel == ILink.Relation.PREVIOUS }
         if (_pageSize == null) {
             _pageSize = pageMetadata?.values?.size
         }

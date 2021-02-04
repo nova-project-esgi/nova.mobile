@@ -1,4 +1,16 @@
 package com.esgi.nova.infrastructure.api.pagination
 
-data class PageMetadata<out T>(val links: List<Link>, val values: List<T>, val total: Int)
+data class PageMetadata<T>(
+    override val links: List<ApiLink>,
+    override val values: List<T>,
+    override val total: Int
+) :
+    IPageMetadata<T> {
+
+    fun toSecuredPage() = SecuredPageMetadata(
+        links = links.map { it.toSecuredLink() },
+        values = values,
+        total = total
+    )
+}
 

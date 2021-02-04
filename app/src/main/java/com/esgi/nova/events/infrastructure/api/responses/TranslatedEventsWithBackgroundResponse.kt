@@ -2,7 +2,7 @@ package com.esgi.nova.events.infrastructure.api.responses
 
 import com.esgi.nova.events.infrastructure.api.models.ResumedEvent
 import com.esgi.nova.events.ports.IDetailedEvent
-import com.esgi.nova.infrastructure.api.Link
+import com.esgi.nova.infrastructure.api.pagination.ApiLink
 import java.util.*
 
 data class TranslatedEventsWithBackgroundResponse(
@@ -11,7 +11,7 @@ data class TranslatedEventsWithBackgroundResponse(
     override val description: String,
     val language: String,
     override val choices: MutableList<TranslatedChoiceResponse>,
-    val backgroundUrl: Link,
+    val backgroundUrl: ApiLink,
     override val isDaily: Boolean = false
 ) : IDetailedEvent {
 

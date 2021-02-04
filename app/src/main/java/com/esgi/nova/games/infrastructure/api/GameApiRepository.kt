@@ -8,7 +8,7 @@ import com.esgi.nova.games.ports.IGameEdition
 import com.esgi.nova.games.ports.IGameForCreation
 import com.esgi.nova.games.ports.IGameState
 import com.esgi.nova.infrastructure.api.AuthenticatedApiRepository
-import com.esgi.nova.infrastructure.api.pagination.PageMetadata
+import com.esgi.nova.infrastructure.api.pagination.IPageMetadata
 import com.esgi.nova.users.application.GetUserToken
 import com.esgi.nova.users.application.UpdateUserToken
 import com.esgi.nova.utils.reflectMapNotNull
@@ -43,8 +43,9 @@ class GameApiRepository @Inject constructor(
         difficultyId: UUID,
         page: Int?,
         pageSize: Int?
-    ): PageMetadata<LeaderBoardGameView> {
+    ): IPageMetadata<LeaderBoardGameView> {
         return gameService.getLeaderBoardGamesByDifficulty(difficultyId.toString(), page, pageSize)
+            .toSecuredPage()
     }
 
     suspend fun getLastActiveGameForUser(username: String): IGameState {

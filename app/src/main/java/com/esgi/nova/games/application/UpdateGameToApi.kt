@@ -7,6 +7,9 @@ import com.esgi.nova.games.infrastructure.api.GameApiRepository
 import com.esgi.nova.games.infrastructure.data.game.GameDbRepository
 import com.esgi.nova.infrastructure.api.exceptions.NoConnectionException
 import com.esgi.nova.users.infrastructure.data.UserStorageRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
 
@@ -21,21 +24,27 @@ class UpdateGameToApi @Inject constructor(
         gameDbRepository.getById(gameId)?.let { game ->
             userStorageRepository.getUsername()?.let { username ->
                 gameDbRepository.getGameEditionById(gameId)?.let { gameEdition ->
-                    try {
+                    GlobalScope.launch(Dispatchers.IO) {
                         try {
-                            gameApiRepository.update(gameId, gameEdition)
-                        } catch (e: GameNotFoundException) {
-                            gameApiRepository.createGame(
-                                GameForCreation(
-                                    username = username,
-                                    difficultyId = game.difficultyId
+                            try {
+                                gameApiRepository.update(gameId, gameEdition)
+                            } catch (e: GameNotFoundException) {
+                                gameApiRepository.createGame(
+                                    GameForCreation(
+                                        username = username,
+                                        difficultyId = game.difficultyId
+                                    )
                                 )
+                                gameApiRepository.update(gameId, gameEdition)
+                            }
+                        } catch (e: NoConnectionException) {
+                            Log.i(
+                                ConfirmChoice::class.qualifiedName,
+                                "No connection for updating game"
                             )
-                            gameApiRepository.update(gameId, gameEdition)
                         }
-                    } catch (e: NoConnectionException) {
-                        Log.i(ConfirmChoice::class.qualifiedName, "No connection for updating game")
                     }
+
                 }
             }
         }

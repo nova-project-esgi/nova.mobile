@@ -23,6 +23,6 @@ class ResourceApiRepository @Inject constructor(
     suspend fun getAll(language: String): List<LinkWrapper<IResource>> {
         return resourcesServices
             .getAll(language)
-            .map { LinkWrapper(it, it.iconUrl) }
+            .map { LinkWrapper(it, it.iconUrl.toSecuredLink()) }
     }
 }

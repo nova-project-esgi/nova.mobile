@@ -2,6 +2,7 @@ package com.esgi.nova.infrastructure.api
 
 import android.content.Context
 import com.esgi.nova.infrastructure.api.error_handling.ErrorsCallAdapterFactory
+import com.esgi.nova.utils.toHttps
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -48,7 +49,8 @@ open class ApiRepository @Inject constructor(@ApplicationContext protected val c
 
     protected suspend inline fun <reified T : Any> Response<*>.getLocatedContent(): T? {
         return this@getLocatedContent.headers()[HttpConstants.Headers.Location]?.let { location ->
-            val res = this@ApiRepository.genericService.get(location)
+            val editedLocation = if (ApiConstants.SecureNetworkOn) location.toHttps() else location
+            val res = this@ApiRepository.genericService.get(editedLocation)
             Gson().fromJson(res.charStream(), T::class.java)
         }
     }
