@@ -80,7 +80,5 @@ class ConfirmChoice @Inject constructor(
         }
         return isEnded1
     }
-
-
 }
 

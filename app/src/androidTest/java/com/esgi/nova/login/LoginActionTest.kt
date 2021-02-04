@@ -11,10 +11,8 @@ import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.esgi.nova.R
-import com.esgi.nova.users.exceptions.InvalidUsernameException
 import com.esgi.nova.users.exceptions.UserNotFoundException
 import com.esgi.nova.users.infrastructure.api.models.LogUser
-import com.esgi.nova.users.ports.ILogUser
 import com.esgi.nova.users.ui.LoginActivity
 import com.esgi.nova.users.ui.LoginActivityModule
 import com.esgi.nova.users.ui.LoginViewModelFactory
@@ -24,9 +22,7 @@ import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
-import kotlinx.coroutines.runBlocking
 import org.hamcrest.Matchers
-import org.junit.Assert
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -87,11 +83,13 @@ class LoginActionTest {
 
         onView(ViewMatchers.withId(R.id.ti_login)).perform(ViewActions.clearText())
         onView(ViewMatchers.withId(R.id.ti_login)).perform(ViewActions.typeText(shortNameFakeUser.username))
+        onView(ViewMatchers.withId(R.id.ti_login)).perform(ViewActions.closeSoftKeyboard())
         onView(ViewMatchers.withId(R.id.ti_password)).perform(ViewActions.clearText())
         onView(ViewMatchers.withId(R.id.ti_password)).perform(ViewActions.typeText(shortNameFakeUser.password))
+        onView(ViewMatchers.withId(R.id.ti_password)).perform(ViewActions.closeSoftKeyboard())
         onView(ViewMatchers.withId(R.id.btn_login)).perform(ViewActions.click())
 
-
+        Thread.sleep(2_000)
         onView(
             Matchers.allOf(
                 ViewMatchers.withId(R.id.message_tv),
