@@ -8,7 +8,6 @@ import android.content.Context.NOTIFICATION_SERVICE
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.esgi.nova.R
-import com.esgi.nova.application_state.application.IsSynchronized
 import com.esgi.nova.application_state.application.SetSynchronizeState
 import com.esgi.nova.parameters.application.HasNotifications
 import com.esgi.nova.ui.init.InitSetupActivity
@@ -39,18 +38,40 @@ class PushNotificationListener(private val hasNotifications: HasNotifications, p
 
     override fun onPushNotificationReceived(context: Context?, message: NotificationMessage?) {
 
-        if (context == null || !hasNotifications.execute()) return
-
+        if (context == null) return
         val notificationBuilder = getBaseNotificationBuilder(context, message?.title, message?.body)
+        handleNotificationByType(message = message)
+
+        if (!hasNotifications.execute()) return
+        customizeNotificationBuilderByType(
+            context = context,
+            notificationBuilder = notificationBuilder,
+            message = message
+        )
+        with(NotificationManagerCompat.from(context)) {
+            notify(NOTIFICATION_ID, notificationBuilder.build())
+        }
+    }
+
+    private fun customizeNotificationBuilderByType(
+        context: Context,
+        notificationBuilder: NotificationCompat.Builder,
+        message: NotificationMessage?
+    ): NotificationCompat.Builder? {
+        return when (message?.data?.values?.firstOrNull()) {
+            NotificationType.UPDATE.name -> {
+                transformBuilderForUpdate(context, notificationBuilder)
+            }
+            else -> notificationBuilder
+        }
+
+    }
+
+    private fun handleNotificationByType(message: NotificationMessage?) {
         when (message?.data?.values?.firstOrNull()) {
             NotificationType.UPDATE.name -> {
                 setSynchronizeState.execute(false)
-                transformBuilderForUpdate(context, notificationBuilder)
             }
-        }
-
-        with(NotificationManagerCompat.from(context)) {
-            notify(NOTIFICATION_ID, notificationBuilder.build())
         }
     }
 
