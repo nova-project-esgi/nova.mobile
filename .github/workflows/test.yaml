@@ -2,7 +2,7 @@ name: lint
 
 on: push
 jobs:
-  lint:
+  test:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
@@ -12,7 +12,7 @@ jobs:
 
       - uses: eskatos/gradle-command-action@v1
         with:
-          arguments: lint
+          arguments: test
           wrapper-cache-enabled: true
           dependencies-cache-enabled: true
           configuration-cache-enabled: true
