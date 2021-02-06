@@ -2,6 +2,7 @@ package com.esgi.nova.application
 
 import android.app.Application
 import androidx.lifecycle.ProcessLifecycleOwner
+import com.esgi.nova.notifications.PushNotificationListener
 import com.yariksoffice.lingver.Lingver
 import dagger.hilt.android.HiltAndroidApp
 
@@ -14,6 +15,8 @@ class NovaApplication : Application() {
         super.onCreate()
         Lingver.init(this)
         ProcessLifecycleOwner.get().lifecycle.addObserver(ApplicationSoundServiceObserver(this))
+        PushNotificationListener.createNotificationChannel(this)
     }
+
 
 }

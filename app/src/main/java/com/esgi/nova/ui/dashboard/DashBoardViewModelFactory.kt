@@ -1,6 +1,7 @@
 package com.esgi.nova.ui.dashboard
 
 import androidx.lifecycle.ViewModel
+import com.esgi.nova.application_state.application.IsSynchronized
 import com.esgi.nova.difficulties.application.GetAllDetailedDifficultiesSortedByRank
 import com.esgi.nova.games.application.CreateGame
 import com.esgi.nova.games.infrastructure.data.game.models.CanLaunchGame
@@ -10,7 +11,7 @@ import com.esgi.nova.ui.dashboard.view_models.DashboardViewModel
 
 @Suppress("UNCHECKED_CAST")
 class DashBoardViewModelFactory(
-    private val createGame: CreateGame,
+    private val isSynchronized: IsSynchronized,
     private val getAllDetailedDifficultiesSortedByRank: GetAllDetailedDifficultiesSortedByRank,
     private val getImageStartValueResourceWrappersByDifficultyId: GetImageStartValueResourceWrappersByDifficultyId,
     private val canLaunchGame: CanLaunchGame,
@@ -18,11 +19,11 @@ class DashBoardViewModelFactory(
 ) : IDashboardViewModelFactory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return DashboardViewModel(
-            createGame = createGame,
             getAllDetailedDifficultiesSortedByRank = getAllDetailedDifficultiesSortedByRank,
             getImageStartValueResourceWrappersByDifficultyId = getImageStartValueResourceWrappersByDifficultyId,
             canLaunchGame = canLaunchGame,
-            canResumeGame = canResumeGame
+            canResumeGame = canResumeGame,
+            isSynchronized = isSynchronized
         ) as T
     }
 }

@@ -19,7 +19,6 @@ import com.esgi.nova.parameters.ui.models.Parameters
 import com.esgi.nova.parameters.ui.view_models.ParametersViewModel
 import com.esgi.nova.ui.dashboard.DashboardActivity
 import com.esgi.nova.ui.init.InitSetupActivity
-import com.esgi.nova.ui.snackbars.IconSnackBar.Companion.confirmSnackBar
 import com.esgi.nova.users.ui.LoginActivity
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -115,7 +114,7 @@ class ParametersActivity : AppCompatActivity(), View.OnClickListener,
     }
 
     private fun startInitSetupActivity() {
-        InitSetupActivity.startWithUserConfirmation(this)
+        InitSetupActivity.start(this)
     }
 
 

@@ -37,7 +37,7 @@ class ParametersStorageRepository @Inject constructor(@ApplicationContext contex
             hasSound = preference.getBoolean(PreferenceConstants.Parameters.HasMusicKey, true),
             hasNotifications = preference.getBoolean(
                 PreferenceConstants.Parameters.HasNotificationsKey,
-                false
+                true
             )
         )
     }

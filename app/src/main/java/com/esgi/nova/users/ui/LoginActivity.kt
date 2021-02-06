@@ -1,7 +1,6 @@
 package com.esgi.nova.users.ui
 
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -13,8 +12,12 @@ import android.view.View.VISIBLE
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.esgi.nova.BuildConfig
 import com.esgi.nova.R
+import com.esgi.nova.application_state.application.SetSynchronizeState
 import com.esgi.nova.databinding.ActivityLoginBinding
+import com.esgi.nova.notifications.extensions.startNotificationsListening
+import com.esgi.nova.parameters.application.HasNotifications
 import com.esgi.nova.parameters.application.SetCurrentTheme
 import com.esgi.nova.sound.application.SwitchSound
 import com.esgi.nova.ui.dashboard.DashboardActivity
@@ -30,13 +33,17 @@ import javax.inject.Inject
 class LoginActivity : AppCompatActivity(), View.OnClickListener, TextWatcher {
 
 
-
     @Inject
     lateinit var setCurrentTheme: SetCurrentTheme
 
     @Inject
     lateinit var switchSound: SwitchSound
 
+    @Inject
+    lateinit var hasNotifications: HasNotifications
+
+    @Inject
+    lateinit var setSynchronizeState: SetSynchronizeState
 
     @Inject
     lateinit var viewModelFactory: LoginViewModelFactory
@@ -46,7 +53,8 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, TextWatcher {
 
     companion object {
         const val ReconnectionKey: String = "ReconnectionKey"
-        const val RegisterUrl: String = "http://freenetaccess.freeboxos.fr:8002/register"
+        const val RegisterUrl: String = BuildConfig.registerUrl
+
         fun startReconnection(context: Context): Context {
             val intent = Intent(context, LoginActivity::class.java)
             intent.putExtra(ReconnectionKey, true)
@@ -59,6 +67,10 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, TextWatcher {
             context.startActivity(intent)
             return context
         }
+
+        fun getStartIntent(context: Context): Intent {
+            return Intent(context, LoginActivity::class.java)
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,7 +78,9 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, TextWatcher {
         setCurrentTheme.execute()
         binding = ActivityLoginBinding.inflate(layoutInflater)
         viewModel = ViewModelProvider(this, viewModelFactory).get(BaseLoginViewModel::class.java)
-
+        application.startNotificationsListening(hasNotifications, setSynchronizeState)
+//        NotificationHub.setListener(new CustomNotificationListener());
+//        NotificationHub.initialize(this.getApplication(), “Connection-String”, "Hub Name");
         setContentView(binding.root)
 
         binding.btnLogin.setOnClickListener(this)
@@ -76,7 +90,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, TextWatcher {
             DashboardActivity.start(this@LoginActivity)
         }
         viewModel.navigateToInitSetup.observe(this) {
-            InitSetupActivity.startWithUserConfirmation(this@LoginActivity)
+            InitSetupActivity.start(this@LoginActivity)
         }
 
         viewModel.invalidPassword.observe(this) {

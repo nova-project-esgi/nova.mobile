@@ -1,5 +1,6 @@
 package com.esgi.nova.ui.dashboard
 
+import com.esgi.nova.application_state.application.IsSynchronized
 import com.esgi.nova.difficulties.application.GetAllDetailedDifficultiesSortedByRank
 import com.esgi.nova.games.application.CreateGame
 import com.esgi.nova.games.infrastructure.data.game.models.CanLaunchGame
@@ -16,14 +17,14 @@ class DashBoardActivityModule {
 
     @Provides
     fun provideCalculatorViewModelFactory(
-        createGame: CreateGame,
+        isSynchronized: IsSynchronized,
         getAllDetailedDifficultiesSortedByRank: GetAllDetailedDifficultiesSortedByRank,
         getImageStartValueResourceWrappersByDifficultyId: GetImageStartValueResourceWrappersByDifficultyId,
         canLaunchGame: CanLaunchGame,
         canResumeGame: CanResumeGame,
     ): IDashboardViewModelFactory =
         DashBoardViewModelFactory(
-            createGame = createGame,
+            isSynchronized = isSynchronized,
             getAllDetailedDifficultiesSortedByRank = getAllDetailedDifficultiesSortedByRank,
             getImageStartValueResourceWrappersByDifficultyId = getImageStartValueResourceWrappersByDifficultyId,
             canLaunchGame = canLaunchGame,

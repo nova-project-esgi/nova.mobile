@@ -1,10 +1,11 @@
 package com.esgi.nova.ui.init
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProvider
 import com.esgi.nova.R
 import com.esgi.nova.databinding.ActivityInitSetupBinding
@@ -33,17 +34,13 @@ class InitSetupActivity : AppCompatActivity() {
     companion object {
         const val SynchronizeStepsTotal = 7
 
-        fun startWithUserConfirmation(context: Context): Context {
-            context.alert {
-                val intent = Intent(context, InitSetupActivity::class.java)
-                messageResource = R.string.resource_fetching_msg
-                titleResource = R.string.network_warning
-                iconResource = R.drawable.baseline_warning_amber_400_24dp
-                negativeButton(R.string.cancel) { }
-                positiveButton(R.string.yes) { context.startActivity(intent) }
-            }.show()
+        fun start(context: Activity): Activity {
+            val intent = Intent(context, InitSetupActivity::class.java)
+            ActivityCompat.startActivityForResult(context, intent, 0, null)
             return context
         }
+
+        fun getStartIntent(context: Context) = Intent(context, InitSetupActivity::class.java)
 
     }
 
@@ -60,8 +57,14 @@ class InitSetupActivity : AppCompatActivity() {
         viewModel.navigateToDashboard.observe(this) { navigateToDashboard() }
         viewModel.networkError.observe(this) { handleNetworkError() }
         viewModel.unexpectedError.observe(this) { handleUnexpectedError() }
-        viewModel.loadContent()
 
+        alert {
+            messageResource = R.string.resource_fetching_msg
+            titleResource = R.string.network_warning
+            iconResource = R.drawable.baseline_warning_amber_400_24dp
+            negativeButton(R.string.cancel) { finish() }
+            positiveButton(R.string.yes) { viewModel.loadContent() }
+        }.show()
     }
 
     private fun navigateToDashboard() {

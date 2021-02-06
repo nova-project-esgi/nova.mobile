@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "155941022930",
+    "project_id": "nova-mobile-4b0b0",
+    "storage_bucket": "nova-mobile-4b0b0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:155941022930:android:43316261714488c0b2110b",
+        "android_client_info": {
+          "package_name": "com.esgi.nova"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "155941022930-fdtfstvd9e7rosv22kqlckbmt5rn36sf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.esgi.nova",
+            "certificate_hash": "36d4ed6e6cb67d81b651bedb606e9f6f7fd558b3"
+          }
+        },
+        {
+          "client_id": "155941022930-esstlda56dg1pju310cfp1bf8nuaaqgq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDeIJL3QHvl64ssx5B6AV3npLys92vr9rM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "155941022930-esstlda56dg1pju310cfp1bf8nuaaqgq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

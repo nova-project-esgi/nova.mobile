@@ -23,7 +23,7 @@ class FileApiRepository @Inject constructor(
         val file = fileService
             .getFile(fileUrl)
         return FileStreamResume(
-            extension = file.contentType()?.subtype() ?: file.contentType()?.type() ?: "",
+            extension = file.contentType()?.subtype ?: file.contentType()?.type ?: "",
             data = file.byteStream(),
             fileSize = file.contentLength()
         )

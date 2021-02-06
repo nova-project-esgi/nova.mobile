@@ -1,8 +1,10 @@
 package com.esgi.nova.infrastructure.api
 
+import com.esgi.nova.BuildConfig
+
 object ApiConstants {
-    const val BaseUrl = "https://nova-cloud-api.azurewebsites.net/"
-    const val SecureNetworkOn = true
+    const val BaseUrl = BuildConfig.apiUrl
+    const val SecureNetworkOn: Boolean = BuildConfig.securedNetworkOn == "true"
 
     object EndPoints {
         const val Auth = "auth/"

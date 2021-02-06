@@ -24,7 +24,7 @@ class TokenRefreshAuthenticator(val updateUserToken: UpdateUserToken) :
     private fun Response.createSignedRequest(): Request? = try {
         runBlocking {
             updateUserToken.execute()?.let { user ->
-                return@runBlocking this@createSignedRequest.request().signWithToken(user.token)
+                return@runBlocking this@createSignedRequest.request.signWithToken(user.token)
             }
         }
     } catch (error: Throwable) {
@@ -33,11 +33,11 @@ class TokenRefreshAuthenticator(val updateUserToken: UpdateUserToken) :
 
     private val Response.retryCount: Int
         get() {
-            var currentResponse = priorResponse()
+            var currentResponse = priorResponse
             var result = 0
             while (currentResponse != null) {
                 result++
-                currentResponse = currentResponse.priorResponse()
+                currentResponse = currentResponse.priorResponse
             }
             return result
         }

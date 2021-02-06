@@ -64,4 +64,5 @@
         <item quantity="one">Vous avez survécu %d tour.</item>
         <item quantity="other">Vous avez survécu %d tours.</item>
     </plurals>
+    <string name="launch_update">Lancer la mise à jour</string>
 </resources>

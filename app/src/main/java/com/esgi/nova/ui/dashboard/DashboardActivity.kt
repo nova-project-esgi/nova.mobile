@@ -26,6 +26,7 @@ import com.esgi.nova.games.ui.leaderboard.LeaderBoardActivity
 import com.esgi.nova.parameters.ui.ParametersActivity
 import com.esgi.nova.ui.dashboard.adapters.DashBoardResourcesAdapter
 import com.esgi.nova.ui.dashboard.view_models.BaseDashboardViewModel
+import com.esgi.nova.ui.init.InitSetupActivity
 import com.esgi.nova.ui.snackbars.IconSnackBar.Companion.confirmSnackBar
 import com.esgi.nova.users.ui.LoginActivity
 import com.esgi.nova.utils.clear
@@ -37,6 +38,8 @@ import javax.inject.Inject
 class DashboardActivity : AppCompatActivity(), View.OnClickListener,
     AdapterView.OnItemClickListener {
 
+
+    private var menu: Menu? = null
 
     @Inject
     lateinit var viewModelFactory: IDashboardViewModelFactory
@@ -116,6 +119,7 @@ class DashboardActivity : AppCompatActivity(), View.OnClickListener,
     }
 
     override fun onResume() {
+        updateUpdateBtnVisibility()
         viewModel.initialize(intent.getBooleanExtra(ParameterSavedKey, false))
         super.onResume()
     }
@@ -129,12 +133,27 @@ class DashboardActivity : AppCompatActivity(), View.OnClickListener,
         return true
     }
 
+    override fun onPrepareOptionsMenu(m: Menu?): Boolean {
+        menu = m
+        updateUpdateBtnVisibility()
+        return super.onPrepareOptionsMenu(menu)
+    }
+
+    private fun updateUpdateBtnVisibility(){
+        menu?.findItem(R.id.update_btn)?.let { btn ->
+            btn.isVisible = !viewModel.isSynchronized()
+        }
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.leaderboard_btn -> LeaderBoardActivity.start(
                 this
             )
             R.id.settings_btn -> ParametersActivity.start(
+                this
+            )
+            R.id.update_btn -> InitSetupActivity.start(
                 this
             )
         }

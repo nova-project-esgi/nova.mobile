@@ -20,4 +20,5 @@ abstract class BaseDashboardViewModel : AppViewModel() {
 
     abstract fun setResourcesWrappers(wrappers: List<IFileWrapper<IDetailedDifficulty.IStartValueResource>>)
     abstract fun initialize(hasSavedParameters: Boolean)
+    abstract fun isSynchronized(): Boolean
 }

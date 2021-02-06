@@ -3,6 +3,7 @@ package com.esgi.nova.ui.dashboard.view_models
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.esgi.nova.application_state.application.IsSynchronized
 import com.esgi.nova.difficulties.application.GetAllDetailedDifficultiesSortedByRank
 import com.esgi.nova.difficulties.ports.IDetailedDifficulty
 import com.esgi.nova.dtos.difficulty.DetailedDifficultyDto
@@ -10,14 +11,15 @@ import com.esgi.nova.files.infrastructure.ports.IFileWrapper
 import com.esgi.nova.games.application.CreateGame
 import com.esgi.nova.games.infrastructure.data.game.models.CanLaunchGame
 import com.esgi.nova.games.infrastructure.data.game.models.CanResumeGame
+import com.esgi.nova.parameters.application.GetParameters
 import com.esgi.nova.resources.application.GetImageStartValueResourceWrappersByDifficultyId
 import com.esgi.nova.utils.reflectMapCollection
 
 
 class DashboardViewModel @ViewModelInject constructor(
-    private val createGame: CreateGame,
     private val getAllDetailedDifficultiesSortedByRank: GetAllDetailedDifficultiesSortedByRank,
     private val getImageStartValueResourceWrappersByDifficultyId: GetImageStartValueResourceWrappersByDifficultyId,
+    private val isSynchronized: IsSynchronized,
     private val canLaunchGame: CanLaunchGame,
     private val canResumeGame: CanResumeGame,
 ) : BaseDashboardViewModel() {
@@ -55,6 +57,7 @@ class DashboardViewModel @ViewModelInject constructor(
         if (hasSavedParameters) {
             _showParameterSaved.value = hasSavedParameters
         }
+
         if (initialized) return
 
 
@@ -62,6 +65,8 @@ class DashboardViewModel @ViewModelInject constructor(
 
         initialized = true
     }
+
+    override fun isSynchronized() = isSynchronized.execute()
 
     private fun initActionsAvailability() {
         loadingLaunch {

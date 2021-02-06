@@ -59,9 +59,12 @@
     <string name="no_games_available">No games are available for this difficulty</string>
     <string name="increase">Increase</string>
     <string name="resource_fetching_msg">Nova resources fetching could impact your network consumption, continue ?</string>
+    <string name="launch_update">Launch update</string>
     <string name="network_warning">Network warning !</string>
     <string name="unexpected_error_msg">Unexpected error !</string>
     <string name="settings_saved">Settings saved</string>
     <string name="trophy">Trophy</string>
     <string name="icon">Icon</string>
+    <string name="channel_name" translatable="false">Push notification channel</string>
+    <string name="channel_description" translatable="false">Notification channel for push notifications.</string>
 </resources>

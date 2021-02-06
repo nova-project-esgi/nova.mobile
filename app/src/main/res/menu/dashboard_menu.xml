@@ -4,11 +4,20 @@
     tools:context=".ui.dashboard.DashboardActivity">
 
     <item
+        android:id="@+id/update_btn"
+        android:contentDescription="@string/launch_update"
+        android:icon="@drawable/round_system_update_alt_blue_24dp"
+        android:title="@string/launch_update"
+        app:showAsAction="ifRoom"
+        android:visible="false"/>
+
+    <item
         android:id="@+id/settings_btn"
         android:contentDescription="@string/open_settings"
         android:icon="@drawable/baseline_settings_white_24"
         android:title="@string/settings"
         app:showAsAction="ifRoom" />
+
 
     <item
         android:id="@+id/leaderboard_btn"
