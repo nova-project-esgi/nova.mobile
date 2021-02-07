@@ -24,9 +24,9 @@ class ConfirmChoiceTest {
 
     @Test
     fun addition_isCorrect() {
-        val gameDbRepository = mock<GameDbRepository>{}
-        val gameResourceDbRepository = mock<GameResourceDbRepository>{}
-        val choiceResourceDbRepository = mock<ChoiceResourceDbRepository>{}
+//        val gameDbRepository = mock<GameDbRepository>{}
+//        val gameResourceDbRepository = mock<GameResourceDbRepository>{}
+//        val choiceResourceDbRepository = mock<ChoiceResourceDbRepository>{}
 //        val gameDbRepository = mock<UserStorageRepository>{}
 //        val gameDbRepository = mock<GameDbRepository>{}
 //        val sut = ConfirmChoice(
