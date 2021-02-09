@@ -40,6 +40,22 @@ jobs:
           wrapper-cache-enabled: true
           dependencies-cache-enabled: true
           configuration-cache-enabled: true
+  androidTest:
+    runs-on: macOS-latest
+      strategy:
+        matrix:
+          api-level: [26, 27, 28]
+          arch: [x86, x86_64]
+      steps:
+        - name: checkout
+          uses: actions/checkout@v2
+
+        - name: run tests
+          uses: reactivecircus/android-emulator-runner@v2
+          with:
+            api-level: ${{ matrix.api-level }}
+            arch: ${{ matrix.arch }}
+            script: ./gradlew connectedCheck
   buid:
     strategy:
       matrix:
