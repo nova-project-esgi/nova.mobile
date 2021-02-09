@@ -49,8 +49,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-  - name: "Run UI Tests"
-    uses: vgaidarji/android-github-actions-emulator@v1.0.1
+      - name: "Run UI Tests"
+        uses: vgaidarji/android-github-actions-emulator@v1.0.1
 
   buid:
     strategy:
