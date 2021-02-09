@@ -91,6 +91,7 @@ class LoginActivityTest {
             )
 
     }
+
     @Test
     fun displayNetworkError_on_unavailableNetwork() {
 //        unavailableNetwork.value = true
