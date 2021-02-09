@@ -94,7 +94,7 @@ class LoginActivityTest {
 
     @Test
     fun displayNetworkError_on_unavailableNetwork() {
-//        unavailableNetwork.value = true
+       unavailableNetwork.value = true
         onView(allOf(withId(R.id.message_tv), withText(R.string.network_not_available_msg)))
             .check(
                 matches(
@@ -105,4 +105,3 @@ class LoginActivityTest {
 
 
 }
-
