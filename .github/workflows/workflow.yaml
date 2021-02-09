@@ -37,15 +37,19 @@ jobs:
 
   ui-tests:
     runs-on: macos-latest
+    strategy:
+      matrix:
+        api-level: [26, 27, 28, 29, 30]
     steps:
-    - name: checkout
-      uses: actions/checkout@v2
-
-    - name: run tests
-      uses: reactivecircus/android-emulator-runner@v2
-      with:
-        api-level: 29
-        script: ./gradlew connectedAndroidTest
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: run tests
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: ${{ matrix.api-level }}
+          script: ./gradlew connectedAndroidTest
+          arch: x86_64
+          profile: Nexus 6
 
   build:
     strategy:
