@@ -36,7 +36,7 @@ class ConfirmChoiceTest {
 //            userRepository = mock {  },
 //            updateGameToApi = mock {  }
 //        )
-        Assert.assertEquals(5, 2 + 2)
+        Assert.assertEquals(4, 2 + 2)
     }
 
 }
