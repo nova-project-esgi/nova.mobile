@@ -29,7 +29,8 @@ class ResourcesChangeSnackBar(
         )
         getView().setPadding(0, 0, 0, 0)
     }
-    companion object{
+
+    companion object {
         fun View.resourcesChangeSnackBar(
             resourcesChanges: List<IFileWrapper<IDetailedChoice.IChangeValueResource>>,
             duration: Int

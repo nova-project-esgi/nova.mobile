@@ -10,7 +10,7 @@ class Link(
 ) {
     private val _href: String = href
 
-    val href : String get() = if (ApiConstants.SecureNetworkOn) _href.toHttps() else _href
+    val href: String get() = if (ApiConstants.SecureNetworkOn) _href.toHttps() else _href
 
     val url: URL get() = URL(href)
 }

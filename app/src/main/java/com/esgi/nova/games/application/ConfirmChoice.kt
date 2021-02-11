@@ -4,7 +4,6 @@ import com.esgi.nova.events.infrastructure.data.choice_resource.ChoiceResourceDb
 import com.esgi.nova.events.ports.IDetailedChoice
 import com.esgi.nova.games.application.models.Game
 import com.esgi.nova.games.application.models.GameResource
-import com.esgi.nova.games.infrastructure.api.GameApiRepository
 import com.esgi.nova.games.infrastructure.data.game.GameDbRepository
 import com.esgi.nova.games.infrastructure.data.game_resource.GameResourceDbRepository
 import com.esgi.nova.games.ports.IGame

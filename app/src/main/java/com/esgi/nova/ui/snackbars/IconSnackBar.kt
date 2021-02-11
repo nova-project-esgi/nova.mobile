@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import com.esgi.nova.R
-import com.esgi.nova.games.ui.game.ResourcesChangeSnackBar
 import com.esgi.nova.utils.findSuitableParent
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import org.jetbrains.anko.imageResource
@@ -26,41 +25,72 @@ class IconSnackBar(
         )
         getView().setPadding(0, 0, 0, 0)
     }
-    companion object{
+
+    companion object {
         fun View.networkErrorSnackBar(
             duration: Int = 2000
         ): IconSnackBar? {
-            return getIconSnackBar(R.drawable.baseline_signal_wifi_off_red_700_24dp, this.context.getString(R.string.network_not_available_msg), duration)
+            return getIconSnackBar(
+                R.drawable.baseline_signal_wifi_off_red_700_24dp,
+                this.context.getString(R.string.network_not_available_msg),
+                duration
+            )
         }
+
         fun View.unexpectedErrorSnackBar(
             duration: Int = 2000
         ): IconSnackBar? {
-            return getIconSnackBar(R.drawable.baseline_error_outline_red_700_24dp, this.context.getString(R.string.unexpected_error_msg), duration)
+            return getIconSnackBar(
+                R.drawable.baseline_error_outline_red_700_24dp,
+                this.context.getString(R.string.unexpected_error_msg),
+                duration
+            )
         }
+
         fun View.errorSnackBar(
             messageId: Int,
             duration: Int = 2000,
         ): IconSnackBar? {
-            return getIconSnackBar(R.drawable.baseline_error_outline_red_700_24dp, this.context.getString(messageId), duration)
+            return getIconSnackBar(
+                R.drawable.baseline_error_outline_red_700_24dp,
+                this.context.getString(messageId),
+                duration
+            )
         }
+
         fun View.warnSnackBar(
             messageId: Int,
             duration: Int = 2000,
         ): IconSnackBar? {
-            return getIconSnackBar(R.drawable.baseline_warning_amber_400_24dp, this.context.getString(messageId), duration)
+            return getIconSnackBar(
+                R.drawable.baseline_warning_amber_400_24dp,
+                this.context.getString(messageId),
+                duration
+            )
         }
+
         fun View.infoSnackBar(
             messageId: Int,
             duration: Int = 2000
         ): IconSnackBar? {
-            return getIconSnackBar(R.drawable.baseline_feedback_black_24dp, this.context.getString(messageId), duration)
+            return getIconSnackBar(
+                R.drawable.baseline_feedback_black_24dp,
+                this.context.getString(messageId),
+                duration
+            )
         }
+
         fun View.confirmSnackBar(
             messageId: Int,
             duration: Int = 2000
         ): IconSnackBar? {
-            return getIconSnackBar(R.drawable.baseline_check_circle_outline_green_600_24dp, this.context.getString(messageId), duration)
+            return getIconSnackBar(
+                R.drawable.baseline_check_circle_outline_green_600_24dp,
+                this.context.getString(messageId),
+                duration
+            )
         }
+
         fun View.iconSnackBar(
             iconResourceId: Int,
             message: String,

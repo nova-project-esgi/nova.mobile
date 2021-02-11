@@ -31,7 +31,12 @@ class EventApiRepository @Inject constructor(
     suspend fun getOneTranslatedEvent(eventId: UUID, language: String): LinkWrapper<IResumedEvent> =
         eventService
             .getOneTranslatedEvent(eventId = eventId.toString(), language = language)
-            .let { event -> LinkWrapper(event.toResumedEvent(), event.backgroundUrl.toSecuredLink()) }
+            .let { event ->
+                LinkWrapper(
+                    event.toResumedEvent(),
+                    event.backgroundUrl.toSecuredLink()
+                )
+            }
 
 
     suspend fun getDailyEvent(language: String, gameId: UUID): LinkWrapper<IResumedEvent> =

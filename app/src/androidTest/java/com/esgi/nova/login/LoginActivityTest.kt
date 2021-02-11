@@ -1,8 +1,5 @@
 package com.esgi.nova.login
 
-import android.os.IBinder
-import android.view.View
-import android.view.WindowManager
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -20,9 +17,7 @@ import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
-import org.hamcrest.Description
 import org.hamcrest.Matchers.allOf
-import org.hamcrest.TypeSafeMatcher
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -94,7 +89,7 @@ class LoginActivityTest {
 
     @Test
     fun displayNetworkError_on_unavailableNetwork() {
-//        unavailableNetwork.value = true
+       unavailableNetwork.value = true
         onView(allOf(withId(R.id.message_tv), withText(R.string.network_not_available_msg)))
             .check(
                 matches(
@@ -105,4 +100,3 @@ class LoginActivityTest {
 
 
 }
-

@@ -15,7 +15,10 @@ import com.esgi.nova.users.ui.LoginActivity
 import com.microsoft.windowsazure.messaging.notificationhubs.NotificationListener
 import com.microsoft.windowsazure.messaging.notificationhubs.NotificationMessage
 
-class PushNotificationListener(private val hasNotifications: HasNotifications, private val setSynchronizeState: SetSynchronizeState) :
+class PushNotificationListener(
+    private val hasNotifications: HasNotifications,
+    private val setSynchronizeState: SetSynchronizeState
+) :
     NotificationListener {
 
     companion object {

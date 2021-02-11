@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -173,7 +172,7 @@ class GameActivity : AppCompatActivity() {
     private fun showChangeResourcesSnackBar(changesResources: List<IFileWrapper<IDetailedChoice.IChangeValueResource>>) {
         contentView?.let {
             binding.root.resourcesChangeSnackBar(
-                 changesResources, ResourceSnackBarDurationMs
+                changesResources, ResourceSnackBarDurationMs
             )?.show()
         }
     }

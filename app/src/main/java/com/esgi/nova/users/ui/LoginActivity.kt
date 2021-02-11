@@ -108,7 +108,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, TextWatcher {
             binding.root.networkErrorSnackBar()?.show()
         }
         viewModel.userNotFound.observe(this) {
-            binding.root.errorSnackBar( R.string.user_not_exist_msg)?.show()
+            binding.root.errorSnackBar(R.string.user_not_exist_msg)?.show()
         }
         viewModel.unexpectedError.observe(this) {
             binding.root.unexpectedErrorSnackBar()?.show()

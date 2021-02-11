@@ -8,8 +8,8 @@
         android:contentDescription="@string/launch_update"
         android:icon="@drawable/round_system_update_alt_blue_24dp"
         android:title="@string/launch_update"
-        app:showAsAction="ifRoom"
-        android:visible="false"/>
+        android:visible="false"
+        app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/settings_btn"

@@ -2,7 +2,6 @@ package com.esgi.nova.ui.dashboard
 
 import com.esgi.nova.application_state.application.IsSynchronized
 import com.esgi.nova.difficulties.application.GetAllDetailedDifficultiesSortedByRank
-import com.esgi.nova.games.application.CreateGame
 import com.esgi.nova.games.infrastructure.data.game.models.CanLaunchGame
 import com.esgi.nova.games.infrastructure.data.game.models.CanResumeGame
 import com.esgi.nova.resources.application.GetImageStartValueResourceWrappersByDifficultyId

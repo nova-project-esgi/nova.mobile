@@ -13,8 +13,6 @@ import com.esgi.nova.games.infrastructure.data.game_event.GameEventDbRepository
 import com.esgi.nova.infrastructure.api.exceptions.NoConnectionException
 import com.esgi.nova.infrastructure.fs.FsConstants
 import com.esgi.nova.parameters.infrastructure.storage.ParametersStorageRepository
-import com.google.android.gms.common.api.ApiException
-import java.lang.Exception
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.util.*
@@ -52,10 +50,13 @@ class GetNextEvent @Inject constructor(
                 }
             } catch (e: NoConnectionException) {
                 Log.i(GetNextEvent::class.qualifiedName, "Cannot fetch daily event from api")
-            } catch( e: GameNotFoundException){
-                Log.i(GetNextEvent::class.qualifiedName, "Cannot find game with id $gameId in api try to synchronize...")
+            } catch (e: GameNotFoundException) {
+                Log.i(
+                    GetNextEvent::class.qualifiedName,
+                    "Cannot find game with id $gameId in api try to synchronize..."
+                )
                 updateGameToApi.execute(gameId)
-            } catch(e: Exception){
+            } catch (e: Exception) {
                 Log.i(GetNextEvent::class.qualifiedName, "Cannot get daily event from api")
             }
         }

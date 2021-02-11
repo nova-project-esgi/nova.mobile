@@ -5,6 +5,7 @@
     tools:layout_height="wrap_content"
     tools:layout_width="wrap_content"
     tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
+
     <com.google.android.material.card.MaterialCardView
         style="@style/CardView"
         android:layout_width="wrap_content"
@@ -17,6 +18,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/snack_constraint"
             android:layout_width="wrap_content"
@@ -29,12 +31,12 @@
                 android:id="@+id/icon_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/icon_div"
                 android:contentDescription="@string/icon"
-                />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/icon_div"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <View
                 android:id="@+id/icon_div"
                 style="?attr/divider"
@@ -46,14 +48,15 @@
                 app:layout_constraintEnd_toStartOf="@id/message_tv"
                 app:layout_constraintStart_toEndOf="@id/icon_iv"
                 app:layout_constraintTop_toTopOf="parent" />
+
             <TextView
                 android:id="@+id/message_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/icon_div"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintTop_toTopOf="parent" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

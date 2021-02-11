@@ -46,7 +46,7 @@ class UpdateGameToApi @Inject constructor(
                                 ConfirmChoice::class.qualifiedName,
                                 "Unexpected api exception"
                             )
-                        }catch (e:Exception) {
+                        } catch (e: Exception) {
                             Log.i(
                                 ConfirmChoice::class.qualifiedName,
                                 "Unexpected  exception"

@@ -139,7 +139,7 @@ class DashboardActivity : AppCompatActivity(), View.OnClickListener,
         return super.onPrepareOptionsMenu(menu)
     }
 
-    private fun updateUpdateBtnVisibility(){
+    private fun updateUpdateBtnVisibility() {
         menu?.findItem(R.id.update_btn)?.let { btn ->
             btn.isVisible = !viewModel.isSynchronized()
         }

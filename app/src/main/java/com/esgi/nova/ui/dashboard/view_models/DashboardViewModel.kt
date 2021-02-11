@@ -8,10 +8,8 @@ import com.esgi.nova.difficulties.application.GetAllDetailedDifficultiesSortedBy
 import com.esgi.nova.difficulties.ports.IDetailedDifficulty
 import com.esgi.nova.dtos.difficulty.DetailedDifficultyDto
 import com.esgi.nova.files.infrastructure.ports.IFileWrapper
-import com.esgi.nova.games.application.CreateGame
 import com.esgi.nova.games.infrastructure.data.game.models.CanLaunchGame
 import com.esgi.nova.games.infrastructure.data.game.models.CanResumeGame
-import com.esgi.nova.parameters.application.GetParameters
 import com.esgi.nova.resources.application.GetImageStartValueResourceWrappersByDifficultyId
 import com.esgi.nova.utils.reflectMapCollection
 

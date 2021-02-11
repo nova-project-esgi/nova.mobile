@@ -36,7 +36,6 @@ jobs:
           dependencies-cache-enabled: true
           configuration-cache-enabled: true
 
-
   ui-tests:
     runs-on: macos-latest
     strategy:
@@ -52,7 +51,6 @@ jobs:
           script: ./gradlew connectedAndroidTest
           arch: x86_64
           profile: Nexus 6
-
 
   build:
     strategy:
